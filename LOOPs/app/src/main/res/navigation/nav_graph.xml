@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mealPlanHomePageFragment">
+
+    <fragment
+        android:id="@+id/mealPlanHomePageFragment"
+        android:name="com.example.loops.MealPlanHomePageFragment"
+        android:label="fragment_meal_plan_home_page"
+        tools:layout="@layout/fragment_meal_plan_home_page" >
+        <action
+            android:id="@+id/action_mealPlanHomePageFragment_to_ingredientCollectionFragment"
+            app:destination="@id/ingredientCollectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingredientCollectionFragment"
+        android:name="com.example.loops.IngredientCollectionFragment"
+        android:label="fragment_ingredient_collection"
+        tools:layout="@layout/fragment_ingredient_collection" />
+</navigation>
