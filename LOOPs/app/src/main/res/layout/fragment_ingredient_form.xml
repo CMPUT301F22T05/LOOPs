@@ -36,6 +36,7 @@
             android:ems="10"
             android:hint="Description of ingredient"
             android:inputType="text"
+            android:maxLength="100000"
             android:minHeight="48dp"
             android:textColorHint="#757575" />
     </LinearLayout>
@@ -61,8 +62,11 @@
             android:layout_marginEnd="18dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="Best before date of ingredient"
             android:inputType="date"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="MM/DD/YYYY"
             android:minHeight="48dp"
             android:textColorHint="#757575" />
     </LinearLayout>
@@ -115,7 +119,8 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="Amount of ingredients in below units"
-            android:inputType="date"
+            android:inputType="numberDecimal"
+            android:maxLength="100000"
             android:minHeight="48dp"
             android:textColorHint="#757575" />
     </LinearLayout>

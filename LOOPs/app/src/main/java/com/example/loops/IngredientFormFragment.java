@@ -1,5 +1,8 @@
 package com.example.loops;
 
+import static android.provider.Settings.System.DATE_FORMAT;
+
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +22,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class IngredientFormFragment extends Fragment {
+    private static final String DATE_FORMAT = "MM/dd/yyyy";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +68,35 @@ public class IngredientFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ingredient_form, container, false);
+        View formView = inflater.inflate(R.layout.fragment_ingredient_form, container, false);
+        EditText dateInput = formView.findViewById(R.id.ingredientFormBestBeforeDateInput);
+        bindDatePickerDialogToDateInput(dateInput);
+        return formView;
+    }
+
+    private void bindDatePickerDialogToDateInput(EditText dateInput) {
+        /*
+        Android_coder, Datepicker: How to popup datepicker when click on edittext
+        https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext,
+        2022-09-24, Creative Commons Attribution-ShareAlike license
+         */
+        DatePickerDialog.OnDateSetListener onDateSetCallback = (view, year, month, day) -> {
+            Calendar pickedDate = Calendar.getInstance();
+            pickedDate.set(Calendar.YEAR, year);
+            pickedDate.set(Calendar.MONTH,month);
+            pickedDate.set(Calendar.DAY_OF_MONTH,day);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+            dateInput.setText(dateFormat.format(pickedDate.getTime()));
+        };
+        dateInput.setOnClickListener( (clickedView) -> {
+            Calendar today = Calendar.getInstance();
+
+            new DatePickerDialog(getActivity(), onDateSetCallback,
+                    today.get(Calendar.YEAR),
+                    today.get(Calendar.MONTH),
+                    today.get(Calendar.DAY_OF_MONTH)
+            ).show();
+        });
     }
 }
