@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--FIXME: Various UI values are hardcoded for now like strings, text size, margin size, padding size, colors, etc-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ingredientFormLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingStart="18dp"
-    android:paddingTop="30dp"
+    android:paddingTop="18dp"
     android:paddingEnd="18dp"
     android:paddingBottom="18dp"
     tools:context=".IngredientFormFragment">
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/ingredientFormDescriptionText"
@@ -42,10 +45,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout7">
 
         <TextView
             android:id="@+id/ingredientFormBestBeforeDateText"
@@ -61,21 +68,25 @@
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
             android:autofillHints=""
-            android:ems="10"
-            android:inputType="date"
             android:clickable="false"
+            android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:hint="MM/DD/YYYY"
+            android:inputType="date"
             android:minHeight="48dp"
             android:textColorHint="#757575" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout8">
 
         <TextView
             android:id="@+id/ingredientFormLocationText"
@@ -98,10 +109,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout9">
 
         <TextView
             android:id="@+id/ingredientFormAmountText"
@@ -126,10 +141,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout10">
 
         <TextView
             android:id="@+id/ingredientFormUnitText"
@@ -152,10 +171,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintBottom_toTopOf="@+id/ingredientFormSubmitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout11">
 
         <TextView
             android:id="@+id/ingredientFormCategoryText"
@@ -182,6 +205,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:text="SUBMIT" />
+        android:text="SUBMIT"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout12" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
