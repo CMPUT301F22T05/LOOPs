@@ -1,79 +1,170 @@
 package com.example.loops;
 
-import static android.provider.Settings.System.DATE_FORMAT;
-
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link IngredientFormFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * An ingredient form. Holds the UI of the form and on submit, saves the result as FragmentResult
+ * with the key INGREDIENT_RESULT
  */
-public class IngredientFormFragment extends Fragment {
-    private static final String DATE_FORMAT = "MM/dd/yyyy";
+public abstract class IngredientFormFragment extends Fragment {
+    private static final String INPUT_DATE_FORMAT = "MM/dd/yyyy";
+    protected EditText descriptionInput;
+    protected EditText bestBeforeDateInput;
+    protected Spinner locationInput;
+    protected EditText amountInput;
+    protected Spinner unitInput;
+    protected Spinner categoryInput;
+    protected Button submitButton;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public IngredientFormFragment() {
-        // Required empty public constructor
-    }
+    public IngredientFormFragment() {}
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment IngredientFormFragment.
+     * Creates view of the ingredient form and initialize its widgets
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
      */
-    // TODO: Rename and change types and number of parameters
-    public static IngredientFormFragment newInstance(String param1, String param2) {
-        IngredientFormFragment fragment = new IngredientFormFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View formView = inflater.inflate(R.layout.fragment_ingredient_form, container, false);
-        EditText dateInput = formView.findViewById(R.id.ingredientFormBestBeforeDateInput);
-        bindDatePickerDialogToDateInput(dateInput);
+        initializeWidgets(formView);
         return formView;
     }
 
+    /**
+     * Set up event listeners
+     * @param formView
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
+        setConstraintsOnInputs(); // Feel like this needs better name
+        setButtonOnClickListeners();
+    }
+
+/*    FIXME:
+       I feel like it's better to replace setSubmitButtonOnClick() and setCancelButtonOnClick()
+       with setButtonOnClickListeners(), submitForm(), cancelForm().
+*/
+    /**
+     * Sets all the button on click listeners in the form
+     */
+    private void setButtonOnClickListeners() {
+        // setOnClickSubmitButton() but in here instead.
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitForm();
+            }
+        });
+        // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
+    }
+
+    /**
+     * Validates the values in the form.
+     * If there are any validation errors, displays to the user error messages.
+     * If there are no validation errors, submits the result to the fragment manager and closes fragment
+     */
+    public void submitForm() {
+        // FIXME: Abstract below code into private Ingredient getInputtedIngredient();
+        String description = descriptionInput.getText().toString();
+        LocalDate bestBeforeDate;
+        // FIXME: ugly code here, I will fix when I implement getInputtedIngredient()
+        try {
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(INPUT_DATE_FORMAT);
+            bestBeforeDate = LocalDate.parse( bestBeforeDateInput.getText().toString() );
+        }
+        catch (DateTimeParseException e) {
+            bestBeforeDate = null;
+        }
+        String location = locationInput.getSelectedItem().toString();
+        int amount;
+        try {
+            amount = Integer.parseInt( amountInput.getText().toString() );
+        }
+        catch (NumberFormatException e) {
+            // FIXME: need a null value for amount
+            amount = -1;
+        }
+        // FIXME: need non-selected value for spinners
+        String unit = unitInput.getSelectedItem().toString();
+        String category = categoryInput.getSelectedItem().toString();
+
+        // FIXME: Abstract below into validateFields()
+        ArrayList<String> errorMessages = new ArrayList<>();
+
+        // FIXME: replace by checkIngredient() instead later.
+        IngredientValidator validator = new IngredientValidator();
+        validator.checkDescription(description);
+        validator.checkBestBeforeDate(bestBeforeDate);
+        validator.checkLocation(location);
+        validator.checkAmount(amount);
+        validator.checkUnit(unit);
+        validator.checkCategory(category);
+
+        for (int errorStringID : validator.getErrorStringIds()) {
+            errorMessages.add( getString(errorStringID) );
+        }
+        if (errorMessages.size() > 0) {
+            displayErrorMessages(errorMessages);
+            return;
+        }
+
+        sendResult(description);
+   }
+
+   // FIXME: for now, only send description...
+    /**
+     * Abstract method. Implement to handle how submitted ingredient is sent to other activities
+     * @param desc
+     */
+   abstract void sendResult(String desc);
+
+    /**
+     * Displays error messages to the user by opening up a popup
+     * @param errorMessages string of error messages to display to user
+     */
+    private void displayErrorMessages(ArrayList<String> errorMessages) {
+        // FIXME: Maybe this should also be a custom widget? Make it reusable?
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog errorMessageDisplay = builder
+                .setMessage( String.join("\n", errorMessages) )
+                .create();
+        errorMessageDisplay.show();
+    }
+
+    /**
+     * Set constraints on input widgets
+     */
+    private void setConstraintsOnInputs() {
+        bindDatePickerDialogToDateInput(bestBeforeDateInput);
+    }
+
+    // FIXME: I feel like this shouldn't be in java docs. This is not something outside users should know.
+    // FIXME: This would be great as a custom widget...
     private void bindDatePickerDialogToDateInput(EditText dateInput) {
         /*
         Android_coder, Datepicker: How to popup datepicker when click on edittext
@@ -86,7 +177,7 @@ public class IngredientFormFragment extends Fragment {
             pickedDate.set(Calendar.MONTH,month);
             pickedDate.set(Calendar.DAY_OF_MONTH,day);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(INPUT_DATE_FORMAT, Locale.US);
             dateInput.setText(dateFormat.format(pickedDate.getTime()));
         };
         dateInput.setOnClickListener( (clickedView) -> {
@@ -98,5 +189,24 @@ public class IngredientFormFragment extends Fragment {
                     today.get(Calendar.DAY_OF_MONTH)
             ).show();
         });
+    }
+
+
+    // FIXME: I feel like this shouldn't be in java docs. This is not something outside users should know.
+    // Furthermore, onCreateView function already says that this is done
+    private void initializeWidgets(View formView) {
+        getLayoutWidgetsFrom(formView);
+//        populateSpinnerOptions()      FIXME: For now, spinner options are hard-coded but this will change
+    }
+
+    // FIXME: I feel like this shouldn't be in java docs. This is not something outside users should know.
+    private void getLayoutWidgetsFrom(View formView) {
+        descriptionInput = formView.findViewById(R.id.ingredientFormDescriptionInput);
+        bestBeforeDateInput = formView.findViewById(R.id.ingredientFormBestBeforeDateInput);
+        locationInput = formView.findViewById(R.id.ingredientFormLocationInput);
+        amountInput = formView.findViewById(R.id.ingredientFormAmountInput);
+        unitInput = formView.findViewById(R.id.ingredientFormUnitInput);
+        categoryInput = formView.findViewById(R.id.ingredientFormCategoryInput);
+        submitButton = formView.findViewById(R.id.ingredientFormSubmitButton);
     }
 }
