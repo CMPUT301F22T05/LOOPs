@@ -2,6 +2,9 @@ package com.example.loops;
 
 import junit.framework.TestCase;
 
+/**
+ * JUNIT test for Recipe class
+ */
 public class RecipeTest extends TestCase {
 
     public void setUp() throws Exception {

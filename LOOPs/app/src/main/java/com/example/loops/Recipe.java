@@ -17,6 +17,19 @@ public class Recipe {
     private Uri picUri;
     private IngredientCollection ingredients;
 
+    public Recipe(String title, int numServing) {
+        this.title = title;
+        this.numServing = numServing;
+    }
+
+    public void addIngredient(Ingredient ingredient){
+        ingredients.addIngredient(ingredient);
+    }
+
+    //Accepts into to delete but should take ingredient?
+    public void removeIngredient(Ingredient ingredient){
+        ingredients.deleteIngredient(0);
+    }
 
     public String getTitle() {
         return title;
