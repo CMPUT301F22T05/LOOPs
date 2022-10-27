@@ -11,6 +11,10 @@ public class IngredientCollection {
         ingredients = new ArrayList<>();
     }
 
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
     }
