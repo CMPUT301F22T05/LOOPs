@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 else if (navDestination.getId() == R.id.ingredientCollectionFragment) {
                     getSupportActionBar().setTitle(R.string.ingredientCollection);
                 }
+                else if (navDestination.getId() == R.id.recipeCollectionFragment) {
+                    getSupportActionBar().setTitle(R.string.recipeCollection);
+                }
             }
         });
     }

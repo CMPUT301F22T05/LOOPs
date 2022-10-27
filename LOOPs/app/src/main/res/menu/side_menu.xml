@@ -5,6 +5,8 @@
         <item
             android:id="@+id/ingredientCollectionFragment"
             android:title="@string/ingredientCollection" />
-        <item android:title="Item" />
+        <item
+            android:id="@+id/recipeCollectionFragment"
+            android:title="@string/recipeCollection" />
     </group>
 </menu>
