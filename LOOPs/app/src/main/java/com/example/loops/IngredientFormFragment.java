@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -85,52 +83,56 @@ public abstract class IngredientFormFragment extends Fragment {
      * If there are no validation errors, submits the result to the fragment manager and closes fragment
      */
     public void submitForm() {
-        // FIXME: Abstract below code into private Ingredient getInputtedIngredient();
-        String description = descriptionInput.getText().toString();
-        LocalDate bestBeforeDate;
-        // FIXME: ugly code here, I will fix when I implement getInputtedIngredient()
-        try {
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(INPUT_DATE_FORMAT);
-            bestBeforeDate = LocalDate.parse( bestBeforeDateInput.getText().toString() );
+        Ingredient submittedIngredient = getInputtedIngredient();
+        if ( isValidIngredientAndNotifyErrors(submittedIngredient) ) {
+            sendResult(submittedIngredient);
         }
-        catch (DateTimeParseException e) {
-            bestBeforeDate = null;
-        }
-        String location = locationInput.getSelectedItem().toString();
-        int amount;
-        try {
-            amount = Integer.parseInt( amountInput.getText().toString() );
-        }
-        catch (NumberFormatException e) {
-            // FIXME: need a null value for amount
-            amount = -1;
-        }
+   }
+
+    /**
+     * Returns an ingredient object where its attributes are those from the form
+     * @return ingredient object formed by the value of the fields of the form
+     */
+    public Ingredient getInputtedIngredient() {
         // FIXME: need non-selected value for spinners
+        String description = descriptionInput.getText().toString();
+        Date bestBeforeDate = parseBestBeforeDateFromInput();
+        String location = locationInput.getSelectedItem().toString();
+        int amount = parseAmountFromInput();
         String unit = unitInput.getSelectedItem().toString();
         String category = categoryInput.getSelectedItem().toString();
 
-        // FIXME: Abstract below into validateFields()
-        ArrayList<String> errorMessages = new ArrayList<>();
+        Ingredient inputtedIngredient = new Ingredient(
+                description,
+                bestBeforeDate,
+                location,
+                amount,
+                unit,
+                category
+        );
+        return inputtedIngredient;
+    }
 
-        // FIXME: replace by checkIngredient() instead later.
+    /**
+     * Checks if ingredient is valid and also if there are any errors, prompts the message to user
+     * by displayErrorMessage
+     * @param ingredientToValidate
+     * @return True if ingredient is valid. Otherwise false
+     */
+    private boolean isValidIngredientAndNotifyErrors(Ingredient ingredientToValidate) {
         IngredientValidator validator = new IngredientValidator();
-        validator.checkDescription(description);
-        validator.checkBestBeforeDate(bestBeforeDate);
-        validator.checkLocation(location);
-        validator.checkAmount(amount);
-        validator.checkUnit(unit);
-        validator.checkCategory(category);
+        validator.checkIngredient(ingredientToValidate, IngredientValidator.INGREDIENT_TYPE.STORED);
 
+        ArrayList<String> errorMessages = new ArrayList<>();
         for (int errorStringID : validator.getErrorStringIds()) {
             errorMessages.add( getString(errorStringID) );
         }
         if (errorMessages.size() > 0) {
             displayErrorMessages(errorMessages);
-            return;
+            return false;
         }
-
-        // sendResult(description);
-   }
+        return true;
+    }
 
     /**
      * Abstract method. Implement to handle how submitted ingredient is sent to other activities
@@ -213,5 +215,36 @@ public abstract class IngredientFormFragment extends Fragment {
         unitInput = formView.findViewById(R.id.ingredientFormUnitInput);
         categoryInput = formView.findViewById(R.id.ingredientFormCategoryInput);
         submitButton = formView.findViewById(R.id.ingredientFormSubmitButton);
+    }
+
+    /**
+     * Parses the best before date from the input
+     * @return the parsed best before date
+     */
+    private Date parseBestBeforeDateFromInput() {
+        Date bestBeforeDate;
+        try {
+            String bestBeforeDateText = bestBeforeDateInput.getText().toString();
+            bestBeforeDate = new SimpleDateFormat(INPUT_DATE_FORMAT, Locale.CANADA).parse(bestBeforeDateText);
+        }
+        catch (ParseException e) {
+            bestBeforeDate = null;
+        }
+        return bestBeforeDate;
+    }
+
+    /**
+     * Parses the amount from the input
+     * @return the parsed Integer amount
+     */
+    private Integer parseAmountFromInput() {
+        Integer amount;
+        try {
+            amount = Integer.parseInt( amountInput.getText().toString() );
+        }
+        catch (NumberFormatException e) {
+            amount = null;
+        }
+        return amount;
     }
 }
