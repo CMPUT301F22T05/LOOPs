@@ -43,6 +43,21 @@ public class IngredientValidator {
     }
 
     /**
+     * A nice function that checks for all attributes of the ingredient by calling
+     * other checker methods
+     * @param ingredient ingredient to check
+     * @return true if valid. False otherwise
+     */
+    public boolean checkIngredient(Ingredient ingredient, INGREDIENT_TYPE type) {
+        return checkDescription(ingredient.getDescription(), type)
+                && checkBestBeforeDate(ingredient.getBestBeforeDate(), type)
+                && checkLocation(ingredient.getStoreLocation(), type)
+                && checkAmount(ingredient.getAmount(), type)
+                && checkUnit(ingredient.getUnit(), type)
+                && checkCategory(ingredient.getCategory(), type);
+    }
+
+    /**
      * Returns true on a valid description of ingredient. Otherwise false.
      * Appends any validation failures to buffer.
      * @param description description of the ingredient
