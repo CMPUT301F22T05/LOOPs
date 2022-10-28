@@ -39,7 +39,7 @@
             android:id="@+id/submitIngredientToCollection"
             app:destination="@id/ingredientCollectionFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/recipeCollectionFragment"
