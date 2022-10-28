@@ -4,23 +4,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
+import static com.example.loops.AddIngredientFormFragmentDirections.*;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * An ingredient form for adding ingredients.
  */
 public class AddIngredientFormFragment extends IngredientFormFragment {
-    public static final String INGREDIENT_RESULT_KEY = "ADD_INGREDIENT_FORM_RESULT_KEY";
 
     public AddIngredientFormFragment() { }
 
     /**
-     * Set up event listeners
+     * Set up event listeners and changes button text
      * @param formView
      * @param savedInstanceState
      */
@@ -30,18 +27,17 @@ public class AddIngredientFormFragment extends IngredientFormFragment {
         submitButton.setText("Add");
     }
 
-    void sendResult(String desc) {
-//        This could be useful.
-//        https://developer.android.com/guide/fragments/communicate#fragment-result
-        Bundle ingredientBundle = new Bundle();
-//        FIXME: can't submit ingredient right now... Hardcoded to description for now...
-        ingredientBundle.putString(INGREDIENT_RESULT_KEY, desc);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        fragmentManager.setFragmentResult(INGREDIENT_RESULT_KEY, ingredientBundle);
-        closeFragment();
-    }
-
-    private void closeFragment() {
-        getActivity().getFragmentManager().popBackStack();
+    /**
+     * Sends ingredient to IngredientCollectionFragment through navigation graph action
+     * @param submittedIngredient
+     */
+    void sendResult(Ingredient submittedIngredient) {
+        // FIXME: Make this more flexible by sending the result back to the fragment that opened
+        // this form, not hardcoded to be the ingredient collection view.
+        SubmitIngredientToCollection toSubmitAction =
+                AddIngredientFormFragmentDirections
+                .submitIngredientToCollection();
+        toSubmitAction.setAddedIngredient(submittedIngredient);
+        Navigation.findNavController(getView()).navigate(toSubmitAction);
     }
 }
