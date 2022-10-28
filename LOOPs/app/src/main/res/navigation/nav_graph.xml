@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mealPlanHomePageFragment_to_ingredientCollectionFragment"
             app:destination="@id/ingredientCollectionFragment" />
+        <action
+            android:id="@+id/action_mealPlanHomePageFragment_to_recipeCollectionFragment"
+            app:destination="@id/recipeCollectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionFragment"
@@ -40,5 +43,9 @@
             >
 <!--            Add popUpTo and popUpToInclusive so you don't go back to a form. -->
         </action>
-    </fragment>
+    <fragment
+        android:id="@+id/recipeCollectionFragment"
+        android:name="com.example.loops.RecipeCollectionFragment"
+        android:label="fragment_recipe_collection"
+        tools:layout="@layout/fragment_recipe_collection" />
 </navigation>
