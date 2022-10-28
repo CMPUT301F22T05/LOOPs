@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
-import static com.example.loops.AddIngredientFormFragmentDirections.*;
 
 import android.view.View;
 
@@ -34,7 +33,7 @@ public class AddIngredientFormFragment extends IngredientFormFragment {
     void sendResult(Ingredient submittedIngredient) {
         // FIXME: Make this more flexible by sending the result back to the fragment that opened
         // this form, not hardcoded to be the ingredient collection view.
-        SubmitIngredientToCollection toSubmitAction =
+        AddIngredientFormFragmentDirections.SubmitIngredientToCollection toSubmitAction =
                 AddIngredientFormFragmentDirections
                 .submitIngredientToCollection();
         toSubmitAction.setAddedIngredient(submittedIngredient);
