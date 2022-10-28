@@ -18,5 +18,27 @@
         android:id="@+id/ingredientCollectionFragment"
         android:name="com.example.loops.IngredientCollectionFragment"
         android:label="fragment_ingredient_collection"
-        tools:layout="@layout/fragment_ingredient_collection" />
+        tools:layout="@layout/fragment_ingredient_collection" >
+        <action
+            android:id="@+id/addIngredientFromCollection"
+            app:destination="@id/addIngredientFormFragment" />
+        <argument
+            android:name="addedIngredient"
+            app:argType="com.example.loops.Ingredient"
+            android:defaultValue="@null"
+            app:nullable="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addIngredientFormFragment"
+        android:name="com.example.loops.AddIngredientFormFragment"
+        android:label="AddIngredientFormFragment" >
+        <action
+            android:id="@+id/submitIngredientToCollection"
+            app:destination="@id/ingredientCollectionFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"
+            >
+<!--            Add popUpTo and popUpToInclusive so you don't go back to a form. -->
+        </action>
+    </fragment>
 </navigation>

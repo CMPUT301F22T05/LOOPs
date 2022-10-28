@@ -1,8 +1,9 @@
 package com.example.loops;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private String description;
     private Date bestBeforeDate;
     private String storeLocation;
