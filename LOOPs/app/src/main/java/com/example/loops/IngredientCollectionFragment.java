@@ -62,6 +62,18 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         View view = inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
         bindComponents(view);
         collectionTitle.setText(R.string.ingredientCollection);
+        //region hard code
+        IngredientCollection ingredientCollection = new IngredientCollection();
+        Ingredient ingredient;
+        try{
+            ingredient = new Ingredient("XXXXX", "2022-10-27", "fridge", 1, "UU", "CC");
+            ingredientCollection.addIngredient(ingredient);
+            ingredientCollection.addIngredient(ingredient);
+        } catch (Exception e) {
+
+        }
+        collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), ingredientCollection.getIngredients()));
+        //endregion
         return view;
     }
 }
