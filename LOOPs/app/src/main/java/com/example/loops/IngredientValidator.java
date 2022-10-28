@@ -49,7 +49,8 @@ public class IngredientValidator {
      * @return true if valid. False otherwise
      */
     public boolean checkIngredient(Ingredient ingredient, INGREDIENT_TYPE type) {
-        return checkDescription(ingredient.getDescription(), type)
+        return ingredient != null
+                && checkDescription(ingredient.getDescription(), type)
                 && checkBestBeforeDate(ingredient.getBestBeforeDate(), type)
                 && checkLocation(ingredient.getStoreLocation(), type)
                 && checkAmount(ingredient.getAmount(), type)
