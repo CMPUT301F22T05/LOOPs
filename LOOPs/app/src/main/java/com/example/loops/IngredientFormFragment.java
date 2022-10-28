@@ -65,10 +65,6 @@ public abstract class IngredientFormFragment extends Fragment {
         setButtonOnClickListeners();
     }
 
-/*    FIXME:
-       I feel like it's better to replace setSubmitButtonOnClick() and setCancelButtonOnClick()
-       with setButtonOnClickListeners(), submitForm(), cancelForm().
-*/
     /**
      * Sets all the button on click listeners in the form
      */
@@ -133,15 +129,14 @@ public abstract class IngredientFormFragment extends Fragment {
             return;
         }
 
-        sendResult(description);
+        // sendResult(description);
    }
 
-   // FIXME: for now, only send description...
     /**
      * Abstract method. Implement to handle how submitted ingredient is sent to other activities
-     * @param desc
+     * @param submittedIngredient
      */
-   abstract void sendResult(String desc);
+   abstract void sendResult(Ingredient submittedIngredient);
 
     /**
      * Displays error messages to the user by opening up a popup
@@ -163,14 +158,18 @@ public abstract class IngredientFormFragment extends Fragment {
         bindDatePickerDialogToDateInput(bestBeforeDateInput);
     }
 
-    // FIXME: I feel like this shouldn't be in java docs. This is not something outside users should know.
-    // FIXME: This would be great as a custom widget...
+    /**
+     * Binds the date picker dialog to the date input by opening the date picker on date input click
+     * After choosing the date, the date is set in the date input.
+     * @param dateInput
+     */
     private void bindDatePickerDialogToDateInput(EditText dateInput) {
         /*
         Android_coder, Datepicker: How to popup datepicker when click on edittext
         https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext,
         2022-09-24, Creative Commons Attribution-ShareAlike license
          */
+        // FIXME: This would be great as a custom widget...
         DatePickerDialog.OnDateSetListener onDateSetCallback = (view, year, month, day) -> {
             Calendar pickedDate = Calendar.getInstance();
             pickedDate.set(Calendar.YEAR, year);
@@ -192,14 +191,20 @@ public abstract class IngredientFormFragment extends Fragment {
     }
 
 
-    // FIXME: I feel like this shouldn't be in java docs. This is not something outside users should know.
-    // Furthermore, onCreateView function already says that this is done
+    /**
+     * initializes widgets of the form.
+     * This involves finding the layout widgets and populating the spinner values
+     * @param formView
+     */
     private void initializeWidgets(View formView) {
         getLayoutWidgetsFrom(formView);
 //        populateSpinnerOptions()      FIXME: For now, spinner options are hard-coded but this will change
     }
 
-    // FIXME: I feel like this shouldn't be in java docs. This is not something outside users should know.
+    /**
+     * Gets all the relevant widgets and sets it to the corresponding class attribute.
+     * @param formView
+     */
     private void getLayoutWidgetsFrom(View formView) {
         descriptionInput = formView.findViewById(R.id.ingredientFormDescriptionInput);
         bestBeforeDateInput = formView.findViewById(R.id.ingredientFormBestBeforeDateInput);
