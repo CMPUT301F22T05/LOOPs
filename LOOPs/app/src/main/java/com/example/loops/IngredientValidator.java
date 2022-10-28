@@ -1,8 +1,7 @@
 package com.example.loops;
 
-import java.sql.Array;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Check if attributes of ingredient are valid or not based on the context it lies in
@@ -20,7 +19,6 @@ public class IngredientValidator {
      * The various context the ingredient lies on
      *      STORED - ingredient that is stored in ingredient storage
      *      SHOPPING - ingredient that is in the shopping list
-     *
      */
     public enum INGREDIENT_TYPE {
         STORED,
@@ -31,8 +29,6 @@ public class IngredientValidator {
     public IngredientValidator() {
         errorStringIds = new ArrayList<>();
     }
-
-    // FIXME: Add checkIngredient function. Can't right now...
 
     /**
      * Returns the buffer that stores error message ids.
@@ -72,11 +68,11 @@ public class IngredientValidator {
      * @param type the type of the ingredient, i.e. the context the ingredient lies on
      * @return true if valid. False otherwise.
      */
-    public boolean checkBestBeforeDate(LocalDate date, INGREDIENT_TYPE type) {
+    public boolean checkBestBeforeDate(Date date, INGREDIENT_TYPE type) {
         return true;
     }
 
-    public boolean checkBestBeforeDate(LocalDate date) {
+    public boolean checkBestBeforeDate(Date date) {
         return checkBestBeforeDate(date, INGREDIENT_TYPE.STORED);
     }
 
