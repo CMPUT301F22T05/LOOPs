@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="recipe_categories">
+        <item>Breakfast</item>
+        <item>User needs to be able to add these</item>
+        <item>Lunch</item>
+    </string-array>
+</resources>
