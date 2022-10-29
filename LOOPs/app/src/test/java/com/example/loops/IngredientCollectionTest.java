@@ -23,4 +23,19 @@ public class IngredientCollectionTest {
         ingredientCollection.addIngredient(ingredient);
         assertEquals(1, ingredientCollection.getIngredients().size());
     }
+
+    @Test
+    void testSortByDescription() {
+        IngredientCollection ingredientCollection = new IngredientCollection();
+        Ingredient ingredient1 = new Ingredient("a", new Date(), "", 1, "", "");
+        Ingredient ingredient2 = new Ingredient("b", new Date(), "", 1, "", "");
+        ingredientCollection.addIngredient(ingredient1);
+        ingredientCollection.addIngredient(ingredient2);
+        ingredientCollection.sort(IngredientSortOption.BY_DESCRIPTION_DESCENDING);
+        assertEquals("b", ingredientCollection.getIngredients().get(0).getDescription());
+        assertEquals("a", ingredientCollection.getIngredients().get(1).getDescription());
+        ingredientCollection.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
+        assertEquals("a", ingredientCollection.getIngredients().get(0).getDescription());
+        assertEquals("b", ingredientCollection.getIngredients().get(1).getDescription());
+    }
 }
