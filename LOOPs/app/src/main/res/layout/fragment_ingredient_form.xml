@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--FIXME: Various UI values are hardcoded for now like strings, text size, margin size, padding size, colors, etc-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ingredientFormLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="18dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="18dp"
+    android:paddingBottom="18dp"
+    tools:context=".IngredientFormFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/ingredientFormDescriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/ingredientFormDescriptionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Description of ingredient"
+            android:inputType="text"
+            android:maxLength="100000"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout7">
+
+        <TextView
+            android:id="@+id/ingredientFormBestBeforeDateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Best Before Date"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/ingredientFormBestBeforeDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:autofillHints=""
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="MM/DD/YYYY"
+            android:inputType="date"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout8">
+
+        <TextView
+            android:id="@+id/ingredientFormLocationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/ingredientFormLocationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:contentDescription="Select storage location of ingredient"
+            android:ems="10"
+            android:entries="@array/ingredient_locations"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout9">
+
+        <TextView
+            android:id="@+id/ingredientFormAmountText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Amount"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/ingredientFormAmountInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Amount of ingredients in below units"
+            android:inputType="numberDecimal"
+            android:maxLength="100000"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout10">
+
+        <TextView
+            android:id="@+id/ingredientFormUnitText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unit"
+            android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/ingredientFormUnitInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:contentDescription="Select which unit to express the amount of ingredient"
+            android:ems="10"
+            android:entries="@array/ingredient_units"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/ingredientFormSubmitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout11">
+
+        <TextView
+            android:id="@+id/ingredientFormCategoryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/ingredientFormCategoryInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:contentDescription="Select which category the ingredient falls under"
+            android:ems="10"
+            android:entries="@array/ingredient_categories"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ingredientFormSubmitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="SUBMIT"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout12" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
