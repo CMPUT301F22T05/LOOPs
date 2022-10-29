@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="extra_small_pad">5dp</dimen>
+    <dimen name="small_pad">18dp</dimen>
+    <dimen name="medium_pad">20dp</dimen>
+    <dimen name="large_pad">26dp</dimen>
+    <dimen name="extra_large_pad">30dp</dimen>
+
+    <dimen name="extra_small_text_size">6dp</dimen>
+    <dimen name="small_text_size">12dp</dimen>
+    <dimen name="medium_text_size">18dp</dimen>
+    <dimen name="large_text_size">24dp</dimen>
+    <dimen name="extra_large_text_size">30dp</dimen>
+</resources>
