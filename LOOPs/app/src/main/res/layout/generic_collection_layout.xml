@@ -9,7 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:padding="18dp">
+        android:padding="18dp"
+        android:paddingEnd="0dp">
+
+        <Spinner
+            android:id="@+id/sort_option_spinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="0dp" />
 
         <TextView
             android:id="@+id/generic_collection_title"
@@ -23,26 +32,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="100dp"
             android:fontFamily="sans-serif-black"
             android:text="Sort by:"
             android:textSize="18sp">
 
         </TextView>
-        <Button
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_centerVertical="true"
-            >
-        </Button>
     </RelativeLayout>
 
     <RelativeLayout

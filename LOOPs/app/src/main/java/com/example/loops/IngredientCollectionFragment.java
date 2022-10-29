@@ -8,6 +8,8 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +65,11 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         View view = inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
         bindComponents(view);
         collectionTitle.setText(R.string.ingredientCollection);
+        ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
+                ArrayAdapter.createFromResource(getActivity(),
+                    R.array.ingredient_collection_sort_option, android.R.layout.simple_spinner_item);
+        sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
         //region hard code
         /*IngredientCollection ingredientCollection = new IngredientCollection();
         Ingredient ingredient;
@@ -79,6 +86,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
         if (submittedIngredient != null) {
             allIngredients.addIngredient(submittedIngredient);
+            //getArguments().clear();
         }
         collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), allIngredients.getIngredients()));
 
@@ -86,6 +94,13 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(view).navigate(R.id.addIngredientFromCollection);
+            }
+        });
+
+        collectionView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
         return view;
