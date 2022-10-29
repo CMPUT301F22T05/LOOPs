@@ -3,6 +3,7 @@ package com.example.loops;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class IngredientCollectionFragment extends GenericCollectionLayout {
-
+    private IngredientCollection allIngredients;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,7 +64,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         bindComponents(view);
         collectionTitle.setText(R.string.ingredientCollection);
         //region hard code
-        IngredientCollection ingredientCollection = new IngredientCollection();
+        /*IngredientCollection ingredientCollection = new IngredientCollection();
         Ingredient ingredient;
         try{
             ingredient = new Ingredient("XXXXX", "2022-10-27", "fridge", 1, "UU", "CC");
@@ -72,8 +73,21 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         } catch (Exception e) {
 
         }
-        collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), ingredientCollection.getIngredients()));
+        collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), ingredientCollection.getIngredients()));*/
         //endregion
+        allIngredients = ((MainActivity)getActivity()).allIngredients;
+        Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
+        if (submittedIngredient != null) {
+            allIngredients.addIngredient(submittedIngredient);
+        }
+        collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), allIngredients.getIngredients()));
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.addIngredientFromCollection);
+            }
+        });
         return view;
     }
 }

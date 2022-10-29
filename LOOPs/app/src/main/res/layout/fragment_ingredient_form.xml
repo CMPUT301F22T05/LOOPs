@@ -72,9 +72,10 @@
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:hint="MM/DD/YYYY"
+            android:hint="@string/DateFormat"
             android:inputType="date"
             android:minHeight="48dp"
+            android:textAllCaps="false"
             android:textColorHint="#757575" />
     </LinearLayout>
 

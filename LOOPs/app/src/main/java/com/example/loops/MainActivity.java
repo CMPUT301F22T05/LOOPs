@@ -16,7 +16,8 @@ import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    AppBarConfiguration appBarConfiguration;
+    private AppBarConfiguration appBarConfiguration;
+    IngredientCollection allIngredients = new IngredientCollection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

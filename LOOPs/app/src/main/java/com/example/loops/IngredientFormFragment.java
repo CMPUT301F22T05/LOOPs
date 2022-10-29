@@ -27,7 +27,7 @@ import java.util.Locale;
  * with the key INGREDIENT_RESULT
  */
 public abstract class IngredientFormFragment extends Fragment {
-    private static final String INPUT_DATE_FORMAT = "MM/dd/yyyy";
+    //private static final String INPUT_DATE_FORMAT = "MM/dd/yyyy";
     protected EditText descriptionInput;
     protected EditText bestBeforeDateInput;
     protected Spinner locationInput;
@@ -98,7 +98,7 @@ public abstract class IngredientFormFragment extends Fragment {
         String description = descriptionInput.getText().toString();
         Date bestBeforeDate = parseBestBeforeDateFromInput();
         String location = locationInput.getSelectedItem().toString();
-        int amount = parseAmountFromInput();
+        int amount = parseAmountFromInput(); //FIXME: input could be decimal
         String unit = unitInput.getSelectedItem().toString();
         String category = categoryInput.getSelectedItem().toString();
 
@@ -178,7 +178,7 @@ public abstract class IngredientFormFragment extends Fragment {
             pickedDate.set(Calendar.MONTH,month);
             pickedDate.set(Calendar.DAY_OF_MONTH,day);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat(INPUT_DATE_FORMAT, Locale.US);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.DateFormat), Locale.US);
             dateInput.setText(dateFormat.format(pickedDate.getTime()));
         };
         dateInput.setOnClickListener( (clickedView) -> {
@@ -225,7 +225,7 @@ public abstract class IngredientFormFragment extends Fragment {
         Date bestBeforeDate;
         try {
             String bestBeforeDateText = bestBeforeDateInput.getText().toString();
-            bestBeforeDate = new SimpleDateFormat(INPUT_DATE_FORMAT, Locale.CANADA).parse(bestBeforeDateText);
+            bestBeforeDate = new SimpleDateFormat(getString(R.string.DateFormat), Locale.CANADA).parse(bestBeforeDateText);
         }
         catch (ParseException e) {
             bestBeforeDate = null;
