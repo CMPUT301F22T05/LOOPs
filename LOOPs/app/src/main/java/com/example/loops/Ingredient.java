@@ -2,9 +2,10 @@ package com.example.loops;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private String description;
     private Date bestBeforeDate;
     private String storeLocation;

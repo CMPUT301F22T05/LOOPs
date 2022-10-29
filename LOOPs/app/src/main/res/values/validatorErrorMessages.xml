@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    INGREDIENT DESCRIPTION ERROR MESSAGES -->
+    <string name="ingredient_no_description">Ingredient\'s description must be given</string>
+<!--    INGREDIENT AMOUNT ERROR MESSAGES-->
+    <string name="ingredient_negative_amount">Ingredient\'s amount cannot be negative</string>
+</resources>
