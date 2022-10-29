@@ -40,6 +40,9 @@ public class IngredientCollection {
         else if (option.equals(IngredientSortOption.BY_LOCATION_ASCENDING)) {
             Collections.sort(ingredients, new LocationAscendingComparator());
         }
+        else if (option.equals(IngredientSortOption.BY_DESCRIPTION_DESCENDING)) {
+            Collections.sort(ingredients, (new DescriptionAscendingComparator()).reversed());
+        }
     }
 
     class DescriptionAscendingComparator implements Comparator<Ingredient> {

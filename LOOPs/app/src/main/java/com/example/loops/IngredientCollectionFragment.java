@@ -70,6 +70,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
                     R.array.ingredient_collection_sort_option, android.R.layout.simple_spinner_item);
         sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
+
         //region hard code
         /*IngredientCollection ingredientCollection = new IngredientCollection();
         Ingredient ingredient;
@@ -86,9 +87,37 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
         if (submittedIngredient != null) {
             allIngredients.addIngredient(submittedIngredient);
-            //getArguments().clear();
+            getArguments().clear();
         }
-        collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), allIngredients.getIngredients()));
+        IngredientStorageViewAdapter collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(), allIngredients.getIngredients());
+        collectionView.setAdapter(collectionViewAdapter);
+
+        sortOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getItemAtPosition(position).equals(getString(R.string.empty_sort_option))) {
+                    return;
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_description))) {
+                    allIngredients.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_best_before_date))) {
+                    allIngredients.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING);
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Location))) {
+                    allIngredients.sort(IngredientSortOption.BY_LOCATION_ASCENDING);
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Category))) {
+                    allIngredients.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
+                }
+                collectionViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //useless?
+            }
+        });
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
