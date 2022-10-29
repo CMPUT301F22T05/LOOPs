@@ -16,7 +16,8 @@ import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    AppBarConfiguration appBarConfiguration;
+    private AppBarConfiguration appBarConfiguration;
+    IngredientCollection allIngredients = new IngredientCollection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 if (navDestination.getId() == R.id.mealPlanHomePageFragment) {
                     getSupportActionBar().setTitle(R.string.mealPlans);
                 }
-                else if (navDestination.getId() == R.id.ingredientCollectionFragment) {
+                else if (navDestination.getId() == R.id.ingredientCollectionEditorFragment) {
                     getSupportActionBar().setTitle(R.string.ingredientCollection);
                 }
                 else if (navDestination.getId() == R.id.recipeCollectionFragment) {

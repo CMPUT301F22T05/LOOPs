@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:drawableBottom="@color/black"
+        android:text="Description:" />
+
+    <TextView
+        android:id="@+id/ingredient_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="descriotion" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Best Before Date:" />
+
+    <TextView
+        android:id="@+id/ingredient_best_before_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="best before date" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Location:" />
+
+    <TextView
+        android:id="@+id/ingredient_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="location" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Amount:" />
+
+    <TextView
+        android:id="@+id/ingredient_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="amount" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Unit:" />
+
+    <TextView
+        android:id="@+id/ingredient_unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="unit" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Ingredient Category:" />
+
+    <TextView
+        android:id="@+id/ingredient_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="category" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/ingredient_back_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#2196F3"
+            android:text="back"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/ingredient_edit_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#4CAF50"
+            android:text="edit"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/ingredient_delete_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#E91E63"
+            android:text="delete"
+            android:textSize="10dp" />
+
+    </TableRow>
+</LinearLayout>
