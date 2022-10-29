@@ -42,7 +42,7 @@
         <action
             android:id="@+id/submitIngredientToCollection"
             app:destination="@id/ingredientCollectionFragment"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/ingredientCollectionFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

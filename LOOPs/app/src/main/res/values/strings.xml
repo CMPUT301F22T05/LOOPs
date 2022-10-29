@@ -5,5 +5,12 @@
     <string name="ingredientCollection">Ingredients</string>
     <string name="mealPlans">Meal Plans</string>
     <string name="recipeCollection">Recipes</string>
-    <string name="DateFormat">MM/dd/yyyy</string>
+    <string name="date_format">MM/dd/yyyy</string>
+    <string-array name="ingredient_collection_sort_option">
+        <item></item>
+        <item>Description</item>
+        <item>Best Before Date</item>
+        <item>Location</item>
+        <item>Category</item>
+    </string-array>
 </resources>

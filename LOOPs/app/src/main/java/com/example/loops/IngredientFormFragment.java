@@ -178,7 +178,7 @@ public abstract class IngredientFormFragment extends Fragment {
             pickedDate.set(Calendar.MONTH,month);
             pickedDate.set(Calendar.DAY_OF_MONTH,day);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.DateFormat), Locale.US);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format), Locale.US);
             dateInput.setText(dateFormat.format(pickedDate.getTime()));
         };
         dateInput.setOnClickListener( (clickedView) -> {
@@ -225,7 +225,7 @@ public abstract class IngredientFormFragment extends Fragment {
         Date bestBeforeDate;
         try {
             String bestBeforeDateText = bestBeforeDateInput.getText().toString();
-            bestBeforeDate = new SimpleDateFormat(getString(R.string.DateFormat), Locale.CANADA).parse(bestBeforeDateText);
+            bestBeforeDate = new SimpleDateFormat(getString(R.string.date_format), Locale.CANADA).parse(bestBeforeDateText);
         }
         catch (ParseException e) {
             bestBeforeDate = null;
