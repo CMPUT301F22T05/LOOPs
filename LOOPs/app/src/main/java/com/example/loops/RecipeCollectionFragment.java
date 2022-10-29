@@ -1,5 +1,7 @@
 package com.example.loops;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,12 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RecipeCollectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class RecipeCollectionFragment extends GenericCollectionLayout {
+
+    private Bitmap myBitmap;
+    private Uri picUri;
+
+
+    private ArrayList permissionsToRequest;
+    private ArrayList permissionsRejected = new ArrayList();
+    private ArrayList permissions = new ArrayList();
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
