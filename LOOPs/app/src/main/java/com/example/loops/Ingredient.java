@@ -1,5 +1,7 @@
 package com.example.loops;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,10 +12,19 @@ public class Ingredient implements Serializable {
     private Integer amount;
     private String unit;
     private String category;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     public Ingredient(String description, Date bestBeforeDate, String storeLocation, Integer amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
+        this.storeLocation = storeLocation;
+        this.amount = amount;
+        this.unit = unit;
+        this.category = category;
+    }
+    public Ingredient(String description, String bestBeforeDate, String storeLocation, Integer amount, String unit, String category) throws ParseException{
+        this.description = description;
+        setBestBeforeDate(bestBeforeDate);
         this.storeLocation = storeLocation;
         this.amount = amount;
         this.unit = unit;
@@ -32,8 +43,17 @@ public class Ingredient implements Serializable {
         return bestBeforeDate;
     }
 
+    public String getBestBeforeDateString() {
+        return dateFormatter.format(bestBeforeDate);
+    }
+
     public void setBestBeforeDate(Date bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
+    }
+
+    public void setBestBeforeDate(String bestBeforeDate) throws ParseException{
+        Date date = dateFormatter.parse(bestBeforeDate);
+        this.bestBeforeDate = date;
     }
 
     public String getStoreLocation() {
