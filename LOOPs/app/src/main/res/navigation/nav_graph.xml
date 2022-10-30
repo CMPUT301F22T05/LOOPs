@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_ingredientCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
+        <action
+            android:id="@+id/action_ingredientCollectionFragment_to_ingredientFragment"
+            app:destination="@id/ingredientFragment" />
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"
@@ -54,4 +57,15 @@
             android:id="@+id/action_recipeCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ingredientFragment"
+        android:name="com.example.loops.IngredientFragment"
+        android:label="fragment_ingredient"
+        tools:layout="@layout/fragment_ingredient" >
+
+        <action
+            android:id="@+id/action_ingredientFragment_to_ingredientCollectionFragment"
+            app:destination="@id/ingredientCollectionFragment" />
+    </fragment>
+
 </navigation>

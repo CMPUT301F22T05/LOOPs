@@ -16,13 +16,13 @@
         android:text="Description:" />
 
     <TextView
-        android:id="@+id/ingredientDescription"
+        android:id="@+id/ingredient_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="<descriotion>" />
+        android:text="descriotion" />
 
 
     <TextView
@@ -36,13 +36,13 @@
         android:text="Best Before Date:" />
 
     <TextView
-        android:id="@+id/bestBeforeDateDescription"
+        android:id="@+id/ingredient_best_before_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="<best before date>" />
+        android:text="best before date" />
 
 
     <TextView
@@ -56,13 +56,13 @@
         android:text="Location:" />
 
     <TextView
-        android:id="@+id/locationDescription"
+        android:id="@+id/ingredient_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="<location>" />
+        android:text="location" />
 
 
     <TextView
@@ -76,13 +76,13 @@
         android:text="Amount:" />
 
     <TextView
-        android:id="@+id/amountDescription"
+        android:id="@+id/ingredient_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="<amount>" />
+        android:text="amount" />
 
 
     <TextView
@@ -96,13 +96,13 @@
         android:text="Unit:" />
 
     <TextView
-        android:id="@+id/unitDescription"
+        android:id="@+id/ingredient_unit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="<unit>" />
+        android:text="unit" />
 
 
     <TextView
@@ -116,32 +116,22 @@
         android:text="Ingredient Category:" />
 
     <TextView
-        android:id="@+id/categoryDescription"
+        android:id="@+id/ingredient_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="<category>" />
+        android:text="category" />
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/ingredientBackButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="#3F51B5"
-            android:text="back"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/ingredientEditButton"
+            android:id="@+id/ingredient_edit_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -151,7 +141,7 @@
             android:textSize="15dp" />
 
         <Button
-            android:id="@+id/ingredientDeleteButton"
+            android:id="@+id/ingredient_delete_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"

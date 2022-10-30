@@ -129,7 +129,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         collectionView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Navigation.findNavController(view).navigate(R.id.action_ingredientCollectionFragment_to_ingredientFragment);
             }
         });
         return view;
