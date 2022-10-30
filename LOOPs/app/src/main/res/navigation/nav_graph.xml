@@ -61,8 +61,8 @@
         android:name="com.example.loops.RecipeFragment"
         android:label="fragment_recipe"
         tools:layout="@layout/fragment_recipe">
-        <action
-            android:id="@+id/action_recipe_to_recipeCollection"
-            app:destination="@id/recipeCollectionFragment"/>
+        <argument
+            android:name="SelectedRecipe"
+            app:argType="com.example.loops.Recipe" />
     </fragment>
 </navigation>
