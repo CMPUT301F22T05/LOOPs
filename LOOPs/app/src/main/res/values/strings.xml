@@ -18,4 +18,9 @@
         <item>@string/sort_by_Location</item>
         <item>@string/sort_by_Category</item>
     </string-array>
+    <string name="prepTime">Preparation Time: </string>
+    <string name="servingSize">Serving: </string>
+    <string name="recipeCommentSubHead">Comment</string>
+    <string name="ingredientSubHead">Ingredients</string>
+    <string name="EditRecipeButtonName">Edit</string>
 </resources>
