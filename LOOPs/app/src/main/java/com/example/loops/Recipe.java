@@ -2,14 +2,16 @@ package com.example.loops;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
+
 import java.time.LocalTime;
 
 /**
  *  model class of a Recipe
  */
-public class Recipe implements Serializable {
+public class Recipe implements Parcelable {
     private String title;
     private LocalTime prepTime;
     private int numServing;
@@ -22,6 +24,26 @@ public class Recipe implements Serializable {
         this.title = title;
         this.numServing = numServing;
     }
+
+    protected Recipe(Parcel in) {
+        title = in.readString();
+        numServing = in.readInt();
+        category = in.readString();
+        photo = in.readParcelable(Bitmap.class.getClassLoader());
+        picUri = in.readParcelable(Uri.class.getClassLoader());
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
     public void addIngredient(Ingredient ingredient){
         ingredients.addIngredient(ingredient);
@@ -81,4 +103,17 @@ public class Recipe implements Serializable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeInt(numServing);
+        parcel.writeString(category);
+        parcel.writeParcelable(photo, i);
+        parcel.writeParcelable(picUri, i);
+    }
 }
