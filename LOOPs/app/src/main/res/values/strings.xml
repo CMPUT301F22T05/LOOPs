@@ -23,4 +23,5 @@
     <string name="recipeCommentSubHead">Comment</string>
     <string name="ingredientSubHead">Ingredients</string>
     <string name="EditRecipeButtonName">Edit</string>
+    <string name="categoryInRecipe">Category:</string>
 </resources>

@@ -29,7 +29,7 @@
                 android:id="@+id/recipeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="recipeTitle"
+
                 android:textSize="@dimen/extra_large_text_size"
 
                 android:layout_marginTop="@dimen/medium_pad"
@@ -46,7 +46,7 @@
                 android:id="@+id/recipePrepTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 hr"
+
                 android:layout_below="@+id/recipeTitle"
                 android:layout_toEndOf="@+id/prepTimeString"/>
 
@@ -63,10 +63,27 @@
                 android:id="@+id/recipeServing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
+
                 android:layout_toEndOf="@+id/servingSizeString"
                 android:layout_below="@+id/recipeTitle"
                 />
+
+            <TextView
+                android:id="@+id/categoryInRecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/serving_padding"
+                android:layout_toEndOf="@+id/recipeServing"
+                android:layout_below="@+id/recipeTitle"
+                android:text="@string/categoryInRecipe" />
+
+            <TextView
+                android:id="@+id/recipeCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/categoryInRecipe"
+                android:layout_below="@+id/recipeTitle"
+                 />
 
             <TextView
                 android:id="@+id/recipeCommentSubhead"
@@ -83,7 +100,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/small_text_size"
                 android:layout_marginTop="@dimen/extra_small_pad"
-                android:text="asdsgdkfljajfwqjrkjqwnerkjasdnkjdsnvkjasbgkjasdfkadshfkjasfhjksadnvkjzxbvjksdafsdfasd"
                 android:layout_below="@+id/recipeCommentSubhead"/>
 
             <TextView

@@ -6,15 +6,15 @@
     <dimen name="large_pad">26dp</dimen>
     <dimen name="extra_large_pad">30dp</dimen>
 
-    <dimen name="extra_small_text_size">6dp</dimen>
-    <dimen name="small_text_size">12dp</dimen>
-    <dimen name="medium_text_size">18dp</dimen>
-    <dimen name="large_text_size">24dp</dimen>
-    <dimen name="extra_large_text_size">30dp</dimen>
+    <dimen name="extra_small_text_size">6sp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
+    <dimen name="medium_text_size">18sp</dimen>
+    <dimen name="large_text_size">24sp</dimen>
+    <dimen name="extra_large_text_size">30sp</dimen>
 
     <dimen name="recipe_edit_layout_width">67dp</dimen>
     <dimen name="recipe_edit_width">50dp</dimen>
-    <dimen name="recipe_subheading">20dp</dimen>
+    <dimen name="recipe_subheading">20sp</dimen>
     <dimen name="serving_padding">10dp</dimen>
     <dimen name="recipe_fragment_image_width">350dp</dimen>
     <dimen name="recipe_fragment_image_height">200dp</dimen>
