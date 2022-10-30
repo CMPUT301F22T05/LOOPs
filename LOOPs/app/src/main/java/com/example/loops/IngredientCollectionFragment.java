@@ -11,52 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link IngredientCollectionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class IngredientCollectionFragment extends GenericCollectionLayout {
     private IngredientCollection allIngredients;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public IngredientCollectionFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment IngredientCollectionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static IngredientCollectionFragment newInstance(String param1, String param2) {
-        IngredientCollectionFragment fragment = new IngredientCollectionFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,33 +21,25 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         View view = inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
         bindComponents(view);
         collectionTitle.setText(R.string.ingredientCollection);
+
+        readPassingData();
+        setAdapters();
+        setListeners();
+
+        return view;
+    }
+    private void setAdapters() {
         ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
                 ArrayAdapter.createFromResource(getActivity(),
-                    R.array.ingredient_collection_sort_option, android.R.layout.simple_spinner_item);
+                        R.array.ingredient_collection_sort_option, android.R.layout.simple_spinner_item);
         sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
 
-        //region hard code
-        /*IngredientCollection ingredientCollection = new IngredientCollection();
-        Ingredient ingredient;
-        try{
-            ingredient = new Ingredient("XXXXX", "2022-10-27", "fridge", 1, "UU", "CC");
-            ingredientCollection.addIngredient(ingredient);
-            ingredientCollection.addIngredient(ingredient);
-        } catch (Exception e) {
-
-        }
-        collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), ingredientCollection.getIngredients()));*/
-        //endregion
-        allIngredients = ((MainActivity)getActivity()).allIngredients;
-        Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
-        if (submittedIngredient != null) {
-            allIngredients.addIngredient(submittedIngredient);
-            getArguments().clear();
-        }
         IngredientStorageViewAdapter collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(), allIngredients.getIngredients());
         collectionView.setAdapter(collectionViewAdapter);
+    }
 
+    private void setListeners() {
         sortOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -110,7 +58,8 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
                 else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Category))) {
                     allIngredients.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
                 }
-                collectionViewAdapter.notifyDataSetChanged();
+                ((IngredientStorageViewAdapter)collectionView.getAdapter()).notifyDataSetChanged();
+                //collectionViewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -122,7 +71,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.addIngredientFromCollection);
+                Navigation.findNavController(v).navigate(R.id.addIngredientFromCollection);
             }
         });
 
@@ -132,6 +81,14 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
 
             }
         });
-        return view;
+    }
+
+    private void readPassingData() {
+        allIngredients = ((MainActivity)getActivity()).allIngredients;
+        Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
+        if (submittedIngredient != null) {
+            allIngredients.addIngredient(submittedIngredient);
+            getArguments().clear();
+        }
     }
 }
