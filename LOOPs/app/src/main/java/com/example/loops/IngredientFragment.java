@@ -12,6 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavAction;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 public class IngredientFragment extends Fragment {
     // selected ingredient from ingredient collection
@@ -26,7 +29,6 @@ public class IngredientFragment extends Fragment {
     private TextView categoryText;
 
     // all buttons
-    private Button backButton;
     private Button editButton;
     private Button deleteButton;
 
@@ -37,6 +39,18 @@ public class IngredientFragment extends Fragment {
         amountText.setText(valueOf(ingredient.getAmount()));
         unitText.setText(ingredient.getUnit());
         categoryText.setText(ingredient.getCategory());
+    }
+
+    public void setEditButtonOnClick() {
+        editButton.setOnClickListener(view -> {
+            NavDirections editIngredientAction = IngredientFragmentDirections
+                    .actionIngredientFragmentToEditIngredientFormFragment(ingredient);
+            Navigation.findNavController(view).navigate(editIngredientAction);
+        });
+    }
+
+    public void setDeleteButtonOnClick() {
+
     }
 
     @Override
@@ -57,12 +71,16 @@ public class IngredientFragment extends Fragment {
         unitText = view.findViewById(R.id.ingredient_unit);
         categoryText = view.findViewById(R.id.ingredient_category);
 
-        backButton = view.findViewById(R.id.ingredient_edit_button);
+        editButton = view.findViewById(R.id.ingredient_edit_button);
         deleteButton = view.findViewById(R.id.ingredient_delete_button);
 
         // get the ingredient and load info
         ingredient = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredient();
         initializeViewWithIngredient();
+
+        // initialize all button activities
+        setEditButtonOnClick();
+        setDeleteButtonOnClick();
 
         return view;
     }

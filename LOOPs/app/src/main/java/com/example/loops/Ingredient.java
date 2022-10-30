@@ -12,7 +12,7 @@ public class Ingredient implements Serializable {
     private Integer amount;
     private String unit;
     private String category;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
 
     public Ingredient(String description, Date bestBeforeDate, String storeLocation, Integer amount, String unit, String category) {
         this.description = description;

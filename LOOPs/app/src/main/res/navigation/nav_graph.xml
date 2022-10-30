@@ -69,6 +69,22 @@
         <argument
             android:name="selectedIngredient"
             app:argType="com.example.loops.Ingredient" />
+        <action
+            android:id="@+id/action_ingredientFragment_to_editIngredientFormFragment"
+            app:destination="@id/editIngredientFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editIngredientFormFragment"
+        android:name="com.example.loops.EditIngredientFormFragment"
+        android:label="EditIngredientFormFragment"
+        tools:layout="@layout/fragment_ingredient_form">
+
+        <argument
+            android:name="editedIngredient"
+            app:argType="com.example.loops.Ingredient" />
+        <action
+            android:id="@+id/action_editIngredientFormFragment_to_ingredientFragment"
+            app:destination="@id/ingredientFragment" />
     </fragment>
 
 </navigation>

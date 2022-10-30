@@ -247,4 +247,13 @@ public abstract class IngredientFormFragment extends Fragment {
         }
         return amount;
     }
+
+    protected int getSpinnerIndexByValue(String value, Spinner spinner) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equals(value)) {
+                return i;
+            }
+        }
+        return 0;
+    }
 }
