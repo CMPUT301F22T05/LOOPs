@@ -22,6 +22,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/medium_pad"
                 android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/roundedCorners"
                  />
 
             <TextView
