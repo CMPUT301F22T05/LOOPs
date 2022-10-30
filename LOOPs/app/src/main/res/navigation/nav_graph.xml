@@ -53,5 +53,16 @@
         <action
             android:id="@+id/action_recipeCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
+        <action
+            android:id="@+id/action_recipeCollection_to_recipe"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment android:id="@+id/recipeFragment"
+        android:name="com.example.loops.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe">
+        <action
+            android:id="@+id/action_recipe_to_recipeCollection"
+            app:destination="@id/recipeCollectionFragment"/>
     </fragment>
 </navigation>
