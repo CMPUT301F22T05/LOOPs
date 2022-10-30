@@ -34,7 +34,7 @@
             android:id="@+id/action_ingredientCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
         <action
-            android:id="@+id/action_ingredientCollectionFragment_to_ingredientFragment"
+            android:id="@+id/actionViewIngredientDetails"
             app:destination="@id/ingredientFragment" />
     </fragment>
     <fragment
@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_ingredientFragment_to_ingredientCollectionFragment"
             app:destination="@id/ingredientCollectionFragment" />
+        <argument
+            android:name="selectedIngredient"
+            app:argType="com.example.loops.Ingredient" />
     </fragment>
 
 </navigation>

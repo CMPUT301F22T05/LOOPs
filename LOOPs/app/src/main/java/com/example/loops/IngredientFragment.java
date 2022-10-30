@@ -1,5 +1,7 @@
 package com.example.loops;
 
+import static java.lang.String.valueOf;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,15 @@ public class IngredientFragment extends Fragment {
     private Button editButton;
     private Button deleteButton;
 
+    public void initializeViewWithIngredient() {
+        descriptionText.setText(ingredient.getDescription());
+        bestBeforeDateText.setText(ingredient.getBestBeforeDateString());
+        locationText.setText(ingredient.getStoreLocation());
+        amountText.setText(valueOf(ingredient.getAmount()));
+        unitText.setText(ingredient.getUnit());
+        categoryText.setText(ingredient.getCategory());
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +60,9 @@ public class IngredientFragment extends Fragment {
         backButton = view.findViewById(R.id.ingredient_edit_button);
         deleteButton = view.findViewById(R.id.ingredient_delete_button);
 
-        //
+        // get the ingredient and load info
+        ingredient = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredient();
+        initializeViewWithIngredient();
 
         return view;
     }
