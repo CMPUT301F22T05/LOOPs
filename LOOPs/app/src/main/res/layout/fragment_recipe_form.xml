@@ -10,7 +10,7 @@
     android:paddingTop="18dp"
     android:paddingEnd="18dp"
     android:paddingBottom="18dp"
-    tools:context=".IngredientFormFragment">
+    tools:context=".RecipeFormFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout7"
@@ -83,14 +83,53 @@
             android:text="Preparation Time"
             android:textSize="24sp" />
 
-        <NumberPicker
-            android:id="@+id/recipeFormPrepTimeInput"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:autofillHints=""
-            android:clickable="false" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <NumberPicker
+                android:id="@+id/recipeFormPrepTimeHourInput"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:autofillHints=""
+                android:clickable="false"
+                android:scaleX="1.75"
+                android:scaleY="1.75"
+                android:theme="@style/NumberPickerText" />
+
+            <TextView
+                android:id="@+id/recipeFormPrepTimeHourText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="hour(s)"
+                android:textSize="18sp" />
+
+            <NumberPicker
+                android:id="@+id/recipeFormPrepTimeMinuteInput"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:autofillHints=""
+                android:clickable="false"
+                android:scaleX="1.75"
+                android:scaleY="1.75"
+                android:theme="@style/NumberPickerText" />
+
+            <TextView
+                android:id="@+id/recipeFormPrepTimeMinuteText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="minute(s)"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -192,7 +231,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/ingredientFormSubmitButton"
+        app:layout_constraintBottom_toTopOf="@+id/recipeFormSubmitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linearLayout11">

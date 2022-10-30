@@ -1,5 +1,6 @@
 package com.example.loops;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 /**
  *  A recipe form. Holds the UI of the  form and on submit, saves the result as FragmentResult
  *  with the key RECIPE_RESULT
@@ -22,13 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecipeFormFragment extends Fragment {
 
     protected EditText titleInput;
-    protected NumberPicker prepTimeInput;
+    protected NumberPicker prepTimeHourInput;
+    protected NumberPicker prepTimeMinuteInput;
     protected Spinner categoryInput;
     protected EditText numServingInput;
     protected EditText commentsInput;
     protected Button submitButton;
     protected Button addIngredientButton;
-
     protected ListView ingredientListView;
     protected RecyclerView ingredientRecyclerView;
     protected IngredientCollection ingredientCollection;
@@ -64,7 +69,8 @@ public class RecipeFormFragment extends Fragment {
      */
     private void getLayoutWidgetsFrom(View formView) {
         titleInput = formView.findViewById(R.id.recipeFormTitleInput);
-        prepTimeInput = formView.findViewById(R.id.recipeFormPrepTimeInput);
+        prepTimeHourInput = formView.findViewById(R.id.recipeFormPrepTimeHourInput);
+        prepTimeMinuteInput = formView.findViewById(R.id.recipeFormPrepTimeMinuteInput);
         numServingInput = formView.findViewById(R.id.recipeFormNumServingInput);
         commentsInput = formView.findViewById(R.id.recipeFormCommentsInput);
         ingredientRecyclerView = formView.findViewById(R.id.recipeFormIngredientRecyclerView);
@@ -82,8 +88,43 @@ public class RecipeFormFragment extends Fragment {
         setConstraintsOnInputs(); // Feel like this needs better name
         setButtonOnClickListeners();
     }
-    
+
+    /**
+     * Set constraints on input widgets
+     */
     private void setConstraintsOnInputs() {
-        bindDatePickerDialogToDateInput(bestBeforeDateInput);
+        bindNumberPickerOnInput(prepTimeHourInput, prepTimeMinuteInput);
     }
+
+    /**
+     * Sets the values displayed by the number picker's
+     * @param prepTimeHourInput
+     * @param prepTimeMinuteInput
+     */
+    private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput,NumberPicker prepTimeMinuteInput ) {
+        // TODO: Finish implementing the values displayed for number picker
+        int maxHourValue = 48;
+        int maxMinuteValue = 48;
+
+        prepTimeHourInput.setMinValue(0);
+        prepTimeHourInput.setMaxValue(maxHourValue);
+
+        prepTimeMinuteInput.setMinValue(0);
+        prepTimeMinuteInput.setMaxValue(maxMinuteValue);
+    }
+
+    /**
+     * Sets all the button on click listeners in the form
+     */
+    private void setButtonOnClickListeners() {
+        // setOnClickSubmitButton() but in here instead.
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement saving the recipe
+            }
+        });
+        // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
+    }
+
 }
