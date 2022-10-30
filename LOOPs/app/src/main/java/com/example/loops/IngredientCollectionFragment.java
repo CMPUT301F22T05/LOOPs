@@ -3,18 +3,21 @@ package com.example.loops;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link IngredientCollectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class IngredientCollectionFragment extends Fragment {
-
+public class IngredientCollectionFragment extends GenericCollectionLayout {
+    private IngredientCollection allIngredients;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +62,76 @@ public class IngredientCollectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
+        bindComponents(view);
+        collectionTitle.setText(R.string.ingredientCollection);
+        ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
+                ArrayAdapter.createFromResource(getActivity(),
+                    R.array.ingredient_collection_sort_option, android.R.layout.simple_spinner_item);
+        sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
+
+        //region hard code
+        /*IngredientCollection ingredientCollection = new IngredientCollection();
+        Ingredient ingredient;
+        try{
+            ingredient = new Ingredient("XXXXX", "2022-10-27", "fridge", 1, "UU", "CC");
+            ingredientCollection.addIngredient(ingredient);
+            ingredientCollection.addIngredient(ingredient);
+        } catch (Exception e) {
+
+        }
+        collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), ingredientCollection.getIngredients()));*/
+        //endregion
+        allIngredients = ((MainActivity)getActivity()).allIngredients;
+        Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
+        if (submittedIngredient != null) {
+            allIngredients.addIngredient(submittedIngredient);
+            getArguments().clear();
+        }
+        IngredientStorageViewAdapter collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(), allIngredients.getIngredients());
+        collectionView.setAdapter(collectionViewAdapter);
+
+        sortOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getItemAtPosition(position).equals(getString(R.string.empty_sort_option))) {
+                    return;
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_description))) {
+                    allIngredients.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_best_before_date))) {
+                    allIngredients.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING);
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Location))) {
+                    allIngredients.sort(IngredientSortOption.BY_LOCATION_ASCENDING);
+                }
+                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Category))) {
+                    allIngredients.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
+                }
+                collectionViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //useless?
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.addIngredientFromCollection);
+            }
+        });
+
+        collectionView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+        return view;
     }
 }

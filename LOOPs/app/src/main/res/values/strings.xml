@@ -4,4 +4,18 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ingredientCollection">Ingredients</string>
     <string name="mealPlans">Meal Plans</string>
+    <string name="recipeCollection">Recipes</string>
+    <string name="date_format">MM/dd/yyyy</string>
+    <string name="empty_sort_option"></string>
+    <string name="sort_by_description">Description</string>
+    <string name="sort_by_best_before_date">Best Before Date</string>
+    <string name="sort_by_Location">Location</string>
+    <string name="sort_by_Category">Category</string>
+    <string-array name="ingredient_collection_sort_option">
+        <item>@string/empty_sort_option</item>
+        <item>@string/sort_by_description</item>
+        <item>@string/sort_by_best_before_date</item>
+        <item>@string/sort_by_Location</item>
+        <item>@string/sort_by_Category</item>
+    </string-array>
 </resources>

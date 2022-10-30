@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/teal_200"
+    app:cardCornerRadius="15dp"
+    app:contentPadding="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/ingredient_bbd_in_storage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="best before"
+            app:layout_constraintEnd_toStartOf="@+id/ingredient_location_in_storage"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_description_in_storage" />
+
+        <TextView
+            android:id="@+id/ingredient_description_in_storage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ingredient_location_in_storage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="location"
+            app:layout_constraintBaseline_toBaselineOf="@+id/ingredient_bbd_in_storage"
+            app:layout_constraintEnd_toStartOf="@+id/ingredient_category_in_storage"
+            app:layout_constraintHorizontal_weight="0.25"
+            app:layout_constraintStart_toEndOf="@+id/ingredient_bbd_in_storage" />
+
+        <TextView
+            android:id="@+id/ingredient_category_in_storage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="category"
+            app:layout_constraintBaseline_toBaselineOf="@+id/ingredient_location_in_storage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.25"
+            app:layout_constraintStart_toEndOf="@+id/ingredient_location_in_storage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
