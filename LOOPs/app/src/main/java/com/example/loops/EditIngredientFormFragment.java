@@ -50,7 +50,7 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
     // TODO: Implement this
     void sendResult(Ingredient submittedIngredient) {
         NavDirections updateIngredientAction = EditIngredientFormFragmentDirections
-                .actionEditIngredientFormFragmentToIngredientFragment(submittedIngredient);
+                .actionEditIngredientFormFragmentToIngredientFragment(submittedIngredient, 0);
         Navigation.findNavController(getView()).navigate(updateIngredientAction);
     }
 }

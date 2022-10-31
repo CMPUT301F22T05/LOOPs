@@ -16,9 +16,14 @@ import androidx.navigation.NavAction;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+/**
+ * This fragment displays details of an ingredient and provides
+ * edit & delete options for a specific ingredient.
+ */
 public class IngredientFragment extends Fragment {
     // selected ingredient from ingredient collection
     private Ingredient ingredient;
+    private int ingInd;
 
     // all text views
     private TextView descriptionText;
@@ -29,9 +34,13 @@ public class IngredientFragment extends Fragment {
     private TextView categoryText;
 
     // all buttons
+    private Button backButton;
     private Button editButton;
     private Button deleteButton;
 
+    /**
+     * Initialize all text views based on the selected ingredient.
+     */
     public void initializeViewWithIngredient() {
         descriptionText.setText(ingredient.getDescription());
         bestBeforeDateText.setText(ingredient.getBestBeforeDateString());
@@ -41,6 +50,25 @@ public class IngredientFragment extends Fragment {
         categoryText.setText(ingredient.getCategory());
     }
 
+    /**
+     * Set up the back button's action.
+     * Send the edited ingredient back to the ingredient collection for update.
+     */
+    public void setBackButtonOnClick() {
+        backButton.setOnClickListener(view -> {
+            IngredientFragmentDirections.ActionIngredientFragmentToIngredientCollectionFragment
+                    backCollectionAction = IngredientFragmentDirections
+                    .actionIngredientFragmentToIngredientCollectionFragment();
+            backCollectionAction.setEditedIngredient(ingredient);
+            backCollectionAction.setEditedIngredientIndex(ingInd);
+            Navigation.findNavController(view).navigate(backCollectionAction);
+        });
+    }
+
+    /**
+     * Set up the edit button's action.
+     * Send the current ingredient to edit ingredient form fragment for user to edit.
+     */
     public void setEditButtonOnClick() {
         editButton.setOnClickListener(view -> {
             NavDirections editIngredientAction = IngredientFragmentDirections
@@ -71,14 +99,17 @@ public class IngredientFragment extends Fragment {
         unitText = view.findViewById(R.id.ingredient_unit);
         categoryText = view.findViewById(R.id.ingredient_category);
 
+        backButton = view.findViewById(R.id.ingredient_back_button);
         editButton = view.findViewById(R.id.ingredient_edit_button);
         deleteButton = view.findViewById(R.id.ingredient_delete_button);
 
         // get the ingredient and load info
         ingredient = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredient();
+        ingInd = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredientIndex();
         initializeViewWithIngredient();
 
         // initialize all button activities
+        setBackButtonOnClick();
         setEditButtonOnClick();
         setDeleteButtonOnClick();
 

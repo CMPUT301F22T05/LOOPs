@@ -131,6 +131,16 @@
         android:layout_marginTop="20dp">
 
         <Button
+            android:id="@+id/ingredient_back_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#2196F3"
+            android:text="back"
+            android:textSize="15dp" />
+
+        <Button
             android:id="@+id/ingredient_edit_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
