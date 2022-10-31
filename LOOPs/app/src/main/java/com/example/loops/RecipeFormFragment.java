@@ -103,8 +103,8 @@ public class RecipeFormFragment extends Fragment {
      */
     private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput,NumberPicker prepTimeMinuteInput ) {
         // TODO: Finish implementing the values displayed for number picker
-        int maxHourValue = 48;
-        int maxMinuteValue = 48;
+        int maxHourValue = 99;
+        int maxMinuteValue = 59;
 
         prepTimeHourInput.setMinValue(0);
         prepTimeHourInput.setMaxValue(maxHourValue);

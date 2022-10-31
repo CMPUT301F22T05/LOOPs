@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
 /**
- * An ingredient form for adding ingredients.
+ * A recipe form for adding recipes.
  */
 public class AddRecipeFormFragment extends RecipeFormFragment {
 
@@ -26,12 +26,12 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     }
 
     /**
-     * Sends ingredient to IngredientCollectionFragment through navigation graph action
+     * Sends recipe to RecipeCollectionFragment through navigation graph action
      * @param submittedRecipe
      */
     void sendResult(Recipe submittedRecipe) {
         // FIXME: Make this more flexible by sending the result back to the fragment that opened
-        // this form, not hardcoded to be the ingredient collection view.
+        // this form, not hardcoded to be the recipe collection view.
         /*
         AddRecipeFormFragmentDirections.SubmitIngredientToCollection toSubmitAction =
                 AddRecipeFormFragmentDirections
