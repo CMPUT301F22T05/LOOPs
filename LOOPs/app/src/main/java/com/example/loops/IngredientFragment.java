@@ -3,10 +3,13 @@ package com.example.loops;
 import static java.lang.String.valueOf;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +27,7 @@ public class IngredientFragment extends Fragment {
     // selected ingredient from ingredient collection
     private Ingredient ingredient;
     private int ingInd;
+    private int fromWhichFragment;
 
     // all text views
     private TextView descriptionText;
@@ -65,6 +69,8 @@ public class IngredientFragment extends Fragment {
         });
     }
 
+
+
     /**
      * Set up the edit button's action.
      * Send the current ingredient to edit ingredient form fragment for user to edit.
@@ -72,13 +78,25 @@ public class IngredientFragment extends Fragment {
     public void setEditButtonOnClick() {
         editButton.setOnClickListener(view -> {
             NavDirections editIngredientAction = IngredientFragmentDirections
-                    .actionIngredientFragmentToEditIngredientFormFragment(ingredient);
+                    .actionIngredientFragmentToEditIngredientFormFragment(ingredient, ingInd);
             Navigation.findNavController(view).navigate(editIngredientAction);
         });
     }
 
     public void setDeleteButtonOnClick() {
+        LayoutInflater inflater = getLayoutInflater();
+        View deletePopupView = inflater.inflate(R.layout.popup_ingredient_delete, null);
 
+        PopupWindow deletePopupWindow = new PopupWindow(
+                deletePopupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+        );
+
+        deleteButton.setOnClickListener(view -> {
+            deletePopupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+        });
     }
 
     @Override
@@ -106,6 +124,11 @@ public class IngredientFragment extends Fragment {
         // get the ingredient and load info
         ingredient = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredient();
         ingInd = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredientIndex();
+        fromWhichFragment = IngredientFragmentArgs.fromBundle(getArguments()).getFromWhichFragment();
+        if (fromWhichFragment == R.layout.fragment_ingredient_form) {
+            backButton.setText("confirm");
+        }
+
         initializeViewWithIngredient();
 
         // initialize all button activities
