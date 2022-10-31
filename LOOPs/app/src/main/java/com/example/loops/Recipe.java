@@ -20,6 +20,15 @@ public class Recipe implements Serializable {
     private Bitmap photo;
     private Uri picUri;
     private IngredientCollection ingredients;
+    private String comments;
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     public Recipe(String title, int numServing) {
         this.title = title;
