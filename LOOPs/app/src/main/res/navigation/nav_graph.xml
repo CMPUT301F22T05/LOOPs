@@ -33,6 +33,17 @@
         <action
             android:id="@+id/action_ingredientCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
+        <action
+            android:id="@+id/actionViewIngredientDetails"
+            app:destination="@id/ingredientFragment" />
+        <argument android:name="editedIngredient"
+            app:argType="com.example.loops.Ingredient"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="editedIngredientIndex"
+            app:argType="integer"
+            android:defaultValue="-1"/>
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"
@@ -54,4 +65,39 @@
             android:id="@+id/action_recipeCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ingredientFragment"
+        android:name="com.example.loops.IngredientFragment"
+        android:label="fragment_ingredient"
+        tools:layout="@layout/fragment_ingredient" >
+
+        <action
+            android:id="@+id/action_ingredientFragment_to_ingredientCollectionFragment"
+            app:destination="@id/ingredientCollectionFragment"
+            app:popUpTo="@id/ingredientCollectionFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="selectedIngredient"
+            app:argType="com.example.loops.Ingredient" />
+        <action
+            android:id="@+id/action_ingredientFragment_to_editIngredientFormFragment"
+            app:destination="@id/editIngredientFormFragment" />
+        <argument
+            android:name="SelectedIngredientIndex"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editIngredientFormFragment"
+        android:name="com.example.loops.EditIngredientFormFragment"
+        android:label="EditIngredientFormFragment"
+        tools:layout="@layout/fragment_ingredient_form">
+
+        <argument
+            android:name="editedIngredient"
+            app:argType="com.example.loops.Ingredient" />
+        <action
+            android:id="@+id/action_editIngredientFormFragment_to_ingredientFragment"
+            app:destination="@id/ingredientFragment" />
+    </fragment>
+
 </navigation>

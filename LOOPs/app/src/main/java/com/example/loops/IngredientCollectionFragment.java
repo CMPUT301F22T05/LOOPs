@@ -3,6 +3,7 @@ package com.example.loops;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -129,7 +130,11 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         collectionView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Ingredient selectedIngredient = allIngredients.getIngredients().get(position);
+                NavDirections viewIngredientDetailsAction =
+                        IngredientCollectionFragmentDirections.actionViewIngredientDetails(
+                                selectedIngredient, position);
+                Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
             }
         });
         return view;
