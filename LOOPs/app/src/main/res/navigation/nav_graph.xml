@@ -44,6 +44,10 @@
             android:name="editedIngredientIndex"
             app:argType="integer"
             android:defaultValue="-1"/>
+        <argument
+            android:name="deleteFlag"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"

@@ -19,6 +19,8 @@ import androidx.navigation.NavAction;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import org.w3c.dom.Text;
+
 /**
  * This fragment displays details of an ingredient and provides
  * edit & delete options for a specific ingredient.
@@ -69,8 +71,6 @@ public class IngredientFragment extends Fragment {
         });
     }
 
-
-
     /**
      * Set up the edit button's action.
      * Send the current ingredient to edit ingredient form fragment for user to edit.
@@ -83,6 +83,10 @@ public class IngredientFragment extends Fragment {
         });
     }
 
+    /**
+     * Set up the delete button's action
+     * Invoke a popup window for user to confirm the deletion to avoid accidentally delete.
+     */
     public void setDeleteButtonOnClick() {
         LayoutInflater inflater = getLayoutInflater();
         View deletePopupView = inflater.inflate(R.layout.popup_ingredient_delete, null);
@@ -94,6 +98,28 @@ public class IngredientFragment extends Fragment {
                 true
         );
 
+        // set up two buttons, one for cancel, one for confirm
+        // set up the popup message
+        Button popupDeleteNoButton = deletePopupView.findViewById(R.id.delete_popup_no_button);
+        Button popupDeleteYesButton = deletePopupView.findViewById(R.id.delete_popup_yes_button);
+        TextView popupDeleteText = deletePopupView.findViewById(R.id.delete_popup_message);
+
+        popupDeleteNoButton.setOnClickListener(view -> {
+            deletePopupWindow.dismiss();
+        });
+        popupDeleteYesButton.setOnClickListener(view -> {
+            deletePopupWindow.dismiss();
+            IngredientFragmentDirections.ActionIngredientFragmentToIngredientCollectionFragment
+                    deleteCollectionAction = IngredientFragmentDirections
+                    .actionIngredientFragmentToIngredientCollectionFragment();
+            deleteCollectionAction.setEditedIngredient(ingredient);
+            deleteCollectionAction.setEditedIngredientIndex(ingInd);
+            deleteCollectionAction.setDeleteFlag(true);
+            Navigation.findNavController(getParentFragment().getView()).navigate(deleteCollectionAction);
+        });
+        popupDeleteText.setText(String.format("Delete Ingredient %s?", ingredient.getDescription()));
+
+        // delete button is only for opening popup window
         deleteButton.setOnClickListener(view -> {
             deletePopupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
         });
