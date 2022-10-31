@@ -64,5 +64,19 @@
         <argument
             android:name="SelectedRecipe"
             app:argType="com.example.loops.Recipe" />
+        <action
+            android:id="@+id/action_recipeFragment_to_placeholder"
+            app:destination="@id/EditRecipePlaceHolder" />
+        <argument
+            android:name="SelectedRecipeIndex"
+            app:argType="integer" />
+    </fragment>
+    <fragment android:id="@+id/EditRecipePlaceHolder" >
+        <argument
+            android:name="editedRecipe"
+            app:argType="com.example.loops.Recipe" />
+        <action
+            android:id="@+id/action_EditRecipePlaceHolder_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
     </fragment>
 </navigation>
