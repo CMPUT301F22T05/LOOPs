@@ -2,7 +2,9 @@ package com.example.loops;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,6 +50,26 @@ public class RecipeFragment extends Fragment {
         bindComponents(view);
         putContentOnViews();
         setUpRecyclerView(view);
+
+        /**
+         * Implement delete an ingredient on swipe
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int pos = viewHolder.getAdapterPosition();
+                selectedRecipe.getIngredients().deleteIngredient(pos);
+                recipeIngredientsAdapter.notifyDataSetChanged();
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recipeIngredients);
+         */
         return view;
     }
 
@@ -78,6 +100,7 @@ public class RecipeFragment extends Fragment {
         servingSize.setText("" + selectedRecipe.getNumServing());
         recipeCategory.setText(selectedRecipe.getCategory());
         recipeTitle.setText(selectedRecipe.getTitle());
+        recipeComments.setText(selectedRecipe.getComments());
     }
 
     /**
@@ -98,4 +121,16 @@ public class RecipeFragment extends Fragment {
         recipeIngredients.setAdapter(recipeIngredientsAdapter);
 
     }
+
+
+    private void setEditRecipeButtonOnClick() {
+        editRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+
 }
