@@ -3,6 +3,7 @@ package com.example.loops;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -13,7 +14,13 @@ import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.time.Duration;
 
+
+/**
+ * A class to represent the UI and business logic that happens
+ * when you checkout a specific recipe in RecipeCollectionFragment
+ */
 public class RecipeFragment extends Fragment {
 
     private Recipe selectedRecipe;
@@ -25,6 +32,8 @@ public class RecipeFragment extends Fragment {
     private TextView recipeTitle;
     private ShapeableImageView recipeImage;
     private TextView recipeCategory;
+    private RecyclerView.Adapter recipeIngredientsAdapter;
+    private RecyclerView.LayoutManager recipeIngredientsLayoutManager;
 
 
     @Override
@@ -37,8 +46,15 @@ public class RecipeFragment extends Fragment {
             selectedRecipe = args.getSelectedRecipe();
         }
         bindComponents(view);
+        putContentOnViews();
+        setUpRecyclerView(view);
         return view;
     }
+
+    /**
+     * This binds variables to the textViews, recyclerView, shapeableImageView in fragment_recipe.xml
+     * @param view
+     */
     private void bindComponents(View view){
         editRecipeButton = view.findViewById(R.id.editRecipeButton);
         prepTime = view.findViewById(R.id.recipePrepTime);
@@ -47,6 +63,39 @@ public class RecipeFragment extends Fragment {
         recipeTitle = view.findViewById(R.id.recipeTitle);
         recipeImage = view.findViewById(R.id.recipeImage);
         recipeCategory = view.findViewById(R.id.recipeCategory);
+        recipeIngredients = view.findViewById(R.id.recipeIngredientList);
+    }
+
+    /**
+     * Puts recipe attributes that is not the ingredients on views
+     */
+    private void putContentOnViews(){
+        Duration time = selectedRecipe.getPrepTime();
+        long seconds = time.getSeconds();
+        String duration = String.format("%d:%02d",seconds/3600,(seconds%3600)/60);
+        prepTime.setText(duration);
+        recipeImage.setImageBitmap(selectedRecipe.getPhoto());
+        servingSize.setText("" + selectedRecipe.getNumServing());
+        recipeCategory.setText(selectedRecipe.getCategory());
+        recipeTitle.setText(selectedRecipe.getTitle());
+    }
+
+    /**
+     * Displays the description, count, and unit of an ingredient in a recipe on
+     * a recyclerview
+     * @param view
+     */
+    private void setUpRecyclerView(View view){
+        recipeIngredients.setHasFixedSize(true);
+        recipeIngredientsLayoutManager = new LinearLayoutManager(view.getContext()) {
+            @Override
+            public boolean canScrollVertically(){
+                return false;
+            }
+        };
+        recipeIngredients.setLayoutManager(recipeIngredientsLayoutManager);
+        recipeIngredientsAdapter = new RecipeIngredientsAdapter (selectedRecipe.getIngredients(),view.getContext());
+        recipeIngredients.setAdapter(recipeIngredientsAdapter);
 
     }
 }
