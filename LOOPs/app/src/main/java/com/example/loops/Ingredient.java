@@ -12,7 +12,7 @@ public class Ingredient implements Serializable {
     private Integer amount;
     private String unit;
     private String category;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
 
     public Ingredient(String description, Date bestBeforeDate, String storeLocation, Integer amount, String unit, String category) {
         this.description = description;
@@ -29,6 +29,19 @@ public class Ingredient implements Serializable {
         this.amount = amount;
         this.unit = unit;
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Ingredient))
+            return false;
+        Ingredient toCompare = (Ingredient) o;
+        return toCompare.getDescription().equals(getDescription())
+                && toCompare.getAmount() == getAmount()
+                && toCompare.getCategory().equals(getCategory())
+                && toCompare.getBestBeforeDateString().equals(getBestBeforeDateString())
+                && toCompare.getStoreLocation().equals(getStoreLocation())
+                && toCompare.getUnit().equals(getUnit());
     }
 
     public String getDescription() {

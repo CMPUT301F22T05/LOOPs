@@ -23,8 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * An ingredient form. Holds the UI of the form and on submit, saves the result as FragmentResult
- * with the key INGREDIENT_RESULT
+ * An ingredient form. Holds the UI of the form and delegates on submit behavior to its subclasses
  */
 public abstract class IngredientFormFragment extends Fragment {
     //private static final String INPUT_DATE_FORMAT = "MM/dd/yyyy";
@@ -98,7 +97,7 @@ public abstract class IngredientFormFragment extends Fragment {
         String description = descriptionInput.getText().toString();
         Date bestBeforeDate = parseBestBeforeDateFromInput();
         String location = locationInput.getSelectedItem().toString();
-        int amount = parseAmountFromInput(); //FIXME: input could be decimal
+        int amount = parseAmountFromInput();
         String unit = unitInput.getSelectedItem().toString();
         String category = categoryInput.getSelectedItem().toString();
 
@@ -148,6 +147,7 @@ public abstract class IngredientFormFragment extends Fragment {
         // FIXME: Maybe this should also be a custom widget? Make it reusable?
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog errorMessageDisplay = builder
+                .setTitle("Please fill out the form properly")
                 .setMessage( String.join("\n", errorMessages) )
                 .create();
         errorMessageDisplay.show();
@@ -243,8 +243,17 @@ public abstract class IngredientFormFragment extends Fragment {
             amount = Integer.parseInt( amountInput.getText().toString() );
         }
         catch (NumberFormatException e) {
-            amount = null;
+            amount = -1;
         }
         return amount;
+    }
+
+    protected int getSpinnerIndexByValue(String value, Spinner spinner) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equals(value)) {
+                return i;
+            }
+        }
+        return 0;
     }
 }
