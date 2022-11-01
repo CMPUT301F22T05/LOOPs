@@ -31,6 +31,19 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Ingredient))
+            return false;
+        Ingredient toCompare = (Ingredient) o;
+        return toCompare.getDescription().equals(getDescription())
+                && toCompare.getAmount() == getAmount()
+                && toCompare.getCategory().equals(getCategory())
+                && toCompare.getBestBeforeDateString().equals(getBestBeforeDateString())
+                && toCompare.getStoreLocation().equals(getStoreLocation())
+                && toCompare.getUnit().equals(getUnit());
+    }
+
     public String getDescription() {
         return description;
     }
