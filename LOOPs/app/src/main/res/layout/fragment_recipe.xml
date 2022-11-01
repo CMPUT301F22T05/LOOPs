@@ -7,7 +7,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:id = "@+id/recipeFragmentScrollViewId">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -114,9 +115,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipeIngredientList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/extra_small_pad"
-                android:layout_marginBottom="@dimen/medium_pad"
                 android:layout_below="@+id/ingredientSubHead"/>
 
         </RelativeLayout>
