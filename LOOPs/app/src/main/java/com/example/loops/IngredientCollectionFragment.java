@@ -29,6 +29,26 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
 
         return view;
     }
+
+    private void readPassingData() {
+        allIngredients = ((MainActivity)getActivity()).allIngredients;
+        IngredientCollectionFragmentArgs args = IngredientCollectionFragmentArgs.fromBundle(getArguments());
+        //Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
+        if (args.getAddedIngredient() != null) {
+            allIngredients.addIngredient(args.getAddedIngredient());
+            //getArguments().clear();
+        }
+        else if (args.getEditedIngredient() != null) {
+            if (args.getDeleteFlag() == false) { //update ingredient
+                allIngredients.updateIngredient(args.getEditedIngredientIndex(), args.getEditedIngredient());
+            }
+            else {
+                allIngredients.deleteIngredient(args.getEditedIngredientIndex());
+            }
+        }
+        getArguments().clear();
+    }
+
     private void setAdapters() {
         ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
                 ArrayAdapter.createFromResource(getActivity(),
@@ -81,19 +101,10 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient selectedIngredient = allIngredients.getIngredients().get(position);
                 NavDirections viewIngredientDetailsAction =
-                        IngredientCollectionFragmentDirections.actionViewIngredientDetails(
+                        (NavDirections)IngredientCollectionFragmentDirections.actionViewIngredientDetails(
                                 selectedIngredient, position, R.layout.fragment_ingredient_collection);
                 Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
             }
         });
-    }
-
-    private void readPassingData() {
-        allIngredients = ((MainActivity)getActivity()).allIngredients;
-        Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
-        if (submittedIngredient != null) {
-            allIngredients.addIngredient(submittedIngredient);
-            getArguments().clear();
-        }
     }
 }

@@ -15,8 +15,8 @@ public class IngredientCollectionTest {
     Ingredient ingredient2;
     void initialize() {
         storage = new IngredientCollection();
-        ingredient1 = new Ingredient("a", "2022-10-28", "cupboard", 1, "", "x");
-        ingredient2 = new Ingredient("b", "2022-10-29", "fridge", 1, "", "y");
+        ingredient1 = new Ingredient("a", "10/28/2022", "cupboard", 1, "", "x");
+        ingredient2 = new Ingredient("b", "10/29/2022", "fridge", 1, "", "y");
         storage.addIngredient(ingredient1);
         storage.addIngredient(ingredient2);
     }
