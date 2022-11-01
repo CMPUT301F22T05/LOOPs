@@ -133,7 +133,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
                 Ingredient selectedIngredient = allIngredients.getIngredients().get(position);
                 NavDirections viewIngredientDetailsAction =
                         IngredientCollectionFragmentDirections.actionViewIngredientDetails(
-                                selectedIngredient, position);
+                                selectedIngredient, position, R.layout.fragment_ingredient_collection);
                 Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
             }
         });

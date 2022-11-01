@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout/fragment_ingredient_collection.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/fragment_ingredient_form.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/generic_collection_layout.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/layout/popup_ingredient_delete.xml" value="0.20199275362318841" />
       </map>
     </option>
   </component>

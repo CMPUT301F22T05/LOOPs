@@ -17,6 +17,7 @@ import android.view.View;
 public class EditIngredientFormFragment extends IngredientFormFragment {
 
     private Ingredient editIngredient;
+    private int editIngredientInd;
 
     public EditIngredientFormFragment() { }
 
@@ -33,10 +34,14 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
         initializeFormWithIngredientAttributes();
     }
 
-    // TODO: Implement this
+    /**
+     * Get the ingredient to edit & set up the text views in edit text.
+     */
     public void initializeFormWithIngredientAttributes() {
         editIngredient = EditIngredientFormFragmentArgs.fromBundle(getArguments())
                 .getEditedIngredient();
+        editIngredientInd = EditIngredientFormFragmentArgs.fromBundle(getArguments())
+                .getEditIngredientIndex();
 
         // pre-fill all fields
         descriptionInput.setText(editIngredient.getDescription());
@@ -47,10 +52,14 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
         categoryInput.setSelection(getSpinnerIndexByValue(editIngredient.getCategory(), categoryInput));
     }
 
-    // TODO: Implement this
+    /**
+     * Send the edited ingredient back to IngredientFragment.
+     * @param submittedIngredient
+     */
     void sendResult(Ingredient submittedIngredient) {
         NavDirections updateIngredientAction = EditIngredientFormFragmentDirections
-                .actionEditIngredientFormFragmentToIngredientFragment(submittedIngredient, 0);
+                .actionEditIngredientFormFragmentToIngredientFragment(
+                        submittedIngredient, editIngredientInd, R.layout.fragment_ingredient_form);
         Navigation.findNavController(getView()).navigate(updateIngredientAction);
     }
 }

@@ -44,6 +44,10 @@
             android:name="editedIngredientIndex"
             app:argType="integer"
             android:defaultValue="-1"/>
+        <argument
+            android:name="deleteFlag"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"
@@ -85,6 +89,9 @@
         <argument
             android:name="SelectedIngredientIndex"
             app:argType="integer" />
+        <argument
+            android:name="fromWhichFragment"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/editIngredientFormFragment"
@@ -97,7 +104,12 @@
             app:argType="com.example.loops.Ingredient" />
         <action
             android:id="@+id/action_editIngredientFormFragment_to_ingredientFragment"
-            app:destination="@id/ingredientFragment" />
+            app:destination="@id/ingredientFragment"
+            app:popUpTo="@id/ingredientFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="editIngredientIndex"
+            app:argType="integer" />
     </fragment>
 
 </navigation>
