@@ -34,14 +34,23 @@ public class IngredientCollection {
         else if (option.equals(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING)) {
             ingredients.sort(new BestBeforeDateAscendingComparator());
         }
-        else if (option.equals(IngredientSortOption.BY_CATEGORY_ASCENDING)) {
-            ingredients.sort(new CategoryAscendingComparator());
-        }
         else if (option.equals(IngredientSortOption.BY_LOCATION_ASCENDING)) {
             Collections.sort(ingredients, new LocationAscendingComparator());
         }
+        else if (option.equals(IngredientSortOption.BY_CATEGORY_ASCENDING)) {
+            ingredients.sort(new CategoryAscendingComparator());
+        }
         else if (option.equals(IngredientSortOption.BY_DESCRIPTION_DESCENDING)) {
             Collections.sort(ingredients, (new DescriptionAscendingComparator()).reversed());
+        }
+        else if (option.equals(IngredientSortOption.BY_BEST_BEFORE_DATE_DESCENDING)) {
+            ingredients.sort((new BestBeforeDateAscendingComparator()).reversed());
+        }
+        else if (option.equals(IngredientSortOption.BY_LOCATION_DESCENDING)) {
+            Collections.sort(ingredients, (new LocationAscendingComparator()).reversed());
+        }
+        else if (option.equals(IngredientSortOption.BY_CATEGORY_DESCENDING)) {
+            ingredients.sort((new CategoryAscendingComparator()).reversed());
         }
     }
 

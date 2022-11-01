@@ -22,7 +22,7 @@ public class Ingredient implements Serializable {
         this.unit = unit;
         this.category = category;
     }
-    public Ingredient(String description, String bestBeforeDate, String storeLocation, Integer amount, String unit, String category) throws ParseException{
+    public Ingredient(String description, String bestBeforeDate, String storeLocation, Integer amount, String unit, String category) {
         this.description = description;
         setBestBeforeDate(bestBeforeDate);
         this.storeLocation = storeLocation;
@@ -64,9 +64,13 @@ public class Ingredient implements Serializable {
         this.bestBeforeDate = bestBeforeDate;
     }
 
-    public void setBestBeforeDate(String bestBeforeDate) throws ParseException{
-        Date date = dateFormatter.parse(bestBeforeDate);
-        this.bestBeforeDate = date;
+    public void setBestBeforeDate(String bestBeforeDate){
+        try {
+            Date date = dateFormatter.parse(bestBeforeDate);
+            this.bestBeforeDate = date;
+        } catch (ParseException e) {
+            this.bestBeforeDate = new Date(0);
+        }
     }
 
     public String getStoreLocation() {
