@@ -48,6 +48,10 @@
             android:name="deleteFlag"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="collectionType"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"
@@ -125,6 +129,10 @@
             app:argType="com.example.loops.Ingredient"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="collectionType"
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/addIngredientFormFromSelection"
             app:destination="@id/addIngredientFormFragment" />
