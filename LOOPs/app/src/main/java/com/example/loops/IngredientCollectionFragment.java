@@ -5,15 +5,34 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-public class IngredientCollectionFragment extends GenericCollectionLayout {
-    private IngredientCollection allIngredients;
+/**
+ * A fragment displaying an ingredient collection
+ */
+public abstract class IngredientCollectionFragment extends GenericCollectionLayout {
+    protected IngredientCollection ingredientCollection;
+    protected IngredientStorageViewAdapter collectionViewAdapter;
+
+    public IngredientCollectionFragment() {
+        // Required empty public constructor
+    }
+
+    abstract void onClickAddButton(View clickedView);
+
+    abstract void onClickIngredient(AdapterView<?> parent, View view, int position, long id);
+
+    abstract void getIngredientCollectionToDisplay();
+
+    abstract void parseActionArguments();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -21,32 +40,13 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
         bindComponents(view);
-        collectionTitle.setText(R.string.ingredientCollection);
 
-        readPassingData();
+        ingredientCollection = ((MainActivity)getActivity()).allIngredients;
+        parseActionArguments();
         setAdapters();
         setListeners();
 
         return view;
-    }
-
-    private void readPassingData() {
-        allIngredients = ((MainActivity)getActivity()).allIngredients;
-        IngredientCollectionFragmentArgs args = IngredientCollectionFragmentArgs.fromBundle(getArguments());
-        //Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
-        if (args.getAddedIngredient() != null) {
-            allIngredients.addIngredient(args.getAddedIngredient());
-            //getArguments().clear();
-        }
-        else if (args.getEditedIngredient() != null) {
-            if (args.getDeleteFlag() == false) { //update ingredient
-                allIngredients.updateIngredient(args.getEditedIngredientIndex(), args.getEditedIngredient());
-            }
-            else {
-                allIngredients.deleteIngredient(args.getEditedIngredientIndex());
-            }
-        }
-        getArguments().clear();
     }
 
     private void setAdapters() {
@@ -56,33 +56,15 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
 
-        IngredientStorageViewAdapter collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(), allIngredients.getIngredients());
-        collectionView.setAdapter(collectionViewAdapter);
+        adaptIngredientCollection();
     }
 
     private void setListeners() {
         sortOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position).equals(getString(R.string.empty_sort_option))) {
-                    return;
-                }
-                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_description))) {
-                    allIngredients.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
-                }
-                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_best_before_date))) {
-                    allIngredients.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING);
-                }
-                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Location))) {
-                    allIngredients.sort(IngredientSortOption.BY_LOCATION_ASCENDING);
-                }
-                else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Category))) {
-                    allIngredients.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
-                }
-                ((IngredientStorageViewAdapter)collectionView.getAdapter()).notifyDataSetChanged();
-                //collectionViewAdapter.notifyDataSetChanged();
+                sortIngredientCollection(parent, position);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 //useless?
@@ -92,19 +74,40 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.addIngredientFromCollection);
+                onClickAddButton(v);
             }
         });
 
         collectionView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Ingredient selectedIngredient = allIngredients.getIngredients().get(position);
-                NavDirections viewIngredientDetailsAction =
-                        (NavDirections)IngredientCollectionFragmentDirections.actionViewIngredientDetails(
-                                selectedIngredient, position, R.layout.fragment_ingredient_collection);
-                Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
+                onClickIngredient(parent, view, position, id);
             }
         });
+    }
+
+    private void sortIngredientCollection(AdapterView<?> parent, int position) {
+        if (parent.getItemAtPosition(position).equals(getString(R.string.empty_sort_option))) {
+            return;
+        }
+        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_description))) {
+            ingredientCollection.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
+        }
+        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_best_before_date))) {
+            ingredientCollection.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING);
+        }
+        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Location))) {
+            ingredientCollection.sort(IngredientSortOption.BY_LOCATION_ASCENDING);
+        }
+        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Category))) {
+            ingredientCollection.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
+        }
+        collectionViewAdapter.notifyDataSetChanged();
+    }
+
+    private void adaptIngredientCollection() {
+        collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(),
+                    ingredientCollection.getIngredients());
+        collectionView.setAdapter(collectionViewAdapter);
     }
 }

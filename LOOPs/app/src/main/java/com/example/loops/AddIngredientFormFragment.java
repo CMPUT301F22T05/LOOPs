@@ -43,7 +43,7 @@ public class AddIngredientFormFragment extends IngredientFormFragment {
             resultBundle.putSerializable(INGREDIENT_KEY, submittedIngredient);
             getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
         }
-        else if ( callerFragmentId == R.id.ingredientCollectionFragment ) {
+        else if ( callerFragmentId == R.id.ingredientStorageFragment ) {
             AddIngredientFormFragmentDirections.SubmitIngredientToCollection toSubmitAction =
                 AddIngredientFormFragmentDirections.submitIngredientToCollection();
             toSubmitAction.setAddedIngredient(submittedIngredient);
