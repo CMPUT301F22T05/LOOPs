@@ -12,16 +12,16 @@
         tools:layout="@layout/fragment_meal_plan_home_page" >
         <action
             android:id="@+id/action_mealPlanHomePageFragment_to_ingredientCollectionFragment"
-            app:destination="@id/ingredientCollectionFragment" />
+            app:destination="@id/ingredientCollectionEditorFragment" />
         <action
             android:id="@+id/action_mealPlanHomePageFragment_to_recipeCollectionFragment"
             app:destination="@id/recipeCollectionFragment" />
     </fragment>
     <fragment
-        android:id="@+id/ingredientCollectionFragment"
-        android:name="com.example.loops.IngredientCollectionFragment"
-        android:label="fragment_ingredient_collection"
-        tools:layout="@layout/fragment_ingredient_collection" >
+        android:id="@+id/ingredientCollectionEditorFragment"
+        android:name="com.example.loops.IngredientCollectionEditorFragment"
+        android:label="fragment_ingredient_storage"
+        tools:layout="@layout/fragment_ingredient_collection">
         <argument
             android:name="addedIngredient"
             app:argType="com.example.loops.Ingredient"
@@ -48,6 +48,10 @@
             android:name="deleteFlag"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="collectionType"
+            app:argType="com.example.loops.IngredientCollectionFragment$CollectionType"
+            android:defaultValue="FROM_STORAGE" />
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"
@@ -56,8 +60,13 @@
         tools:layout="@layout/fragment_ingredient_form">
         <action
             android:id="@+id/submitIngredientToCollection"
-            app:destination="@id/ingredientCollectionFragment"
-            app:popUpTo="@id/ingredientCollectionFragment"
+            app:destination="@id/ingredientCollectionEditorFragment"
+            app:popUpTo="@id/ingredientCollectionEditorFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addIngredientFormFragment_to_selectIngredientFragment"
+            app:destination="@id/ingredientCollectionSelectionFragment"
+            app:popUpTo="@id/ingredientCollectionSelectionFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -77,8 +86,8 @@
 
         <action
             android:id="@+id/action_ingredientFragment_to_ingredientCollectionFragment"
-            app:destination="@id/ingredientCollectionFragment"
-            app:popUpTo="@id/ingredientCollectionFragment"
+            app:destination="@id/ingredientCollectionEditorFragment"
+            app:popUpTo="@id/ingredientCollectionEditorFragment"
             app:popUpToInclusive="true" />
         <argument
             android:name="selectedIngredient"
@@ -98,7 +107,6 @@
         android:name="com.example.loops.EditIngredientFormFragment"
         android:label="EditIngredientFormFragment"
         tools:layout="@layout/fragment_ingredient_form">
-
         <argument
             android:name="editedIngredient"
             app:argType="com.example.loops.Ingredient" />
@@ -111,5 +119,22 @@
             android:name="editIngredientIndex"
             app:argType="integer" />
     </fragment>
-
+    <fragment
+        android:id="@+id/ingredientCollectionSelectionFragment"
+        android:name="com.example.loops.IngredientCollectionSelectionFragment"
+        android:label="fragment_select_ingredient"
+        tools:layout="@layout/fragment_ingredient_collection" >
+        <argument
+            android:name="addedIngredient"
+            app:argType="com.example.loops.Ingredient"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="collectionType"
+            android:defaultValue="FROM_STORAGE"
+            app:argType="com.example.loops.IngredientCollectionFragment$CollectionType" />
+        <action
+            android:id="@+id/addIngredientFormFromSelection"
+            app:destination="@id/addIngredientFormFragment" />
+    </fragment>
 </navigation>
