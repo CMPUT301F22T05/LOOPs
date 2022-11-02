@@ -1,7 +1,6 @@
 package com.example.loops;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,9 @@ import androidx.navigation.Navigation;
 /**
  * Ingredient collection fragment for showing the ingredients in storage
  */
-public class IngredientStorageFragment extends IngredientCollectionFragment {
+public class IngredientCollectionEditorFragment extends IngredientCollectionFragment {
 
-    public IngredientStorageFragment() {
+    public IngredientCollectionEditorFragment() {
         // Required empty public constructor
     }
 
@@ -28,7 +27,7 @@ public class IngredientStorageFragment extends IngredientCollectionFragment {
     }
 
     void parseActionArguments() {
-        IngredientStorageFragmentArgs args = IngredientStorageFragmentArgs.fromBundle(getArguments());
+        IngredientCollectionEditorFragmentArgs args = IngredientCollectionEditorFragmentArgs.fromBundle(getArguments());
         //Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
         if (args.getAddedIngredient() != null) {
             ingredientCollection.addIngredient(args.getAddedIngredient());
@@ -51,7 +50,7 @@ public class IngredientStorageFragment extends IngredientCollectionFragment {
     void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
         Ingredient selectedIngredient = ingredientCollection.getIngredients().get(position);
         NavDirections viewIngredientDetailsAction =
-                (NavDirections)IngredientStorageFragmentDirections.actionViewIngredientDetails(
+                (NavDirections)IngredientCollectionEditorFragmentDirections.actionViewIngredientDetails(
                         selectedIngredient, position, R.layout.fragment_ingredient_collection);
         Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
     }

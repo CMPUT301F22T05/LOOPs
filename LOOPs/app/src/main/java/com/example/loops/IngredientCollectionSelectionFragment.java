@@ -2,7 +2,6 @@ package com.example.loops;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,11 +14,11 @@ import android.widget.AdapterView;
 /**
  * Ingredient collection fragment for selecting an ingredient
  */
-public class SelectIngredientFragment extends IngredientCollectionFragment {
+public class IngredientCollectionSelectionFragment extends IngredientCollectionFragment {
     public static final String RESULT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
     public static final String INGREDIENT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY_INGREDIENT";
 
-    public SelectIngredientFragment() {
+    public IngredientCollectionSelectionFragment() {
         // Required empty public constructor
     }
 
@@ -34,7 +33,7 @@ public class SelectIngredientFragment extends IngredientCollectionFragment {
     void parseActionArguments() {
         Bundle argsBundle = getArguments();
         if (argsBundle != null) {
-            Ingredient submittedIngredient = IngredientStorageFragmentArgs.fromBundle(argsBundle).getAddedIngredient();
+            Ingredient submittedIngredient = IngredientCollectionSelectionFragmentArgs.fromBundle(argsBundle).getAddedIngredient();
             if (submittedIngredient != null) {
                 sendSelectedIngredientToCaller(submittedIngredient);
             }
@@ -57,13 +56,13 @@ public class SelectIngredientFragment extends IngredientCollectionFragment {
             resultBundle.putSerializable(INGREDIENT_KEY, selectedIngredient);
             getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
         }
-        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
-            SelectIngredientFragmentDirections.AddIngredientToAddRecipeForm toSubmitAction =
-                    SelectIngredientFragmentDirections.
-                            addIngredientToAddRecipeForm();
-            toSubmitAction.setAddedIngredient(selectedIngredient);
-            Navigation.findNavController(getView()).navigate(toSubmitAction);
-        }
+//        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
+//            IngredientCollectionSelectionFragmentDirections.AddIngredientToAddRecipeForm toSubmitAction =
+//                    IngredientCollectionSelectionFragmentDirections.
+//                            addIngredientToAddRecipeForm();
+//            toSubmitAction.setAddedIngredient(selectedIngredient);
+//            Navigation.findNavController(getView()).navigate(toSubmitAction);
+//        }
     }
 
     void getIngredientCollectionToDisplay() {
