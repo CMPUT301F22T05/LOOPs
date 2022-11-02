@@ -6,13 +6,10 @@ import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
-import java.util.Date;
 
 /**
  * Ingredient collection fragment for selecting an ingredient
@@ -20,13 +17,18 @@ import java.util.Date;
 public class IngredientCollectionSelectionFragment extends IngredientCollectionFragment {
     public static final String RESULT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
     public static final String INGREDIENT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY_INGREDIENT";
-    public static final int FROM_STORAGE = 0;
-    public static final int FROM_TESTING = 1;   // FIXME: temporary. Just to show it works
 
     public IngredientCollectionSelectionFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Sets the UI layout of the view it creates
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,28 +37,52 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         return fragmentView;
     }
 
-    void parseActionArguments() {
-        Bundle argsBundle = getArguments();
-        if (argsBundle != null) {
-            getIngredientCollectionToDisplay();
-
-            Ingredient submittedIngredient = IngredientCollectionSelectionFragmentArgs.fromBundle(argsBundle).getAddedIngredient();
-            if (submittedIngredient != null) {
-                sendSelectedIngredientToCaller(submittedIngredient);
-            }
-            argsBundle.clear();
+    /**
+     * Parses the arguments specified by navigation graph actions.
+     * Sets the ingredient collection from the arguments and passes ingredients from forms back
+     * to caller
+     */
+    void parseArguments() {
+        if (getArguments() == null)
+            throw new IllegalArgumentException("Arguments not supplied to the fragment");
+        IngredientCollectionSelectionFragmentArgs argsBundle
+                = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
+        // Set the type of the ingredient collection
+        CollectionType collectionType = argsBundle.getCollectionType();
+        setIngredientCollectionToDisplay(collectionType);
+        // If any form had returned an ingredient, send it back to this fragment's caller
+        Ingredient submittedIngredient = argsBundle.getAddedIngredient();
+        if (submittedIngredient != null) {
+            sendIngredientToCallerFragment(submittedIngredient);
         }
+
+        getArguments().clear();
     }
 
+    /**
+     * Opens the add ingredient form
+     * @param clickedView
+     */
     void onClickAddButton(View clickedView) {
         Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFromSelection);
     }
 
+    /**
+     * Selects the clicked ingredient and sends it to caller fragment
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
-        sendSelectedIngredientToCaller(collectionViewAdapter.getItem(position));
+        sendIngredientToCallerFragment(collectionViewAdapter.getItem(position));
     }
 
-    void sendSelectedIngredientToCaller(Ingredient selectedIngredient) {
+    /**
+     * Sends the ingredient to the caller fragment
+     * @param selectedIngredient ingredient to send
+     */
+    void sendIngredientToCallerFragment(Ingredient selectedIngredient) {
         Integer callerFragmentId = getCallerFragmentId();
 
         if ( callerFragmentId == null ) {
@@ -73,50 +99,10 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
 //        }
     }
 
-//  FIXME: needs better design
-    void getIngredientCollectionToDisplay() {
-        Bundle argsBundle = getArguments();
-        int collectionTypeId = IngredientCollectionSelectionFragmentArgs.fromBundle(argsBundle).getCollectionType();
-        switch(collectionTypeId) {
-            case -1:    // FIXME: hardcoded to this for now
-                Log.e("TESTING", "-1 in getIngredientCollectionToDisplay in selection");
-            case FROM_STORAGE:
-                ingredientCollection = ((MainActivity)getActivity()).allIngredients;
-                break;
-            case FROM_TESTING:
-                ingredientCollection = new IngredientCollection();
-                ingredientCollection.addIngredient(new Ingredient(
-                        "test 1",
-                        new Date(0),
-                        "Test Location",
-                        69,
-                        "Test Unit",
-                        "Test Category"
-                ));
-                ingredientCollection.addIngredient(new Ingredient(
-                        "test 2",
-                        new Date(0),
-                        "Test Location",
-                        69,
-                        "Test Unit",
-                        "Test Category"
-                ));
-                ingredientCollection.addIngredient(new Ingredient(
-                        "test 3",
-                        new Date(0),
-                        "Test Location",
-                        69,
-                        "Test Unit",
-                        "Test Category"
-                ));
-                break;
-            case -5:
-                break;
-            default:
-                throw new RuntimeException("Invalid collection type id for ingredient selection fragment");
-        }
-    }
-
+    /**
+     * Gets the id of the caller fragment
+     * @return id of the caller fragment
+     */
     private Integer getCallerFragmentId() {
         NavController navController = Navigation.findNavController(getView());
         NavBackStackEntry previousFragment = navController.getPreviousBackStackEntry();

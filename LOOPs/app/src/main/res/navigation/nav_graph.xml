@@ -50,8 +50,8 @@
             android:defaultValue="false" />
         <argument
             android:name="collectionType"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            app:argType="com.example.loops.IngredientCollectionFragment$CollectionType"
+            android:defaultValue="FROM_STORAGE" />
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"
@@ -131,8 +131,8 @@
             android:defaultValue="@null" />
         <argument
             android:name="collectionType"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:defaultValue="FROM_STORAGE"
+            app:argType="com.example.loops.IngredientCollectionFragment$CollectionType" />
         <action
             android:id="@+id/addIngredientFormFromSelection"
             app:destination="@id/addIngredientFormFragment" />

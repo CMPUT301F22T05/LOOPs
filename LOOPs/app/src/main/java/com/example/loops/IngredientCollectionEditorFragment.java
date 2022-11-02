@@ -13,7 +13,8 @@ import androidx.navigation.Navigation;
 import java.util.Date;
 
 /**
- * Ingredient collection fragment for showing the ingredients in storage
+ * Ingredient collection fragment for showing the ingredients and also allowing manipulation
+ * of the ingredients in the collection
  */
 public class IngredientCollectionEditorFragment extends IngredientCollectionFragment {
     public static final int FROM_STORAGE = 0;
@@ -23,6 +24,13 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
         // Required empty public constructor
     }
 
+    /**
+     * Sets the UI layout of the view it creates
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,76 +39,56 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
         return fragmentView;
     }
 
-    void parseActionArguments() {
-        getIngredientCollectionToDisplay();
-
-        IngredientCollectionEditorFragmentArgs args = IngredientCollectionEditorFragmentArgs.fromBundle(getArguments());
-        if (args.getAddedIngredient() != null) {
-            ingredientCollection.addIngredient(args.getAddedIngredient());
+    /**
+     * Parses the arguments specified by navigation graph actions.
+     * Sets the ingredient collection from the arguments and adds ingredient sent by form to
+     * its ingredient collection
+     */
+    void parseArguments() {
+        if (getArguments() == null)
+            throw new IllegalArgumentException("Arguments not supplied to the fragment");
+        IngredientCollectionEditorFragmentArgs argsBundle
+                = IngredientCollectionEditorFragmentArgs.fromBundle(getArguments());
+        // Set the type of the ingredient collection
+        CollectionType collectionType = argsBundle.getCollectionType();
+        setIngredientCollectionToDisplay(collectionType);
+        // If any form had returned an ingredient, send it back to this fragment's caller
+        Ingredient submittedIngredient = argsBundle.getAddedIngredient();
+        if (submittedIngredient != null) {
+            ingredientCollection.addIngredient(submittedIngredient);
         }
-        else if (args.getEditedIngredient() != null) {
-            if (args.getDeleteFlag() == false) { //update ingredient
-                ingredientCollection.updateIngredient(args.getEditedIngredientIndex(), args.getEditedIngredient());
+        Ingredient editedIngredient = argsBundle.getEditedIngredient();
+        if (editedIngredient != null) {
+            if (argsBundle.getDeleteFlag() == false) { //update ingredient
+                ingredientCollection.updateIngredient(argsBundle.getEditedIngredientIndex(), editedIngredient);
             }
             else {
-                ingredientCollection.deleteIngredient(args.getEditedIngredientIndex());
+                ingredientCollection.deleteIngredient(argsBundle.getEditedIngredientIndex());
             }
         }
         getArguments().clear();
     }
 
+    /**
+     * Opens the add ingredient form
+     * @param clickedView
+     */
     void onClickAddButton(View clickedView) {
         Navigation.findNavController(getView()).navigate(R.id.addIngredientFromCollection);
     }
 
+    /**
+     * Opens ingredient view details
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
         Ingredient selectedIngredient = ingredientCollection.getIngredients().get(position);
         NavDirections viewIngredientDetailsAction =
                 (NavDirections)IngredientCollectionEditorFragmentDirections.actionViewIngredientDetails(
                         selectedIngredient, position, R.layout.fragment_ingredient_collection);
         Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
-    }
-
-    void getIngredientCollectionToDisplay() {
-        Bundle argsBundle = getArguments();
-        int collectionTypeId = IngredientCollectionEditorFragmentArgs.fromBundle(argsBundle).getCollectionType();
-        switch(collectionTypeId) {
-            case -1:    // FIXME: hardcoded to this for now
-                Log.e("TESTING", "-1 in getIngredientCollectionToDisplay in edition");
-            case FROM_STORAGE:
-                ingredientCollection = ((MainActivity)getActivity()).allIngredients;
-                break;
-            case FROM_TESTING:
-                ingredientCollection = new IngredientCollection();
-                ingredientCollection.addIngredient(new Ingredient(
-                        "test 1",
-                        new Date(0),
-                        "Test Location",
-                        69,
-                        "Test Unit",
-                        "Test Category"
-                ));
-                ingredientCollection.addIngredient(new Ingredient(
-                        "test 2",
-                        new Date(0),
-                        "Test Location",
-                        69,
-                        "Test Unit",
-                        "Test Category"
-                ));
-                ingredientCollection.addIngredient(new Ingredient(
-                        "test 3",
-                        new Date(0),
-                        "Test Location",
-                        69,
-                        "Test Unit",
-                        "Test Category"
-                ));
-                break;
-            case -5:
-                break;
-            default:
-                throw new RuntimeException("Invalid collection type id for ingredient selection fragment");
-        }
     }
 }
