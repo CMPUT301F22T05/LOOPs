@@ -169,12 +169,15 @@ public class RecipeFragmentTest {
 
 
     }
+    /*  Still a work in progress
     @Test
     public void testNavigateToEditRecipe() {
         onView(withId(R.id.editRecipeButton)).perform(click());
         assertEquals(R.id.EditRecipePlaceHolder,navController.getCurrentDestination().getId());
 
     }
+
+     */
 
 
 
