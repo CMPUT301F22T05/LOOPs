@@ -1,5 +1,6 @@
 package com.example.loops;
 
+import static android.os.SystemClock.sleep;
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.widget.DatePicker;
 
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
@@ -31,6 +33,7 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -51,6 +54,7 @@ public class AddIngredientFormFragmentTest {
 
         fragmentScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
+            navController.setCurrentDestination(R.id.addIngredientFormFragment);
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
     }
@@ -115,6 +119,9 @@ public class AddIngredientFormFragmentTest {
     @Test
     public void testSubmittingWithValidIngredient() {
 //        FIXME: hardcoded values for spinner values.
+
+        Log.e("dbg", Integer.toString(navController.getCurrentDestination().getId()));
+        Log.e("cp", Integer.toString(R.id.mealPlanHomePageFragment));
         Ingredient typedIngredient = new Ingredient(
           "Tuna Can",
           new Date(2022, 10, 22),
@@ -131,6 +138,7 @@ public class AddIngredientFormFragmentTest {
         setUnit(typedIngredient.getUnit());
         setCategory(typedIngredient.getCategory());
         clickSubmit();
+        sleep(5000);
 
         fragmentScenario.onFragment( fragment -> {
             fragment.getParentFragmentManager().setFragmentResultListener(
