@@ -85,24 +85,12 @@ public class RecipeFragmentTest {
         Bundle bundle = new Bundle();
         bundle.putSerializable("SelectedRecipe",mockRecipe);
         bundle.putInt("SelectedRecipeIndex",0);
-        fragmentScenario = FragmentScenario.launchInContainer(
-                RecipeFragment.class,null, new FragmentFactory(){
-                    @NonNull
-                    @Override
-                    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className,@Nullable Bundle args) {
-                        RecipeFragment recipeFragment = new RecipeFragment();
-                        recipeFragment.getViewLifecycleOwnerLiveData().observeForever(new Observer<LifecycleOwner>() {
-                            @Override
-                            public void onChanged(LifecycleOwner lifecycleOwner) {
-                                if (lifecycleOwner != null){
-                                    navController.setGraph(R.navigation.nav_graph);
-                                    Navigation.setViewNavController(recipeFragment.requireView(), navController);
-                                }
-                            }
-                        });
-                        return recipeFragment;
-                    }
-                });
+        fragmentScenario = FragmentScenario.launchInContainer(RecipeFragment.class,bundle);
+        fragmentScenario.onFragment(fragment -> {
+            navController.setGraph(R.navigation.nav_graph);
+            Navigation.setViewNavController(fragment.requireView(), navController);
+        });
+
 
 
     }
