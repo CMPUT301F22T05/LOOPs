@@ -1,5 +1,7 @@
 package com.example.loops;
 
+import static java.lang.Float.NaN;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -9,11 +11,6 @@ import java.util.Set;
  * Check if attributes of ingredient are valid or not based on the context it lies in
  * The context of the ingredient is specified by {@link INGREDIENT_TYPE}
  */
-// FIXME: THe name isn't the best. It might be too verbose and long. Feel free to rename them.
-/* FIXME: Furthermore, some functions aren't probably needed. For now, I added them but if it's
-    safe to do so, you can remove them.
- */
-// FIXME: So far, I only handled null description... Check for other null attributes.
 public class IngredientValidator {
     private final Set<Integer> errorStringIds;
 
@@ -112,8 +109,8 @@ public class IngredientValidator {
      * @param type the type of the ingredient, i.e. the context the ingredient lies on
      * @return true if valid. False otherwise.
      */
-    public boolean checkAmount(Integer amount, INGREDIENT_TYPE type) {
-        if (amount == null) {
+    public boolean checkAmount(float amount, INGREDIENT_TYPE type) {
+        if ( Float.isNaN(amount) ) {
             errorStringIds.add(R.string.ingredient_no_amount);
             return false;
         }

@@ -9,12 +9,12 @@ public class Ingredient implements Serializable {
     private String description;
     private Date bestBeforeDate;
     private String storeLocation;
-    private Integer amount;
+    private float amount;
     private String unit;
     private String category;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
 
-    public Ingredient(String description, Date bestBeforeDate, String storeLocation, Integer amount, String unit, String category) {
+    public Ingredient(String description, Date bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.storeLocation = storeLocation;
@@ -22,7 +22,7 @@ public class Ingredient implements Serializable {
         this.unit = unit;
         this.category = category;
     }
-    public Ingredient(String description, String bestBeforeDate, String storeLocation, Integer amount, String unit, String category) {
+    public Ingredient(String description, String bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
         setBestBeforeDate(bestBeforeDate);
         this.storeLocation = storeLocation;
@@ -81,11 +81,11 @@ public class Ingredient implements Serializable {
         this.storeLocation = storeLocation;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

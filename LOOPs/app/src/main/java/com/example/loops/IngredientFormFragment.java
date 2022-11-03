@@ -100,7 +100,7 @@ public abstract class IngredientFormFragment extends Fragment {
         String description = descriptionInput.getText().toString();
         Date bestBeforeDate = parseBestBeforeDateFromInput();
         String location = locationInput.getSelectedItem().toString();
-        int amount = parseAmountFromInput();
+        float amount = parseAmountFromInput();
         String unit = unitInput.getSelectedItem().toString();
         String category = categoryInput.getSelectedItem().toString();
 
@@ -232,17 +232,23 @@ public abstract class IngredientFormFragment extends Fragment {
      * Parses the amount from the input
      * @return the parsed Integer amount
      */
-    private Integer parseAmountFromInput() {
-        Integer amount;
+    private float parseAmountFromInput() {
+        float amount;
         try {
-            amount = Integer.parseInt( amountInput.getText().toString() );
+            amount = Float.parseFloat( amountInput.getText().toString() );
         }
         catch (NumberFormatException e) {
-            amount = -1;
+            amount = Float.NaN;
         }
         return amount;
     }
 
+    /**
+     * Returns the index of the spinner item given its text value
+     * @param value the string value of the spinner option
+     * @param spinner the spinner to check
+     * @return
+     */
     protected int getSpinnerIndexByValue(String value, Spinner spinner) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).toString().equals(value)) {
