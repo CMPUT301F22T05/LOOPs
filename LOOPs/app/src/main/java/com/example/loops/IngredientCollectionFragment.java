@@ -84,6 +84,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
         }
         collectionView.setAdapter(new IngredientStorageViewAdapter(getActivity(), ingredientCollection.getIngredients()));*/
         //endregion
+        /**
         allIngredients = ((MainActivity)getActivity()).allIngredients;
         Ingredient submittedIngredient = IngredientCollectionFragmentArgs.fromBundle(getArguments()).getAddedIngredient();
         if (submittedIngredient != null) {
@@ -137,6 +138,7 @@ public class IngredientCollectionFragment extends GenericCollectionLayout {
                 Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
             }
         });
+         */
         return view;
     }
 }

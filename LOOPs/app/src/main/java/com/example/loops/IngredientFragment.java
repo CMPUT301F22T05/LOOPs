@@ -26,6 +26,7 @@ import org.w3c.dom.Text;
  * edit & delete options for a specific ingredient.
  */
 public class IngredientFragment extends Fragment {
+
     // selected ingredient from ingredient collection
     private Ingredient ingredient;
     private int ingInd;
