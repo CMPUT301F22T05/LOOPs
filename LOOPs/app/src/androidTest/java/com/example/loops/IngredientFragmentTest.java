@@ -147,7 +147,7 @@ public class IngredientFragmentTest {
         displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
 
         onView(withId(R.id.ingredient_back_button)).perform(ViewActions.click());
-        assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientCollectionFragment);
+        assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientCollectionEditorFragment);
         Bundle returnValue = getReturnBundle();
         assertEquals(returnValue.getSerializable("editedIngredient"), ingredient);
         assertEquals(returnValue.getInt("editedIngredientIndex"), 6);
@@ -203,7 +203,7 @@ public class IngredientFragmentTest {
         }
 
         onView(withId(R.id.delete_popup_yes_button)).perform(click());
-        assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientCollectionFragment);
+        assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientCollectionEditorFragment);
         Bundle returnValue = getReturnBundle();
         assertEquals(returnValue.getSerializable("editedIngredient"), ingredient);
         assertEquals(returnValue.getInt("editedIngredientIndex"), 6);
