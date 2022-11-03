@@ -100,7 +100,7 @@
             android:id="@+id/action_ingredientFragment_to_editIngredientFormFragment"
             app:destination="@id/editIngredientFormFragment" />
         <argument
-            android:name="SelectedIngredientIndex"
+            android:name="selectedIngredientIndex"
             app:argType="integer" />
         <argument
             android:name="fromWhichFragment"

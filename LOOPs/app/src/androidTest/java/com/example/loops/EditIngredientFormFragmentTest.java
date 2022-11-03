@@ -1,69 +1,85 @@
 package com.example.loops;
 
 import static android.os.SystemClock.sleep;
-import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
-import android.util.Log;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Bundle;
 import android.widget.DatePicker;
 
 import androidx.fragment.app.testing.FragmentScenario;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.PickerActions;
-import static androidx.test.espresso.action.ViewActions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.Matchers.*;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.hamcrest.Matchers.allOf;
-import static org.junit.Assert.*;
 
 import java.util.Calendar;
 import java.util.Date;
 
+
 /**
- * Test for the add ingredient form fragment
+ * Test for edit ingredient form fragment
  */
-@RunWith(AndroidJUnit4.class)
-public class AddIngredientFormFragmentTest {
+public class EditIngredientFormFragmentTest {
     private TestNavHostController navController;
-    private FragmentScenario<AddIngredientFormFragment> fragmentScenario;
+    private FragmentScenario<EditIngredientFormFragment> fragmentScenario;
+    private Ingredient ingredientToEdit;
 
     /**
      * Sets up the test navigation host controller and fragment scenario before each test
      */
     @Before
     public void setUp() {
+        int year = 2022; int month = 10; int day = 21;
+        ingredientToEdit = new Ingredient(
+                "Tuna Can",
+                getDate(year, month, day),
+                "Pantry",
+                25,
+                "kg",
+                "Dog Food"
+        );
+        Bundle args = new Bundle();
+        args.putSerializable("editedIngredient", ingredientToEdit);
+        args.putInt("editIngredientIndex", 0);
+
         navController = new TestNavHostController( ApplicationProvider.getApplicationContext() );
-        fragmentScenario = FragmentScenario.launchInContainer(AddIngredientFormFragment.class);
+        fragmentScenario = FragmentScenario.launchInContainer(EditIngredientFormFragment.class, args);
 
         fragmentScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
-            navController.setCurrentDestination(R.id.addIngredientFormFragment);
+            navController.setCurrentDestination(R.id.editIngredientFormFragment, args);
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
     }
 
     private String getString(int id) {
-        /*
-          https://stackoverflow.com/questions/39453986/android-espresso-assert-text-on-screen-against-string-in-resources
-          Date Accessed: 2022-10-30
-          Author: adalpari
+        /**
+         * https://stackoverflow.com/questions/39453986/android-espresso-assert-text-on-screen-against-string-in-resources
+         * Date Accessed: 2022-10-30
+         * Author: adalpari
          */
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         return targetContext.getResources().getString(id);
@@ -120,52 +136,36 @@ public class AddIngredientFormFragmentTest {
                 .perform(ViewActions.click());
     }
 
-    private Ingredient getSubmittedIngredient() {
-        Ingredient ingredientFromPreviousFragment = (Ingredient) navController.getBackStack()
-                .get(navController.getBackStack().size()-1)
-                .getArguments()
-                .getSerializable("addedIngredient");
-        return ingredientFromPreviousFragment;
-    }
-
     /**
-     * Test submitting a valid ingredient in the form to the ingredient collection
+     * Test ingredient form's inputs are properly initialized with the values of the ingredient to edit
      */
     @Test
-
-    public void testSubmittingWithValidIngredientToCollection() {
-        fragmentScenario.onFragment(fragment -> {
-            navController.setCurrentDestination(R.id.ingredientCollectionEditorFragment);
-            navController.navigate(R.id.addIngredientFromCollection);
-        });
-        int year = 2022; int month = 10; int day = 21;
-
-        Ingredient typedIngredient = new Ingredient(
-          "Tuna Can",
-          getDate(year, month, day),
-          "Pantry",
-          12,
-          "g",
-          "Dog Food"
-        );
-        setDescription(typedIngredient.getDescription());
-        setBestBeforeDate(year, month, day);
-        setLocation(typedIngredient.getStoreLocation());
-        setAmount(Float.toString(typedIngredient.getAmount()));
-        setUnit(typedIngredient.getUnit());
-        setCategory(typedIngredient.getCategory());
-        clickSubmit();
-        sleep(5000);
-
-        Ingredient submittedIngredient = getSubmittedIngredient();
-        assertTrue( typedIngredient.equals(submittedIngredient) );
+    public void testEditFormInitializedWithIngredientToEdit() {
+        onView(withId(R.id.ingredientFormDescriptionInput))
+                .check(matches( withText(ingredientToEdit.getDescription()) ));
+        DateFormat dateFormat = new SimpleDateFormat("10/21/2022");
+        onView(withId(R.id.ingredientFormBestBeforeDateInput))
+                .check(matches( withText(dateFormat.format(ingredientToEdit.getBestBeforeDate())) ));
+        onView(withId(R.id.ingredientFormLocationInput))
+                .check(matches( withSpinnerText(ingredientToEdit.getStoreLocation()) ));
+        onView(withId(R.id.ingredientFormAmountInput))
+                .check(matches( withText(Float.toString(ingredientToEdit.getAmount())) ));
+        onView(withId(R.id.ingredientFormUnitInput))
+                .check(matches( withSpinnerText(ingredientToEdit.getUnit()) ));
+        onView(withId(R.id.ingredientFormCategoryInput))
+                .check(matches( withSpinnerText(ingredientToEdit.getCategory()) ));
     }
 
     /**
-     * Test submitting with untouched inputs
+     * Test submitting with by emptying all possible fields
      */
     @Test
     public void testSubmittingWithNothing() {
+        setDescription("");
+        setLocation("");
+        setAmount("");
+        setUnit("");
+        setCategory("");
         clickSubmit();
         onView(withText("Please fill out the form properly")).check(matches(isDisplayed()));
     }
@@ -175,27 +175,9 @@ public class AddIngredientFormFragmentTest {
      */
     @Test
     public void testSubmittingWithNoDescription() {
-        setBestBeforeDate(2022, 10, 22);
-        setLocation("Pantry");
-        setAmount("25");
-        setUnit("g");
-        setCategory("Cat Food");
+        setDescription("");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_description))).check(matches(isDisplayed()));
-    }
-
-    /**
-     * Test submitting with empty best before date
-     */
-    @Test
-    public void testSubmittingWithNoBestBeforeDate() {
-        setDescription("Tuna Can");
-        setLocation("Pantry");
-        setAmount("25");
-        setUnit("g");
-        setCategory("Cat Food");
-        clickSubmit();
-        onView(withText(getString(R.string.ingredient_no_bestbeforedate))).check(matches(isDisplayed()));
     }
 
     /**
@@ -203,11 +185,7 @@ public class AddIngredientFormFragmentTest {
      */
     @Test
     public void testSubmittingWithNoLocation() {
-        setDescription("Tuna Can");
-        setBestBeforeDate(2022, 10, 22);
-        setAmount("25");
-        setUnit("g");
-        setCategory("Cat Food");
+        setLocation("");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_location))).check(matches(isDisplayed()));
     }
@@ -217,11 +195,7 @@ public class AddIngredientFormFragmentTest {
      */
     @Test
     public void testSubmittingWithNoAmount() {
-        setDescription("Tuna Can");
-        setBestBeforeDate(2022, 10, 22);
-        setLocation("Pantry");
-        setUnit("g");
-        setCategory("Cat Food");
+        setAmount("");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_amount))).check(matches(isDisplayed()));
     }
@@ -231,11 +205,7 @@ public class AddIngredientFormFragmentTest {
      */
     @Test
     public void testSubmittingWithNoUnit() {
-        setDescription("Tuna Can");
-        setBestBeforeDate(2022, 10, 22);
-        setLocation("Pantry");
-        setAmount("25");
-        setCategory("Cat Food");
+        setUnit("");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_unit))).check(matches(isDisplayed()));
     }
@@ -245,11 +215,7 @@ public class AddIngredientFormFragmentTest {
      */
     @Test
     public void testSubmittingWithNoCategory() {
-        setDescription("Tuna Can");
-        setBestBeforeDate(2022, 10, 22);
-        setLocation("Pantry");
-        setAmount("25");
-        setUnit("g");
+        setCategory("");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_category))).check(matches(isDisplayed()));
     }

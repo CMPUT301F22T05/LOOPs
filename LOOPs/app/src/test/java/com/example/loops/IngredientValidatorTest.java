@@ -9,8 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
+/**
+ * Test cases for IngredientValidator class
+ */
 public class IngredientValidatorTest {
-
     /**
      * Check an empty description and tests whether a single appropriate error string id
      * is in the error string buffer
@@ -18,7 +20,7 @@ public class IngredientValidatorTest {
     @Test
     public void testNoDescriptionErrorStringIdInBuffer() {
         IngredientValidator validator = new IngredientValidator();
-        validator.checkDescription("");
+        validator.checkDescription("", IngredientValidator.INGREDIENT_TYPE.STORED);
         ArrayList<Integer> errorStringIds = validator.getErrorStringIds();
         assertEquals( 1, errorStringIds.size());
         assertEquals( (int) R.string.ingredient_no_description, (int) errorStringIds.get(0) );
@@ -29,13 +31,38 @@ public class IngredientValidatorTest {
      * whether the error string buffer in the validator has been cleared
      */
     @Test
-    public void testErrorStringIdIsEmptied() {
+    public void testErrorStringIdBufferIsEmptied() {
         IngredientValidator validator = new IngredientValidator();
-        validator.checkDescription("");
+        validator.checkDescription("", IngredientValidator.INGREDIENT_TYPE.STORED);
         ArrayList<Integer> errorStringIds = validator.getErrorStringIds();
         assertEquals( 1, errorStringIds.size() );
         errorStringIds = validator.getErrorStringIds();
         assertEquals( 0, errorStringIds.size() );
+    }
+
+    /**
+     * Checks whether duplicate error strings ids can be in the buffer
+     */
+    @Test
+    public void testNoDuplicateIdsInErrorStringIdBuffer() {
+        IngredientValidator validator = new IngredientValidator();
+        validator.checkDescription("", IngredientValidator.INGREDIENT_TYPE.STORED);
+        validator.checkDescription("", IngredientValidator.INGREDIENT_TYPE.STORED);
+        ArrayList<Integer> errorStringIds = validator.getErrorStringIds();
+        assertEquals( 1, errorStringIds.size() );
+    }
+
+    /**
+     * Checks whether multiple error strings ids can be in the buffer
+     */
+    @Test
+    public void testMultipleErrorStringIdsInBuffer() {
+        IngredientValidator validator = new IngredientValidator();
+        validator.checkDescription("", IngredientValidator.INGREDIENT_TYPE.STORED);
+        validator.checkLocation("", IngredientValidator.INGREDIENT_TYPE.STORED);
+        validator.checkBestBeforeDate(null, IngredientValidator.INGREDIENT_TYPE.STORED);
+        ArrayList<Integer> errorStringIds = validator.getErrorStringIds();
+        assertEquals( 3, errorStringIds.size() );
     }
 
     /**
@@ -140,6 +167,17 @@ public class IngredientValidatorTest {
     }
 
     /**
+     * Tests for null best before date
+     */
+    @Test
+    public void testNullBestBeforeDate() {
+        IngredientValidator validator = new IngredientValidator();
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertFalse( validator.checkBestBeforeDate(null, type) );
+        }
+    }
+
+    /**
      * Tests checking amount of a negative value. Negative amount is not acceptable
      */
     @Test
@@ -152,10 +190,21 @@ public class IngredientValidatorTest {
     }
 
     /**
-     * Tests checking amount for fifty. Fifty is acceptable.
+     * Tests checking amount of zero. Zero is acceptable
+     */
+    @Test void testZeroAmount() {
+        IngredientValidator validator = new IngredientValidator();
+        int amount = 0;
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertTrue( validator.checkAmount(amount, type) );
+        }
+    }
+
+    /**
+     * Tests checking amount of a positive value. Positive amount is acceptable.
      */
     @Test
-    public void testFiftyAmount() {
+    public void testPositiveAmount() {
         IngredientValidator validator = new IngredientValidator();
         int amount = 50;
         for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
@@ -163,27 +212,108 @@ public class IngredientValidatorTest {
         }
     }
 
-    /*
-    FIXME:
-    I just tested obvious things, but there are other things I want to test but can't
-    because the requirements is not complete enough.
-    Some stuff are:
-        testDescriptionOverCharacterLimit()     what's the character limit?
-        testNullBestBeforeDate()                maybe best before date is not required?
-        testZeroAmount()                        maybe that's allowed?
-
-        These ones I am waiting on how we are going to store these values and retrieve them.
-        testNullLocation
-        testNoLocation
-        testExistingLocation
-        testNullUnit
-        testNoUnit
-        testExistingUnit
-        testNullCategory
-        testNoCategory
-        testExistingCategory
-
-     Furthermore, there could be tests for specific ingredient types.
-     Like as an example SHOPPING ingredient may accept null best before date but STORED ingredient doesn't
+    /**
+     * Tests checking for a location string that is in valid form
      */
+    @Test
+    public void testValidLocation() {
+        IngredientValidator validator = new IngredientValidator();
+        String location = "Pantry";
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertTrue( validator.checkLocation(location, type) );
+        }
+    }
+
+    /**
+     * Tests checking for no location.
+     */
+    @Test
+    public void testNoLocation() {
+        IngredientValidator validator = new IngredientValidator();
+        String location = "";
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertFalse( validator.checkLocation(location, type) );
+        }
+    }
+
+    /**
+     * Tests checking for a null location
+     */
+    @Test
+    public void testNullLocation() {
+        IngredientValidator validator = new IngredientValidator();
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertFalse( validator.checkLocation(null, type) );
+        }
+    }
+
+    /**
+     * Tests checking for a unit that is valid form
+     */
+    @Test
+    public void testValidUnit() {
+        IngredientValidator validator = new IngredientValidator();
+        String unit = "kg";
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertTrue( validator.checkUnit(unit, type) );
+        }
+    }
+
+    /**
+     * Tests checking for an empty unit.
+     */
+    @Test
+    public void testNoUnit() {
+        IngredientValidator validator = new IngredientValidator();
+        String unit = "";
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertFalse( validator.checkUnit(unit, type) );
+        }
+    }
+
+    /**
+     * Tests checking for a null unit
+     */
+    @Test
+    public void testNullUnit() {
+        IngredientValidator validator = new IngredientValidator();
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertFalse( validator.checkUnit(null, type) );
+        }
+    }
+
+    /**
+     * Tests checking for a category that is valid form
+     */
+    @Test
+    public void testValidCategory() {
+        IngredientValidator validator = new IngredientValidator();
+        String category = "Non-Perishable";
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertTrue( validator.checkCategory(category, type) );
+        }
+    }
+
+    /**
+     * Tests checking for an empty category.
+     */
+    @Test
+    public void testNoCategory() {
+        IngredientValidator validator = new IngredientValidator();
+        String category = "";
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertFalse( validator.checkCategory(category, type) );
+        }
+    }
+
+    /**
+     * Tests checking for a null category
+     */
+    @Test
+    public void testNullCategory() {
+        IngredientValidator validator = new IngredientValidator();
+        for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
+            assertFalse( validator.checkCategory(null, type) );
+        }
+    }
 }
