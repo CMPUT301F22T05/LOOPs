@@ -3,87 +3,118 @@ package com.example.loops;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
-
-
-import java.io.Serializable;
-import java.time.Duration;
-
+import java.time.LocalTime;
 
 /**
  *  model class of a Recipe
  */
-public class Recipe implements Serializable {
+public class Recipe {
     private String title;
-    private Duration prepTime;
+    private LocalTime prepTime;
     private int numServing;
     private String category;
     private Bitmap photo;
     private Uri picUri;
     private IngredientCollection ingredients;
-    private String comments;
 
-    public String getComments() {
-        return comments;
-    }
+    /**
+     * Empty constructor
+     */
+    public Recipe(){this.ingredients = new IngredientCollection();};
 
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
+    /**
+     * Constructor w/ minimum required parameters
+     * @param title (String)
+     * @param numServing (int)
+     */
     public Recipe(String title, int numServing) {
         this.title = title;
         this.numServing = numServing;
+        this.ingredients = new IngredientCollection();
     }
 
-
-    public IngredientCollection getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(IngredientCollection ingredients) {
-        this.ingredients = ingredients;
-    }
-
+    /**
+     * Method for adding an ingredient to a recipe
+     * @param ingredient (Ingredient)
+     */
     public void addIngredient(Ingredient ingredient){
         ingredients.addIngredient(ingredient);
     }
 
-    //Accepts into to delete but should take ingredient?
-    public void removeIngredient(Ingredient ingredient){
-        ingredients.deleteIngredient(0);
+    /**
+     * Method for removing an ingredient from a recipe, index based
+     * @param indexToDelete (int)
+     */
+    public void removeIngredient(int indexToDelete){
+        ingredients.deleteIngredient(indexToDelete);
     }
 
+
+    /**
+     * Method to get the title of the recipe
+     * @return String representing the title of the recipe
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Method for setting the title of the recipe
+     * @param title (String)
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public Duration getPrepTime() {
+    /**
+     * Method to get the preparation time of the recipe
+     * @return LocalTime representing the preparation time
+     */
+    public LocalTime getPrepTime() {
         return prepTime;
     }
 
-    public void setPrepTime(Duration prepTime) {
+    /**
+     * Method for setting the preparation time of the recipe
+     * @param prepTime (LocalTime)
+     */
+    public void setPrepTime(LocalTime prepTime) {
         this.prepTime = prepTime;
     }
 
+    /**
+     * Method for getting the number of servings of the recipe
+     * @return int representing the number of servings
+     */
     public int getNumServing() {
         return numServing;
     }
 
+    /**
+     * Method for setting the number of servings for the recipe
+     * @param numServing (int)
+     */
     public void setNumServing(int numServing) {
         this.numServing = numServing;
     }
 
+    /**
+     * Method to get the category of the recipe
+     * @return String representing the category
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * Method for setting the category for the recipe
+     * @param category (String)
+     */
     public void setCategory(String category) {
         this.category = category;
     }
+
+    //TODO: Update with javadocs the methods that are required below
 
     public Bitmap getPhoto() {
         return photo;
@@ -100,7 +131,5 @@ public class Recipe implements Serializable {
     public void setPicUri(Uri picUri) {
         this.picUri = picUri;
     }
-
-
 
 }
