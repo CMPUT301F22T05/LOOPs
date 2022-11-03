@@ -9,12 +9,12 @@ public class Ingredient implements Serializable {
     private String description;
     private Date bestBeforeDate;
     private String storeLocation;
-    private Integer amount;
+    private float amount;
     private String unit;
     private String category;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
 
-    public Ingredient(String description, Date bestBeforeDate, String storeLocation, Integer amount, String unit, String category) {
+    public Ingredient(String description, Date bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.storeLocation = storeLocation;
@@ -22,13 +22,26 @@ public class Ingredient implements Serializable {
         this.unit = unit;
         this.category = category;
     }
-    public Ingredient(String description, String bestBeforeDate, String storeLocation, Integer amount, String unit, String category) throws ParseException{
+    public Ingredient(String description, String bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
         setBestBeforeDate(bestBeforeDate);
         this.storeLocation = storeLocation;
         this.amount = amount;
         this.unit = unit;
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Ingredient))
+            return false;
+        Ingredient toCompare = (Ingredient) o;
+        return toCompare.getDescription().equals(getDescription())
+                && toCompare.getAmount() == getAmount()
+                && toCompare.getCategory().equals(getCategory())
+                && toCompare.getBestBeforeDateString().equals(getBestBeforeDateString())
+                && toCompare.getStoreLocation().equals(getStoreLocation())
+                && toCompare.getUnit().equals(getUnit());
     }
 
     public String getDescription() {
@@ -51,9 +64,13 @@ public class Ingredient implements Serializable {
         this.bestBeforeDate = bestBeforeDate;
     }
 
-    public void setBestBeforeDate(String bestBeforeDate) throws ParseException{
-        Date date = dateFormatter.parse(bestBeforeDate);
-        this.bestBeforeDate = date;
+    public void setBestBeforeDate(String bestBeforeDate){
+        try {
+            Date date = dateFormatter.parse(bestBeforeDate);
+            this.bestBeforeDate = date;
+        } catch (ParseException e) {
+            this.bestBeforeDate = new Date(0);
+        }
     }
 
     public String getStoreLocation() {
@@ -64,11 +81,11 @@ public class Ingredient implements Serializable {
         this.storeLocation = storeLocation;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

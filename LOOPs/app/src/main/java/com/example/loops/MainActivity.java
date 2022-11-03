@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 if (navDestination.getId() == R.id.mealPlanHomePageFragment) {
                     getSupportActionBar().setTitle(R.string.mealPlans);
                 }
-                else if (navDestination.getId() == R.id.ingredientCollectionFragment) {
+                else if (navDestination.getId() == R.id.ingredientCollectionEditorFragment) {
                     getSupportActionBar().setTitle(R.string.ingredientCollection);
                 }
                 else if (navDestination.getId() == R.id.recipeCollectionFragment) {

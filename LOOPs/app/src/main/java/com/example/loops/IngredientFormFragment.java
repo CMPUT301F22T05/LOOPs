@@ -23,8 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * An ingredient form. Holds the UI of the form and on submit, saves the result as FragmentResult
- * with the key INGREDIENT_RESULT
+ * An ingredient form. Holds the UI of the form and delegates on submit behavior to its subclasses
  */
 public abstract class IngredientFormFragment extends Fragment {
     //private static final String INPUT_DATE_FORMAT = "MM/dd/yyyy";
@@ -39,11 +38,17 @@ public abstract class IngredientFormFragment extends Fragment {
     public IngredientFormFragment() {}
 
     /**
+     * Implement to handle how submitted ingredient is sent to other activities
+     * @param submittedIngredient ingredient submitted by the form
+     */
+    abstract void sendResult(Ingredient submittedIngredient);
+
+    /**
      * Creates view of the ingredient form and initialize its widgets
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return view of the ingredient form
      */
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
@@ -54,7 +59,7 @@ public abstract class IngredientFormFragment extends Fragment {
 
     /**
      * Set up event listeners
-     * @param formView
+     * @param formView view of the ingredient form
      * @param savedInstanceState
      */
     @Override
@@ -67,14 +72,12 @@ public abstract class IngredientFormFragment extends Fragment {
      * Sets all the button on click listeners in the form
      */
     private void setButtonOnClickListeners() {
-        // setOnClickSubmitButton() but in here instead.
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submitForm();
             }
         });
-        // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
     /**
@@ -94,11 +97,10 @@ public abstract class IngredientFormFragment extends Fragment {
      * @return ingredient object formed by the value of the fields of the form
      */
     public Ingredient getInputtedIngredient() {
-        // FIXME: need non-selected value for spinners
         String description = descriptionInput.getText().toString();
         Date bestBeforeDate = parseBestBeforeDateFromInput();
         String location = locationInput.getSelectedItem().toString();
-        int amount = parseAmountFromInput(); //FIXME: input could be decimal
+        float amount = parseAmountFromInput();
         String unit = unitInput.getSelectedItem().toString();
         String category = categoryInput.getSelectedItem().toString();
 
@@ -116,8 +118,8 @@ public abstract class IngredientFormFragment extends Fragment {
     /**
      * Checks if ingredient is valid and also if there are any errors, prompts the message to user
      * by displayErrorMessage
-     * @param ingredientToValidate
-     * @return True if ingredient is valid. Otherwise false
+     * @param ingredientToValidate ingredient to validate
+     * @return True if ingredient is valid. Otherwise false and notify user of errors
      */
     private boolean isValidIngredientAndNotifyErrors(Ingredient ingredientToValidate) {
         IngredientValidator validator = new IngredientValidator();
@@ -135,19 +137,13 @@ public abstract class IngredientFormFragment extends Fragment {
     }
 
     /**
-     * Abstract method. Implement to handle how submitted ingredient is sent to other activities
-     * @param submittedIngredient
-     */
-   abstract void sendResult(Ingredient submittedIngredient);
-
-    /**
      * Displays error messages to the user by opening up a popup
      * @param errorMessages string of error messages to display to user
      */
     private void displayErrorMessages(ArrayList<String> errorMessages) {
-        // FIXME: Maybe this should also be a custom widget? Make it reusable?
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog errorMessageDisplay = builder
+                .setTitle("Please fill out the form properly")
                 .setMessage( String.join("\n", errorMessages) )
                 .create();
         errorMessageDisplay.show();
@@ -163,7 +159,7 @@ public abstract class IngredientFormFragment extends Fragment {
     /**
      * Binds the date picker dialog to the date input by opening the date picker on date input click
      * After choosing the date, the date is set in the date input.
-     * @param dateInput
+     * @param dateInput edittext to act as date input
      */
     private void bindDatePickerDialogToDateInput(EditText dateInput) {
         /*
@@ -171,7 +167,6 @@ public abstract class IngredientFormFragment extends Fragment {
         https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext,
         2022-09-24, Creative Commons Attribution-ShareAlike license
          */
-        // FIXME: This would be great as a custom widget...
         DatePickerDialog.OnDateSetListener onDateSetCallback = (view, year, month, day) -> {
             Calendar pickedDate = Calendar.getInstance();
             pickedDate.set(Calendar.YEAR, year);
@@ -196,7 +191,7 @@ public abstract class IngredientFormFragment extends Fragment {
     /**
      * initializes widgets of the form.
      * This involves finding the layout widgets and populating the spinner values
-     * @param formView
+     * @param formView view of the ingredient form
      */
     private void initializeWidgets(View formView) {
         getLayoutWidgetsFrom(formView);
@@ -205,7 +200,7 @@ public abstract class IngredientFormFragment extends Fragment {
 
     /**
      * Gets all the relevant widgets and sets it to the corresponding class attribute.
-     * @param formView
+     * @param formView view of the ingredient form
      */
     private void getLayoutWidgetsFrom(View formView) {
         descriptionInput = formView.findViewById(R.id.ingredientFormDescriptionInput);
@@ -237,17 +232,23 @@ public abstract class IngredientFormFragment extends Fragment {
      * Parses the amount from the input
      * @return the parsed Integer amount
      */
-    private Integer parseAmountFromInput() {
-        Integer amount;
+    private float parseAmountFromInput() {
+        float amount;
         try {
-            amount = Integer.parseInt( amountInput.getText().toString() );
+            amount = Float.parseFloat( amountInput.getText().toString() );
         }
         catch (NumberFormatException e) {
-            amount = null;
+            amount = Float.NaN;
         }
         return amount;
     }
 
+    /**
+     * Returns the index of the spinner item given its text value
+     * @param value the string value of the spinner option
+     * @param spinner the spinner to check
+     * @return
+     */
     protected int getSpinnerIndexByValue(String value, Spinner spinner) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).toString().equals(value)) {
