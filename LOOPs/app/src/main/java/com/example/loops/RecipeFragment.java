@@ -3,7 +3,12 @@ package com.example.loops;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHost;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,8 +28,7 @@ import java.time.Duration;
  * A class to represent the UI and business logic that happens
  * when you checkout a specific recipe in RecipeCollectionFragment
  */
-public class RecipeFragment extends Fragment {
-
+public class RecipeFragment extends Fragment implements RecyclerViewOnClickInterface{
     private Recipe selectedRecipe;
     private Button editRecipeButton;
     private RecyclerView recipeIngredients;
@@ -37,40 +41,44 @@ public class RecipeFragment extends Fragment {
     private RecyclerView.Adapter recipeIngredientsAdapter;
     private RecyclerView.LayoutManager recipeIngredientsLayoutManager;
 
+    public RecipeFragment() {
+        // Required empty public constructor
+    }
 
+    /**
+     *  Method to inflate fragment's xml
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-        if (getArguments() != null){
-            RecipeFragmentArgs args = RecipeFragmentArgs.fromBundle(getArguments());
-            selectedRecipe = args.getSelectedRecipe();
-        }
+        return view;
+    }
+
+    /**
+     * Method to set up UI interactions
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        selectedRecipe = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipe();
         bindComponents(view);
         putContentOnViews();
         setUpRecyclerView(view);
+        setEditRecipeButtonOnClick();
+        setOnSwipeDeleteIngredients();
 
-        /**
-         * Implement delete an ingredient on swipe
 
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int pos = viewHolder.getAdapterPosition();
-                selectedRecipe.getIngredients().deleteIngredient(pos);
-                recipeIngredientsAdapter.notifyDataSetChanged();
-            }
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recipeIngredients);
-         */
-        return view;
+
     }
 
     /**
@@ -117,20 +125,48 @@ public class RecipeFragment extends Fragment {
             }
         };
         recipeIngredients.setLayoutManager(recipeIngredientsLayoutManager);
-        recipeIngredientsAdapter = new RecipeIngredientsAdapter (selectedRecipe.getIngredients(),view.getContext());
+        recipeIngredientsAdapter = new RecipeIngredientsAdapter (selectedRecipe.getIngredients(),view.getContext(),this);
         recipeIngredients.setAdapter(recipeIngredientsAdapter);
 
     }
 
-
+    /**
+     * this is a button that takes us to a fragment that allows for a recipe to be edited
+     */
     private void setEditRecipeButtonOnClick() {
         editRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                RecipeFragmentDirections.ActionRecipeFragmentToPlaceholder action =
+                        RecipeFragmentDirections.actionRecipeFragmentToPlaceholder(selectedRecipe);
+                Navigation.findNavController(v).navigate(action);
             }
         });
     }
 
+    /**
+     * Creates swipe interactions on recyclerView
+     */
+    private void setOnSwipeDeleteIngredients() {
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
 
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int pos = viewHolder.getAdapterPosition();
+                selectedRecipe.getIngredients().deleteIngredient(pos);
+                recipeIngredientsAdapter.notifyDataSetChanged();
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recipeIngredients);
+    }
+
+    @Override
+    public void OnItemClick(int position) {
+
+    }
 }
