@@ -1,5 +1,6 @@
 package com.example.loops;
 
+import static android.os.SystemClock.sleep;
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.widget.DatePicker;
 
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
@@ -52,6 +54,7 @@ public class AddIngredientFormFragmentTest {
 
         fragmentScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
+            navController.setCurrentDestination(R.id.addIngredientFormFragment);
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
     }
@@ -129,12 +132,14 @@ public class AddIngredientFormFragmentTest {
      * Test submitting a valid ingredient in the form to the ingredient collection
      */
     @Test
+
     public void testSubmittingWithValidIngredientToCollection() {
         fragmentScenario.onFragment(fragment -> {
             navController.setCurrentDestination(R.id.ingredientCollectionEditorFragment);
             navController.navigate(R.id.addIngredientFromCollection);
         });
         int year = 2022; int month = 10; int day = 21;
+
         Ingredient typedIngredient = new Ingredient(
           "Tuna Can",
           getDate(year, month, day),
@@ -150,6 +155,7 @@ public class AddIngredientFormFragmentTest {
         setUnit(typedIngredient.getUnit());
         setCategory(typedIngredient.getCategory());
         clickSubmit();
+        sleep(5000);
 
         Ingredient submittedIngredient = getSubmittedIngredient();
         assertTrue( typedIngredient.equals(submittedIngredient) );
