@@ -81,6 +81,34 @@
         <action
             android:id="@+id/action_recipeCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
+        <action
+            android:id="@+id/action_recipeCollection_to_recipe"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment android:id="@+id/recipeFragment"
+        android:name="com.example.loops.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe">
+        <argument
+            android:name="SelectedRecipe"
+            app:argType="com.example.loops.Recipe" />
+        <action
+            android:id="@+id/action_recipeFragment_to_placeholder"
+            app:destination="@id/EditRecipePlaceHolder" />
+        <argument
+            android:name="SelectedRecipeIndex"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/EditRecipePlaceHolder"
+        android:name="com.example.loops.EditRecipePlaceHolderFragment"
+        tools:layout="@layout/fragment_edit_recipe_place_holder">
+        <argument
+            android:name="editedRecipe"
+            app:argType="com.example.loops.Recipe" />
+        <action
+            android:id="@+id/action_EditRecipePlaceHolder_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/ingredientFragment"
