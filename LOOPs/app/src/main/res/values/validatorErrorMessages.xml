@@ -2,6 +2,15 @@
 <resources>
 <!--    INGREDIENT DESCRIPTION ERROR MESSAGES -->
     <string name="ingredient_no_description">Ingredient\'s description must be given</string>
-<!--    INGREDIENT AMOUNT ERROR MESSAGES-->
+<!--    INGREDIENT DATE ERROR MESSAGE -->
+    <string name="ingredient_no_bestbeforedate">Ingredient\'s best before date must be given</string>
+<!--    INGREDIENT STORED LOCATION ERROR MESSAGE -->
+    <string name="ingredient_no_location">Ingredient\'s location must be given</string>
+<!--    INGREDIENT AMOUNT ERROR MESSAGES -->
+    <string name="ingredient_no_amount">Ingredient\'s amount must be given</string>
     <string name="ingredient_negative_amount">Ingredient\'s amount cannot be negative</string>
+<!--    INGREDIENT UNIT ERROR MESSAGES -->
+    <string name="ingredient_no_unit">Ingredient\'s unit must be given</string>
+<!--    INGREDIENT CATEGORY ERROR MESSAGES -->
+    <string name="ingredient_no_category">Ingredient\'s category must be given</string>
 </resources>

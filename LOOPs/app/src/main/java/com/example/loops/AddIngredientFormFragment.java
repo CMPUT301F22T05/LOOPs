@@ -15,14 +15,12 @@ import android.view.View;
  * An ingredient form for adding ingredients.
  */
 public class AddIngredientFormFragment extends IngredientFormFragment {
-    public static final String RESULT_KEY = "ADD_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
-    public static final String INGREDIENT_KEY = "ADD_INGREDIENT_FORM_FRAGMENT_RESULT_KEY_INGREDIENT";
 
     public AddIngredientFormFragment() { }
 
     /**
      * Set up event listeners and changes button text
-     * @param formView
+     * @param formView view of the add ingredient form
      * @param savedInstanceState
      */
     @Override
@@ -33,21 +31,22 @@ public class AddIngredientFormFragment extends IngredientFormFragment {
 
     /**
      * Sends ingredient to IngredientCollectionFragment through navigation graph action
-     * @param submittedIngredient
+     * @param submittedIngredient ingredient submitted by the form
      */
     void sendResult(Ingredient submittedIngredient) {
         Integer callerFragmentId = getCallerFragmentId();
 
         if ( callerFragmentId == null ) {
-            Bundle resultBundle = new Bundle();
-            resultBundle.putSerializable(INGREDIENT_KEY, submittedIngredient);
-            getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
+            throw new Error("No caller fragment");
         }
-        else if ( callerFragmentId == R.id.ingredientCollectionFragment ) {
+        else if ( callerFragmentId == R.id.ingredientCollectionEditorFragment ) {
             AddIngredientFormFragmentDirections.SubmitIngredientToCollection toSubmitAction =
                 AddIngredientFormFragmentDirections.submitIngredientToCollection();
             toSubmitAction.setAddedIngredient(submittedIngredient);
             Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
+        }
+        else {
+            throw new Error("Navigation action not defined");
         }
 
     }
