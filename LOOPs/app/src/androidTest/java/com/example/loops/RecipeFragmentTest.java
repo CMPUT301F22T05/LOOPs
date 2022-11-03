@@ -11,7 +11,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -79,12 +85,26 @@ public class RecipeFragmentTest {
         Bundle bundle = new Bundle();
         bundle.putSerializable("SelectedRecipe",mockRecipe);
         bundle.putInt("SelectedRecipeIndex",0);
-        fragmentScenario = FragmentScenario.launchInContainer(RecipeFragment.class,bundle);
+        fragmentScenario = FragmentScenario.launchInContainer(
+                RecipeFragment.class,null, new FragmentFactory(){
+                    @NonNull
+                    @Override
+                    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className,@Nullable Bundle args) {
+                        RecipeFragment recipeFragment = new RecipeFragment();
+                        recipeFragment.getViewLifecycleOwnerLiveData().observeForever(new Observer<LifecycleOwner>() {
+                            @Override
+                            public void onChanged(LifecycleOwner lifecycleOwner) {
+                                if (lifecycleOwner != null){
+                                    navController.setGraph(R.navigation.nav_graph);
+                                    Navigation.setViewNavController(recipeFragment.requireView(), navController);
+                                }
+                            }
+                        });
+                        return recipeFragment;
+                    }
+                });
 
-        fragmentScenario.onFragment(fragment -> {
-            navController.setGraph(R.navigation.nav_graph);
-            Navigation.setViewNavController(fragment.requireView(), navController);
-        });
+
     }
     /*
     Checks if UI components are being displayed
@@ -159,8 +179,14 @@ public class RecipeFragmentTest {
         }
 
 
-    }
 
+    }
+    @Test
+    public void testNavigateToEditRecipe() {
+        onView(withId(R.id.editRecipeButton)).perform(click());
+        assertEquals(R.id.EditRecipePlaceHolder,navController.getCurrentDestination().getId());
+
+    }
 
 
 

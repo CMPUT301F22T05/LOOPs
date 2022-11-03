@@ -16,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
  * in RecipeFragments
  */
 public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredientsAdapter.ViewHolder>{
+    private final RecyclerViewOnClickInterface recyclerViewOnClickInterface;
     IngredientCollection recipeIngredients;
     Context context;
 
-    public RecipeIngredientsAdapter(IngredientCollection recipeIngredients, Context context) {
+    public RecipeIngredientsAdapter(IngredientCollection recipeIngredients, Context context,
+                                    RecyclerViewOnClickInterface recyclerViewOnClickInterface) {
         this.recipeIngredients = recipeIngredients;
         this.context = context;
+        this.recyclerViewOnClickInterface = recyclerViewOnClickInterface;
     }
 
     @NonNull
@@ -29,7 +32,7 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_recyclerview_layout,
         parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view, recyclerViewOnClickInterface);
         return holder;
     }
 
@@ -45,16 +48,31 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
         return recipeIngredients.getIngredients().size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView recipeIngredientTitle;
         private TextView recipeIngredientCount;
         private TextView recipeIngredientUnit;
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView, RecyclerViewOnClickInterface recyclerViewOnClickInterface){
             super(itemView);
             recipeIngredientTitle = itemView.findViewById(R.id.recipeIngredientTitle);
             recipeIngredientCount = itemView.findViewById(R.id.recipeIngredientCount);
             recipeIngredientUnit = itemView.findViewById(R.id.recipeIngredientUnit);
+            /* This part allows a click to get the position of a recyclerview
+             * item and passes it on the recyclerViewOnClickInterface to be
+             * process.
+             */
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewOnClickInterface != null){
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION){
+                            recyclerViewOnClickInterface.OnItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
 
     }
