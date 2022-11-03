@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import androidx.core.content.res.ResourcesCompat;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -108,10 +109,11 @@ public class RecipeFragmentTest {
 
 
 
+
+
     }
     /*
-    Checks if the text/image is matching
-    Still need to work on image matching
+    Checks if the text on a textview matches with a recipe attribute
      */
     @Test
     public void testMatchingText(){
@@ -139,13 +141,26 @@ public class RecipeFragmentTest {
         onView(withId(R.id.recipeCommentSubhead)).check(matches(withText(recipeCommentSubHead)));
         onView(withId(R.id.recipeComment)).check(matches(withText(mockRecipe.getComments())));
         onView(withId(R.id.ingredientSubHead)).check(matches(withText(ingredientSubHead)));
+
+        /*
+         * This part of the code checks if each item in the recyclerview displays
+         *  an ingredient's description, amount, and unit properly by scrolling to that item
+         *  if it exist
+         */
+
         ArrayList<Ingredient> testIngredients = mockIngredientCollection.getIngredients();
         Integer length = testIngredients.size();
-        for (int i =0;i<length;i++){
-            break;
+        for (int i = 0; i<length; i++){
+            Ingredient oneIngredient =  testIngredients.get(i);
+            String oneIngredientDescription = oneIngredient.getDescription();
+            onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(oneIngredientDescription))));
+
+
         }
 
+
     }
+
 
 
 
