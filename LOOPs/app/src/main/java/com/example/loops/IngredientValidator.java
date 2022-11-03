@@ -2,6 +2,8 @@ package com.example.loops;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Check if attributes of ingredient are valid or not based on the context it lies in
@@ -13,7 +15,7 @@ import java.util.Date;
  */
 // FIXME: So far, I only handled null description... Check for other null attributes.
 public class IngredientValidator {
-    private ArrayList<Integer> errorStringIds;
+    private final Set<Integer> errorStringIds;
 
     /**
      * The various context the ingredient lies on
@@ -27,7 +29,7 @@ public class IngredientValidator {
 
 
     public IngredientValidator() {
-        errorStringIds = new ArrayList<>();
+        errorStringIds = new HashSet<>();
     }
 
     /**
@@ -37,8 +39,8 @@ public class IngredientValidator {
      * @return ArrayList of error string ids.
      */
     public ArrayList<Integer> getErrorStringIds() {
-        ArrayList<Integer> toReturn = errorStringIds;
-        errorStringIds = new ArrayList<>();
+        ArrayList<Integer> toReturn = new ArrayList<>(errorStringIds);
+        errorStringIds.clear();
         return toReturn;
     }
 
@@ -73,10 +75,6 @@ public class IngredientValidator {
         return true;
     }
 
-    public boolean checkDescription(String description) {
-        return checkDescription(description, INGREDIENT_TYPE.STORED);
-    }
-
     /**
      * Returns true on a valid best before date of ingredient. Otherwise false.
      * Appends any validation failures to buffer.
@@ -85,11 +83,11 @@ public class IngredientValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkBestBeforeDate(Date date, INGREDIENT_TYPE type) {
+        if (date == null) {
+            errorStringIds.add(R.string.ingredient_no_bestbeforedate);
+            return false;
+        }
         return true;
-    }
-
-    public boolean checkBestBeforeDate(Date date) {
-        return checkBestBeforeDate(date, INGREDIENT_TYPE.STORED);
     }
 
     /**
@@ -100,11 +98,11 @@ public class IngredientValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkLocation(String location, INGREDIENT_TYPE type) {
+        if (location == null || location.length() <= 0) {
+            errorStringIds.add(R.string.ingredient_no_location);
+            return false;
+        }
         return true;
-    }
-
-    public boolean checkLocation(String location) {
-        return checkLocation(location, INGREDIENT_TYPE.STORED);
     }
 
     /**
@@ -114,16 +112,16 @@ public class IngredientValidator {
      * @param type the type of the ingredient, i.e. the context the ingredient lies on
      * @return true if valid. False otherwise.
      */
-    public boolean checkAmount(int amount, INGREDIENT_TYPE type) {
+    public boolean checkAmount(Integer amount, INGREDIENT_TYPE type) {
+        if (amount == null) {
+            errorStringIds.add(R.string.ingredient_no_amount);
+            return false;
+        }
         if (amount < 0) {
             errorStringIds.add(R.string.ingredient_negative_amount);
             return false;
         }
         return true;
-    }
-
-    public boolean checkAmount(int amount) {
-        return checkAmount(amount, INGREDIENT_TYPE.STORED);
     }
 
     /**
@@ -134,11 +132,11 @@ public class IngredientValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkUnit(String unit, INGREDIENT_TYPE type) {
+        if (unit == null || unit.length() <= 0) {
+            errorStringIds.add(R.string.ingredient_no_unit);
+            return false;
+        }
         return true;
-    }
-
-    public boolean checkUnit(String unit) {
-        return checkUnit(unit, INGREDIENT_TYPE.STORED);
     }
 
     /**
@@ -149,10 +147,10 @@ public class IngredientValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkCategory(String category, INGREDIENT_TYPE type) {
+        if (category == null || category.length() <= 0) {
+            errorStringIds.add(R.string.ingredient_no_category);
+            return false;
+        }
         return true;
-    }
-
-    public boolean checkCategory(String category) {
-        return checkCategory(category, INGREDIENT_TYPE.STORED);
     }
 }
