@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.database;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
