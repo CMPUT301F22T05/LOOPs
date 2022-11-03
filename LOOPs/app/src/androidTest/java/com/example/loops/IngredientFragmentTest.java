@@ -7,12 +7,18 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import org.mockito.Mockito;
+
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
@@ -67,6 +73,12 @@ public class IngredientFragmentTest {
                 "Meat"
         );
         return ingredient;
+    }
+
+    private Bundle getReturnBundle() {
+        return navController.getBackStack()
+                .get(navController.getBackStack().size()-1)
+                .getArguments();
     }
 
     @Test
@@ -135,21 +147,11 @@ public class IngredientFragmentTest {
         displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
 
         onView(withId(R.id.ingredient_back_button)).perform(ViewActions.click());
-        //onView(withText("back")).perform(click());
-        sleep(5000);
-
-        String[] expected = {
-                "Roast Beef",
-                "12/09/2023",
-                "Fridge",
-                "Meat",
-                "sort by",
-                "Ingredient List",
-                "+"
-        };
-        for (String e : expected) {
-            onView(withText(e)).check(matches(isDisplayed()));
-        }
+        assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientCollectionFragment);
+        Bundle returnValue = getReturnBundle();
+        assertEquals(returnValue.getSerializable("editedIngredient"), ingredient);
+        assertEquals(returnValue.getInt("editedIngredientIndex"), 6);
+        assertEquals(returnValue.getBoolean("deleteFlag"), false);
     }
 
     @Test
@@ -157,27 +159,54 @@ public class IngredientFragmentTest {
         Ingredient ingredient = getTestIngredient();
         displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
 
-        onView(ViewMatchers.withId(R.id.ingredient_edit_button)).perform(ViewActions.click());
-        String[] expected = {
-                "Roast Beef",
-                "12/09/2023",
-                "Fridge",
-                "Meat",
-                "sort by",
-                "Ingredient List",
-                "+"
-        };
-        for (String e : expected) {
-            onView(withText(equalToIgnoringCase(e))).check(matches(isDisplayed()));
-        }
+        onView(withId(R.id.ingredient_edit_button)).perform(ViewActions.click());
+        assertEquals(navController.getCurrentDestination().getId(), R.id.editIngredientFormFragment);
+        Bundle returnValue = getReturnBundle();
+        assertEquals(returnValue.getSerializable("editedIngredient"), ingredient);
+        assertEquals(returnValue.getInt("editIngredientIndex"), 6);
     }
 
     @Test
-    public void testDeleteButton() {
+    public void testDeleteButtonCancel() {
         Ingredient ingredient = getTestIngredient();
         displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
 
         onView(withId(R.id.ingredient_delete_button)).perform(ViewActions.click());
-        String[] expected_popup;
+        String[] expected = {
+                "Warning",
+                "delete ingredient roast beef?",
+                "no",
+                "yes"
+        };
+        for (String e : expected) {
+            onView(withText(equalToIgnoringCase(e))).check(matches(isDisplayed()));
+        }
+
+        onView(withId(R.id.delete_popup_no_button)).perform(click());
+        assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientFragment);
+    }
+
+    @Test
+    public void testDeleteButtonConfirm() {
+        Ingredient ingredient = getTestIngredient();
+        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
+
+        onView(withId(R.id.ingredient_delete_button)).perform(ViewActions.click());
+        String[] expected = {
+                "Warning",
+                "delete ingredient roast beef?",
+                "no",
+                "yes"
+        };
+        for (String e : expected) {
+            onView(withText(equalToIgnoringCase(e))).check(matches(isDisplayed()));
+        }
+
+        onView(withId(R.id.delete_popup_yes_button)).perform(click());
+        assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientCollectionFragment);
+        Bundle returnValue = getReturnBundle();
+        assertEquals(returnValue.getSerializable("editedIngredient"), ingredient);
+        assertEquals(returnValue.getInt("editedIngredientIndex"), 6);
+        assertEquals(returnValue.getBoolean("deleteFlag"), true);
     }
 }

@@ -88,7 +88,7 @@ public class IngredientFragment extends Fragment {
      * Set up the delete button's action
      * Invoke a popup window for user to confirm the deletion to avoid accidentally delete.
      */
-    public void setDeleteButtonOnClick() {
+    public void setDeleteButtonOnClick(View parentView) {
         LayoutInflater inflater = getLayoutInflater();
         View deletePopupView = inflater.inflate(R.layout.popup_ingredient_delete, null);
 
@@ -116,7 +116,8 @@ public class IngredientFragment extends Fragment {
             deleteCollectionAction.setEditedIngredient(ingredient);
             deleteCollectionAction.setEditedIngredientIndex(ingInd);
             deleteCollectionAction.setDeleteFlag(true);
-            Navigation.findNavController(getParentFragment().getView()).navigate(deleteCollectionAction);
+            //Navigation.findNavController(getParentFragment().getView()).navigate(deleteCollectionAction);
+            Navigation.findNavController(parentView).navigate(deleteCollectionAction);
         });
         popupDeleteText.setText(String.format("Delete Ingredient %s?", ingredient.getDescription()));
 
@@ -161,7 +162,7 @@ public class IngredientFragment extends Fragment {
         // initialize all button activities
         setBackButtonOnClick();
         setEditButtonOnClick();
-        setDeleteButtonOnClick();
+        setDeleteButtonOnClick(view);
 
         return view;
     }
