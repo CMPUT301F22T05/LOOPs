@@ -39,7 +39,11 @@ public class RecipeTest extends TestCase {
     }
 
     public void testSetTitle() {
-
+        Recipe pizzaRecipe = new Recipe();
+        pizzaRecipe.setTitle("Pizza");
+        assertEquals("Pizza", pizzaRecipe.getTitle());
+        testRecipe.setTitle("Oven Baked Carrots");
+        assertEquals("Oven Baked Carrots", testRecipe.getTitle());
     }
 
     public void testGetPrepTime() {

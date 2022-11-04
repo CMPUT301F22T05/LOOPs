@@ -70,6 +70,7 @@ public class RecipeCollectionFragment extends GenericCollectionLayout {
         bindComponents(view);
         collectionTitle.setText(R.string.recipeCollection);
 
+        // TODO: Change to user specified categories
         ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
                 ArrayAdapter.createFromResource(getActivity(),
                         R.array.recipe_categories, android.R.layout.simple_spinner_item);
