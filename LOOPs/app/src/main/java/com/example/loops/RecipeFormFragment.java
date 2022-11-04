@@ -136,6 +136,12 @@ public abstract class RecipeFormFragment extends Fragment {
                 submitForm();
             }
         });
+//        addIngredientButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AddIngredient();
+//            }
+//        });
 
         // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
@@ -152,6 +158,7 @@ public abstract class RecipeFormFragment extends Fragment {
             sendResult(submittedRecipe);
         }
     }
+
 
     /**
      * Returns an Recipe object where its attributes are those from the form
@@ -210,4 +217,46 @@ public abstract class RecipeFormFragment extends Fragment {
                 .create();
         errorMessageDisplay.show();
     }
+
+
+//    /**
+//     * Validates the values in the form.
+//     * If there are any validation errors, displays to the user error messages.
+//     * If there are no validation errors, submits the result to the fragment manager and closes fragment
+//     */
+//    public void AddIngredient() {
+//        Ingredient AddIngredient = getInputtedIngredient();
+//        if ( isValidIngredientAndNotifyErrors(AddIngredient) ) {
+//            sendResultIngredient(AddIngredient);
+//        }
+//    }
+//
+//
+//    public Ingredient getInputtedIngredient(){
+//
+//        String description = descriptionInput.getText().toString();
+//        int timeHour = prepTimeHourInput.getValue();
+//        int timeMinute = prepTimeMinuteInput.getValue();
+//        String category = categoryInput.getSelectedItem().toString();
+//        String StringNumServ = numServingInput.getText().toString();
+//        int numServ = Integer.parseInt(StringNumServ);
+//        String comment = commentsInput.getText().toString();
+//        Duration duration = Duration.ofHours(timeHour).plus(Duration.ofMinutes(timeMinute));
+//        Recipe inputtedRecipe= new Recipe(
+//                title,
+//                duration,
+//                category,
+//                numServ,
+//                comment
+//        );
+//        return inputtedRecipe;
+//    }
+
+
+
+
+
+
+
+
 }
