@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import com.example.loops.R;
 import com.example.loops.Recipe;
 
+
 public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
 
     public RecipeCollectionEditorFragment() {

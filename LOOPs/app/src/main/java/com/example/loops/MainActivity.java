@@ -29,11 +29,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Main activity of the program, handle navigation of all fragments.
+ * All database management parts were implemented inside the main activity.
+ */
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     IngredientCollection allIngredients = new IngredientCollection();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    /**
+     * Load all database ingredients into the ingredient collection.
+     */
     public void retrieveIngredientFromDatabase() {
         db.collection("IngredientStorage").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -56,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Delete an ingredient from the database storage.
+     * @param ingInd index of ingredient to delete
+     */
     public void deleteIngredientFromDatabase(int ingInd) {
         db.collection("IngredientStorage").document(Integer.toString(ingInd))
                 .delete()
@@ -73,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Update the ingredient collection to database.
+     * @param updatedIngredient updated ingredient collection
+     */
     public void updateIngredientFromDatabase(IngredientCollection updatedIngredient) {
         if (updatedIngredient == null) {
             return;
