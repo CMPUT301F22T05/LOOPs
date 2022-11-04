@@ -50,7 +50,8 @@
         <action
             android:id="@+id/actionViewIngredientDetails"
             app:destination="@id/ingredientFragment" />
-        <argument android:name="editedIngredient"
+        <argument
+            android:name="editedIngredient"
             app:argType="com.example.loops.Ingredient"
             app:nullable="true"
             android:defaultValue="@null"/>
@@ -70,7 +71,7 @@
     <fragment
         android:id="@+id/addIngredientFormFragment"
         android:name="com.example.loops.AddIngredientFormFragment"
-        android:label="AddIngredientFormFragment"
+        android:label="Add a Ingredient"
         tools:layout="@layout/fragment_ingredient_form">
         <action
             android:id="@+id/submitIngredientToCollection"
@@ -144,8 +145,8 @@
     <fragment
         android:id="@+id/ingredientFragment"
         android:name="com.example.loops.IngredientFragment"
-        android:label="fragment_ingredient"
-        tools:layout="@layout/fragment_ingredient" >
+        android:label="Ingredient Details"
+        tools:layout="@layout/fragment_ingredient">
 
         <action
             android:id="@+id/action_ingredientFragment_to_ingredientCollectionFragment"
@@ -168,7 +169,7 @@
     <fragment
         android:id="@+id/editIngredientFormFragment"
         android:name="com.example.loops.EditIngredientFormFragment"
-        android:label="EditIngredientFormFragment"
+        android:label="Editing the Ingredient"
         tools:layout="@layout/fragment_ingredient_form">
         <argument
             android:name="editedIngredient"

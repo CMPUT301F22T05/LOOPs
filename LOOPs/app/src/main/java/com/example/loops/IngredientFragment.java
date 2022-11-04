@@ -68,7 +68,7 @@ public class IngredientFragment extends Fragment {
                     .actionIngredientFragmentToIngredientCollectionFragment();
             backCollectionAction.setEditedIngredient(ingredient);
             backCollectionAction.setEditedIngredientIndex(ingInd);
-            Navigation.findNavController(view).navigate(backCollectionAction);
+            Navigation.findNavController(view).navigate((NavDirections) backCollectionAction);
         });
     }
 
@@ -78,7 +78,7 @@ public class IngredientFragment extends Fragment {
      */
     public void setEditButtonOnClick() {
         editButton.setOnClickListener(view -> {
-            NavDirections editIngredientAction = IngredientFragmentDirections
+            NavDirections editIngredientAction = (NavDirections) IngredientFragmentDirections
                     .actionIngredientFragmentToEditIngredientFormFragment(ingredient, ingInd);
             Navigation.findNavController(view).navigate(editIngredientAction);
         });
@@ -117,7 +117,7 @@ public class IngredientFragment extends Fragment {
             deleteCollectionAction.setEditedIngredientIndex(ingInd);
             deleteCollectionAction.setDeleteFlag(true);
             //Navigation.findNavController(getParentFragment().getView()).navigate(deleteCollectionAction);
-            Navigation.findNavController(parentView).navigate(deleteCollectionAction);
+            Navigation.findNavController(parentView).navigate((NavDirections) deleteCollectionAction);
         });
         popupDeleteText.setText(String.format("Delete Ingredient %s?", ingredient.getDescription()));
 

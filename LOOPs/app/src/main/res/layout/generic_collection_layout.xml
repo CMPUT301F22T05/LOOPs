@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:fontFamily="sans-serif-black"
             android:text="XXXXX:"
-            android:textSize="18dp"></TextView>
+            android:textSize="18sp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
