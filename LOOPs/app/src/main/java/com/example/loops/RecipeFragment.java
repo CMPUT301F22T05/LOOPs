@@ -195,7 +195,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         backToRecipeCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(RecipeFragmentDirections.actionRecipeFragmentToRecipeCollectionFragment());
+
             }
         });
     }

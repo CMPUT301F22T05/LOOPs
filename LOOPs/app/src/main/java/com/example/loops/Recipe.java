@@ -3,9 +3,13 @@ package com.example.loops;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+
+
+
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalTime;
+
 
 /**
  *  model class of a Recipe
@@ -18,13 +22,32 @@ public class Recipe implements Serializable {
     private Bitmap photo;
     private Uri picUri;
     private IngredientCollection ingredients;
+
     private String comments;
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+
+    public IngredientCollection getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(IngredientCollection ingredients) {
+        this.ingredients = ingredients;
+    }
 
 
     /**
      * Empty constructor
      */
-    public Recipe(){this.ingredients = new IngredientCollection();};
+    public Recipe(){this.ingredients = new IngredientCollection();}
+
 
     /**
      * Constructor w/ minimum required parameters
@@ -37,6 +60,7 @@ public class Recipe implements Serializable {
         this.ingredients = new IngredientCollection();
     }
 
+
     /**
      * Method for adding an ingredient to a recipe
      * @param ingredient (Ingredient)
@@ -44,6 +68,7 @@ public class Recipe implements Serializable {
     public void addIngredient(Ingredient ingredient){
         ingredients.addIngredient(ingredient);
     }
+
 
     /**
      * Method for removing an ingredient from a recipe, index based
@@ -58,9 +83,11 @@ public class Recipe implements Serializable {
      * Method to get the title of the recipe
      * @return String representing the title of the recipe
      */
+
     public String getTitle() {
         return title;
     }
+
 
     /**
      * Method for setting the title of the recipe
@@ -70,9 +97,10 @@ public class Recipe implements Serializable {
         this.title = title;
     }
 
+
     /**
-     * Returns a duration
-     * @return
+     * Method to get the preparation time of the recipe
+     * @return LocalTime representing the preparation time
      */
     public Duration getPrepTime() {
         return prepTime;
@@ -80,7 +108,7 @@ public class Recipe implements Serializable {
 
     /**
      * Method for setting the preparation time of the recipe
-     * @param prepTime (Duration)
+     * @param prepTime (LocalTime)
      */
     public void setPrepTime(Duration prepTime) {
         this.prepTime = prepTime;
@@ -90,9 +118,11 @@ public class Recipe implements Serializable {
      * Method for getting the number of servings of the recipe
      * @return int representing the number of servings
      */
+
     public int getNumServing() {
         return numServing;
     }
+
 
     /**
      * Method for setting the number of servings for the recipe
@@ -102,13 +132,16 @@ public class Recipe implements Serializable {
         this.numServing = numServing;
     }
 
+
     /**
      * Method to get the category of the recipe
      * @return String representing the category
      */
+
     public String getCategory() {
         return category;
     }
+
 
     /**
      * Method for setting the category for the recipe
@@ -118,8 +151,8 @@ public class Recipe implements Serializable {
         this.category = category;
     }
 
-    //TODO: Update with javadocs the methods that are required below
 
+    //TODO: Update with javadocs the methods that are required below
     public Bitmap getPhoto() {
         return photo;
     }
@@ -136,19 +169,4 @@ public class Recipe implements Serializable {
         this.picUri = picUri;
     }
 
-    public IngredientCollection getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(IngredientCollection ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 }
