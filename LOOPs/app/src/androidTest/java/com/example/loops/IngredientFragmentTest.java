@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 import android.os.Bundle;
 import android.util.Log;
 
-import org.mockito.Mockito;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.NavController;

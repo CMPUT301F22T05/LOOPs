@@ -3,19 +3,23 @@ package com.example.loops;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalTime;
 
 /**
  *  model class of a Recipe
  */
-public class Recipe {
+public class Recipe implements Serializable {
     private String title;
-    private LocalTime prepTime;
+    private Duration prepTime;
     private int numServing;
     private String category;
     private Bitmap photo;
     private Uri picUri;
     private IngredientCollection ingredients;
+    private String comments;
+
 
     /**
      * Empty constructor
@@ -67,18 +71,18 @@ public class Recipe {
     }
 
     /**
-     * Method to get the preparation time of the recipe
-     * @return LocalTime representing the preparation time
+     * Returns a duration
+     * @return
      */
-    public LocalTime getPrepTime() {
+    public Duration getPrepTime() {
         return prepTime;
     }
 
     /**
      * Method for setting the preparation time of the recipe
-     * @param prepTime (LocalTime)
+     * @param prepTime (Duration)
      */
-    public void setPrepTime(LocalTime prepTime) {
+    public void setPrepTime(Duration prepTime) {
         this.prepTime = prepTime;
     }
 
@@ -132,4 +136,19 @@ public class Recipe {
         this.picUri = picUri;
     }
 
+    public IngredientCollection getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(IngredientCollection ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }

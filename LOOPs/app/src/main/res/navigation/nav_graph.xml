@@ -98,6 +98,9 @@
         <argument
             android:name="SelectedRecipeIndex"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_recipeFragment_to_recipeCollectionFragment"
+            app:destination="@id/recipeCollectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/EditRecipePlaceHolder"

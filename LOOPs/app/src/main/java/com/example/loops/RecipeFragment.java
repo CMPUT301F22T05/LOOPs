@@ -31,6 +31,8 @@ import java.time.Duration;
 public class RecipeFragment extends Fragment implements RecyclerViewOnClickInterface{
     private Recipe selectedRecipe;
     private Button editRecipeButton;
+    private Button backToRecipeCollection;
+    private Button deleteRecipeButton;
     private RecyclerView recipeIngredients;
     private TextView prepTime;
     private TextView servingSize;
@@ -86,6 +88,8 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
      * @param view
      */
     private void bindComponents(View view){
+        backToRecipeCollection = view.findViewById(R.id.backToRecipeCollection);
+        deleteRecipeButton = view.findViewById(R.id.deleteRecipeButton);
         editRecipeButton = view.findViewById(R.id.editRecipeButton);
         prepTime = view.findViewById(R.id.recipePrepTime);
         servingSize = view.findViewById(R.id.recipeServing);
@@ -143,6 +147,20 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
             }
         });
     }
+
+    private void setBackToRecipeCollectionOnClick() {
+        backToRecipeCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+
+
+
+
+
 
     /**
      * Creates swipe interactions on recyclerView
