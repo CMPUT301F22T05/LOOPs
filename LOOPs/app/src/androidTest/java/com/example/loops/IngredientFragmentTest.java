@@ -14,8 +14,6 @@ import static org.junit.Assert.assertTrue;
 import android.os.Bundle;
 import android.util.Log;
 
-import org.mockito.Mockito;
-
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.NavController;
 import androidx.navigation.NavHostController;
@@ -132,7 +130,7 @@ public class IngredientFragmentTest {
                 "Roast Beef",
                 "12/09/2023",
                 "Fridge",
-                "23",
+                "23.0",
                 "kg",
                 "Meat"
         };

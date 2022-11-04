@@ -71,7 +71,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
+        View view = inflater.inflate(R.layout.generic_collection_layout, container, false);
         bindComponents(view);
 
         parseArguments();
@@ -121,10 +121,23 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     "Test Category"
             ));
         }
+        //This is used for intent test and it should not be removed
         else if (type == CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT) {
             ingredientCollection = new IngredientCollection();
-            ingredientCollection.addIngredient(new Ingredient("BBB", "10/28/2022", "fridge", 1, "", "XXX"));
-            ingredientCollection.addIngredient(new Ingredient("AAA", "10/29/2022", "cupboard", 1, "", "YYY"));
+            ingredientCollection.addIngredient(new Ingredient(
+                    "BBB",
+                    "10/28/2022",
+                    "fridge",
+                    1,
+                    "unit",
+                    "XXX"));
+            ingredientCollection.addIngredient(new Ingredient(
+                    "AAA",
+                    "10/29/2022",
+                    "cupboard",
+                    1,
+                    "unit",
+                    "YYY"));
         }
         else {
             throw new IllegalArgumentException("Unknown given collection type");

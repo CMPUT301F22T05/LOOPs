@@ -57,15 +57,28 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
         if (submittedIngredient != null) {
             ingredientCollection.addIngredient(submittedIngredient);
         }
-        Ingredient editedIngredient = argsBundle.getEditedIngredient();
-        if (editedIngredient != null) {
+        else{
+            int ingredientIndex = argsBundle.getEditedIngredientIndex();
             if (argsBundle.getDeleteFlag() == false) { //update ingredient
-                ingredientCollection.updateIngredient(argsBundle.getEditedIngredientIndex(), editedIngredient);
+                Ingredient editedIngredient = argsBundle.getEditedIngredient();
+                if (editedIngredient != null) {
+                    ingredientCollection.updateIngredient(ingredientIndex, editedIngredient);
+                }
             }
-            else {
-                ingredientCollection.deleteIngredient(argsBundle.getEditedIngredientIndex());
+            else { //delete ingredient
+                ingredientCollection.deleteIngredient(ingredientIndex);
             }
         }
+        /*Ingredient editedIngredient = argsBundle.getEditedIngredient();
+        if (editedIngredient != null) {
+            int ingredientIndex = argsBundle.getEditedIngredientIndex();
+            if (argsBundle.getDeleteFlag() == false) { //update ingredient
+                ingredientCollection.updateIngredient(ingredientIndex, editedIngredient);
+            }
+            else {
+                ingredientCollection.deleteIngredient(ingredientIndex);
+            }
+        }*/
         getArguments().clear();
     }
 
