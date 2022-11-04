@@ -90,6 +90,13 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
             resultBundle.putSerializable(INGREDIENT_KEY, selectedIngredient);
             getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
         }
+        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
+            IngredientCollectionSelectionFragmentDirections.ActionIngredientCollectionSelectionFragmentToAddRecipeFormFragment toSubmitAction =
+                    IngredientCollectionSelectionFragmentDirections.
+                            actionIngredientCollectionSelectionFragmentToAddRecipeFormFragment();
+            toSubmitAction.setAddedIngredient(selectedIngredient);
+            Navigation.findNavController(getView()).navigate(toSubmitAction);
+        }
 //        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
 //            IngredientCollectionSelectionFragmentDirections.AddIngredientToAddRecipeForm toSubmitAction =
 //                    IngredientCollectionSelectionFragmentDirections.

@@ -62,7 +62,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     abstract void parseArguments();
 
     /**
-     * Sets the UI layout for the view it creates and any listeners
+     * Sets the UI layout for the view
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -74,12 +74,19 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.generic_collection_layout, container, false);
         bindComponents(view);
+        return view;
+    }
 
+    /**
+     * Reads in any arguments of the fragment and set up listeners for the UI
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         parseArguments();
         populateSortSpinnerOptions();
         setListeners();
-
-        return view;
     }
 
     /**

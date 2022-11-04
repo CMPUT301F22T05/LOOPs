@@ -1,11 +1,14 @@
 package com.example.loops;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 
 /**
  * An ingredient form for editing ingredients. Supply the ingredient to edit through action args
@@ -65,5 +68,40 @@ public class EditRecipeFragment extends RecipeFormFragment {
      */
     void sendResult(Recipe submittedRecipe) {
         return;
+    }
+
+    void openSelectionForWhereToSelectIngredientsFrom() {
+        CharSequence[] ingredientSelectionOptions = new CharSequence[]{
+                "From Ingredient Storage",
+                "By New Ingredient",
+                "Cancel"
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog ingredientSelectionPrompt = builder
+                .setTitle( "How do you want to select an ingredient?" )
+                .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // navigate to ingredient storage
+                        if (i == 0) {
+//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
+//                                    AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
+//                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_STORAGE);
+//                            Navigation.findNavController(getView()).navigate(addIngredientAction);
+                        }
+                        // navigate to add ingredient form
+                        else if (i == 1) {
+//                            Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFragment);
+                        }
+                        else if (i == 2) {
+                            return;
+                        }
+                        else {
+                            throw new Error("Invalid selection");
+                        }
+                    }
+                })
+                .create();
+        ingredientSelectionPrompt.show();
     }
 }

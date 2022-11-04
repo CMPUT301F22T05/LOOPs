@@ -51,6 +51,13 @@ public abstract class RecipeFormFragment extends Fragment {
      * @param submittedRecipe ingredient submitted by the form
      */
     abstract void sendResult(Recipe submittedRecipe);
+
+    /**
+     * Implement to handle where to add ingredients from.
+     */
+    // FIXME: better as a non-abstract method but not enough time!!!! >: (
+    abstract void openSelectionForWhereToSelectIngredientsFrom();
+
     /**
      * Creates view of the ingredient form and initialize its widgets
      * @param inflater
@@ -88,6 +95,7 @@ public abstract class RecipeFormFragment extends Fragment {
         ingredientRecyclerView = formView.findViewById(R.id.recipeFormIngredientRecyclerView);
         categoryInput = formView.findViewById(R.id.recipeFormCategoryInput);
         submitButton = formView.findViewById(R.id.recipeFormSubmitButton);
+        addIngredientButton = formView.findViewById(R.id.recipeFormAddIngredientButton);
     }
 
     /**
@@ -97,6 +105,7 @@ public abstract class RecipeFormFragment extends Fragment {
      */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
+        ingredientCollection = new IngredientCollection();
         setConstraintsOnInputs(); // Feel like this needs better name
         setButtonOnClickListeners();
     }
@@ -137,6 +146,12 @@ public abstract class RecipeFormFragment extends Fragment {
             }
         });
 
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSelectionForWhereToSelectIngredientsFrom();
+            }
+        });
         // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
