@@ -83,6 +83,7 @@ public class RecipeFragmentTest {
         Bitmap image = BitmapFactory.decodeResource(targetContext.getResources(),R.drawable.fried_chicken_test_picutre);
         mockRecipe.setPhoto(image);
         Bundle bundle = new Bundle();
+        bundle.putInt("fromWhichFragment", R.layout.fragment_recipe_collection);
         bundle.putSerializable("SelectedRecipe",mockRecipe);
         bundle.putInt("SelectedRecipeIndex",0);
         fragmentScenario = FragmentScenario.launchInContainer(RecipeFragment.class,bundle);

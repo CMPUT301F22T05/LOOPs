@@ -83,8 +83,7 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
         Recipe selectedRecipe = recipeCollection.getRecipe(position);
         NavDirections viewRecipeDetailsAction =
                 (NavDirections) RecipeCollectionEditorFragmentDirections.actionRecipeCollectionToRecipe(
-                        selectedRecipe, position
-                );
+                        selectedRecipe, position, R.layout.fragment_recipe_collection);
         Navigation.findNavController(getView()).navigate(viewRecipeDetailsAction);
     }
 }

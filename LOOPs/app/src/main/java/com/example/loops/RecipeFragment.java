@@ -45,6 +45,8 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
     private TextView recipeCategory;
     private RecyclerView.Adapter recipeIngredientsAdapter;
     private RecyclerView.LayoutManager recipeIngredientsLayoutManager;
+    private Integer recipeIndex;
+    private Integer fromWhichFragment;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -73,14 +75,19 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        recipeIndex = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipeIndex();
         selectedRecipe = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipe();
+        fromWhichFragment = RecipeFragmentArgs.fromBundle(getArguments()).getFromWhichFragment();
+
         bindComponents(view);
         putContentOnViews();
         setUpRecyclerView(view);
         setEditRecipeButtonOnClick();
         setOnSwipeDeleteIngredients();
         setBackToRecipeCollectionOnClick();
+        setDeleteRecipeButton(view);
+
+
 
 
 
@@ -117,6 +124,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         recipeCategory.setText(selectedRecipe.getCategory());
         recipeTitle.setText(selectedRecipe.getTitle());
         recipeComments.setText(selectedRecipe.getComments());
+
     }
 
     /**
@@ -177,8 +185,17 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
          */
         popupDeleteNoButton.setOnClickListener(view -> {
             deletePopupWindow.dismiss();
-        });
 
+        });
+        popupDeleteYesButton.setOnClickListener(view -> {
+            deletePopupWindow.dismiss();
+            RecipeFragmentDirections.ActionRecipeFragmentToRecipeCollectionEditorFragment action =
+                    RecipeFragmentDirections.actionRecipeFragmentToRecipeCollectionEditorFragment();
+            action.setEditedRecipe(selectedRecipe);
+            action.setEditedRecipeIndex(recipeIndex);
+            action.setDeletedFlag(true);
+            Navigation.findNavController(parentView).navigate(action);
+        });
         /*
          * Set the text based on the recipe's title
          */
@@ -195,7 +212,11 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         backToRecipeCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                RecipeFragmentDirections.ActionRecipeFragmentToRecipeCollectionEditorFragment action =
+                        RecipeFragmentDirections.actionRecipeFragmentToRecipeCollectionEditorFragment();
+                action.setEditedRecipe(selectedRecipe);
+                action.setEditedRecipeIndex(recipeIndex);
+                Navigation.findNavController(view).navigate(action);
             }
         });
     }
