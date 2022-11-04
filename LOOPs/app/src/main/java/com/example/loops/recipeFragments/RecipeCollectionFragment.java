@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import com.example.loops.GenericCollectionLayout;
 import com.example.loops.Ingredient;
 import com.example.loops.IngredientSortOption;
+import com.example.loops.MainActivity;
 import com.example.loops.R;
 import com.example.loops.Recipe;
 import com.example.loops.RecipeCollection;
@@ -87,8 +88,8 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
     protected void setRecipeCollectionToDisplay(CollectionType type) {
         if (type == CollectionType.FROM_STORAGE) {
             // TODO: retrieve recipes from storage
-            setRecipeCollectionToDisplay(CollectionType.FROM_TESTING);
-            return;
+            recipeCollection = ((MainActivity)getActivity()).getAllRecipes();
+            //setRecipeCollectionToDisplay(CollectionType.FROM_TESTING);
         }
 //        FIXME: Here for debugging purposes. Remove later
         else if (type == CollectionType.FROM_TESTING) {

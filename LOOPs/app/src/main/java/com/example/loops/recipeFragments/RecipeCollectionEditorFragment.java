@@ -1,6 +1,7 @@
 package com.example.loops.recipeFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.example.loops.MainActivity;
 import com.example.loops.R;
 import com.example.loops.Recipe;
 
@@ -60,10 +62,17 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
                 recipeCollection.updateRecipe(editedRecipeIndex, editedRecipe);
             }
             else {
+                for (Recipe r : recipeCollection.getAllRecipes()) {
+                    Log.e("Recipe", r.getTitle());
+                }
                 recipeCollection.deleteRecipe(editedRecipeIndex);
             }
         }
         getArguments().clear();
+        for (Recipe r : recipeCollection.getAllRecipes()) {
+            Log.e("Recipe", r.getTitle());
+        }
+        ((MainActivity)getActivity()).setAllRecipes(recipeCollection);
     }
 
     /**

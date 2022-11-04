@@ -36,7 +36,34 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     IngredientCollection allIngredients = new IngredientCollection();
+    RecipeCollection allRecipes = new RecipeCollection();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    public RecipeCollection getAllRecipes() {
+        return allRecipes;
+    }
+
+    public void setAllRecipes(RecipeCollection recipeCollection) {
+        allRecipes = recipeCollection;
+    }
+
+    public void retrieveRecipeFromDatabase() {
+        db.collection("RecipeStorage").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                Recipe databaseRecipe = new Recipe(
+                                    documentSnapshot.getString("title"),
+                                        Integer.parseInt(documentSnapshot.getString("numServing"))
+                                );
+
+                            }
+                        }
+                    }
+                });
+    }
 
     /**
      * Load all database ingredients into the ingredient collection.

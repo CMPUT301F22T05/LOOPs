@@ -1,6 +1,7 @@
 package com.example.loops;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -47,6 +48,7 @@ public class RecipeCollection {
      * @param indexToDelete (int)
      */
     public void deleteRecipe(int indexToDelete){
+        Log.e("jwebijb", Integer.toString(indexToDelete));
             allRecipes.remove(indexToDelete);
     }
 

@@ -47,8 +47,5 @@
         <item>@string/sort_by_title_asc</item>
         <item>@string/sort_by_preptime_asc</item>
         <item>@string/sort_by_category_asc</item>
-        <item>@string/sort_by_title_desc</item>
-        <item>@string/sort_by_preptime_desc</item>
-        <item>@string/sort_by_category_desc</item>
     </string-array>
 </resources>
