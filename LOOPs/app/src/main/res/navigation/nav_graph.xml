@@ -137,6 +137,9 @@
         <action
             android:id="@+id/action_EditRecipePlaceHolder_to_recipeFragment"
             app:destination="@id/recipeFragment" />
+        <argument
+            android:name="editedRecipeIndex"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/ingredientFragment"
