@@ -19,7 +19,7 @@
                 android:id="@+id/backToRecipeCollection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back"
+                android:text="@string/recipeBackButtonText"
                 android:layout_marginTop="@dimen/medium_pad"
                 android:layout_below="@id/recipeIngredientList"/>
 
@@ -27,7 +27,7 @@
                 android:id="@+id/deleteRecipeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete"
+                android:text="@string/recipeDeleteButtonText"
                 android:layout_marginStart="@dimen/medium_pad"
                 android:layout_marginTop="@dimen/medium_pad"
                 android:layout_below="@id/recipeIngredientList"

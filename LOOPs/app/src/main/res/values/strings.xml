@@ -18,12 +18,14 @@
         <item>@string/sort_by_Location</item>
         <item>@string/sort_by_Category</item>
     </string-array>
-    <string name="prepTime">Preparation Time: </string>
-    <string name="servingSize">Serving: </string>
+    <string name="prepTime">Preparation Time:</string>
+    <string name="servingSize">Serving:</string>
     <string name="recipeCommentSubHead">Comment</string>
     <string name="ingredientSubHead">Ingredients</string>
     <string name="EditRecipeButtonName">Edit</string>
     <string name="categoryInRecipe">Category:</string>
+    <string name= "recipeBackButtonText">Back</string>
+    <string name= "recipeDeleteButtonText">Delete</string>
 <!-- RECIPE SORT OPTION STRINGS-->
     <string name="sort_by_title_asc">Title Ascending</string>
     <string name="sort_by_preptime_asc">Prep Time Ascending</string>

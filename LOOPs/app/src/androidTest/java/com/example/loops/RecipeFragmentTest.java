@@ -49,6 +49,12 @@ public class RecipeFragmentTest {
     private Recipe mockRecipe;
     private IngredientCollection mockIngredientCollection;
 
+    private Bundle getReturnBundle() {
+        return navController.getBackStack()
+                .get(navController.getBackStack().size()-1)
+                .getArguments();
+    }
+
 
     @Before
     public void setUp() throws ParseException {
@@ -117,7 +123,8 @@ public class RecipeFragmentTest {
         onView(withId(R.id.ingredientSubHead)).check(matches(isDisplayed()));
         onView(withId(R.id.recipeIngredientList)).perform(scrollTo());
         onView(withId(R.id.recipeIngredientList)).check(matches(isDisplayed()));
-
+        onView(withId(R.id.backToRecipeCollection)).check(matches(isDisplayed()));
+        onView(withId(R.id.deleteRecipeButton)).check(matches(isDisplayed()));
 
 
 
@@ -135,6 +142,8 @@ public class RecipeFragmentTest {
         String ingredientSubHead = targetContext.getResources().getString(R.string.ingredientSubHead);
         String categoryInRecipe = targetContext.getResources().getString(R.string.categoryInRecipe);
         String editRecipeText = targetContext.getResources().getString(R.string.EditRecipeButtonName);
+        String deleteButtonText = targetContext.getResources().getString(R.string.recipeDeleteButtonText);
+        String backButtonText = targetContext.getResources().getString(R.string.recipeBackButtonText);
         String recipeServingSize = mockRecipe.getNumServing() + "";
         Duration time = mockRecipe.getPrepTime();
         long seconds = time.getSeconds();
@@ -168,16 +177,97 @@ public class RecipeFragmentTest {
 
 
         }
+        onView(withId(R.id.backToRecipeCollection)).check(matches(withText(backButtonText)));
+        onView(withId(R.id.deleteRecipeButton)).check(matches(withText(deleteButtonText)));
 
 
 
     }
 
+    /**
+     * Checking if swiping an ingredient to the right deletes it
+     */
+    @Test
+    public void testDeleteSwipe(){
+        onView(withId(R.id.recipeIngredientList)).perform(scrollTo());
+        ArrayList<Ingredient> testIngredients = mockIngredientCollection.getIngredients();
+        Ingredient deletedIngredient = testIngredients.get(2);
+        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.scrollToPosition(2),swipeRight());
+        assertNotEquals(deletedIngredient,testIngredients.get(2));
+
+    }
+
+    /**
+     * Checks if the back button returns an edited/not recipe to recipeCollectionEditorFragment
+     */
+    @Test
+    public void testBackButton(){
+        onView(withId(R.id.backToRecipeCollection)).perform(scrollTo(), click());
+        assertEquals(navController.getCurrentDestination().getId(), R.id.recipeCollectionEditorFragment);
+        Bundle returnValue = getReturnBundle();
+        assertEquals(returnValue.getSerializable("editedRecipe"),mockRecipe);
+        assertEquals(returnValue.getInt("editedRecipeIndex"),0);
+        assertEquals(returnValue.getBoolean("deleteFlag"),false);
+
+    }
+
+    /**
+     * Checks if navigating to edit recipe gives proper arguments
+     */
     @Test
     public void testNavigateToEditRecipe() {
         onView(withId(R.id.editRecipeButton)).perform(click());
         assertEquals(navController.getCurrentDestination().getId(),R.id.EditRecipePlaceHolder);
+        Bundle returnValue = getReturnBundle();
+        assertEquals(returnValue.getSerializable("editedRecipe"), mockRecipe);
+        assertEquals(returnValue.getInt("editedRecipe"),0);
+    }
 
+    /**
+     * Checks if pop up to confirm a deletion of a recipe is displaying the right things
+     *  and that pressing no does nothing to the recipe and returns to recipeFragment
+     */
+    @Test
+    public void testDeleteButtonCancel() {
+        onView(withId(R.id.deleteRecipeButton)).perform(scrollTo(), click());
+        String warning = "Delete " + mockRecipe.getTitle() + " recipe";
+        String[] expected = {
+                "Warning",
+                warning,
+                "no",
+                "yes"
+        };
+        for (String e: expected){
+            onView(withText(equalToIgnoringCase(e))).check(matches(isDisplayed()));
+        }
+        onView(withId(R.id.delete_popup_no_button)).perform(click());
+        assertEquals(navController.getCurrentDestination().getId(), R.id.recipeFragment);
+    }
+
+    /**
+     * Checks if pop up to confirm a deletion of a recipe is displaying the right things
+     *   and that pressing yes sends a signal for a recipe to be deleted and returns to
+     *   recipeCollectionEditorFragment
+     */
+    @Test
+    public void testDeleteButtonConfirm() {
+        onView(withId(R.id.deleteRecipeButton)).perform(scrollTo(), click());
+        String warning = "Delete " + mockRecipe.getTitle() + " recipe";
+        String[] expected = {
+                "Warning",
+                warning,
+                "no",
+                "yes"
+        };
+        for (String e: expected){
+            onView(withText(equalToIgnoringCase(e))).check(matches(isDisplayed()));
+        }
+        onView(withId(R.id.delete_popup_yes_button)).perform(click());
+        assertEquals(navController.getCurrentDestination().getId(), R.id.recipeCollectionEditorFragment);
+        Bundle returnValue = getReturnBundle();
+        assertEquals(returnValue.getSerializable("editedRecipe"),mockRecipe);
+        assertEquals(returnValue.getInt("editedRecipeIndex"), 0);
+        assertEquals(returnValue.getBoolean("deleteFlag"),true);
     }
 
 
