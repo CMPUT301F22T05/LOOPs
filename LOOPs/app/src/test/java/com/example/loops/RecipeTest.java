@@ -15,8 +15,6 @@ public class RecipeTest extends TestCase {
     IngredientCollection ingredients;
     float amount;
 
-
-
     public void setUp() throws Exception {
         super.setUp();
     }
@@ -64,8 +62,7 @@ public class RecipeTest extends TestCase {
     @Test
     void testGetPrepTimeHour() {
         initialize();
-        Duration testDuration = Duration.ofHours(2);
-        assertEquals(testDuration, testRecipe.getPrepTimeHour());
+        assertEquals(2, testRecipe.getPrepTimeHour());
     }
 
     @Test
@@ -73,24 +70,64 @@ public class RecipeTest extends TestCase {
         initialize();
         Recipe pizzaRecipe = new Recipe("Pizza", 2);
         pizzaRecipe.setPrepTimeHour(3);
-        assertEquals(3, testRecipe.getPrepTimeHour());
+        assertEquals(3, pizzaRecipe.getPrepTimeHour());
     }
 
-    public void testGetNumServing() {
+    @Test
+    void testGetPrepTimeMinute() {
         initialize();
+        assertEquals(15, testRecipe.getPrepTimeMinute());
+    }
+
+    @Test
+    void testSetPrepTimeMinute() {
+        initialize();
+        Recipe pizzaRecipe = new Recipe("Pizza", 2);
+        pizzaRecipe.setPrepTimeMinute(30);
+        assertEquals(30, pizzaRecipe.getPrepTimeMinute());
+    }
+
+    @Test
+    void testGetPrepTime() {
+        initialize();
+        Recipe pizzaRecipe = new Recipe("Pizza", 2);
+        pizzaRecipe.setPrepTimeHour(2);
+        pizzaRecipe.setPrepTimeMinute(30);
+        assertEquals(150, pizzaRecipe.getPrepTime());
+    }
+
+    @Test
+    void testGetNumServing() {
+        initialize();
+        Recipe pizzaRecipe = new Recipe("Pizza", 2);
         assertEquals(3, testRecipe.getNumServing());
+        assertEquals(2, pizzaRecipe.getNumServing());
     }
 
-    public void testSetNumServing() {
+    @Test
+    void testSetNumServing() {
         initialize();
+        Recipe pizzaRecipe = new Recipe("Pizza", 2);
+        pizzaRecipe.setNumServing(4);
+        assertEquals(4, pizzaRecipe.getNumServing());
     }
 
-    public void testGetCategory() {
+    @Test
+    void testGetCategory() {
         initialize();
+        Recipe pizzaRecipe = new Recipe("Pizza", 2);
+        pizzaRecipe.setCategory("Supper");
+        assertEquals("Supper", pizzaRecipe.getCategory());
     }
 
-    public void testSetCategory() {
+    @Test
+    void testSetCategory() {
         initialize();
+        testRecipe.setCategory("Snack");
+        Recipe pizzaRecipe = new Recipe("Pizza", 2);
+        pizzaRecipe.setCategory("Lunch");
+        assertEquals("Snack", testRecipe.getCategory());
+        assertEquals("Lunch", pizzaRecipe.getCategory());
     }
 
 }

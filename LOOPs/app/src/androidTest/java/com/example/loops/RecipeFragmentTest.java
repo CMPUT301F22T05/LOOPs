@@ -78,7 +78,8 @@ public class RecipeFragmentTest {
                 "",
                 "2. In a deep-fat fryer, heat oil to 375°. Fry chicken, several pieces at a time, until chicken is golden brown and juices run clear, 7-8 minutes on each side. Drain on paper towels.");
         mockRecipe.setComments(comment);
-        mockRecipe.setPrepTime(Duration.ofSeconds(900));
+        mockRecipe.setPrepTimeHour(2);
+        mockRecipe.setPrepTimeMinute(2);
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Bitmap image = BitmapFactory.decodeResource(targetContext.getResources(),R.drawable.fried_chicken_test_picutre);
         mockRecipe.setPhoto(image);
@@ -133,9 +134,7 @@ public class RecipeFragmentTest {
         String categoryInRecipe = targetContext.getResources().getString(R.string.categoryInRecipe);
         String editRecipeText = targetContext.getResources().getString(R.string.EditRecipeButtonName);
         String recipeServingSize = mockRecipe.getNumServing() + "";
-        Duration time = mockRecipe.getPrepTime();
-        long seconds = time.getSeconds();
-        String durationString = String.format("%d:%02d",seconds/3600,(seconds%3600)/60);
+        String durationString = String.format("2 hrs 30 min");
 
         onView(withId(R.id.editRecipeButton)).check(matches(withText(editRecipeText)));
         onView(withId(R.id.recipeTitle)).check(matches(withText(mockRecipe.getTitle())));
