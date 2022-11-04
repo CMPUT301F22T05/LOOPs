@@ -87,11 +87,6 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         setBackToRecipeCollectionOnClick();
         setDeleteRecipeButton(view);
 
-
-
-
-
-
     }
 
     /**
@@ -220,15 +215,6 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
             }
         });
     }
-
-
-
-
-
-
-
-
-
 
     /**
      * Creates swipe interactions on recyclerView

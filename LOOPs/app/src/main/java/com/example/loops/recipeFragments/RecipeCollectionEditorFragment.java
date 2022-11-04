@@ -14,7 +14,10 @@ import com.example.loops.MainActivity;
 import com.example.loops.R;
 import com.example.loops.Recipe;
 
-
+/**
+ * Recipe collection fragment for showing the recipes and also allowing manipulation
+ * of the recipes in the collection
+ */
 public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
 
     public RecipeCollectionEditorFragment() {

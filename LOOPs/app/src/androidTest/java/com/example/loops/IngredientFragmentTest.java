@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Test cases for the Ingredient fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class IngredientFragmentTest {
     private TestNavHostController navController;
@@ -78,6 +81,7 @@ public class IngredientFragmentTest {
                 .get(navController.getBackStack().size()-1)
                 .getArguments();
     }
+
 
     @Test
     public void testStaticDisplayFromIngredientCollection() {

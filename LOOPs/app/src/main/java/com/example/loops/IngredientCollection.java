@@ -41,6 +41,7 @@ public class IngredientCollection {
     /**
      * Delete an ingredient from the collection.
      * @param index
+     * @return true if deleted, false otherwise
      */
     public boolean deleteIngredient(int index) {
         try {
@@ -53,8 +54,9 @@ public class IngredientCollection {
 
     /**
      * Update an ingredient's info based on its index.
-     * @param index
-     * @param ingredient
+     * @param index (int)
+     * @param ingredient (Ingredient)
+     * @return true if deleted, false otherwise
      */
     public boolean updateIngredient(int index, Ingredient ingredient) {
         try {
