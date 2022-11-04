@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
  */
 public class AddRecipeFormFragment extends RecipeFormFragment {
 
+    private Recipe addedRecipe = new Recipe();
     // Empty constructor
     public AddRecipeFormFragment() { }
 
@@ -31,6 +32,8 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Add");
+        ingredientCollection = addedRecipe.getIngredients();
+        setUpRecyclerView(formView);
         parseArguments();
     }
 
@@ -116,6 +119,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
             Ingredient submittedIngredient = AddRecipeFormFragmentArgs.fromBundle(argsBundle).getAddedIngredient();
             if (submittedIngredient != null) {
                 ingredientCollection.addIngredient(submittedIngredient);
+                recyclerViewAdapter.notifyDataSetChanged();
                 Log.e("TEST", submittedIngredient.getDescription());
             }
             argsBundle.clear();

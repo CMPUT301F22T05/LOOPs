@@ -1,6 +1,7 @@
 package com.example.loops;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 
@@ -39,7 +40,6 @@ public class Recipe implements Serializable {
             this.category = category;
             this.comments = comment;
             this.ingredients = new IngredientCollection();
-
     }
 
     /**

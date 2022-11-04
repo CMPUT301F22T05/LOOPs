@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
@@ -28,7 +29,7 @@ import java.util.Locale;
  *  A recipe form. Holds the UI of the  form and on submit, saves the result as FragmentResult
  *  with the key RECIPE_RESULT
  */
-public abstract class RecipeFormFragment extends Fragment {
+public abstract class RecipeFormFragment extends Fragment implements RecyclerViewOnClickInterface {
 
     protected EditText titleInput;
     protected NumberPicker prepTimeHourInput;
@@ -43,8 +44,28 @@ public abstract class RecipeFormFragment extends Fragment {
     protected RecipeIngredientsAdapter ingredientsAdapter;
     protected IngredientCollection ingredientCollection;
 
+    protected RecyclerView.LayoutManager layoutManager;
+    protected RecyclerView.Adapter recyclerViewAdapter;
+
     public RecipeFormFragment() {}
 
+    public void setUpRecyclerView(View view){
+        ingredientRecyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(view.getContext()) {
+            @Override
+            public boolean canScrollVertically(){
+                return false;
+            }
+        };
+        ingredientRecyclerView.setLayoutManager(layoutManager);
+        recyclerViewAdapter = new RecipeIngredientsAdapter (ingredientCollection,view.getContext(),this);
+        ingredientRecyclerView.setAdapter(recyclerViewAdapter);
+    }
+
+    @Override
+    public void OnItemClick(int position) {
+        //To do overridden by subclasses
+    }
 
     /**
      * Implement to handle how submitted Recipe is sent to other activities
@@ -105,7 +126,7 @@ public abstract class RecipeFormFragment extends Fragment {
      */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
-        ingredientCollection = new IngredientCollection();
+        //ingredientCollection = new IngredientCollection();
         setConstraintsOnInputs(); // Feel like this needs better name
         setButtonOnClickListeners();
     }

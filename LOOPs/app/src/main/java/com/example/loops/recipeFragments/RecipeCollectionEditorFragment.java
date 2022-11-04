@@ -69,13 +69,14 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
                     Log.e("Recipe", r.getTitle());
                 }
                 recipeCollection.deleteRecipe(editedRecipeIndex);
+                ((MainActivity)getActivity()).deleteRecipeFromDatabase(editedRecipeIndex);
             }
         }
         getArguments().clear();
         for (Recipe r : recipeCollection.getAllRecipes()) {
             Log.e("Recipe", r.getTitle());
         }
-        ((MainActivity)getActivity()).setAllRecipes(recipeCollection);
+        ((MainActivity)getActivity()).updateRecipeFromDatabase(recipeCollection);
     }
 
     /**
