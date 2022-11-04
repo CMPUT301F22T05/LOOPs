@@ -17,8 +17,6 @@ import java.util.Date;
  * of the ingredients in the collection
  */
 public class IngredientCollectionEditorFragment extends IngredientCollectionFragment {
-    public static final int FROM_STORAGE = 0;
-    public static final int FROM_TESTING = 1;   // FIXME: temporary. Just to show it works
 
     public IngredientCollectionEditorFragment() {
         // Required empty public constructor
@@ -43,6 +41,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
      * Parses the arguments specified by navigation graph actions.
      * Sets the ingredient collection from the arguments and adds ingredient sent by form to
      * its ingredient collection
+     * Notify changes to the database.
      */
     void parseArguments() {
         if (getArguments() == null)
@@ -51,8 +50,11 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
                 = IngredientCollectionEditorFragmentArgs.fromBundle(getArguments());
         // Set the type of the ingredient collection
         CollectionType collectionType = argsBundle.getCollectionType();
+        if (collectionType == CollectionType.FROM_STORAGE) {
+            //((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
+        }
         setIngredientCollectionToDisplay(collectionType);
-        // If any form had returned an ingredient, send it back to this fragment's caller
+        // If any form had returned an ingredient, update it to collection
         Ingredient submittedIngredient = argsBundle.getAddedIngredient();
         if (submittedIngredient != null) {
             ingredientCollection.addIngredient(submittedIngredient);
@@ -67,9 +69,11 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
             }
             else { //delete ingredient
                 ingredientCollection.deleteIngredient(ingredientIndex);
+                ((MainActivity)getActivity()).deleteIngredientFromDatabase(argsBundle.getEditedIngredientIndex());
             }
         }
         getArguments().clear();
+        ((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
     }
 
     /**

@@ -5,6 +5,9 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 /**
@@ -38,6 +41,34 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                 .submitRecipeToCollection();
         toSubmitAction.setAddedRecipe(submittedRecipe);
         Navigation.findNavController(getView()).navigate(toSubmitAction);
+        Integer callerFragmentId = getCallerFragmentId();
         */
+        Integer callerFragmentId = getCallerFragmentId();
+
+        if ( callerFragmentId == null ) {
+            throw new Error("No caller fragment");
+        }
+        else if ( callerFragmentId == R.id.recipeCollectionEditorFragment ) {
+            AddRecipeFormFragmentDirections.SubmitRecipeToCollection toSubmitAction =
+                    AddRecipeFormFragmentDirections.submitRecipeToCollection();
+            toSubmitAction.setAddedRecipe(submittedRecipe);
+            Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
+        }
+        else {
+            throw new Error("Navigation action not defined");
+        }
     }
+
+    /**
+     * Returns the id of the previous fragment
+     * @return id of previous fragment. If no such fragment then null
+     */
+    private Integer getCallerFragmentId() {
+        NavController navController = Navigation.findNavController(getView());
+        NavBackStackEntry previousFragment = navController.getPreviousBackStackEntry();
+        if (previousFragment == null)
+            return null;
+        return previousFragment.getDestination().getId();
+    }
+
 }

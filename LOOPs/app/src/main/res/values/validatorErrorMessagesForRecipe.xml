@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    RECIPE TITLE ERROR MESSAGES -->
+    <string name="recipe_no_title">Recipe\'s title must be given</string>
+
+    <!--    RECIPE DURATION ERROR MESSAGE -->
+    <string name="recipe_no_duration">Recipe\'s duration must be given</string>
+
+    <!--    RECIPE CATEGORY ERROR MESSAGE -->
+    <string name="recipe_no_category">Recipe\'s category must be given</string>
+
+    <!--    RECIPE NUMBER SERVINGS ERROR MESSAGE -->
+    <string name="recipe_no_numServ">Recipe\'s numServ must be given</string>
+
+    <!--    RECIPE NUMBER SERVINGS ERROR MESSAGE -->
+    <string name="recipe_negative_numServ">Recipe\'s numServ must be positive</string>
+
+    <!--    RECIPE COMMENT ERROR MESSAGE -->
+    <string name="recipe_no_Comment">Recipe\'s Comment must be given</string>
+
+</resources>

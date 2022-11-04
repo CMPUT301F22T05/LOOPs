@@ -25,6 +25,16 @@ public class Recipe implements Serializable {
 
     private String comments;
 
+    public Recipe(String title, Duration duration, String category, int numServ, String comment) {
+            this.title = title;
+            this.prepTime = duration;
+            this.numServing = numServ;
+            this.category = category;
+            this.comments = comment;
+            this.ingredients = new IngredientCollection();
+
+    }
+
     public String getComments() {
         return comments;
     }
@@ -46,7 +56,7 @@ public class Recipe implements Serializable {
     /**
      * Empty constructor
      */
-    public Recipe(){this.ingredients = new IngredientCollection();};
+    public Recipe(){this.ingredients = new IngredientCollection();}
 
 
     /**

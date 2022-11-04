@@ -18,10 +18,37 @@
         <item>@string/sort_by_Location</item>
         <item>@string/sort_by_Category</item>
     </string-array>
-    <string name="prepTime">Preparation Time: </string>
-    <string name="servingSize">Serving: </string>
+    <string name="prepTime">Preparation Time:</string>
+    <string name="servingSize">Serving:</string>
     <string name="recipeCommentSubHead">Comment</string>
     <string name="ingredientSubHead">Ingredients</string>
     <string name="EditRecipeButtonName">Edit</string>
     <string name="categoryInRecipe">Category:</string>
+    <string name= "recipeBackButtonText">Back</string>
+    <string name= "recipeDeleteButtonText">Delete</string>
+<!-- RECIPE SORT OPTION STRINGS-->
+    <string name="sort_by_title_asc">Title Ascending</string>
+    <string name="sort_by_preptime_asc">Prep Time Ascending</string>
+    <string name="sort_by_category_asc">Category Ascending</string>
+    <string name="sort_by_title_desc">Title Descending</string>
+    <string name="sort_by_preptime_desc">Prep Time Descending</string>
+    <string name="sort_by_category_desc">Category Descending</string>
+    <string name="description">description</string>
+    <string name="ingredients_description">ingredients_description</string>
+    <string name="amount_needed_for_the_recipe">amount_needed_for_the_recipe</string>
+    <string name="ingredients_amount">ingredients_amount</string>
+    <string name="unit">unit</string>
+    <string name="ingredients_unit">ingredients_unit</string>
+    <string name="ingredients_category">ingredients_category</string>
+    <string name="ingredient_category">ingredient_category</string>
+    <string name="save">save</string>
+    <string-array name="recipe_collection_sort_option">
+        <item>@string/empty_sort_option</item>
+        <item>@string/sort_by_title_asc</item>
+        <item>@string/sort_by_preptime_asc</item>
+        <item>@string/sort_by_category_asc</item>
+        <item>@string/sort_by_title_desc</item>
+        <item>@string/sort_by_preptime_desc</item>
+        <item>@string/sort_by_category_desc</item>
+    </string-array>
 </resources>
