@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -69,11 +70,17 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
             }
             else { //delete ingredient
                 ingredientCollection.deleteIngredient(ingredientIndex);
-                ((MainActivity)getActivity()).deleteIngredientFromDatabase(argsBundle.getEditedIngredientIndex());
+                try {
+                    ((MainActivity) getActivity()).deleteIngredientFromDatabase(argsBundle.getEditedIngredientIndex());
+                } catch (Exception e) {}
             }
         }
         getArguments().clear();
-        ((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
+        try {
+            ((MainActivity) getActivity()).updateIngredientFromDatabase(ingredientCollection);
+        } catch (Exception e) {
+            return;
+        }
     }
 
     /**
