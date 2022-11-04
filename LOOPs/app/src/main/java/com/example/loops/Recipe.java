@@ -14,9 +14,11 @@ import java.time.LocalTime;
 /**
  *  model class of a Recipe
  */
-public class Recipe implements Serializable {
+public class Recipe implements Serializable, Comparable<Recipe> {
     private String title;
-    private Duration prepTime;
+    private int prepTimeHour;
+    private int prepTimeMinute;
+    private int prepTime;
     private int numServing;
     private String category;
     private Bitmap photo;
@@ -46,7 +48,13 @@ public class Recipe implements Serializable {
     /**
      * Empty constructor
      */
-    public Recipe(){this.ingredients = new IngredientCollection();};
+    public Recipe(){
+        this.ingredients = new IngredientCollection();
+        this.prepTimeMinute = 0;
+        this.prepTimeHour = 0;
+        this.numServing = 0;
+        this.prepTime = 0;
+    };
 
 
     /**
@@ -58,6 +66,9 @@ public class Recipe implements Serializable {
         this.title = title;
         this.numServing = numServing;
         this.ingredients = new IngredientCollection();
+        this.prepTimeMinute = 0;
+        this.prepTimeHour = 0;
+        this.prepTime = 0;
     }
 
 
@@ -99,26 +110,9 @@ public class Recipe implements Serializable {
 
 
     /**
-     * Method to get the preparation time of the recipe
-     * @return LocalTime representing the preparation time
-     */
-    public Duration getPrepTime() {
-        return prepTime;
-    }
-
-    /**
-     * Method for setting the preparation time of the recipe
-     * @param prepTime (LocalTime)
-     */
-    public void setPrepTime(Duration prepTime) {
-        this.prepTime = prepTime;
-    }
-
-    /**
      * Method for getting the number of servings of the recipe
      * @return int representing the number of servings
      */
-
     public int getNumServing() {
         return numServing;
     }
@@ -137,7 +131,6 @@ public class Recipe implements Serializable {
      * Method to get the category of the recipe
      * @return String representing the category
      */
-
     public String getCategory() {
         return category;
     }
@@ -151,6 +144,55 @@ public class Recipe implements Serializable {
         this.category = category;
     }
 
+
+    /**
+     * Method to get the hours of prep time of the recipe
+     * @return int representing the hours
+     */
+    public int getPrepTimeHour() {
+        return prepTimeHour;
+    }
+
+
+    /**
+     * Method to set the hours of prep time of the recipe
+     * @param prepTimeHour (int)
+     */
+    public void setPrepTimeHour(int prepTimeHour) {
+        this.prepTimeHour = prepTimeHour;
+        updateTotalPrepTime(prepTimeHour * 60);
+    }
+
+
+    /**
+     * Method to get the minutes of prep time of the recipe
+     * @return int representing the minutes
+     */
+    public int getPrepTimeMinute() {
+        return prepTimeMinute;
+    }
+
+
+    /**
+     * Method to set the minutes of prep time of the recipe
+     * @param prepTimeMinute (int)
+     */
+    public void setPrepTimeMinute(int prepTimeMinute) {
+        this.prepTimeMinute = prepTimeMinute;
+        updateTotalPrepTime(prepTimeMinute);
+    }
+
+    /**
+     * Method to set the minutes of prep time of the recipe
+     * @return the total prep time in minutes (int)
+     */
+    public int getPrepTime(){
+        return this.prepTime;
+    }
+
+    private void updateTotalPrepTime(int minutes){
+        this.prepTime += minutes;
+    }
 
     //TODO: Update with javadocs the methods that are required below
     public Bitmap getPhoto() {
@@ -169,4 +211,20 @@ public class Recipe implements Serializable {
         this.picUri = picUri;
     }
 
+    @Override
+    public int compareTo(Recipe o)
+    {
+        if (this.prepTime > o.prepTime) {
+            // if current object is greater,then return 1
+            return 1;
+        }
+        else if (this.prepTime < o.prepTime) {
+            // if current object is greater,then return -1
+            return -1;
+        }
+        else {
+            // if current object is equal to o,then return 0
+            return 0;
+        }
+    }
 }
