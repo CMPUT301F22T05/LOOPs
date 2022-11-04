@@ -74,9 +74,41 @@
         android:name="com.example.loops.RecipeCollectionFragment"
         android:label="fragment_recipe_collection"
         tools:layout="@layout/fragment_recipe_collection" >
+
+        <action
+            android:id="@+id/addRecipeFromCollection"
+            app:destination="@id/addRecipeFormFragment" />
         <action
             android:id="@+id/action_recipeCollectionFragment_to_mealPlanHomePageFragment"
             app:destination="@id/mealPlanHomePageFragment" />
+        <action
+            android:id="@+id/action_recipeCollection_to_recipe"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment android:id="@+id/recipeFragment"
+        android:name="com.example.loops.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe">
+        <argument
+            android:name="SelectedRecipe"
+            app:argType="com.example.loops.Recipe" />
+        <action
+            android:id="@+id/action_recipeFragment_to_placeholder"
+            app:destination="@id/EditRecipePlaceHolder" />
+        <argument
+            android:name="SelectedRecipeIndex"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/EditRecipePlaceHolder"
+        android:name="com.example.loops.EditRecipePlaceHolderFragment"
+        tools:layout="@layout/fragment_edit_recipe_place_holder">
+        <argument
+            android:name="editedRecipe"
+            app:argType="com.example.loops.Recipe" />
+        <action
+            android:id="@+id/action_EditRecipePlaceHolder_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/ingredientFragment"
@@ -96,7 +128,7 @@
             android:id="@+id/action_ingredientFragment_to_editIngredientFormFragment"
             app:destination="@id/editIngredientFormFragment" />
         <argument
-            android:name="SelectedIngredientIndex"
+            android:name="selectedIngredientIndex"
             app:argType="integer" />
         <argument
             android:name="fromWhichFragment"
@@ -136,5 +168,16 @@
         <action
             android:id="@+id/addIngredientFormFromSelection"
             app:destination="@id/addIngredientFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRecipeFormFragment"
+        android:name="com.example.loops.AddRecipeFormFragment"
+        android:label="addRecipeFormFragment"
+        tools:layout="@layout/fragment_recipe_form">
+        <action
+            android:id="@+id/submitRecipeToCollection"
+            app:destination="@id/recipeCollectionFragment"
+            app:popUpTo="@id/recipeCollectionFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

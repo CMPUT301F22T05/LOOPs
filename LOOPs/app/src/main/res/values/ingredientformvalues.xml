@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="ingredient_locations">
+        <item></item>
         <item>Pantry</item>
         <item>Fridge</item>
         <item>Dog</item>
     </string-array>
 
     <string-array name="ingredient_units">
+        <item></item>
         <item>kg</item>
         <item>g</item>
         <item>dogs</item>
     </string-array>
 
     <string-array name="ingredient_categories">
+        <item></item>
         <item>Dog Food</item>
         <item>Cat Food</item>
         <item>Sure, I guess Human Food as well</item>

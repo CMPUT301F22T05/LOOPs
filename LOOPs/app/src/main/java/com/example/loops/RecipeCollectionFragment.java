@@ -1,12 +1,19 @@
 package com.example.loops;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,9 +66,30 @@ public class RecipeCollectionFragment extends GenericCollectionLayout {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ingredient_collection, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe_collection, container, false);
         bindComponents(view);
         collectionTitle.setText(R.string.recipeCollection);
+
+        ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
+                ArrayAdapter.createFromResource(getActivity(),
+                        R.array.recipe_categories, android.R.layout.simple_spinner_item);
+        sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.addRecipeFromCollection);
+            }
+        });
+
+        collectionView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
         return view;
     }
 }
