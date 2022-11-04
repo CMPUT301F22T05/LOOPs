@@ -55,8 +55,8 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         if (submittedIngredient != null) {
             sendIngredientToCallerFragment(submittedIngredient);
         }
-
         getArguments().clear();
+        ((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
     }
 
     /**
