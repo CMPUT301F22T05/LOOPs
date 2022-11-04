@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Control class for ingredients
+ * it can contain number of ingredients and keep track of them
+ * ingredient can be removed or updated from the collection
+ * new ingredients can also be added in
+ * ingredients can also be sorted in different ways shown in IngredientSortOption enum
+ * it also contains comparators for Ingredient
+ */
 public class IngredientCollection {
     private ArrayList<Ingredient> ingredients;
 
@@ -19,12 +27,24 @@ public class IngredientCollection {
         ingredients.add(ingredient);
     }
 
-    public void deleteIngredient(int index) {
-        ingredients.remove(index);
+    public boolean deleteIngredient(int index) {
+        try {
+            ingredients.remove(index);
+        }
+        catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
-    public void updateIngredient(int index, Ingredient ingredient) {
-        ingredients.set(index, ingredient);
+    public boolean updateIngredient(int index, Ingredient ingredient) {
+        try {
+            ingredients.set(index, ingredient);
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public void sort(IngredientSortOption option) {

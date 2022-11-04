@@ -69,16 +69,6 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
                 ingredientCollection.deleteIngredient(ingredientIndex);
             }
         }
-        /*Ingredient editedIngredient = argsBundle.getEditedIngredient();
-        if (editedIngredient != null) {
-            int ingredientIndex = argsBundle.getEditedIngredientIndex();
-            if (argsBundle.getDeleteFlag() == false) { //update ingredient
-                ingredientCollection.updateIngredient(ingredientIndex, editedIngredient);
-            }
-            else {
-                ingredientCollection.deleteIngredient(ingredientIndex);
-            }
-        }*/
         getArguments().clear();
     }
 

@@ -42,8 +42,8 @@ public class IngredientCollectionEditorFragmentTest {
         //Two ingredients will be shown in the fragment for testing
         //1. Ingredient("BBB", "10/28/2022", "fridge", 1, "", "XXX")
         //2. Ingredient("AAA", "10/29/2022", "cupboard", 1, "", "YYY")
-        // check method setIngredientCollectionToDisplay(CollectionType type)
-        // in IngredientCollectionFragment.java
+        //check method setIngredientCollectionToDisplay(CollectionType type)
+        //in IngredientCollectionFragment.java
         bundle.putSerializable("collectionType",
                 IngredientCollectionFragment
                         .CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT);
@@ -58,14 +58,6 @@ public class IngredientCollectionEditorFragmentTest {
             navController.setGraph(R.navigation.nav_graph);
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
-
-        //IdlingPolicies.setMasterPolicyTimeout(5000, TimeUnit.HOURS);
-        /*fragmentScenario.onFragment(new FragmentScenario.FragmentAction<IngredientCollectionEditorFragment>() {
-            @Override
-            public void perform(@NonNull IngredientCollectionEditorFragment ingredientCollectionEditorFragment) {
-
-            }
-        })*/
     }
 
     private void chooseSortOption(String option) {
@@ -78,8 +70,6 @@ public class IngredientCollectionEditorFragmentTest {
     private void testSortByDescription() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
                 .getString(R.string.sort_by_description));
-//        onData(allOf(instanceOf(Ingredient.class))).atPosition(0).check(matches(withText(containsString("AAA"))));
-//        onData(is(instanceOf(IngredientStorageViewAdapter.class))).atPosition(0).check(matches(withText(containsString("AAA"))));
         onData(is(instanceOf(Ingredient.class)))
                 .inAdapterView(withId(R.id.generic_collection_view))
                 .atPosition(0)

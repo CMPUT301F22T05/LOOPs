@@ -38,7 +38,6 @@ public class IngredientCollectionTest {
 
     @Test
     void testAdd() {
-        //initialize();
         Ingredient ingredient = new Ingredient(
                 "",
                 new Date(0),
@@ -53,7 +52,7 @@ public class IngredientCollectionTest {
 
     @Test
     void testDelete() {
-        //initialize();
+        assertFalse(storage.deleteIngredient(-1));
         assertEquals(2, storage.getIngredients().size());
         storage.deleteIngredient(1);
         assertEquals(1, storage.getIngredients().size());
@@ -63,7 +62,6 @@ public class IngredientCollectionTest {
 
     @Test
     void testUpdate() {
-        //initialize();
         Ingredient ingredient = new Ingredient(
                 "aa",
                 new Date(0),
@@ -71,6 +69,7 @@ public class IngredientCollectionTest {
                 1,
                 "",
                 "");
+        assertFalse(storage.updateIngredient(3, ingredient));
         assertEquals("a", storage.getIngredients().get(0).getDescription());
         storage.updateIngredient(0, ingredient);
         assertEquals("aa", storage.getIngredients().get(0).getDescription());
@@ -78,7 +77,6 @@ public class IngredientCollectionTest {
 
     @Test
     void testSortByDescription() {
-        //initialize();
         storage.sort(IngredientSortOption.BY_DESCRIPTION_DESCENDING);
         assertEquals("b", storage.getIngredients().get(0).getDescription());
         assertEquals("a", storage.getIngredients().get(1).getDescription());
@@ -89,7 +87,6 @@ public class IngredientCollectionTest {
 
     @Test
     void testSortByBestBeforeDate() {
-        //initialize();
         storage.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_DESCENDING);
         assertEquals("2022-10-29",
                 dateFormatter.format(storage.getIngredients().get(0).getBestBeforeDate()));
@@ -104,7 +101,6 @@ public class IngredientCollectionTest {
 
     @Test
     void testSortByLocation() {
-        //initialize();
         storage.sort(IngredientSortOption.BY_LOCATION_DESCENDING);
         assertEquals("fridge", storage.getIngredients().get(0).getStoreLocation());
         assertEquals("cupboard", storage.getIngredients().get(1).getStoreLocation());
@@ -115,7 +111,6 @@ public class IngredientCollectionTest {
 
     @Test
     void testSortByCategory() {
-        //initialize();
         storage.sort(IngredientSortOption.BY_CATEGORY_DESCENDING);
         assertEquals("y", storage.getIngredients().get(0).getCategory());
         assertEquals("x", storage.getIngredients().get(1).getCategory());

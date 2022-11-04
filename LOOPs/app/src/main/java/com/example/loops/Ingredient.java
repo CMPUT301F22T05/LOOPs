@@ -5,6 +5,10 @@ import java.text.SimpleDateFormat;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Model class. It is abstraction of ingredient and it implements Serializable which make it
+ * transmissible between fragment
+ */
 public class Ingredient implements Serializable {
     private String description;
     private Date bestBeforeDate;
@@ -31,6 +35,11 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
+    /**
+     * check if two ingredients are equal
+     * @param o
+     * @return if o is equal to this
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Ingredient))
@@ -44,26 +53,50 @@ public class Ingredient implements Serializable {
                 && toCompare.getUnit().equals(getUnit());
     }
 
+    /**
+     * get the ingredient's description
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * set the ingredient's description to a wanted value
+     * @param description new description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * get the ingredient's best before date as Date
+     * @return Date object
+     */
     public Date getBestBeforeDate() {
         return bestBeforeDate;
     }
 
+    /**
+     * get the ingredient's best before date as string
+     * @return Date string
+     */
     public String getBestBeforeDateString() {
         return dateFormatter.format(bestBeforeDate);
     }
 
+    /**
+     * set the ingredient's best before date to another Date
+     * @param bestBeforeDate new date
+     */
     public void setBestBeforeDate(Date bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
     }
 
+    /**
+     * set the ingredient's best before date to another Date with formatted string
+     * @param bestBeforeDate new date
+     */
     public void setBestBeforeDate(String bestBeforeDate){
         try {
             Date date = dateFormatter.parse(bestBeforeDate);
@@ -73,34 +106,66 @@ public class Ingredient implements Serializable {
         }
     }
 
+    /**
+     * get the ingredient's store location
+     * @return the store location
+     */
     public String getStoreLocation() {
         return storeLocation;
     }
 
+    /**
+     * set teh ingredient's store location
+     * @param storeLocation new store location
+     */
     public void setStoreLocation(String storeLocation) {
         this.storeLocation = storeLocation;
     }
 
+    /**
+     * get the amount of the ingredient
+     * @return the amount
+     */
     public float getAmount() {
         return amount;
     }
 
+    /**
+     * set the ingredient's amount to a new value
+     * @param amount new amount
+     */
     public void setAmount(float amount) {
         this.amount = amount;
     }
 
+    /**
+     * get the ingredient's unit
+     * @return the unit
+     */
     public String getUnit() {
         return unit;
     }
 
+    /**
+     * give the ingredient another unit
+     * @param unit new unit
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
+    /**
+     * get the ingredient's category
+     * @return the category of the ingredient
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * set the ingredient's category
+     * @param category new category of this ingredient
+     */
     public void setCategory(String category) {
         this.category = category;
     }
