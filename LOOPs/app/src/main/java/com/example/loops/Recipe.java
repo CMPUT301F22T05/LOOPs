@@ -25,6 +25,14 @@ public class Recipe implements Serializable {
 
     private String comments;
 
+    public Recipe(String title, Duration duration, String category, int numServ, String comment) {
+            this.title = title;
+            this.prepTime = duration;
+            this.numServing = numServ;
+            this.category = category;
+            this.comments = comment;
+    }
+
     public String getComments() {
         return comments;
     }

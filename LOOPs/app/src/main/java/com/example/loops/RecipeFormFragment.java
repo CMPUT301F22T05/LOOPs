@@ -1,5 +1,6 @@
 package com.example.loops;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,14 +18,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
  *  A recipe form. Holds the UI of the  form and on submit, saves the result as FragmentResult
  *  with the key RECIPE_RESULT
  */
-public class RecipeFormFragment extends Fragment {
+public abstract class RecipeFormFragment extends Fragment {
 
     protected EditText titleInput;
     protected NumberPicker prepTimeHourInput;
@@ -39,7 +43,14 @@ public class RecipeFormFragment extends Fragment {
     protected RecipeIngredientsAdapter ingredientsAdapter;
     protected IngredientCollection ingredientCollection;
 
+    public RecipeFormFragment() {}
 
+
+    /**
+     * Implement to handle how submitted Recipe is sent to other activities
+     * @param submittedRecipe ingredient submitted by the form
+     */
+    abstract void sendResult(Recipe submittedRecipe);
     /**
      * Creates view of the ingredient form and initialize its widgets
      * @param inflater
@@ -122,10 +133,81 @@ public class RecipeFormFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Implement saving the recipe
+                submitForm();
             }
         });
+
         // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
+
+    /**
+     * Validates the values in the form.
+     * If there are any validation errors, displays to the user error messages.
+     * If there are no validation errors, submits the result to the fragment manager and closes fragment
+     */
+    public void submitForm() {
+        Recipe submittedRecipe = getInputtedRecipe();
+        if ( isValidRecipeAndNotifyErrors(submittedRecipe) ) {
+            sendResult(submittedRecipe);
+        }
+    }
+
+    /**
+     * Returns an Recipe object where its attributes are those from the form
+     * @return Recipe object formed by the value of the fields of the form
+     */
+    public Recipe getInputtedRecipe() {
+        String title = titleInput.getText().toString();
+        int timeHour = prepTimeHourInput.getValue();
+        int timeMinute = prepTimeMinuteInput.getValue();
+        String category = categoryInput.getSelectedItem().toString();
+        String StringNumServ = numServingInput.getText().toString();
+        int numServ = Integer.parseInt(StringNumServ);
+        String comment = commentsInput.getText().toString();
+        Duration duration = Duration.ofHours(timeHour).plus(Duration.ofMinutes(timeMinute));
+        Recipe inputtedRecipe= new Recipe(
+                title,
+                duration,
+                category,
+                numServ,
+                comment
+        );
+        return inputtedRecipe;
+    }
+
+
+    /**
+     * Checks if Recipe is valid and also if there are any errors, prompts the message to user
+     * by displayErrorMessage
+     * @param RecipeToValidate Recipe to validate
+     * @return True if ingredient is valid. Otherwise false and notify user of errors
+     */
+    private boolean isValidRecipeAndNotifyErrors(Recipe RecipeToValidate) {
+        RecipeValidator validator = new RecipeValidator();
+        validator.checkRecipe(RecipeToValidate, RecipeValidator.RECIPE_TYPE.STORED);
+
+        ArrayList<String> errorMessages = new ArrayList<>();
+        for (int errorStringID : validator.getErrorStringIds()) {
+            errorMessages.add( getString(errorStringID) );
+        }
+        if (errorMessages.size() > 0) {
+            displayErrorMessages(errorMessages);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Displays error messages to the user by opening up a popup
+     * @param errorMessages string of error messages to display to user
+     */
+    private void displayErrorMessages(ArrayList<String> errorMessages) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog errorMessageDisplay = builder
+                .setTitle("Please fill out the form properly")
+                .setMessage( String.join("\n", errorMessages) )
+                .create();
+        errorMessageDisplay.show();
+    }
 }
