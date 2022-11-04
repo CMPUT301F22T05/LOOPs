@@ -30,12 +30,12 @@ public class RecipeTest extends TestCase {
         Duration x = Duration.ofHours(2);
         Duration y = Duration.ofMinutes(15);
         x.plus(y);
+        testRecipe.setPrepTime(x);
         testRecipe.setTitle("Baked carrots");
         testRecipe.setCategory("Vegetables");
         testRecipe.setComments("Bake in oven at 350F");
         testRecipe.setIngredients(ingredients);
         testRecipe.setNumServing(3);
-        testRecipe.setPrepTime(x);
     }
 
 
