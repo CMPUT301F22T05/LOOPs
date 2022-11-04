@@ -104,7 +104,7 @@ public class RecipeCollection {
     class PrepTimeAscendingComparator implements Comparator<Recipe> {
         @Override
         public int compare(Recipe o1, Recipe o2) {
-            return o1.getPrepTime().compareTo(o2.getPrepTime());
+            return o1.compareTo(o2);
         }
     }
 

@@ -100,10 +100,8 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
      * Puts recipe attributes that is not the ingredients on views
      */
     private void putContentOnViews(){
-        Duration time = selectedRecipe.getPrepTime();
-        long seconds = time.getSeconds();
-        String duration = String.format("%d:%02d",seconds/3600,(seconds%3600)/60);
-        prepTime.setText(duration);
+        String time = String.format("%d hrs %d min", selectedRecipe.getPrepTimeHour(), selectedRecipe.getPrepTimeMinute());
+        prepTime.setText(time);
         recipeImage.setImageBitmap(selectedRecipe.getPhoto());
         servingSize.setText("" + selectedRecipe.getNumServing());
         recipeCategory.setText(selectedRecipe.getCategory());
