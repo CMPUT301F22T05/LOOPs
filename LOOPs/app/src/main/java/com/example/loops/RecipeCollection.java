@@ -45,9 +45,15 @@ public class RecipeCollection {
     /**
      * Method to remove a recipe from the collection of recipes
      * @param indexToDelete (int)
+     * @return true if deleted, false otherwise
      */
-    public void deleteRecipe(int indexToDelete){
+    public boolean deleteRecipe(int indexToDelete){
+        try {
             allRecipes.remove(indexToDelete);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -71,9 +77,16 @@ public class RecipeCollection {
      * Method to update (edit) a recipe by overwriting it in the collection
      * @param recipeInd (int)
      * @param newRecipe (Recipe)
+     * @return true if deleted, false otherwise
      */
-    public void updateRecipe(int recipeInd, Recipe newRecipe){
-        allRecipes.set(recipeInd, newRecipe);
+    public boolean updateRecipe(int recipeInd, Recipe newRecipe){
+        try {
+            allRecipes.set(recipeInd, newRecipe);
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**

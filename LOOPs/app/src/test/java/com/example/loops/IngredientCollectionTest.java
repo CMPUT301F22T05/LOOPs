@@ -18,6 +18,7 @@ public class IngredientCollectionTest {
     private IngredientCollection storage;
     private Ingredient ingredient1;
     private Ingredient ingredient2;
+
     @BeforeEach
     void initialize() {
         storage = new IngredientCollection();
