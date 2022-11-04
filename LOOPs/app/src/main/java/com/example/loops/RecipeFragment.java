@@ -36,13 +36,13 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
     private Button editRecipeButton;
     private Button backToRecipeCollection;
     private Button deleteRecipeButton;
-    private RecyclerView recipeIngredients;
     private TextView prepTime;
     private TextView servingSize;
     private TextView recipeComments;
     private TextView recipeTitle;
     private ShapeableImageView recipeImage;
     private TextView recipeCategory;
+    private RecyclerView recipeIngredients;
     private RecyclerView.Adapter recipeIngredientsAdapter;
     private RecyclerView.LayoutManager recipeIngredientsLayoutManager;
     private Integer recipeIndex;
@@ -154,7 +154,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
             @Override
             public void onClick(View v) {
                 RecipeFragmentDirections.ActionRecipeFragmentToPlaceholder action =
-                        RecipeFragmentDirections.actionRecipeFragmentToPlaceholder(selectedRecipe);
+                        RecipeFragmentDirections.actionRecipeFragmentToPlaceholder(selectedRecipe,recipeIndex);
                 Navigation.findNavController(v).navigate(action);
             }
         });
@@ -251,6 +251,10 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         itemTouchHelper.attachToRecyclerView(recipeIngredients);
     }
 
+    /**
+     * does nothing in this case
+     * @param position
+     */
     @Override
     public void OnItemClick(int position) {
 
