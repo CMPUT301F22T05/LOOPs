@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.example.loops.database.IngredientStorageDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Date;
 
 /**
@@ -87,6 +90,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     protected void setIngredientCollectionToDisplay(CollectionType type) {
         if (type == CollectionType.FROM_STORAGE) {
             ingredientCollection = ((MainActivity)getActivity()).allIngredients;
+            //((MainActivity)getActivity()).retrieveIngredientFromDatabase();
         }
         else if (type == CollectionType.FROM_RECIPE_INGREDIENTS) {
             // TODO: implement this whoever is handling recipe fragment
