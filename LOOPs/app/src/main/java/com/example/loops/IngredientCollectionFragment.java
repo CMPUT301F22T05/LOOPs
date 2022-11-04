@@ -32,7 +32,8 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     public enum CollectionType {
         FROM_STORAGE,
         FROM_RECIPE_INGREDIENTS,
-        FROM_TESTING
+        FROM_TESTING,
+        FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT
     }
 
     public IngredientCollectionFragment() {
@@ -119,6 +120,11 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     "Test Unit",
                     "Test Category"
             ));
+        }
+        else if (type == CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT) {
+            ingredientCollection = new IngredientCollection();
+            ingredientCollection.addIngredient(new Ingredient("BBB", "10/28/2022", "fridge", 1, "", "XXX"));
+            ingredientCollection.addIngredient(new Ingredient("AAA", "10/29/2022", "cupboard", 1, "", "YYY"));
         }
         else {
             throw new IllegalArgumentException("Unknown given collection type");
