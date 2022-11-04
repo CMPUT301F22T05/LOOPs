@@ -33,6 +33,15 @@
     <string name="sort_by_title_desc">Title Descending</string>
     <string name="sort_by_preptime_desc">Prep Time Descending</string>
     <string name="sort_by_category_desc">Category Descending</string>
+    <string name="description">description</string>
+    <string name="ingredients_description">ingredients_description</string>
+    <string name="amount_needed_for_the_recipe">amount_needed_for_the_recipe</string>
+    <string name="ingredients_amount">ingredients_amount</string>
+    <string name="unit">unit</string>
+    <string name="ingredients_unit">ingredients_unit</string>
+    <string name="ingredients_category">ingredients_category</string>
+    <string name="ingredient_category">ingredient_category</string>
+    <string name="save">save</string>
     <string-array name="recipe_collection_sort_option">
         <item>@string/empty_sort_option</item>
         <item>@string/sort_by_title_asc</item>
