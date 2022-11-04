@@ -6,6 +6,11 @@ import junit.framework.TestCase;
  * JUNIT test for Recipe class
  */
 public class RecipeTest extends TestCase {
+    Recipe testRecipe;
+    Ingredient carrot;
+    IngredientCollection ingredients;
+    float amount;
+
 
     public void setUp() throws Exception {
         super.setUp();
@@ -14,10 +19,27 @@ public class RecipeTest extends TestCase {
     public void tearDown() throws Exception {
     }
 
+    void initialize() {
+        testRecipe = new Recipe();
+        ingredients = new IngredientCollection();
+        amount = 10;
+        carrot = new Ingredient("Carrot", "10/24/22", "Fridge",amount , "units","snack");
+        ingredients.addIngredient(carrot);
+        testRecipe.setTitle("Baked carrots");
+        testRecipe.setCategory("Vegetables");
+        testRecipe.setComments("Bake in oven at 350F");
+        testRecipe.setIngredients(ingredients);
+    }
+
     public void testGetTitle() {
+        initialize();
+        assertEquals("Baked carrots", testRecipe.getTitle());
+        Recipe pizzaRecipe = new Recipe("Pizza", 2);
+        assertEquals("Pizza", pizzaRecipe.getTitle());
     }
 
     public void testSetTitle() {
+
     }
 
     public void testGetPrepTime() {
