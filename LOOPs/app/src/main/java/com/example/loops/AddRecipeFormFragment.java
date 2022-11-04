@@ -1,7 +1,11 @@
 package com.example.loops;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +23,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     public AddRecipeFormFragment() { }
 
     /**
-     * Set up event listeners and changes button text
+     * Set up event listeners and changes button text and parse arguments
      * @param formView
      * @param savedInstanceState
      */
@@ -27,6 +31,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Add");
+        parseArguments();
     }
 
     /**
@@ -34,16 +39,6 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
      * @param submittedRecipe
      */
     void sendResult(Recipe submittedRecipe) {
-        // FIXME: Make this more flexible by sending the result back to the fragment that opened
-        // this form, not hardcoded to be the recipe collection view.
-        /*
-        AddRecipeFormFragmentDirections.SubmitIngredientToCollection toSubmitAction =
-                AddRecipeFormFragmentDirections
-                .submitRecipeToCollection();
-        toSubmitAction.setAddedRecipe(submittedRecipe);
-        Navigation.findNavController(getView()).navigate(toSubmitAction);
-        Integer callerFragmentId = getCallerFragmentId();
-        */
         Integer callerFragmentId = getCallerFragmentId();
 
         if ( callerFragmentId == null ) {
@@ -72,4 +67,58 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
         return previousFragment.getDestination().getId();
     }
 
+
+    /**
+     * Opens dialog to select ingredients from. Either by creating a new ingredient
+     * or selecting from storage
+     */
+    void openSelectionForWhereToSelectIngredientsFrom() {
+        CharSequence[] ingredientSelectionOptions = new CharSequence[]{
+                "From Ingredient Storage",
+                "By New Ingredient",
+                "Cancel"
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog ingredientSelectionPrompt = builder
+                .setTitle( "How do you want to select an ingredient?" )
+                .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // navigate to ingredient storage
+                        if (i == 0) {
+                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
+                                    AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
+                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_STORAGE);
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
+                        }
+                        // navigate to add ingredient form
+                        else if (i == 1) {
+                            Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFragment);
+                        }
+                        else if (i == 2) {
+                            return;
+                        }
+                        else {
+                            throw new Error("Invalid selection");
+                        }
+                    }
+                })
+                .create();
+        ingredientSelectionPrompt.show();
+    }
+
+    /**
+     * Parses argument of this fragment
+     */
+    void parseArguments() {
+        Bundle argsBundle = getArguments();
+        if (argsBundle != null) {
+            Ingredient submittedIngredient = AddRecipeFormFragmentArgs.fromBundle(argsBundle).getAddedIngredient();
+            if (submittedIngredient != null) {
+                ingredientCollection.addIngredient(submittedIngredient);
+                Log.e("TEST", submittedIngredient.getDescription());
+            }
+            argsBundle.clear();
+        }
+    }
 }

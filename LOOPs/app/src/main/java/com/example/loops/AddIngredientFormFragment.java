@@ -45,6 +45,18 @@ public class AddIngredientFormFragment extends IngredientFormFragment {
             toSubmitAction.setAddedIngredient(submittedIngredient);
             Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
         }
+        else if ( callerFragmentId == R.id.ingredientCollectionSelectionFragment ) {
+            AddIngredientFormFragmentDirections.ActionAddIngredientFormFragmentToSelectIngredientFragment toSubmitAction =
+                    AddIngredientFormFragmentDirections.actionAddIngredientFormFragmentToSelectIngredientFragment();
+            toSubmitAction.setAddedIngredient(submittedIngredient);
+            Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
+        }
+        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
+            AddIngredientFormFragmentDirections.ActionAddIngredientFormFragmentToAddRecipeFormFragment toSubmitAction =
+                    AddIngredientFormFragmentDirections.actionAddIngredientFormFragmentToAddRecipeFormFragment();
+            toSubmitAction.setAddedIngredient(submittedIngredient);
+            Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
+        }
         else {
             throw new Error("Navigation action not defined");
         }
