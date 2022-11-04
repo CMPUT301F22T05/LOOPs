@@ -60,6 +60,14 @@ public class RecipeCollection {
     }
 
     /**
+     * Method to get all recipes in the collection as an array list
+     * @return ArrayList of recipes
+     */
+    public ArrayList<Recipe> getAllRecipes(){
+        return allRecipes;
+    }
+
+    /**
      * Method to update (edit) a recipe by overwriting it in the collection
      * @param recipeInd (int)
      * @param newRecipe (Recipe)
