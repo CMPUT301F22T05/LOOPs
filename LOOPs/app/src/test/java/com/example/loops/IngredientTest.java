@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Date;
 
+/**
+ * Test cases for the Ingredient class methods
+ */
 public class IngredientTest {
     private Ingredient ingredient;
     private Date date;

@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
  */
 public class AddRecipeFormFragment extends RecipeFormFragment {
 
+    // Empty constructor
     public AddRecipeFormFragment() { }
 
     /**

@@ -76,9 +76,9 @@ public class Ingredient implements Serializable {
                 && toCompare.getUnit().equals(getUnit());
     }
 
-    /**
-     * The following are all getters & setters.
-     */
+
+    // The following are all getters & setters.
+
 
     /**
      * get the ingredient's description
