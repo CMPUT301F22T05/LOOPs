@@ -38,7 +38,7 @@ public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
 
         Recipe currentRecipe = dataList.get(position);
         title.setText(currentRecipe.getTitle());
-        numServings.setText(currentRecipe.getNumServing());
+        numServings.setText(Integer.toString(currentRecipe.getNumServing()));
         category.setText(currentRecipe.getCategory());
 
         // TODO: Implement prep time localdate conversion
