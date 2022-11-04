@@ -2,12 +2,18 @@ package com.example.loops;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -46,6 +52,10 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
 
     protected RecyclerView.LayoutManager layoutManager;
     protected RecyclerView.Adapter recyclerViewAdapter;
+
+    protected ImageView imageView;
+    protected Button addPhotoButton;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public RecipeFormFragment() {}
 
@@ -117,6 +127,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         categoryInput = formView.findViewById(R.id.recipeFormCategoryInput);
         submitButton = formView.findViewById(R.id.recipeFormSubmitButton);
         addIngredientButton = formView.findViewById(R.id.recipeFormAddIngredientButton);
+        addPhotoButton = formView.findViewById(R.id.add_photo_button);
+        imageView = formView.findViewById(R.id.imageView);
     }
 
     /**
@@ -173,6 +185,18 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
                 openSelectionForWhereToSelectIngredientsFrom();
             }
         });
+
+        addPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    startActivityForResult(openCamera, REQUEST_IMAGE_CAPTURE);
+                } catch (ActivityNotFoundException e) {
+                    // display error state to the user
+                }
+            }
+        });
         // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
@@ -189,6 +213,13 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap photo = (Bitmap)data.getExtras().get("data");
+        imageView.setImageBitmap(photo);
+    }
+
     /**
      * Returns an Recipe object where its attributes are those from the form
      * @return Recipe object formed by the value of the fields of the form
@@ -202,12 +233,14 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         int numServ = Integer.parseInt(StringNumServ);
         String comment = commentsInput.getText().toString();
         Duration duration = Duration.ofHours(timeHour).plus(Duration.ofMinutes(timeMinute));
+        Bitmap photoG = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
         Recipe inputtedRecipe= new Recipe(
                 title,
                 duration,
                 category,
                 numServ,
-                comment
+                comment,
+                photoG
         );
         return inputtedRecipe;
     }

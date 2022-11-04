@@ -33,13 +33,31 @@ public class Recipe implements Serializable {
      * @param numServ
      * @param comment
      */
-    public Recipe(String title, Duration duration, String category, int numServ, String comment) {
+    public Recipe(String title, Duration duration, String category, int numServ, String comment, Bitmap photo) {
             this.title = title;
             this.prepTime = duration;
             this.numServing = numServ;
             this.category = category;
             this.comments = comment;
             this.ingredients = new IngredientCollection();
+            this.photo = photo;
+    }
+
+    /**
+     * Full attribute constructor with no image
+     * @param title
+     * @param duration
+     * @param category
+     * @param numServ
+     * @param comment
+     */
+    public Recipe(String title, Duration duration, String category, int numServ, String comment) {
+        this.title = title;
+        this.prepTime = duration;
+        this.numServing = numServ;
+        this.category = category;
+        this.comments = comment;
+        this.ingredients = new IngredientCollection();
     }
 
     /**

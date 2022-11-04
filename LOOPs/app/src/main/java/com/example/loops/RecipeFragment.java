@@ -116,7 +116,8 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         String duration = String.format("%d:%02d",seconds/3600,(seconds%3600)/60);
         prepTime.setText(duration);
         // FIXME: hard-coded image
-        selectedRecipe.setPhoto(BitmapFactory.decodeResource(getResources(), R.drawable.fried_chicken_test_picutre));
+        //selectedRecipe.setPhoto(BitmapFactory.decodeResource(getResources(), R.drawable.fried_chicken_test_picutre));
+
         recipeImage.setImageBitmap(selectedRecipe.getPhoto());
         servingSize.setText("" + selectedRecipe.getNumServing());
         recipeCategory.setText(selectedRecipe.getCategory());
