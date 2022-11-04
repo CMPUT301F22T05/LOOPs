@@ -64,9 +64,26 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals(0, recipeBook.getAllRecipes().size());
     }
 
+    @Test
     public void testGetRecipe() {
+        Recipe recipe3;
+        recipe3 = recipeBook.getRecipe(1);
+        assertEquals("Grilled Cheese", recipe3.getTitle());
     }
 
+    @Test
     public void testUpdateRecipe() {
+        Recipe recipe3 = new Recipe(
+                "Burger",
+                Duration.ofMinutes(45),
+                "Lunch",
+                2,
+                "Better than McDonalds"
+        );
+        assertFalse(recipeBook.updateRecipe(3, recipe3));
+        assertEquals("Pizza", recipeBook.getAllRecipes().get(0).getTitle());
+        recipeBook.updateRecipe(0, recipe3);
+        assertEquals("Burger", recipeBook.getAllRecipes().get(0).getTitle());
     }
+
 }
