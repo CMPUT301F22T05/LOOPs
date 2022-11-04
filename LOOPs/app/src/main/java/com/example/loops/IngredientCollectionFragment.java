@@ -34,7 +34,6 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     public enum CollectionType {
         FROM_STORAGE,
         FROM_RECIPE_INGREDIENTS,
-        FROM_TESTING,
         FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT
     }
 
@@ -95,34 +94,6 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
         else if (type == CollectionType.FROM_RECIPE_INGREDIENTS) {
             // TODO: implement this whoever is handling recipe fragment
             throw new IllegalArgumentException("NOT IMPLEMENTED");
-        }
-//        FIXME: Here for debugging purposes. Remove later
-        else if (type == CollectionType.FROM_TESTING) {
-            ingredientCollection = new IngredientCollection();
-            ingredientCollection.addIngredient(new Ingredient(
-                    "test 1",
-                    new Date(0),
-                    "Test Location",
-                    69,
-                    "Test Unit",
-                    "Test Category"
-            ));
-            ingredientCollection.addIngredient(new Ingredient(
-                    "test 2",
-                    new Date(0),
-                    "Test Location",
-                    69,
-                    "Test Unit",
-                    "Test Category"
-            ));
-            ingredientCollection.addIngredient(new Ingredient(
-                    "test 3",
-                    new Date(0),
-                    "Test Location",
-                    69,
-                    "Test Unit",
-                    "Test Category"
-            ));
         }
         //This is used for intent test and it should not be removed
         else if (type == CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT) {

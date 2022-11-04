@@ -50,9 +50,6 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
                 = IngredientCollectionEditorFragmentArgs.fromBundle(getArguments());
         // Set the type of the ingredient collection
         CollectionType collectionType = argsBundle.getCollectionType();
-        if (collectionType == CollectionType.FROM_STORAGE) {
-            //((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
-        }
         setIngredientCollectionToDisplay(collectionType);
         // If any form had returned an ingredient, update it to collection
         Ingredient submittedIngredient = argsBundle.getAddedIngredient();
