@@ -15,6 +15,25 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/small_pad">
 
+            <Button
+                android:id="@+id/backToRecipeCollection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:layout_marginTop="@dimen/medium_pad"
+                android:layout_below="@id/recipeIngredientList"/>
+
+            <Button
+                android:id="@+id/deleteRecipeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:layout_marginStart="@dimen/medium_pad"
+                android:layout_marginTop="@dimen/medium_pad"
+                android:layout_below="@id/recipeIngredientList"
+                android:layout_toEndOf="@id/backToRecipeCollection"
+                />
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/recipeImage"
                 android:layout_width="@dimen/recipe_fragment_image_width"

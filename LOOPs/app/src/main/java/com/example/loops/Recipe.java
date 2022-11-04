@@ -46,7 +46,7 @@ public class Recipe implements Serializable {
     /**
      * Empty constructor
      */
-    public Recipe(){this.ingredients = new IngredientCollection();};
+    public Recipe(){this.ingredients = new IngredientCollection();}
 
 
     /**

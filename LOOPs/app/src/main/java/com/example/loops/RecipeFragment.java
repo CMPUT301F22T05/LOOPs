@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
@@ -31,6 +34,8 @@ import java.time.Duration;
 public class RecipeFragment extends Fragment implements RecyclerViewOnClickInterface{
     private Recipe selectedRecipe;
     private Button editRecipeButton;
+    private Button backToRecipeCollection;
+    private Button deleteRecipeButton;
     private RecyclerView recipeIngredients;
     private TextView prepTime;
     private TextView servingSize;
@@ -40,6 +45,8 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
     private TextView recipeCategory;
     private RecyclerView.Adapter recipeIngredientsAdapter;
     private RecyclerView.LayoutManager recipeIngredientsLayoutManager;
+    private Integer recipeIndex;
+    private Integer fromWhichFragment;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -68,13 +75,19 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        recipeIndex = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipeIndex();
         selectedRecipe = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipe();
+        fromWhichFragment = RecipeFragmentArgs.fromBundle(getArguments()).getFromWhichFragment();
+
         bindComponents(view);
         putContentOnViews();
         setUpRecyclerView(view);
         setEditRecipeButtonOnClick();
         setOnSwipeDeleteIngredients();
+        setBackToRecipeCollectionOnClick();
+        setDeleteRecipeButton(view);
+
+
 
 
 
@@ -86,6 +99,8 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
      * @param view
      */
     private void bindComponents(View view){
+        backToRecipeCollection = view.findViewById(R.id.backToRecipeCollection);
+        deleteRecipeButton = view.findViewById(R.id.deleteRecipeButton);
         editRecipeButton = view.findViewById(R.id.editRecipeButton);
         prepTime = view.findViewById(R.id.recipePrepTime);
         servingSize = view.findViewById(R.id.recipeServing);
@@ -109,6 +124,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         recipeCategory.setText(selectedRecipe.getCategory());
         recipeTitle.setText(selectedRecipe.getTitle());
         recipeComments.setText(selectedRecipe.getComments());
+
     }
 
     /**
@@ -143,6 +159,76 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
             }
         });
     }
+
+    /**
+     * Sets the delete button to invoke a popup window for use to confirm deletetion to be avoid
+     * accidentally delete.
+     * @param parentView
+     */
+    private void setDeleteRecipeButton(View parentView) {
+        LayoutInflater inflater = getLayoutInflater();
+        View deletePopupView = inflater.inflate(R.layout.popup_ingredient_delete, null);
+        PopupWindow deletePopupWindow = new PopupWindow(
+                deletePopupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+        );
+        /*
+         * Binds buttons and textviews.
+         */
+        Button popupDeleteNoButton = deletePopupView.findViewById(R.id.delete_popup_no_button);
+        Button popupDeleteYesButton = deletePopupView.findViewById(R.id.delete_popup_yes_button);
+        TextView popupDeleteText = deletePopupView.findViewById(R.id.delete_popup_message);
+        /*
+         * No button dismiss the popup window
+         */
+        popupDeleteNoButton.setOnClickListener(view -> {
+            deletePopupWindow.dismiss();
+
+        });
+        popupDeleteYesButton.setOnClickListener(view -> {
+            deletePopupWindow.dismiss();
+            RecipeFragmentDirections.ActionRecipeFragmentToRecipeCollectionEditorFragment action =
+                    RecipeFragmentDirections.actionRecipeFragmentToRecipeCollectionEditorFragment();
+            action.setEditedRecipe(selectedRecipe);
+            action.setEditedRecipeIndex(recipeIndex);
+            action.setDeletedFlag(true);
+            Navigation.findNavController(parentView).navigate(action);
+        });
+        /*
+         * Set the text based on the recipe's title
+         */
+        popupDeleteText.setText(String.format("Delete  %s recipe",selectedRecipe.getTitle()));
+        deleteRecipeButton.setOnClickListener(view -> {
+            deletePopupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+        });
+    }
+
+    /**
+     * Sets the onClick listener to take us back to the fragment where a list of recipes are being shown.
+     */
+    private void setBackToRecipeCollectionOnClick() {
+        backToRecipeCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RecipeFragmentDirections.ActionRecipeFragmentToRecipeCollectionEditorFragment action =
+                        RecipeFragmentDirections.actionRecipeFragmentToRecipeCollectionEditorFragment();
+                action.setEditedRecipe(selectedRecipe);
+                action.setEditedRecipeIndex(recipeIndex);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * Creates swipe interactions on recyclerView

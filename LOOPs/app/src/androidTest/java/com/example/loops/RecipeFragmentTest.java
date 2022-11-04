@@ -49,10 +49,10 @@ public class RecipeFragmentTest {
     private Recipe mockRecipe;
     private IngredientCollection mockIngredientCollection;
 
+
     @Before
     public void setUp() throws ParseException {
         navController = new TestNavHostController( ApplicationProvider.getApplicationContext() );
-
         Ingredient eggs = new Ingredient("eggs", "11/14/2022","Fridge",2,"","Breakfast");
         Ingredient water = new Ingredient("water", "11/14/2024","Fridge",1,"cups","Liquid");
         Ingredient paprika = new Ingredient("paprika", "11/14/2025","Pantry",1,"tbsp","Spice");
@@ -83,12 +83,15 @@ public class RecipeFragmentTest {
         Bitmap image = BitmapFactory.decodeResource(targetContext.getResources(),R.drawable.fried_chicken_test_picutre);
         mockRecipe.setPhoto(image);
         Bundle bundle = new Bundle();
+        bundle.putInt("fromWhichFragment", R.layout.fragment_recipe_collection);
         bundle.putSerializable("SelectedRecipe",mockRecipe);
         bundle.putInt("SelectedRecipeIndex",0);
         fragmentScenario = FragmentScenario.launchInContainer(RecipeFragment.class,bundle);
         fragmentScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
+            navController.setCurrentDestination(R.id.recipeFragment,bundle);
             Navigation.setViewNavController(fragment.requireView(), navController);
+
         });
 
 
@@ -169,12 +172,15 @@ public class RecipeFragmentTest {
 
 
     }
+
     @Test
     public void testNavigateToEditRecipe() {
         onView(withId(R.id.editRecipeButton)).perform(click());
-        assertEquals(R.id.EditRecipePlaceHolder,navController.getCurrentDestination().getId());
+        assertEquals(navController.getCurrentDestination().getId(),R.id.EditRecipePlaceHolder);
 
     }
+
+
 
 
 
