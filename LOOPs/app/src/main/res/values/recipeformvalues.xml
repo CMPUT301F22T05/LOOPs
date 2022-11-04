@@ -3,7 +3,8 @@
 
     <string-array name="recipe_categories">
         <item>Breakfast</item>
-        <item>User needs to be able to add these</item>
         <item>Lunch</item>
+        <item>Snack</item>
+        <item>Supper</item>
     </string-array>
 </resources>

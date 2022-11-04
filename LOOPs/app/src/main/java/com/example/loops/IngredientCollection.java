@@ -4,29 +4,57 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * An ingredient collection includes all data access methods.
+ */
 public class IngredientCollection {
     private ArrayList<Ingredient> ingredients;
 
+    /**
+     * Default constructor.
+     */
     public IngredientCollection() {
         ingredients = new ArrayList<>();
     }
 
+    /**
+     * Getter for ingredient list.
+     * @return ingredients
+     */
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
+    /**
+     * Add an ingredient to the collection.
+     * @param ingredient
+     */
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
     }
 
+    /**
+     * Delete an ingredient from the collection.
+     * @param index
+     */
     public void deleteIngredient(int index) {
         ingredients.remove(index);
     }
 
+    /**
+     * Update an ingredient's info based on its index.
+     * @param index
+     * @param ingredient
+     */
     public void updateIngredient(int index, Ingredient ingredient) {
         ingredients.set(index, ingredient);
     }
 
+    /**
+     * All sort options in a collection.
+     * Include sort by description, best before date, location, category
+     * @param option
+     */
     public void sort(IngredientSortOption option) {
         if (option.equals(IngredientSortOption.BY_DESCRIPTION_ASCENDING)) {
             Collections.sort(ingredients, new DescriptionAscendingComparator());
@@ -54,6 +82,9 @@ public class IngredientCollection {
         }
     }
 
+    /**
+     * Sort by description.
+     */
     class DescriptionAscendingComparator implements Comparator<Ingredient> {
 
         @Override
@@ -62,6 +93,9 @@ public class IngredientCollection {
         }
     }
 
+    /**
+     * Sort by best before date.
+     */
     class BestBeforeDateAscendingComparator implements Comparator<Ingredient> {
         @Override
         public int compare(Ingredient o1, Ingredient o2) {
@@ -69,6 +103,9 @@ public class IngredientCollection {
         }
     }
 
+    /**
+     * Sort by category.
+     */
     class CategoryAscendingComparator implements Comparator<Ingredient> {
         @Override
         public int compare(Ingredient o1, Ingredient o2) {
@@ -76,6 +113,9 @@ public class IngredientCollection {
         }
     }
 
+    /**
+     * Sort by location.
+     */
     class LocationAscendingComparator implements Comparator<Ingredient> {
         @Override
         public int compare(Ingredient o1, Ingredient o2) {

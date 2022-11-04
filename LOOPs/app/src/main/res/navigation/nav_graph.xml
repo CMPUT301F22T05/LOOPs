@@ -6,6 +6,20 @@
     app:startDestination="@id/mealPlanHomePageFragment">
 
     <fragment
+        android:id="@+id/editRecipeFormFragment"
+        android:name="com.example.loops.EditRecipeFragment"
+        android:label="editRecipeFormFragment">
+        <argument
+            android:name="editRecipe"
+            app:argType="com.example.loops.Recipe" />
+        <argument
+            android:name="editRecipeIndex"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_editRecipeFormFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/mealPlanHomePageFragment"
         android:name="com.example.loops.MealPlanHomePageFragment"
         android:label="fragment_meal_plan_home_page"
@@ -93,6 +107,19 @@
         <action
             android:id="@+id/action_recipeCollection_to_recipe"
             app:destination="@id/recipeFragment" />
+        <argument
+            android:name="deletedFlag"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="editedRecipeIndex"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="editedRecipe"
+            app:argType="com.example.loops.Recipe"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment android:id="@+id/recipeFragment"
         android:name="com.example.loops.RecipeFragment"
@@ -101,23 +128,18 @@
         <argument
             android:name="SelectedRecipe"
             app:argType="com.example.loops.Recipe" />
-        <action
-            android:id="@+id/action_recipeFragment_to_placeholder"
-            app:destination="@id/EditRecipePlaceHolder" />
         <argument
             android:name="SelectedRecipeIndex"
             app:argType="integer" />
-    </fragment>
-    <fragment
-        android:id="@+id/EditRecipePlaceHolder"
-        android:name="com.example.loops.EditRecipePlaceHolderFragment"
-        tools:layout="@layout/fragment_edit_recipe_place_holder">
-        <argument
-            android:name="editedRecipe"
-            app:argType="com.example.loops.Recipe" />
         <action
-            android:id="@+id/action_EditRecipePlaceHolder_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            android:id="@+id/action_recipeFragment_to_recipeCollectionEditorFragment"
+            app:destination="@id/recipeCollectionEditorFragment" />
+        <argument
+            android:name="fromWhichFragment"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_recipeFragment_to_editRecipeFormFragment"
+            app:destination="@id/editRecipeFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/ingredientFragment"

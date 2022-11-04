@@ -12,10 +12,18 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This is the adapter class for ingredient storage collection listview.
+ */
 public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
     private Context context;
     private ArrayList<Ingredient> dataList;
 
+    /**
+     * Adapter constructor.
+     * @param context
+     * @param dataList
+     */
     public IngredientStorageViewAdapter(Context context, ArrayList<Ingredient> dataList) {
         super(context, 0, dataList);
         this.context = context;

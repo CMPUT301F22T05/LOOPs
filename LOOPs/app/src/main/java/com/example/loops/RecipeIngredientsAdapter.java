@@ -20,6 +20,12 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
     IngredientCollection recipeIngredients;
     Context context;
 
+    /**
+     * Constructor of adapter.
+     * @param recipeIngredients
+     * @param context
+     * @param recyclerViewOnClickInterface
+     */
     public RecipeIngredientsAdapter(IngredientCollection recipeIngredients, Context context,
                                     RecyclerViewOnClickInterface recyclerViewOnClickInterface) {
         this.recipeIngredients = recipeIngredients;

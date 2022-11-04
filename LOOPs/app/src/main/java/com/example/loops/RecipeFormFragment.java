@@ -40,6 +40,7 @@ public abstract class RecipeFormFragment extends Fragment {
     protected Button addIngredientButton;
     protected ListView ingredientListView;
     protected RecyclerView ingredientRecyclerView;
+    protected RecipeIngredientsAdapter ingredientsAdapter;
     protected IngredientCollection ingredientCollection;
 
     public RecipeFormFragment() {}

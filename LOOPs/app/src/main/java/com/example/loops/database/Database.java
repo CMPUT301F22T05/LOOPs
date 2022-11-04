@@ -10,7 +10,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Map;
 
-// FIXME:
+// FIXME: This class is deprecated.
 // If we add more functions like interacting with ingredients, interacting with recipes, and so on
 // this database class will have a lot of methods. It may be a good idea to break this database
 // class into smaller classes like IngredientQueryManager, RecipeQueryManager, UserManager, etc
