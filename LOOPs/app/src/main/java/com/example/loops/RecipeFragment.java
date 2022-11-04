@@ -153,8 +153,8 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         editRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RecipeFragmentDirections.ActionRecipeFragmentToPlaceholder action =
-                        RecipeFragmentDirections.actionRecipeFragmentToPlaceholder(selectedRecipe);
+                RecipeFragmentDirections.ActionRecipeFragmentToEditRecipeFormFragment action =
+                        RecipeFragmentDirections.actionRecipeFragmentToEditRecipeFormFragment(selectedRecipe, recipeIndex);
                 Navigation.findNavController(v).navigate(action);
             }
         });
