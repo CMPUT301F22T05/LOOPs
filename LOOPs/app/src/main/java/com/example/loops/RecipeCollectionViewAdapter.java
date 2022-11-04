@@ -1,6 +1,8 @@
 package com.example.loops;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
@@ -40,12 +43,33 @@ public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
         title.setText(currentRecipe.getTitle());
         numServings.setText(Integer.toString(currentRecipe.getNumServing()));
         category.setText(currentRecipe.getCategory());
-
-        // TODO: Implement prep time localdate conversion
-        //prepTime.setText(currentRecipe.getPrepTime());
+        prepTime.setText(getPrepTimeString(currentRecipe.getPrepTime()));
 
         // TODO: Implement image
+        //
+        Bitmap photo = currentRecipe.getPhoto();
+        if (photo != null) {
+            recipeImage.setImageBitmap(photo);
+        }
+        Bitmap testImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.fried_chicken_test_picutre);
+        recipeImage.setImageBitmap(testImage);
 
         return convertView;
+    }
+
+    private String getPrepTimeString(Duration prepTime) {
+        long seconds = prepTime.getSeconds();
+        String prepTimeString = "";
+        // Add hours
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        if (hours > 0) {
+            prepTimeString += String.format("%d hour", hours) + ( (hours > 1) ? "s ": " " );
+        }
+        // Add minutes
+        if (minutes > 0) {
+            prepTimeString += String.format("%d min", minutes) + ( (minutes > 1) ? "s ": " " );
+        }
+        return prepTimeString.trim();
     }
 }
