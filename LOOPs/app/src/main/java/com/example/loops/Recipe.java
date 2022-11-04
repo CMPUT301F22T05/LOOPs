@@ -31,6 +31,8 @@ public class Recipe implements Serializable {
             this.numServing = numServ;
             this.category = category;
             this.comments = comment;
+            this.ingredients = new IngredientCollection();
+
     }
 
     public String getComments() {
