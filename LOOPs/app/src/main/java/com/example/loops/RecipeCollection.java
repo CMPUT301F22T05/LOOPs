@@ -28,7 +28,7 @@ public class RecipeCollection {
     /**
      * Unused for now, no function
      */
-    public void updateAllRecipes(){
+    private void updateAllRecipes(){
         //function for using db data to populate list of recipes
     }
 
