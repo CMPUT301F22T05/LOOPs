@@ -16,6 +16,9 @@ import androidx.annotation.Nullable;
 import java.time.Duration;
 import java.util.ArrayList;
 
+/**
+ * Adapter for recipe collection.
+ */
 public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
     private Context context;
     private ArrayList<Recipe> dataList;

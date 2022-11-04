@@ -8,12 +8,19 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+/**
+ * This class provides a generic layout to all collection fragments.
+ */
 public abstract class GenericCollectionLayout extends Fragment {
     protected TextView collectionTitle;
     protected Button addButton;
     protected ListView collectionView;
     protected Spinner sortOptionSpinner;
 
+    /**
+     * Initialize all the components in the generic collection.
+     * @param view
+     */
     protected void bindComponents(View view) {
         collectionTitle = view.findViewById(R.id.generic_collection_title);
         addButton = view.findViewById(R.id.add_item_to_collection_btn);

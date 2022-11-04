@@ -5,7 +5,13 @@ import java.text.SimpleDateFormat;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Ingredient class that encapsulate the data structure & methods of each ingredient.
+ */
 public class Ingredient implements Serializable {
+    /**
+     * An ingredient includes description, best before date, location, amount, unit & category.
+     */
     private String description;
     private Date bestBeforeDate;
     private String storeLocation;
@@ -14,6 +20,15 @@ public class Ingredient implements Serializable {
     private String category;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
 
+    /**
+     * Constructor that pass all ingredient elements.
+     * @param description
+     * @param bestBeforeDate passing in Date
+     * @param storeLocation
+     * @param amount
+     * @param unit
+     * @param category
+     */
     public Ingredient(String description, Date bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
@@ -22,6 +37,16 @@ public class Ingredient implements Serializable {
         this.unit = unit;
         this.category = category;
     }
+
+    /**
+     * Constructor that pass all ingredient elements.
+     * @param description
+     * @param bestBeforeDate passing in String with mm/dd/yyyy format
+     * @param storeLocation
+     * @param amount
+     * @param unit
+     * @param category
+     */
     public Ingredient(String description, String bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
         setBestBeforeDate(bestBeforeDate);
@@ -31,6 +56,11 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
+    /**
+     * Rewrite equals method to make it comparable by element info.
+     * @param o ingredient object to compare
+     * @return whether is equal
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Ingredient))
@@ -43,6 +73,10 @@ public class Ingredient implements Serializable {
                 && toCompare.getStoreLocation().equals(getStoreLocation())
                 && toCompare.getUnit().equals(getUnit());
     }
+
+    /**
+     * The following are all getters & setters.
+     */
 
     public String getDescription() {
         return description;

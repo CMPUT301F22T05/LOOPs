@@ -1,5 +1,8 @@
 package com.example.loops;
 
+/**
+ * This includes all selections of sort options.
+ */
 public enum IngredientSortOption {
     BY_DESCRIPTION_ASCENDING,
     BY_BEST_BEFORE_DATE_ASCENDING,

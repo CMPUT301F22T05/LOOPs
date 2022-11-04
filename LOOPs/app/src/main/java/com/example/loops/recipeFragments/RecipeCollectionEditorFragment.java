@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import com.example.loops.R;
 import com.example.loops.Recipe;
 
+
 public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
 
     public RecipeCollectionEditorFragment() {
@@ -52,15 +53,16 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
             recipeCollection.addRecipe(submittedRecipe);
         }
         // TODO: handle editted recipes
-//        Recipe editedRecipe = argsBundle.getEditedRecipe();
-//        if (editedIngredient != null) {
-//            if (argsBundle.getDeleteFlag() == false) { //update ingredient
-//                ingredientCollection.updateIngredient(argsBundle.getEditedIngredientIndex(), editedIngredient);
-//            }
-//            else {
-//                ingredientCollection.deleteIngredient(argsBundle.getEditedIngredientIndex());
-//            }
-//        }
+        Recipe editedRecipe = argsBundle.getEditedRecipe();
+        int editedRecipeIndex = argsBundle.getEditedRecipeIndex();
+        if (editedRecipe != null) {
+            if (argsBundle.getDeletedFlag() == false) { //update ingredient
+                recipeCollection.updateRecipe(editedRecipeIndex, editedRecipe);
+            }
+            else {
+                recipeCollection.deleteRecipe(editedRecipeIndex);
+            }
+        }
         getArguments().clear();
     }
 
