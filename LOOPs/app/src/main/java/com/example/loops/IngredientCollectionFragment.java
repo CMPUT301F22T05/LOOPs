@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.example.loops.database.IngredientStorageDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
