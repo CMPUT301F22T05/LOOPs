@@ -17,8 +17,6 @@ import java.util.Date;
  * of the ingredients in the collection
  */
 public class IngredientCollectionEditorFragment extends IngredientCollectionFragment {
-    public static final int FROM_STORAGE = 0;
-    public static final int FROM_TESTING = 1;   // FIXME: temporary. Just to show it works
 
     public IngredientCollectionEditorFragment() {
         // Required empty public constructor
@@ -52,7 +50,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
         // Set the type of the ingredient collection
         CollectionType collectionType = argsBundle.getCollectionType();
         setIngredientCollectionToDisplay(collectionType);
-        // If any form had returned an ingredient, send it back to this fragment's caller
+        // If any form had returned an ingredient, update it to collection
         Ingredient submittedIngredient = argsBundle.getAddedIngredient();
         if (submittedIngredient != null) {
             ingredientCollection.addIngredient(submittedIngredient);
