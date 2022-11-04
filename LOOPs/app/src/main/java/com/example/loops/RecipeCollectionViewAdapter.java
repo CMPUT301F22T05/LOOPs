@@ -20,12 +20,24 @@ public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
     private Context context;
     private ArrayList<Recipe> dataList;
 
+    /**
+     * Creates an adapter for recipes
+     * @param context
+     * @param dataList
+     */
     public RecipeCollectionViewAdapter(Context context, ArrayList<Recipe> dataList) {
         super(context, 0, dataList);
         this.context = context;
         this.dataList = dataList;
     }
 
+    /**
+     * Gets the view of each recipe in the adapter
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -57,6 +69,11 @@ public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
         return convertView;
     }
 
+    /**
+     * Converts recipe's prep time into a string of format x hours x mins
+     * @param prepTime
+     * @return
+     */
     private String getPrepTimeString(Duration prepTime) {
         long seconds = prepTime.getSeconds();
         String prepTimeString = "";
