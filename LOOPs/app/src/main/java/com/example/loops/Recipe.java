@@ -22,9 +22,16 @@ public class Recipe implements Serializable {
     private Bitmap photo;
     private Uri picUri;
     private IngredientCollection ingredients;
-
     private String comments;
 
+    /**
+     * Full attribute constructor
+     * @param title
+     * @param duration
+     * @param category
+     * @param numServ
+     * @param comment
+     */
     public Recipe(String title, Duration duration, String category, int numServ, String comment) {
             this.title = title;
             this.prepTime = duration;
@@ -35,19 +42,34 @@ public class Recipe implements Serializable {
 
     }
 
+    /**
+     * Returns the comments of the recipe
+     * @return comments (String)
+     */
     public String getComments() {
         return comments;
     }
 
+    /**
+     * Sets the comments of the recipe
+     * @param comments (String)
+     */
     public void setComments(String comments) {
         this.comments = comments;
     }
 
-
+    /**
+     * Returns the ingredients of the recipe
+     * @return ingredients (IngredientCollection)
+     */
     public IngredientCollection getIngredients() {
         return ingredients;
     }
 
+    /**
+     * Sets the ingredients for the recipe
+     * @param ingredients (IngredientCollection)
+     */
     public void setIngredients(IngredientCollection ingredients) {
         this.ingredients = ingredients;
     }

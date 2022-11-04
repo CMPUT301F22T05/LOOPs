@@ -10,11 +10,13 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Map;
 
-// FIXME: This class is deprecated.
-// If we add more functions like interacting with ingredients, interacting with recipes, and so on
-// this database class will have a lot of methods. It may be a good idea to break this database
-// class into smaller classes like IngredientQueryManager, RecipeQueryManager, UserManager, etc
-// just to give quick examples. This class is proof of concept more than actual code.
+/**
+ * This class is deprecated.
+ *      If we add more functions like interacting with ingredients, interacting with recipes, and so on
+ *      this database class will have a lot of methods. It may be a good idea to break this database
+ *      class into smaller classes like IngredientQueryManager, RecipeQueryManager, UserManager, etc
+ *      just to give quick examples. This class is proof of concept more than actual code.
+ */
 public class Database {
     /**
      * Singleton pattern

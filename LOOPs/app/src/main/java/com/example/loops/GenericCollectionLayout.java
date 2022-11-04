@@ -19,7 +19,7 @@ public abstract class GenericCollectionLayout extends Fragment {
 
     /**
      * Initialize all the components in the generic collection.
-     * @param view
+     * @param view (View)
      */
     protected void bindComponents(View view) {
         collectionTitle = view.findViewById(R.id.generic_collection_title);

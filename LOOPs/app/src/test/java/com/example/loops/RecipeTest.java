@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 
 /**
- * JUNIT test for Recipe class
+ * Test Cases for the Recipe class methods
  */
 public class RecipeTest extends TestCase {
     Recipe testRecipe;

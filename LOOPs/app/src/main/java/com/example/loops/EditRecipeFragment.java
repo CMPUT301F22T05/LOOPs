@@ -30,6 +30,7 @@ public class EditRecipeFragment extends RecipeFormFragment {
         initializeFormWithIngredientAttributes();
     }
 
+    // Gets the index for where 'value' is at in spinner
     protected int getSpinnerIndexByValue(String value, Spinner spinner) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).toString().equals(value)) {
@@ -39,7 +40,9 @@ public class EditRecipeFragment extends RecipeFormFragment {
         return 0;
     }
 
-    // TODO: Implement this
+    /**
+     * Populates the edit form with data of the recipe
+     */
     public void initializeFormWithIngredientAttributes() {
         editRecipe = EditRecipeFragmentArgs.fromBundle(getArguments())
                 .getEditRecipe();
@@ -52,11 +55,14 @@ public class EditRecipeFragment extends RecipeFormFragment {
         categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
         numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
         commentsInput.setText(editRecipe.getComments());
-
         ingredientCollection = editRecipe.getIngredients();
     }
 
-    // TODO: Implement this
+    /**
+     * Send the edited recipe back to previous fragment.
+     * Todo: implement
+     * @param submittedRecipe recipe submitted by the form
+     */
     void sendResult(Recipe submittedRecipe) {
         return;
     }

@@ -10,6 +10,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Test cases for the IngredientCollection class methods
+ */
 public class IngredientCollectionTest {
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
     private IngredientCollection storage;

@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Check if attributes of recipe are valid or not based on the context it lies in
+ * The context of the ingredient is specified by {@link}
+ */
 public class RecipeValidator {
     private final Set<Integer> errorStringIds;
 
@@ -21,6 +25,9 @@ public class RecipeValidator {
         SHOPPING
     }
 
+    /**
+     * Constructor
+     */
     public RecipeValidator() {
         errorStringIds = new HashSet<>();
     }

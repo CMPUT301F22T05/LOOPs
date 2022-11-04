@@ -29,6 +29,9 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ *  Test cases for editing an ingredient collection
+ */
 @RunWith(AndroidJUnit4.class)
 public class IngredientCollectionEditorFragmentTest {
     private TestNavHostController navController;
@@ -67,6 +70,9 @@ public class IngredientCollectionEditorFragmentTest {
 
     }
 
+    /**
+     * Test for sorting by description
+     */
     private void testSortByDescription() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
                 .getString(R.string.sort_by_description));
@@ -82,6 +88,9 @@ public class IngredientCollectionEditorFragmentTest {
                         withText(containsString("BBB"))))));
     }
 
+    /**
+     * Test for sorting by best before date
+     */
     private void testSortByBestBeforeDate() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
                 .getString(R.string.sort_by_best_before_date));
@@ -97,6 +106,9 @@ public class IngredientCollectionEditorFragmentTest {
                         withText(containsString("10/29/2022"))))));
     }
 
+    /**
+     * Test by sorting by location
+     */
     private void testSortByLocation() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
                 .getString(R.string.sort_by_Location));
@@ -112,6 +124,9 @@ public class IngredientCollectionEditorFragmentTest {
                         withText(containsString("fridge"))))));
     }
 
+    /**
+     * Test by sorting by category
+     */
     private void testSortByCategory() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
                 .getString(R.string.sort_by_Category));
@@ -127,6 +142,9 @@ public class IngredientCollectionEditorFragmentTest {
                         withText(containsString("YYY"))))));
     }
 
+    /**
+     * Tests all sort types by running each individual sorting test
+     */
     @Test
     public void testSort() {
         lunchFragment();
@@ -147,6 +165,9 @@ public class IngredientCollectionEditorFragmentTest {
                         "fruit"));
     }
 
+    /**
+     * Tests adding an ingredient to the collection
+     */
     @Test
     public void testAddIngredientRequest() {
         mimicAddIngredientRequest();
@@ -165,6 +186,9 @@ public class IngredientCollectionEditorFragmentTest {
         bundle.putInt("editedIngredientIndex", 0);
     }
 
+    /**
+     * Tests editing an ingredient in the collection
+     */
     @Test
     public void testEditIngredientRequest() {
         mimicEditIngredientRequest();
@@ -182,6 +206,9 @@ public class IngredientCollectionEditorFragmentTest {
         bundle.putInt("editedIngredientIndex", 0);
     }
 
+    /**
+     * Tests deleting an ingredient in the collection
+     */
     @Test
     public void testDeleteIngredientRequest() {
         mimicDeleteIngredientRequest();

@@ -42,6 +42,9 @@ import java.text.ParseException;
 import java.time.Duration;
 import java.util.ArrayList;
 
+/**
+ * Tests for the Recipe fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class RecipeFragmentTest {
     private TestNavHostController navController;
