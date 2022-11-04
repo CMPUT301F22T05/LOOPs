@@ -89,7 +89,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      */
     protected void setIngredientCollectionToDisplay(CollectionType type) {
         if (type == CollectionType.FROM_STORAGE) {
-            ingredientCollection = ((MainActivity)getActivity()).allIngredients;
+            ingredientCollection = ((MainActivity)getActivity()).getIngredientStorage();
             //((MainActivity)getActivity()).retrieveIngredientFromDatabase();
         }
         else if (type == CollectionType.FROM_RECIPE_INGREDIENTS) {

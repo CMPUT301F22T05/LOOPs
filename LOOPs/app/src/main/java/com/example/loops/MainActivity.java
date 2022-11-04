@@ -35,9 +35,13 @@ import java.util.Map;
  */
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
-    IngredientCollection allIngredients = new IngredientCollection();
-    RecipeCollection allRecipes = new RecipeCollection();
+    private IngredientCollection allIngredients = new IngredientCollection();
+    private RecipeCollection allRecipes = new RecipeCollection();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    public IngredientCollection getIngredientStorage() {
+        return allIngredients;
+    }
 
     public RecipeCollection getAllRecipes() {
         return allRecipes;
