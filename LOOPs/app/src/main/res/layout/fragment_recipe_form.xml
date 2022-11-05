@@ -10,287 +10,270 @@
     android:paddingTop="18dp"
     android:paddingEnd="18dp"
     android:paddingBottom="18dp"
-    tools:context=".RecipeFormFragment">
+    tools:context=".recipeFragments.forms.RecipeFormFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout7"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="126dp"
-                android:layout_height="84dp"
-                android:clickable="true"
-                android:src="@android:drawable/ic_menu_gallery" />
-
-            <Button
-                android:id="@+id/add_photo_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp">
-
-            </Button>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/recipeFormTitleText"
-                android:layout_width="188dp"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/recipeFormTitleInput"
+            <LinearLayout
+                android:id="@+id/linearLayout7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="Title of recipe"
-                android:inputType="text"
-                android:maxLength="100000"
-                android:minHeight="48dp"
-                android:textColorHint="#757575" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="126dp"
+                        android:layout_height="84dp"
+                        android:clickable="true"
+                        android:src="@android:drawable/ic_menu_gallery" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout7">
+                    <Button
+                        android:id="@+id/add_photo_button"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp">
 
-        <TextView
-            android:id="@+id/recipeFormPrepTimeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Preparation Time"
-            android:textSize="24sp" />
+                    </Button>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+                </LinearLayout>
 
-            <NumberPicker
-                android:id="@+id/recipeFormPrepTimeHourInput"
-                android:layout_width="wrap_content"
-                android:layout_height="46dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp"
-                android:autofillHints=""
-                android:clickable="false"
-                android:scaleX="1.75"
-                android:scaleY="1.75"
-                android:theme="@style/NumberPickerText" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/recipeFormPrepTimeHourText"
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/recipeFormTitleText"
+                        android:layout_width="188dp"
+                        android:layout_height="wrap_content"
+                        android:text="Title"
+                        android:textSize="24sp" />
+
+                    <EditText
+                        android:id="@+id/recipeFormTitleInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="18dp"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="Title of recipe"
+                        android:inputType="text"
+                        android:maxLength="100000"
+                        android:minHeight="48dp"
+                        android:textColorHint="#757575" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/recipeFormPrepTimeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Preparation Time"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <NumberPicker
+                        android:id="@+id/recipeFormPrepTimeHourInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="18dp"
+                        android:autofillHints=""
+                        android:clickable="false"
+                        android:scaleX="1.75"
+                        android:scaleY="1.75"
+                        android:theme="@style/NumberPickerText" />
+
+                    <TextView
+                        android:id="@+id/recipeFormPrepTimeHourText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="hour(s)"
+                        android:textSize="18sp" />
+
+                    <NumberPicker
+                        android:id="@+id/recipeFormPrepTimeMinuteInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="18dp"
+                        android:autofillHints=""
+                        android:clickable="false"
+                        android:scaleX="1.75"
+                        android:scaleY="1.75"
+                        android:theme="@style/NumberPickerText" />
+
+                    <TextView
+                        android:id="@+id/recipeFormPrepTimeMinuteText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="minute(s)"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/recipeFormCategoryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Category"
+                    android:textSize="24sp" />
+
+                <Spinner
+                    android:id="@+id/recipeFormCategoryInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    android:contentDescription="Select type of recipe"
+                    android:ems="10"
+                    android:entries="@array/recipe_categories"
+                    android:minHeight="48dp"
+                    android:textColorHint="#757575" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ingredientFormAmountText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Number of Servings"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/recipeFormNumServingInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    android:autofillHints=""
+                    android:digits="0123456789"
+                    android:ems="10"
+                    android:hint="Number of servings for this recipe"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:textColorHint="#757575" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/recipeFormCommentsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comments"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/recipeFormCommentsInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="Add comments or directions"
+                    android:inputType="text"
+                    android:maxLength="100000"
+                    android:minHeight="48dp"
+                    android:textColorHint="#757575" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout12"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="hour(s)"
-                android:textSize="18sp" />
+                android:orientation="vertical">
 
-            <NumberPicker
-                android:id="@+id/recipeFormPrepTimeMinuteInput"
-                android:layout_width="wrap_content"
-                android:layout_height="46dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp"
-                android:autofillHints=""
-                android:clickable="false"
-                android:scaleX="1.75"
-                android:scaleY="1.75"
-                android:theme="@style/NumberPickerText" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/recipeFormPrepTimeMinuteText"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="minute(s)"
-                android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/recipeFormIngredientsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="Ingredients"
+                        android:textSize="24sp" />
 
-        </LinearLayout>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
-    </LinearLayout>
+                    <Button
+                        android:id="@+id/recipeFormAddIngredientButton"
+                        android:layout_width="61dp"
+                        android:layout_height="match_parent"
+                        app:icon="@android:drawable/ic_input_add" />
+                </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout9"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout8">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recipeFormIngredientRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
 
-        <TextView
-            android:id="@+id/recipeFormCategoryText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Category"
-            android:textSize="24sp" />
 
-        <Spinner
-            android:id="@+id/recipeFormCategoryInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:contentDescription="Select type of recipe"
-            android:ems="10"
-            android:entries="@array/recipe_categories"
-            android:minHeight="48dp"
-            android:textColorHint="#757575" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout11"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout9">
-
-        <TextView
-            android:id="@+id/ingredientFormAmountText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Number of Servings"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/recipeFormNumServingInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:autofillHints=""
-            android:digits="0123456789"
-            android:ems="10"
-            android:hint="Number of servings for this recipe"
-            android:inputType="number"
-            android:minHeight="48dp"
-            android:textColorHint="#757575" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout11"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout12"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout10">
-
-        <TextView
-            android:id="@+id/recipeFormCommentsText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comments"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/recipeFormCommentsInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="Add comments or directions"
-            android:inputType="text"
-            android:maxLength="100000"
-            android:minHeight="48dp"
-            android:textColorHint="#757575" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout12"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/recipeFormSubmitButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout11">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/recipeFormIngredientsText"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:text="Ingredients"
-                android:textSize="24sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/recipeFormAddIngredientButton"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:text="Button"
-                app:icon="@android:drawable/ic_input_add" />
+                android:id="@+id/recipeFormSubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="Save"
+                android:textSize="18sp" />
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipeFormIngredientRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/recipeFormSubmitButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="Save"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout12" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

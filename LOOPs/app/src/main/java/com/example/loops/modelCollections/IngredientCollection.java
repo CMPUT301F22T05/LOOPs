@@ -1,4 +1,7 @@
-package com.example.loops;
+package com.example.loops.modelCollections;
+
+import com.example.loops.models.Ingredient;
+import com.example.loops.sortOption.IngredientSortOption;
 
 import java.util.ArrayList;
 import java.util.Collections;

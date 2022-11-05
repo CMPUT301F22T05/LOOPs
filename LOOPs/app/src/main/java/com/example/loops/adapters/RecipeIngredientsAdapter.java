@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.adapters;
 
 import android.content.Context;
 
@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.loops.R;
+import com.example.loops.RecyclerViewOnClickInterface;
+import com.example.loops.modelCollections.IngredientCollection;
 
 /**
  * This is a class to represent a custom adapter to show a list of ingredients

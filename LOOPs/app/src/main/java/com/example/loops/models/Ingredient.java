@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.models;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

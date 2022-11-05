@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.ingredientFragments;
 
 import static java.lang.String.valueOf;
 
@@ -15,11 +15,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavAction;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import org.w3c.dom.Text;
+import com.example.loops.R;
+import com.example.loops.models.Ingredient;
 
 /**
  * This fragment displays details of an ingredient and provides

@@ -1,16 +1,13 @@
 package com.example.loops;
 
 import static android.os.SystemClock.sleep;
-import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.DatePicker;
 
 import androidx.fragment.app.testing.FragmentScenario;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
@@ -19,19 +16,21 @@ import androidx.test.espresso.contrib.PickerActions;
 import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.assertion.ViewAssertions.*;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.Matchers.*;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.*;
+
+import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
+import com.example.loops.models.Ingredient;
 
 import java.util.Calendar;
 import java.util.Date;

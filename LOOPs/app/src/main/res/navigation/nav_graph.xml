@@ -7,17 +7,26 @@
 
     <fragment
         android:id="@+id/editRecipeFormFragment"
-        android:name="com.example.loops.EditRecipeFragment"
-        android:label="editRecipeFormFragment">
+        android:name="com.example.loops.recipeFragments.forms.EditRecipeFormFragment"
+        android:label="Editing the Recipe"
+        tools:layout="@layout/fragment_recipe_form">
         <argument
             android:name="editRecipe"
-            app:argType="com.example.loops.Recipe" />
+            app:argType="com.example.loops.models.Recipe" />
         <argument
             android:name="editRecipeIndex"
             app:argType="integer" />
         <action
             android:id="@+id/action_editRecipeFormFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/recipeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_editRecipeFormFragment_to_ingredientCollectionSelectionFragment"
+            app:destination="@id/ingredientCollectionSelectionFragment" />
+        <action
+            android:id="@+id/action_editRecipeFormFragment_to_addIngredientFormFragment"
+            app:destination="@id/addIngredientFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealPlanHomePageFragment"
@@ -33,12 +42,12 @@
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionEditorFragment"
-        android:name="com.example.loops.IngredientCollectionEditorFragment"
+        android:name="com.example.loops.ingredientFragments.IngredientCollectionEditorFragment"
         android:label="fragment_ingredient_storage"
         tools:layout="@layout/fragment_ingredient_collection">
         <argument
             android:name="addedIngredient"
-            app:argType="com.example.loops.Ingredient"
+            app:argType="com.example.loops.models.Ingredient"
             app:nullable="true"
             android:defaultValue="@null" />
         <action
@@ -46,13 +55,15 @@
             app:destination="@id/addIngredientFormFragment" />
         <action
             android:id="@+id/action_ingredientCollectionFragment_to_mealPlanHomePageFragment"
-            app:destination="@id/mealPlanHomePageFragment" />
+            app:destination="@id/mealPlanHomePageFragment"
+            app:popUpTo="@id/mealPlanHomePageFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/actionViewIngredientDetails"
             app:destination="@id/ingredientFragment" />
         <argument
             android:name="editedIngredient"
-            app:argType="com.example.loops.Ingredient"
+            app:argType="com.example.loops.models.Ingredient"
             app:nullable="true"
             android:defaultValue="@null"/>
         <argument
@@ -65,12 +76,12 @@
             android:defaultValue="false" />
         <argument
             android:name="collectionType"
-            app:argType="com.example.loops.IngredientCollectionFragment$CollectionType"
+            app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType"
             android:defaultValue="FROM_STORAGE" />
     </fragment>
     <fragment
         android:id="@+id/addIngredientFormFragment"
-        android:name="com.example.loops.AddIngredientFormFragment"
+        android:name="com.example.loops.ingredientFragments.forms.AddIngredientFormFragment"
         android:label="Add a Ingredient"
         tools:layout="@layout/fragment_ingredient_form">
         <action
@@ -85,7 +96,14 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addIngredientFormFragment_to_addRecipeFormFragment"
-            app:destination="@id/addRecipeFormFragment" />
+            app:destination="@id/addRecipeFormFragment"
+            app:popUpTo="@id/addRecipeFormFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addIngredientFormFragment_to_editRecipeFormFragment"
+            app:destination="@id/editRecipeFormFragment"
+            app:popUpTo="@id/editRecipeFormFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/recipeCollectionEditorFragment"
@@ -94,7 +112,7 @@
         tools:layout="@layout/fragment_recipe_collection" >
         <argument
             android:name="addedRecipe"
-            app:argType="com.example.loops.Recipe"
+            app:argType="com.example.loops.models.Recipe"
             app:nullable="true"
             android:defaultValue="@null" />
         <argument
@@ -107,7 +125,9 @@
             app:destination="@id/addRecipeFormFragment" />
         <action
             android:id="@+id/action_recipeCollectionEditorFragment_to_mealPlanHomePageFragment"
-            app:destination="@id/mealPlanHomePageFragment" />
+            app:destination="@id/mealPlanHomePageFragment"
+            app:popUpTo="@id/mealPlanHomePageFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_recipeCollection_to_recipe"
             app:destination="@id/recipeFragment" />
@@ -121,23 +141,26 @@
             android:defaultValue="-1" />
         <argument
             android:name="editedRecipe"
-            app:argType="com.example.loops.Recipe"
+            app:argType="com.example.loops.models.Recipe"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
-    <fragment android:id="@+id/recipeFragment"
-        android:name="com.example.loops.RecipeFragment"
-        android:label="fragment_recipe"
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.loops.recipeFragments.RecipeFragment"
+        android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe">
         <argument
             android:name="SelectedRecipe"
-            app:argType="com.example.loops.Recipe" />
+            app:argType="com.example.loops.models.Recipe" />
         <argument
             android:name="SelectedRecipeIndex"
             app:argType="integer" />
         <action
             android:id="@+id/action_recipeFragment_to_recipeCollectionEditorFragment"
-            app:destination="@id/recipeCollectionEditorFragment" />
+            app:destination="@id/recipeCollectionEditorFragment"
+            app:popUpTo="@id/recipeCollectionEditorFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="fromWhichFragment"
             app:argType="integer" />
@@ -147,7 +170,7 @@
     </fragment>
     <fragment
         android:id="@+id/ingredientFragment"
-        android:name="com.example.loops.IngredientFragment"
+        android:name="com.example.loops.ingredientFragments.IngredientFragment"
         android:label="Ingredient Details"
         tools:layout="@layout/fragment_ingredient">
 
@@ -158,7 +181,7 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="selectedIngredient"
-            app:argType="com.example.loops.Ingredient" />
+            app:argType="com.example.loops.models.Ingredient" />
         <action
             android:id="@+id/action_ingredientFragment_to_editIngredientFormFragment"
             app:destination="@id/editIngredientFormFragment" />
@@ -171,12 +194,12 @@
     </fragment>
     <fragment
         android:id="@+id/editIngredientFormFragment"
-        android:name="com.example.loops.EditIngredientFormFragment"
+        android:name="com.example.loops.ingredientFragments.forms.EditIngredientFormFragment"
         android:label="Editing the Ingredient"
         tools:layout="@layout/fragment_ingredient_form">
         <argument
             android:name="editedIngredient"
-            app:argType="com.example.loops.Ingredient" />
+            app:argType="com.example.loops.models.Ingredient" />
         <action
             android:id="@+id/action_editIngredientFormFragment_to_ingredientFragment"
             app:destination="@id/ingredientFragment"
@@ -188,35 +211,42 @@
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionSelectionFragment"
-        android:name="com.example.loops.IngredientCollectionSelectionFragment"
-        android:label="fragment_select_ingredient"
-        tools:layout="@layout/fragment_ingredient_collection" >
+        android:name="com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment"
+        android:label="Choosing a Ingredient"
+        tools:layout="@layout/fragment_ingredient_collection">
         <argument
             android:name="addedIngredient"
-            app:argType="com.example.loops.Ingredient"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:defaultValue="@null"
+            app:argType="com.example.loops.models.Ingredient"
+            app:nullable="true" />
         <argument
             android:name="collectionType"
             android:defaultValue="FROM_STORAGE"
-            app:argType="com.example.loops.IngredientCollectionFragment$CollectionType" />
+            app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType" />
         <action
             android:id="@+id/addIngredientFormFromSelection"
             app:destination="@id/addIngredientFormFragment" />
         <action
             android:id="@+id/action_ingredientCollectionSelectionFragment_to_addRecipeFormFragment"
-            app:destination="@id/addRecipeFormFragment" />
+            app:destination="@id/addRecipeFormFragment"
+            app:popUpTo="@id/addRecipeFormFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_ingredientCollectionSelectionFragment_to_editRecipeFormFragment"
+            app:destination="@id/editRecipeFormFragment"
+            app:popUpTo="@id/addRecipeFormFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFormFragment"
-        android:name="com.example.loops.AddRecipeFormFragment"
-        android:label="addRecipeFormFragment"
+        android:name="com.example.loops.recipeFragments.forms.AddRecipeFormFragment"
+        android:label="Add a Recipe"
         tools:layout="@layout/fragment_recipe_form">
         <argument
             android:name="addedIngredient"
-            app:argType="com.example.loops.Ingredient"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:defaultValue="@null"
+            app:argType="com.example.loops.models.Ingredient"
+            app:nullable="true" />
         <action
             android:id="@+id/submitRecipeToCollection"
             app:destination="@id/recipeCollectionEditorFragment"

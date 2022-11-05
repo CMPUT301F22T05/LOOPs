@@ -9,14 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.loops.GenericCollectionLayout;
-import com.example.loops.Ingredient;
-import com.example.loops.IngredientSortOption;
+import com.example.loops.models.Ingredient;
 import com.example.loops.MainActivity;
 import com.example.loops.R;
-import com.example.loops.Recipe;
-import com.example.loops.RecipeCollection;
-import com.example.loops.RecipeCollectionViewAdapter;
-import com.example.loops.RecipeSortOption;
+import com.example.loops.models.Recipe;
+import com.example.loops.modelCollections.RecipeCollection;
+import com.example.loops.adapters.RecipeCollectionViewAdapter;
+import com.example.loops.sortOption.RecipeSortOption;
 
 import java.time.Duration;
 import java.util.Date;

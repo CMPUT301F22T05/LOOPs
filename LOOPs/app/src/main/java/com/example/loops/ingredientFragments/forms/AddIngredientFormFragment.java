@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.ingredientFragments.forms;
 
 import android.os.Bundle;
 
@@ -10,6 +10,9 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.View;
+
+import com.example.loops.R;
+import com.example.loops.models.Ingredient;
 
 /**
  * An ingredient form for adding ingredients.

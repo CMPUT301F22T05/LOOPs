@@ -1,11 +1,10 @@
-package com.example.loops;
+package com.example.loops.recipeFragments.forms;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +12,11 @@ import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+
+import com.example.loops.ingredientFragments.IngredientCollectionFragment;
+import com.example.loops.models.Ingredient;
+import com.example.loops.R;
+import com.example.loops.models.Recipe;
 
 /**
  * A recipe form for adding recipes.
@@ -41,7 +45,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
      * Sends recipe to RecipeCollectionFragment through navigation graph action
      * @param submittedRecipe
      */
-    void sendResult(Recipe submittedRecipe) {
+    protected void sendResult(Recipe submittedRecipe) {
         Integer callerFragmentId = getCallerFragmentId();
 
         if ( callerFragmentId == null ) {

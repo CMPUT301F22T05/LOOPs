@@ -3,6 +3,9 @@ package com.example.loops;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import com.example.loops.modelCollections.RecipeCollection;
+import com.example.loops.models.Recipe;
+
 import junit.framework.TestCase;
 
 import org.junit.jupiter.api.BeforeEach;

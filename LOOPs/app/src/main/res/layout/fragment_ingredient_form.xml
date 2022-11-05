@@ -10,7 +10,7 @@
     android:paddingTop="18dp"
     android:paddingEnd="18dp"
     android:paddingBottom="18dp"
-    tools:context=".IngredientFormFragment">
+    tools:context=".ingredientFragments.forms.IngredientFormFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout7"

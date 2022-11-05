@@ -1,8 +1,11 @@
-package com.example.loops;
+package com.example.loops.modelCollections;
 
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.loops.models.Recipe;
+import com.example.loops.sortOption.RecipeSortOption;
 
 import java.util.ArrayList;
 import java.util.Collections;

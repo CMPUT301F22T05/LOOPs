@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.ingredientFragments.forms;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.example.loops.validators.IngredientValidator;
+import com.example.loops.R;
+import com.example.loops.models.Ingredient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

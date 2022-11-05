@@ -1,5 +1,9 @@
 package com.example.loops;
 
+import com.example.loops.modelCollections.IngredientCollection;
+import com.example.loops.models.Ingredient;
+import com.example.loops.models.Recipe;
+
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 

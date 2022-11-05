@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.ingredientFragments.forms;
 
 import static java.lang.String.valueOf;
 
@@ -11,8 +11,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.View;
+
+import com.example.loops.R;
+import com.example.loops.models.Ingredient;
 
 /**
  * An ingredient form for editing ingredients. Supply the ingredient to edit through action args

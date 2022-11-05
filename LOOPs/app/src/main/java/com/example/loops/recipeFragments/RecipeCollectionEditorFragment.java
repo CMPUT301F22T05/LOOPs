@@ -12,7 +12,7 @@ import androidx.navigation.Navigation;
 
 import com.example.loops.MainActivity;
 import com.example.loops.R;
-import com.example.loops.Recipe;
+import com.example.loops.models.Recipe;
 
 /**
  * Recipe collection fragment for showing the recipes and also allowing manipulation
