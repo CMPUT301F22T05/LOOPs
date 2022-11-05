@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/editRecipeFormFragment"
         android:name="com.example.loops.recipeFragments.forms.EditRecipeFormFragment"
-        android:label="editRecipeFormFragment"
+        android:label="Editing the Recipe"
         tools:layout="@layout/fragment_recipe_form">
         <argument
             android:name="editRecipe"
@@ -18,7 +18,15 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_editRecipeFormFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/recipeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_editRecipeFormFragment_to_ingredientCollectionSelectionFragment"
+            app:destination="@id/ingredientCollectionSelectionFragment" />
+        <action
+            android:id="@+id/action_editRecipeFormFragment_to_addIngredientFormFragment"
+            app:destination="@id/addIngredientFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealPlanHomePageFragment"
@@ -47,7 +55,9 @@
             app:destination="@id/addIngredientFormFragment" />
         <action
             android:id="@+id/action_ingredientCollectionFragment_to_mealPlanHomePageFragment"
-            app:destination="@id/mealPlanHomePageFragment" />
+            app:destination="@id/mealPlanHomePageFragment"
+            app:popUpTo="@id/mealPlanHomePageFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/actionViewIngredientDetails"
             app:destination="@id/ingredientFragment" />
@@ -86,7 +96,14 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addIngredientFormFragment_to_addRecipeFormFragment"
-            app:destination="@id/addRecipeFormFragment" />
+            app:destination="@id/addRecipeFormFragment"
+            app:popUpTo="@id/addRecipeFormFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addIngredientFormFragment_to_editRecipeFormFragment"
+            app:destination="@id/editRecipeFormFragment"
+            app:popUpTo="@id/editRecipeFormFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/recipeCollectionEditorFragment"
@@ -108,7 +125,9 @@
             app:destination="@id/addRecipeFormFragment" />
         <action
             android:id="@+id/action_recipeCollectionEditorFragment_to_mealPlanHomePageFragment"
-            app:destination="@id/mealPlanHomePageFragment" />
+            app:destination="@id/mealPlanHomePageFragment"
+            app:popUpTo="@id/mealPlanHomePageFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_recipeCollection_to_recipe"
             app:destination="@id/recipeFragment" />
@@ -126,9 +145,10 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
-    <fragment android:id="@+id/recipeFragment"
+    <fragment
+        android:id="@+id/recipeFragment"
         android:name="com.example.loops.recipeFragments.RecipeFragment"
-        android:label="fragment_recipe"
+        android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe">
         <argument
             android:name="SelectedRecipe"
@@ -138,7 +158,9 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_recipeFragment_to_recipeCollectionEditorFragment"
-            app:destination="@id/recipeCollectionEditorFragment" />
+            app:destination="@id/recipeCollectionEditorFragment"
+            app:popUpTo="@id/recipeCollectionEditorFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="fromWhichFragment"
             app:argType="integer" />
@@ -190,13 +212,13 @@
     <fragment
         android:id="@+id/ingredientCollectionSelectionFragment"
         android:name="com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment"
-        android:label="fragment_select_ingredient"
-        tools:layout="@layout/fragment_ingredient_collection" >
+        android:label="Choosing a Ingredient"
+        tools:layout="@layout/fragment_ingredient_collection">
         <argument
             android:name="addedIngredient"
+            android:defaultValue="@null"
             app:argType="com.example.loops.models.Ingredient"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <argument
             android:name="collectionType"
             android:defaultValue="FROM_STORAGE"
@@ -206,18 +228,25 @@
             app:destination="@id/addIngredientFormFragment" />
         <action
             android:id="@+id/action_ingredientCollectionSelectionFragment_to_addRecipeFormFragment"
-            app:destination="@id/addRecipeFormFragment" />
+            app:destination="@id/addRecipeFormFragment"
+            app:popUpTo="@id/addRecipeFormFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_ingredientCollectionSelectionFragment_to_editRecipeFormFragment"
+            app:destination="@id/editRecipeFormFragment"
+            app:popUpTo="@id/addRecipeFormFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFormFragment"
         android:name="com.example.loops.recipeFragments.forms.AddRecipeFormFragment"
-        android:label="addRecipeFormFragment"
+        android:label="Add a Recipe"
         tools:layout="@layout/fragment_recipe_form">
         <argument
             android:name="addedIngredient"
+            android:defaultValue="@null"
             app:argType="com.example.loops.models.Ingredient"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <action
             android:id="@+id/submitRecipeToCollection"
             app:destination="@id/recipeCollectionEditorFragment"
