@@ -2,12 +2,14 @@ package com.example.loops;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.loops.models.Ingredient;
+import com.example.loops.validators.IngredientValidator;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
 
 /**
  * Test cases for IngredientValidator class

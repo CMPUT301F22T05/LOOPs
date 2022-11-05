@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.recipeFragments.forms;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,17 +8,18 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
+
+import com.example.loops.models.Recipe;
 
 /**
  * An ingredient form for editing ingredients. Supply the ingredient to edit through action args
  */
-public class EditRecipeFragment extends RecipeFormFragment {
+public class EditRecipeFormFragment extends RecipeFormFragment {
 
     private Recipe editRecipe;
     private int editRecipeInd;
 
-    public EditRecipeFragment() { }
+    public EditRecipeFormFragment() { }
 
     /**
      * Set up event listeners and sets button text
@@ -47,9 +48,9 @@ public class EditRecipeFragment extends RecipeFormFragment {
      * Populates the edit form with data of the recipe
      */
     public void initializeFormWithIngredientAttributes() {
-        editRecipe = EditRecipeFragmentArgs.fromBundle(getArguments())
+        editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
                 .getEditRecipe();
-        editRecipeInd = EditRecipeFragmentArgs.fromBundle(getArguments())
+        editRecipeInd = EditRecipeFormFragmentArgs.fromBundle(getArguments())
                 .getEditRecipeIndex();
 
         titleInput.setText(editRecipe.getTitle());
@@ -66,7 +67,7 @@ public class EditRecipeFragment extends RecipeFormFragment {
      * Todo: implement
      * @param submittedRecipe recipe submitted by the form
      */
-    void sendResult(Recipe submittedRecipe) {
+    protected void sendResult(Recipe submittedRecipe) {
         return;
     }
 

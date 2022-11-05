@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.ingredientFragments;
 
 import android.os.Bundle;
 
@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
+import com.example.loops.models.Ingredient;
+import com.example.loops.MainActivity;
+import com.example.loops.R;
 
 /**
  * Ingredient collection fragment for selecting an ingredient
@@ -42,7 +46,7 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * Sets the ingredient collection from the arguments and passes ingredients from forms back
      * to caller
      */
-    void parseArguments() {
+    protected void parseArguments() {
         if (getArguments() == null)
             throw new IllegalArgumentException("Arguments not supplied to the fragment");
         IngredientCollectionSelectionFragmentArgs argsBundle
@@ -63,7 +67,7 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * Opens the add ingredient form
      * @param clickedView
      */
-    void onClickAddButton(View clickedView) {
+    protected void onClickAddButton(View clickedView) {
         Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFromSelection);
     }
 
@@ -74,7 +78,7 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param position
      * @param id
      */
-    void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
+    protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
         sendIngredientToCallerFragment(collectionViewAdapter.getItem(position));
     }
 

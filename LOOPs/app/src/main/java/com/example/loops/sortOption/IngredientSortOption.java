@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.sortOption;
 
 /**
  * This includes all selections of sort options.

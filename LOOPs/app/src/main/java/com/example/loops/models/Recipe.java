@@ -1,15 +1,13 @@
-package com.example.loops;
+package com.example.loops.models;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 
-
+import com.example.loops.modelCollections.IngredientCollection;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalTime;
 
 
 /**

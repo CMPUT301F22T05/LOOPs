@@ -1,12 +1,6 @@
-package com.example.loops;
+package com.example.loops.ingredientFragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
+import com.example.loops.GenericCollectionLayout;
+import com.example.loops.models.Ingredient;
+import com.example.loops.modelCollections.IngredientCollection;
+import com.example.loops.adapters.IngredientStorageViewAdapter;
+import com.example.loops.MainActivity;
+import com.example.loops.R;
+import com.example.loops.sortOption.IngredientSortOption;
 
 /**
  * An abstract fragment displaying an ingredient collection
@@ -45,7 +43,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * Subclasses must implement the behavior when the add button is clicked
      * @param clickedView
      */
-    abstract void onClickAddButton(View clickedView);
+    abstract protected void onClickAddButton(View clickedView);
 
     /**
      * Subclasses must implement the behavior when ingredient items in the list are clicked
@@ -54,12 +52,12 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * @param position
      * @param id
      */
-    abstract void onClickIngredient(AdapterView<?> parent, View view, int position, long id);
+    abstract protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id);
 
     /**
      * Subclasses must parse arguments to at minimum handle the type of the ingredient collection
      */
-    abstract void parseArguments();
+    abstract protected void parseArguments();
 
     /**
      * Sets the UI layout for the view

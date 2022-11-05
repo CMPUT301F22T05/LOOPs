@@ -1,7 +1,9 @@
 package com.example.loops;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.Before;
+
+import com.example.loops.models.Ingredient;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 

@@ -1,15 +1,11 @@
-package com.example.loops;
+package com.example.loops.recipeFragments;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.loops.R;
+import com.example.loops.models.Recipe;
+import com.example.loops.adapters.RecipeIngredientsAdapter;
+import com.example.loops.RecyclerViewOnClickInterface;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.time.Duration;
@@ -32,7 +32,7 @@ import java.time.Duration;
  * A class to represent the UI and business logic that happens
  * when you checkout a specific recipe in RecipeCollectionFragment
  */
-public class RecipeFragment extends Fragment implements RecyclerViewOnClickInterface{
+public class RecipeFragment extends Fragment implements RecyclerViewOnClickInterface {
     private Recipe selectedRecipe;
     private Button editRecipeButton;
     private Button backToRecipeCollection;
@@ -140,7 +140,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
             }
         };
         recipeIngredients.setLayoutManager(recipeIngredientsLayoutManager);
-        recipeIngredientsAdapter = new RecipeIngredientsAdapter (selectedRecipe.getIngredients(),view.getContext(),this);
+        recipeIngredientsAdapter = new RecipeIngredientsAdapter(selectedRecipe.getIngredients(),view.getContext(),this);
         recipeIngredients.setAdapter(recipeIngredientsAdapter);
 
     }

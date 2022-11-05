@@ -1,17 +1,17 @@
-package com.example.loops;
+package com.example.loops.ingredientFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import java.util.Date;
+import com.example.loops.models.Ingredient;
+import com.example.loops.MainActivity;
+import com.example.loops.R;
 
 /**
  * Ingredient collection fragment for showing the ingredients and also allowing manipulation
@@ -44,7 +44,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
      * its ingredient collection
      * Notify changes to the database.
      */
-    void parseArguments() {
+    protected void parseArguments() {
         if (getArguments() == null)
             throw new IllegalArgumentException("Arguments not supplied to the fragment");
         IngredientCollectionEditorFragmentArgs argsBundle
@@ -84,7 +84,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
      * Opens the add ingredient form
      * @param clickedView
      */
-    void onClickAddButton(View clickedView) {
+    protected void onClickAddButton(View clickedView) {
         Navigation.findNavController(getView()).navigate(R.id.addIngredientFromCollection);
     }
 
@@ -95,7 +95,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
      * @param position
      * @param id
      */
-    void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
+    protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
         Ingredient selectedIngredient = ingredientCollection.getIngredients().get(position);
         NavDirections viewIngredientDetailsAction =
                 (NavDirections)IngredientCollectionEditorFragmentDirections.actionViewIngredientDetails(

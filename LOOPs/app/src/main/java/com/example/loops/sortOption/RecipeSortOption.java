@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.sortOption;
 
 /**
  * Those are sorting options available for the recipe.

@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.loops.R;
+import com.example.loops.models.Recipe;
 
 import java.time.Duration;
 import java.util.ArrayList;

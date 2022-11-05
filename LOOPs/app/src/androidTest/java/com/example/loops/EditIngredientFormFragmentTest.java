@@ -1,6 +1,5 @@
 package com.example.loops;
 
-import static android.os.SystemClock.sleep;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
@@ -31,6 +30,9 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.loops.ingredientFragments.forms.EditIngredientFormFragment;
+import com.example.loops.models.Ingredient;
 
 import org.junit.Before;
 import org.junit.Test;

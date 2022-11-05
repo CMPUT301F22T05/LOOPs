@@ -1,6 +1,7 @@
-package com.example.loops;
+package com.example.loops.validators;
 
-import static java.lang.Float.NaN;
+import com.example.loops.R;
+import com.example.loops.models.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Date;
