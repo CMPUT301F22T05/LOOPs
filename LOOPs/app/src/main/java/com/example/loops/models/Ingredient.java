@@ -22,7 +22,6 @@ public class Ingredient implements Serializable {
     private String category;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-    public Ingredient() {} //for Firestore
     /**
      * Constructor that pass all ingredient elements.
      * @param description
