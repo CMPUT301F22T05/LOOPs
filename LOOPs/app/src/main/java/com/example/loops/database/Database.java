@@ -1,13 +1,25 @@
 package com.example.loops.database;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
+import com.example.loops.modelCollections.IngredientStorage;
+import com.example.loops.models.Ingredient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +29,7 @@ import java.util.Map;
  *      class into smaller classes like IngredientQueryManager, RecipeQueryManager, UserManager, etc
  *      just to give quick examples. This class is proof of concept more than actual code.
  */
-public class Database {
+public class Database implements RemoteIngredientStorageManager{
     /**
      * Singleton pattern
      * https://refactoring.guru/design-patterns/singleton/java/example#example-2
@@ -25,9 +37,12 @@ public class Database {
      */
     public static final String MAIN_USER_ID = "MainUser";
     public static final String TEST_USER_ID = "TestUser";
+    public static final Object lock = new Object();
     private static volatile Database instance;
     private static volatile String currentUserId = "";
     private DocumentReference userData;
+    private FirebaseFirestore db;
+    private Map<String, Object> ingredientRecord;
 
     /**
      * Called when database query is successful
@@ -61,7 +76,7 @@ public class Database {
 
 
     private Database(String username) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         try {
             userData = db
                     .collection("Users")
@@ -71,6 +86,17 @@ public class Database {
             // TODO: error handling
             throw e;
         }
+    }
+
+    private Database() {
+        db = FirebaseFirestore.getInstance();
+    }
+
+    public static Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
     }
 
     /*
@@ -134,5 +160,101 @@ public class Database {
                 }
             }
         });
+    }
+
+    @Override
+    public void getIngredientStorage(IngredientStorage ingredientStorage) {
+        //ArrayList<Ingredient> ingredientStorage = new ArrayList<>();
+        //return ingredientStorage;
+        Runnable myRunnable = () -> {
+            System.out.println("in runnable");
+            db.collection("IngredientStorage").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                    Ingredient databaseIngredient = new Ingredient(
+                                            documentSnapshot.getString("description"),
+                                            documentSnapshot.getString("bestBeforeDate"),
+                                            documentSnapshot.getString("location"),
+                                            documentSnapshot.getLong("amount"), //why can this return a float?
+                                            documentSnapshot.getString("unit"),
+                                            documentSnapshot.getString("category")
+                                    );
+                                    ingredientStorage.addIngredientLocal(databaseIngredient);
+                                }
+
+                            }
+                            ingredientStorage.done = true;
+                            System.out.println("before unlock");
+                            synchronized (instance) {
+                                instance.notify();
+                                System.out.println("unblock");
+                            }
+                        }
+                    });
+        };
+        Thread thread = new Thread(myRunnable);
+        thread.start();
+        System.out.println("create thread");
+        /*while (ingredientStorage.done == false) {
+            //wait until read all data
+        }*/
+    }
+
+    @Override
+    public void addIngredientToStorage(Ingredient ingredient) {
+        String key =
+                ingredient.getDescription() +
+                ingredient.getBestBeforeDateString() +
+                ingredient.getStoreLocation() +
+                ingredient.getUnit() +
+                ingredient.getCategory();
+        ingredientRecord = new HashMap<>();
+        ingredientRecord.put("description", ingredient.getDescription());
+        ingredientRecord.put("bestBeforeDate", ingredient.getBestBeforeDateString());
+        ingredientRecord.put("location", ingredient.getStoreLocation());
+        ingredientRecord.put("amount", ingredient.getAmount());
+        ingredientRecord.put("unit", ingredient.getUnit());
+        ingredientRecord.put("category", ingredient.getCategory());
+        db.collection("IngredientStorage").document(key)
+                .set(ingredientRecord)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    @Override
+    public void removeIngredientFromStorage(Ingredient ingredient) {
+        String key =
+                ingredient.getDescription() +
+                        ingredient.getBestBeforeDateString() +
+                        ingredient.getStoreLocation() +
+                        ingredient.getUnit() +
+                        ingredient.getCategory();
+        ingredientRecord = new HashMap<>();
+        ingredientRecord.put("description", ingredient.getDescription());
+        ingredientRecord.put("bestBeforeDate", ingredient.getBestBeforeDateString());
+        ingredientRecord.put("location", ingredient.getStoreLocation());
+        ingredientRecord.put("amount", ingredient.getAmount());
+        ingredientRecord.put("unit", ingredient.getUnit());
+        ingredientRecord.put("category", ingredient.getCategory());
+        db.collection("IngredientStorage").document(key).delete();
+    }
+
+    @Override
+    public void updateIngredientInStorage(Ingredient oldIngredient, Ingredient newIngredient) {
+        removeIngredientFromStorage(oldIngredient);
+        addIngredientToStorage(newIngredient);
     }
 }

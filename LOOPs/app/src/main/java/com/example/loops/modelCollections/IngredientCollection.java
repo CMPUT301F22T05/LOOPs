@@ -16,7 +16,7 @@ import java.util.Comparator;
  * it also contains comparators for Ingredient
  */
 public class IngredientCollection {
-    private ArrayList<Ingredient> ingredients;
+    protected ArrayList<Ingredient> ingredients;
 
     /**
      * Default constructor.

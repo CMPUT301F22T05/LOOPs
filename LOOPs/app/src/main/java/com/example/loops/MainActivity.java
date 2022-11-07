@@ -16,7 +16,9 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.loops.database.Database;
 import com.example.loops.modelCollections.IngredientCollection;
+import com.example.loops.modelCollections.IngredientStorage;
 import com.example.loops.modelCollections.RecipeCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
@@ -39,7 +41,9 @@ import java.util.Map;
  */
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
-    private IngredientCollection allIngredients = new IngredientCollection();
+    //private Database database = Database.getInstance();
+    private IngredientStorage allIngredients = new IngredientStorage(Database.getInstance());
+    //private IngredientCollection allIngredients = new IngredientCollection();
     private RecipeCollection allRecipes = new RecipeCollection();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -128,22 +132,22 @@ public class MainActivity extends AppCompatActivity {
      * Delete an ingredient from the database storage.
      * @param ingInd index of ingredient to delete
      */
-    public void deleteIngredientFromDatabase(int ingInd) {
-        db.collection("IngredientStorage").document(Integer.toString(ingInd))
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "Ingredient deleted.");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Ingredient delete failed!");
-                    }
-                });
-    }
+//    public void deleteIngredientFromDatabase(int ingInd) {
+//        db.collection("IngredientStorage").document(Integer.toString(ingInd))
+//                .delete()
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        Log.d(TAG, "Ingredient deleted.");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Ingredient delete failed!");
+//                    }
+//                });
+//    }
 
     public void updateRecipeFromDatabase(RecipeCollection updatedRecipe) {
         if (updatedRecipe == null) {
@@ -189,44 +193,63 @@ public class MainActivity extends AppCompatActivity {
         if (updatedIngredient == null) {
             return;
         }
-        allIngredients = updatedIngredient;
-
-        int i = 0;
-        for (Ingredient ing : allIngredients.getIngredients()) {
-            Log.e(TAG, ing.getDescription());
-            Map<String, Object> ingredientRecord = new HashMap<>();
-            ingredientRecord.put("description", ing.getDescription());
-            ingredientRecord.put("bestBeforeDate", ing.getBestBeforeDateString());
-            ingredientRecord.put("location", ing.getStoreLocation());
-            ingredientRecord.put("amount", ing.getAmount());
-            ingredientRecord.put("unit", ing.getUnit());
-            ingredientRecord.put("category", ing.getCategory());
-
-            db.collection("IngredientStorage").document(Integer.toString(i))
-                    .set(ingredientRecord)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d(TAG, "Ingredient updated.");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Ingredient update failed!");
-                        }
-                    });
-            i++;
-        }
-        deleteIngredientFromDatabase(i);
+//        allIngredients = updatedIngredient;
+//
+//        int i = 0;
+//        for (Ingredient ing : allIngredients.getIngredients()) {
+//            Log.e(TAG, ing.getDescription());
+//            Map<String, Object> ingredientRecord = new HashMap<>();
+//            ingredientRecord.put("description", ing.getDescription());
+//            ingredientRecord.put("bestBeforeDate", ing.getBestBeforeDateString());
+//            ingredientRecord.put("location", ing.getStoreLocation());
+//            ingredientRecord.put("amount", ing.getAmount());
+//            ingredientRecord.put("unit", ing.getUnit());
+//            ingredientRecord.put("category", ing.getCategory());
+//
+//            db.collection("IngredientStorage").document(Integer.toString(i))
+//                    .set(ingredientRecord)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                            Log.d(TAG, "Ingredient updated.");
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.w(TAG, "Ingredient update failed!");
+//                        }
+//                    });
+//            i++;
+//        }
+//        deleteIngredientFromDatabase(i);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println("main activity");
+        /*synchronized (Database.getInstance()) {
+            try {
+                System.out.println("block");
+                Database.getInstance().wait();
+            } catch (InterruptedException e) {
 
-        retrieveIngredientFromDatabase();
+            }
+        }*/
+        //while (allIngredients.done == false) {
+            //wait until read all data
+            /*try {
+                Thread.sleep(2000);
+                System.out.println("2 sec");
+            }
+            catch (Exception e) {
+
+            }*/
+        //}
+        //retrieveIngredientFromDatabase();
+        //database.getIngredientStorage(allIngredients);
         retrieveRecipeFromDatabase();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);

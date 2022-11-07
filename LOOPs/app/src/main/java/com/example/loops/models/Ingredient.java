@@ -20,8 +20,9 @@ public class Ingredient implements Serializable {
     private float amount;
     private String unit;
     private String category;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
+    public Ingredient() {} //for Firestore
     /**
      * Constructor that pass all ingredient elements.
      * @param description
