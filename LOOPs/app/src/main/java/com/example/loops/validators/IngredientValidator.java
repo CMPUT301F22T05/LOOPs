@@ -3,6 +3,7 @@ package com.example.loops.validators;
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -80,7 +81,7 @@ public class IngredientValidator {
      * @param type the type of the ingredient, i.e. the context the ingredient lies on
      * @return true if valid. False otherwise.
      */
-    public boolean checkBestBeforeDate(Date date, INGREDIENT_TYPE type) {
+    public boolean checkBestBeforeDate(LocalDate date, INGREDIENT_TYPE type) {
         if (date == null) {
             errorStringIds.add(R.string.ingredient_no_bestbeforedate);
             return false;

@@ -3,6 +3,9 @@ package com.example.loops.models;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -15,12 +18,12 @@ public class Ingredient implements Serializable {
      * An ingredient includes description, best before date, location, amount, unit & category.
      */
     private String description;
-    private Date bestBeforeDate;
+    private LocalDate bestBeforeDate;
     private String storeLocation;
     private float amount;
     private String unit;
     private String category;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
      * Constructor that pass all ingredient elements.
@@ -31,7 +34,7 @@ public class Ingredient implements Serializable {
      * @param unit
      * @param category
      */
-    public Ingredient(String description, Date bestBeforeDate, String storeLocation, float amount, String unit, String category) {
+    public Ingredient(String description, LocalDate bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.storeLocation = storeLocation;
@@ -100,7 +103,7 @@ public class Ingredient implements Serializable {
      * get the ingredient's best before date as Date
      * @return Date object
      */
-    public Date getBestBeforeDate() {
+    public LocalDate getBestBeforeDate() {
         return bestBeforeDate;
     }
 
@@ -116,7 +119,7 @@ public class Ingredient implements Serializable {
      * set the ingredient's best before date to another Date
      * @param bestBeforeDate new date
      */
-    public void setBestBeforeDate(Date bestBeforeDate) {
+    public void setBestBeforeDate(LocalDate bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
     }
 
@@ -126,10 +129,10 @@ public class Ingredient implements Serializable {
      */
     public void setBestBeforeDate(String bestBeforeDate){
         try {
-            Date date = dateFormatter.parse(bestBeforeDate);
+            LocalDate date = LocalDate.parse(bestBeforeDate, dateFormatter);
             this.bestBeforeDate = date;
-        } catch (ParseException e) {
-            this.bestBeforeDate = new Date(0);
+        } catch (DateTimeException e) {
+            this.bestBeforeDate = LocalDate.now();
         }
     }
 

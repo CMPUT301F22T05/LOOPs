@@ -7,6 +7,7 @@ import com.example.loops.models.Ingredient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 public class IngredientTest {
     private Ingredient ingredient;
-    private Date date;
+    private LocalDate date;
 
     @BeforeEach
     void initialize() {
@@ -25,7 +26,7 @@ public class IngredientTest {
                 1,
                 "kg",
                 "fruit");
-        date = new Date(0);
+        date = LocalDate.now();
     }
 
     @Test

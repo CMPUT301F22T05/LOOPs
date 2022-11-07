@@ -7,6 +7,7 @@ import com.example.loops.validators.IngredientValidator;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -84,7 +85,7 @@ public class IngredientValidatorTest {
     @Test
     public void testValidIngredient() {
         IngredientValidator validator = new IngredientValidator();
-        Ingredient ingredient = new Ingredient("Flour", new Date(), "Pantry", 69, "g", "baking");
+        Ingredient ingredient = new Ingredient("Flour", LocalDate.now(), "Pantry", 69, "g", "baking");
         for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
             assertTrue( validator.checkIngredient(ingredient, type) );
         }
@@ -132,7 +133,7 @@ public class IngredientValidatorTest {
     @Test
     public void testBestBeforeDateOnToday() {
         IngredientValidator validator = new IngredientValidator();
-        Date today = new Date();
+        LocalDate today = LocalDate.now();
         for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
             assertTrue( validator.checkBestBeforeDate(today, type) );
         }
@@ -145,9 +146,9 @@ public class IngredientValidatorTest {
     @Test
     public void testBestBeforeDateAfterToday() {
         IngredientValidator validator = new IngredientValidator();
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        Date afterToday = cal.getTime();
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DATE, 1);
+        LocalDate afterToday = LocalDate.now().plusDays(1);
         for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
             assertTrue( validator.checkBestBeforeDate(afterToday, type) );
         }
@@ -160,9 +161,9 @@ public class IngredientValidatorTest {
     @Test
     public void testBestBeforeDateBeforeToday() {
         IngredientValidator validator = new IngredientValidator();
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        Date beforeToday = cal.getTime();
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DATE, -1);
+        LocalDate beforeToday = LocalDate.now().minusDays(1);
         for (IngredientValidator.INGREDIENT_TYPE type : IngredientValidator.INGREDIENT_TYPE.values()) {
             assertTrue( validator.checkBestBeforeDate(beforeToday, type) );
         }

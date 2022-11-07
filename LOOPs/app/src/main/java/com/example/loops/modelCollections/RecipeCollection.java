@@ -110,6 +110,12 @@ public class RecipeCollection {
         else if (option.equals(RecipeSortOption.BY_TITLE__DESCENDING)) {
             Collections.sort(allRecipes, (new TitleAscendingComparator().reversed()));
         }
+        else if (option.equals(RecipeSortOption.BY_PREP_TIME_DESCENDING)) {
+            allRecipes.sort(new RecipeCollection.PrepTimeAscendingComparator().reversed());
+        }
+        else if (option.equals(RecipeSortOption.BY_CATEGORY_ASCENDING)) {
+            allRecipes.sort(new RecipeCollection.CategoryAscendingComparator().reversed());
+        }
     }
 
     /**

@@ -18,6 +18,7 @@ import com.example.loops.adapters.RecipeCollectionViewAdapter;
 import com.example.loops.sortOption.RecipeSortOption;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -99,7 +100,7 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
             recipeCollection.getRecipe(0).setComments("Blah blah");
             recipeCollection.getRecipe(0).addIngredient(new Ingredient(
                     "desc",
-                    new Date(),
+                    LocalDate.now(),
                     "loc",
                     4,
                     "unit",
@@ -111,7 +112,7 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
             recipeCollection.getRecipe(1).setComments("alah blah");
             recipeCollection.getRecipe(1).addIngredient(new Ingredient(
                     "desc",
-                    new Date(),
+                    LocalDate.now(),
                     "loc",
                     4,
                     "unit",
@@ -124,7 +125,7 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
             recipeCollection.getRecipe(2).setComments("Klah blah");
             recipeCollection.getRecipe(2).addIngredient(new Ingredient(
                     "desc",
-                    new Date(),
+                    LocalDate.now(),
                     "loc",
                     4,
                     "unit",
@@ -144,7 +145,7 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
         sortOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sortRecipeCollection(parent, position);
+                sortCollection(parent);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -170,30 +171,35 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
     /**
      * Sorts the recipe collection and display it
      * @param parent
-     * @param position
      */
-    private void sortRecipeCollection(AdapterView<?> parent, int position) {
-        if (parent.getItemAtPosition(position).equals(getString(R.string.empty_sort_option))) {
+    @Override
+    protected void sortCollection(AdapterView<?> parent) {
+        if (parent.getSelectedItem().toString().equals(getString(R.string.empty_sort_option))) {
             return;
         }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_title_asc))) {
-            recipeCollection.sort(RecipeSortOption.BY_TITLE_ASCENDING);
+        if (isAscendingOrder) {
+            if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_title))) {
+                recipeCollection.sort(RecipeSortOption.BY_TITLE_ASCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_preptime))) {
+                recipeCollection.sort(RecipeSortOption.BY_PREP_TIME_ASCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_category))) {
+                recipeCollection.sort(RecipeSortOption.BY_CATEGORY_ASCENDING);
+            }
         }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_preptime_asc))) {
-            recipeCollection.sort(RecipeSortOption.BY_PREP_TIME_ASCENDING);
+        else {
+             if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_title))) {
+                recipeCollection.sort(RecipeSortOption.BY_TITLE__DESCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_preptime))) {
+                recipeCollection.sort(RecipeSortOption.BY_PREP_TIME_DESCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_category))) {
+                recipeCollection.sort(RecipeSortOption.BY_CATEGORY_DESCENDING);
+            }
         }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_category_asc))) {
-            recipeCollection.sort(RecipeSortOption.BY_CATEGORY_ASCENDING);
-        }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_title_desc))) {
-            recipeCollection.sort(RecipeSortOption.BY_TITLE__DESCENDING);
-        }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_preptime_desc))) {
-            recipeCollection.sort(RecipeSortOption.BY_PREP_TIME_DESCENDING);
-        }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_category_desc))) {
-            recipeCollection.sort(RecipeSortOption.BY_CATEGORY_DESCENDING);
-        }
+
         collectionViewAdapter.notifyDataSetChanged();
     }
 
