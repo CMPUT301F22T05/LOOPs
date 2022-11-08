@@ -38,7 +38,12 @@ public class IngredientCollection {
      * @param ingredient
      */
     public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
+        int ingInd = ingredients.indexOf(ingredient);
+        if (ingInd != -1) {
+            updateIngredient(ingInd, ingredient);
+        } else {
+            ingredients.add(ingredient);
+        }
     }
 
     /**

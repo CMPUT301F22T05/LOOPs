@@ -72,7 +72,7 @@ public class Ingredient implements Serializable {
             return false;
         Ingredient toCompare = (Ingredient) o;
         return toCompare.getDescription().equals(getDescription())
-                && toCompare.getAmount() == getAmount()
+                //&& toCompare.getAmount() == getAmount()
                 && toCompare.getCategory().equals(getCategory())
                 && toCompare.getBestBeforeDateString().equals(getBestBeforeDateString())
                 && toCompare.getStoreLocation().equals(getStoreLocation())
