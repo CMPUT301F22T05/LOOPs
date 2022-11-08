@@ -87,31 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Load all database ingredients into the ingredient collection.
-     */
-    public void retrieveIngredientFromDatabase() {
-        db.collection("IngredientStorage").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                Ingredient databaseIngredient = new Ingredient(
-                                        documentSnapshot.getString("description"),
-                                        documentSnapshot.getString("bestBeforeDate"),
-                                        documentSnapshot.getString("location"),
-                                        documentSnapshot.getLong("amount"),
-                                        documentSnapshot.getString("unit"),
-                                        documentSnapshot.getString("category")
-                                );
-                                allIngredients.addIngredient(databaseIngredient);
-                            }
-                        }
-                    }
-                });
-    }
-
     public void deleteRecipeFromDatabase(int recipeInd) {
         db.collection("RecipeCollection").document(Integer.toString(recipeInd))
                 .delete()
@@ -128,23 +103,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
-//    public void deleteIngredientFromDatabase(int ingInd) {
-//        db.collection("IngredientStorage").document(Integer.toString(ingInd))
-//                .delete()
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Log.d(TAG, "Ingredient deleted.");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Ingredient delete failed!");
-//                    }
-//                });
-//    }
 
     public void updateRecipeFromDatabase(RecipeCollection updatedRecipe) {
         if (updatedRecipe == null) {
@@ -182,45 +140,6 @@ public class MainActivity extends AppCompatActivity {
         deleteRecipeFromDatabase(i);
     }
 
-    /**
-     * Update the ingredient collection to database.
-     * @param updatedIngredient updated ingredient collection
-     */
-    public void updateIngredientFromDatabase(IngredientCollection updatedIngredient) {
-        if (updatedIngredient == null) {
-            return;
-        }
-//        allIngredients = updatedIngredient;
-//
-//        int i = 0;
-//        for (Ingredient ing : allIngredients.getIngredients()) {
-//            Log.e(TAG, ing.getDescription());
-//            Map<String, Object> ingredientRecord = new HashMap<>();
-//            ingredientRecord.put("description", ing.getDescription());
-//            ingredientRecord.put("bestBeforeDate", ing.getBestBeforeDateString());
-//            ingredientRecord.put("location", ing.getStoreLocation());
-//            ingredientRecord.put("amount", ing.getAmount());
-//            ingredientRecord.put("unit", ing.getUnit());
-//            ingredientRecord.put("category", ing.getCategory());
-//
-//            db.collection("IngredientStorage").document(Integer.toString(i))
-//                    .set(ingredientRecord)
-//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void unused) {
-//                            Log.d(TAG, "Ingredient updated.");
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.w(TAG, "Ingredient update failed!");
-//                        }
-//                    });
-//            i++;
-//        }
-//        deleteIngredientFromDatabase(i);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

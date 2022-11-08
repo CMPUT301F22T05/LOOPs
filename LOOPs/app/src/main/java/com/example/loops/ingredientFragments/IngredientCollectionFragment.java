@@ -105,14 +105,14 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
             ingredientCollection = new IngredientCollection();
             ingredientCollection.addIngredient(new Ingredient(
                     "BBB",
-                    "10/28/2022",
+                    "2022-10-28",
                     "fridge",
                     1,
                     "unit",
                     "XXX"));
             ingredientCollection.addIngredient(new Ingredient(
                     "AAA",
-                    "10/29/2022",
+                    "2022-10-29",
                     "cupboard",
                     1,
                     "unit",

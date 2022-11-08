@@ -5,17 +5,17 @@ import com.example.loops.database.RemoteIngredientStorageManager;
 import com.example.loops.models.Ingredient;
 
 public class IngredientStorage extends IngredientCollection{
-    private RemoteIngredientStorageManager remoteIngredientStorageManager;
+    private Database database;
     public boolean done = false;
 
-    public IngredientStorage(RemoteIngredientStorageManager manager) {
+    public IngredientStorage(Database manager) {
         super();
-        remoteIngredientStorageManager = manager;
+        database = manager;
         getIngredientStorageFromDataBase();
     }
 
     private void getIngredientStorageFromDataBase() {
-        remoteIngredientStorageManager.getIngredientStorage(this);
+        database.retrieveCollection(Database.DB_INGREDIENT, this);
 /*        synchronized (remoteIngredientStorageManager) {
             try {
                 System.out.println("block");
@@ -33,19 +33,19 @@ public class IngredientStorage extends IngredientCollection{
 
     @Override
     public void addIngredient(Ingredient ingredient) {
-        remoteIngredientStorageManager.addIngredientToStorage(ingredient);
+        database.addDocument(ingredient);
         super.addIngredient(ingredient);
     }
 
     @Override
     public boolean deleteIngredient(int index) {
-        remoteIngredientStorageManager.removeIngredientFromStorage(ingredients.get(index));
+        database.deleteDocument(ingredients.get(index));
         return super.deleteIngredient(index);
     }
 
     @Override
     public boolean updateIngredient(int index, Ingredient ingredient) {
-        remoteIngredientStorageManager.updateIngredientInStorage(ingredients.get(index), ingredient);
+        database.updateDocument(ingredients.get(index), ingredient);
         return super.updateIngredient(index, ingredient);
     }
 }

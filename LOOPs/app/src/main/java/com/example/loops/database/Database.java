@@ -47,10 +47,10 @@ public class Database implements RemoteIngredientStorageManager{
     private FirebaseFirestore db;
     private Map<String, Object> ingredientRecord;
 
-    private static final String DB_INGREDIENT = "IngredientStorage";
-    private static final String DB_RECIPE = "RecipeCollection";
-    private static final String DB_MEAL_PLAN = "MealPlanCollection";
-    private static final String DB_SHOPPING_LIST = "ShoppingListCollection";
+    public static final String DB_INGREDIENT = "IngredientStorage";
+    public static final String DB_RECIPE = "RecipeCollection";
+    public static final String DB_MEAL_PLAN = "MealPlanCollection";
+    public static final String DB_SHOPPING_LIST = "ShoppingListCollection";
     private static Map<Object, String> collectionDict = new HashMap<>();
 
 
