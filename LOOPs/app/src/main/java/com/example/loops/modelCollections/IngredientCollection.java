@@ -148,4 +148,26 @@ public class IngredientCollection {
             return o1.getStoreLocation().compareTo(o2.getStoreLocation());
         }
     }
+
+    /**
+     * Equal method; used in recipe identical comparison; equal only when all ingredients are
+     * equal with same order.
+     * @param o ingredient collection to compare
+     * @return whether two ingredient collections are identical
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof IngredientCollection))
+            return false;
+        IngredientCollection toCompare = (IngredientCollection) o;
+
+        if (toCompare.getIngredients().size() != getIngredients().size())
+            return false;
+        int size = getIngredients().size();
+        for (int i = 0; i < size; i++) {
+            if (!toCompare.getIngredients().get(i).equals(getIngredients().get(i)))
+                return false;
+        }
+        return true;
+    }
 }

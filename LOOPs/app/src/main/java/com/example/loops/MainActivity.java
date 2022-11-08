@@ -41,21 +41,23 @@ import java.util.Map;
  * All database management parts were implemented inside the main activity.
  */
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Main activity attributes.
+     * appBarConfiguration - header display
+     * allIngredients - ingredient storage from database
+     * allRecipes - recipe storage from database
+     */
     private AppBarConfiguration appBarConfiguration;
-    //private Database database = Database.getInstance();
     private IngredientStorage allIngredients = new IngredientStorage(Database.getInstance());
-    //private IngredientCollection allIngredients = new IngredientCollection();
     private RecipeCollection allRecipes = new RecipeCollection();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public IngredientCollection getIngredientStorage() {
         return allIngredients;
     }
-
     public RecipeCollection getAllRecipes() {
         return allRecipes;
     }
-
     public void setAllRecipes(RecipeCollection recipeCollection) {
         allRecipes = recipeCollection;
     }
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         //}
         //retrieveIngredientFromDatabase();
         //database.getIngredientStorage(allIngredients);
-        retrieveRecipeFromDatabase();
+        //retrieveRecipeFromDatabase();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();

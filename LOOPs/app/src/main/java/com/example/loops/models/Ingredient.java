@@ -23,7 +23,7 @@ public class Ingredient implements Serializable, ModelConstraints {
     private String description;
     private LocalDate bestBeforeDate;
     private String storeLocation;
-    private float amount;
+    private double amount;
     private String unit;
     private String category;
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -37,7 +37,7 @@ public class Ingredient implements Serializable, ModelConstraints {
      * @param unit the unit for the amount; should be one of user-defined
      * @param category the category of ingredient; should be user-defined
      */
-    public Ingredient(String description, LocalDate bestBeforeDate, String storeLocation, float amount, String unit, String category) {
+    public Ingredient(String description, LocalDate bestBeforeDate, String storeLocation, double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.storeLocation = storeLocation;
@@ -55,7 +55,7 @@ public class Ingredient implements Serializable, ModelConstraints {
      * @param unit the unit for the amount; should be one of user-defined
      * @param category the category of ingredient; should be user-defined
      */
-    public Ingredient(String description, String bestBeforeDate, String storeLocation, float amount, String unit, String category) {
+    public Ingredient(String description, String bestBeforeDate, String storeLocation, double amount, String unit, String category) {
         this.description = description;
         setBestBeforeDate(bestBeforeDate);
         this.storeLocation = storeLocation;
@@ -188,7 +188,7 @@ public class Ingredient implements Serializable, ModelConstraints {
      * get the amount of the ingredient
      * @return the amount
      */
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 

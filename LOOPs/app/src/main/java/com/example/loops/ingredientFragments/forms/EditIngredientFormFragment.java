@@ -51,7 +51,7 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
         descriptionInput.setText(editIngredient.getDescription());
         bestBeforeDateInput.setText(editIngredient.getBestBeforeDateString());
         locationInput.setSelection(getSpinnerIndexByValue(editIngredient.getStoreLocation(), locationInput));
-        amountInput.setText(Float.toString(editIngredient.getAmount()));
+        amountInput.setText(Double.toString(editIngredient.getAmount()));
         unitInput.setSelection(getSpinnerIndexByValue(editIngredient.getUnit(), unitInput));
         categoryInput.setSelection(getSpinnerIndexByValue(editIngredient.getCategory(), categoryInput));
     }

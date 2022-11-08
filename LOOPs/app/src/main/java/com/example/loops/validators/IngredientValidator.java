@@ -111,8 +111,8 @@ public class IngredientValidator {
      * @param type the type of the ingredient, i.e. the context the ingredient lies on
      * @return true if valid. False otherwise.
      */
-    public boolean checkAmount(float amount, INGREDIENT_TYPE type) {
-        if ( Float.isNaN(amount) ) {
+    public boolean checkAmount(double amount, INGREDIENT_TYPE type) {
+        if (Double.isNaN(amount) ) {
             errorStringIds.add(R.string.ingredient_no_amount);
             return false;
         }

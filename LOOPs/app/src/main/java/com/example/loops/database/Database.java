@@ -26,13 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is deprecated.
- *      If we add more functions like interacting with ingredients, interacting with recipes, and so on
- *      this database class will have a lot of methods. It may be a good idea to break this database
- *      class into smaller classes like IngredientQueryManager, RecipeQueryManager, UserManager, etc
- *      just to give quick examples. This class is proof of concept more than actual code.
+ * The database class that contains very ease-of-use generic database access interface.
  */
-public class Database implements RemoteIngredientStorageManager{
+public class Database {
     /**
      * Singleton pattern
      * https://refactoring.guru/design-patterns/singleton/java/example#example-2
@@ -41,11 +37,11 @@ public class Database implements RemoteIngredientStorageManager{
     public static final String MAIN_USER_ID = "MainUser";
     public static final String TEST_USER_ID = "TestUser";
     public static final Object lock = new Object();
+
     private static volatile Database instance;
     private static volatile String currentUserId = "";
     private DocumentReference userData;
     private FirebaseFirestore db;
-    private Map<String, Object> ingredientRecord;
 
     public static final String DB_INGREDIENT = "IngredientStorage";
     public static final String DB_RECIPE = "RecipeCollection";
@@ -84,26 +80,40 @@ public class Database implements RemoteIngredientStorageManager{
         void onFailure(@NonNull Exception e);
     }
 
-
-    private Database(String username) {
-        db = FirebaseFirestore.getInstance();
-        try {
-            userData = db
-                    .collection("Users")
-                    .document(username);
-        }
-        catch (Exception e){
-            // TODO: error handling
-            throw e;
-        }
-    }
-
-    private Database() {
+    /**
+     * Connect to FireStore & initialize collection type mapping.
+     */
+    private void initDatabase() {
         db = FirebaseFirestore.getInstance();
         collectionDict.put(Ingredient.class, DB_INGREDIENT);
         collectionDict.put(Recipe.class, DB_RECIPE);
     }
 
+    /**
+     * Constructor for user login.
+     * @param username name of user
+     */
+    private Database(String username) {
+        initDatabase();
+        try {
+            userData = db.collection("Users").document(username);
+        }
+        catch (Exception e){
+            Log.e(TAG, "User not found.");
+        }
+    }
+
+    /**
+     * Constructor for offline mode.
+     */
+    private Database() {
+        initDatabase();
+    }
+
+    /**
+     * Getter for database singleton in offline mode.
+     * @return database singleton; can perform add, delete, update, & retrieve
+     */
     public static Database getInstance() {
         if (instance == null) {
             instance = new Database();
@@ -111,8 +121,9 @@ public class Database implements RemoteIngredientStorageManager{
         return instance;
     }
 
-    /*
-    The idea is whenever you need to access the data, just call Database.getInstance(Database.TEST_USER_ID)
+    /**
+     * Getter for database singleton for user login.
+     * The idea is whenever you need to access the data, just call Database.getInstance(Database.TEST_USER_ID)
      */
     public static Database getInstance(String username) {
         Database result = instance;
@@ -247,7 +258,7 @@ public class Database implements RemoteIngredientStorageManager{
                                         documentSnapshot.getString("description"),
                                         documentSnapshot.getString("bestBeforeDate"),
                                         documentSnapshot.getString("location"),
-                                        documentSnapshot.getLong("amount"), //why can this return a float?
+                                        documentSnapshot.getDouble("amount"), //why can this return a float?
                                         documentSnapshot.getString("unit"),
                                         documentSnapshot.getString("category")
                                 );
@@ -270,6 +281,7 @@ public class Database implements RemoteIngredientStorageManager{
                 });
     }
 
+    /**
     @Override
     public void getIngredientStorage(IngredientStorage ingredientStorage) {
         //ArrayList<Ingredient> ingredientStorage = new ArrayList<>();
@@ -308,7 +320,7 @@ public class Database implements RemoteIngredientStorageManager{
         System.out.println("create thread");
         /*while (ingredientStorage.done == false) {
             //wait until read all data
-        }*/
+        }
     }
 
     @Override
@@ -360,4 +372,5 @@ public class Database implements RemoteIngredientStorageManager{
         removeIngredientFromStorage(oldIngredient);
         addIngredientToStorage(newIngredient);
     }
+    */
 }

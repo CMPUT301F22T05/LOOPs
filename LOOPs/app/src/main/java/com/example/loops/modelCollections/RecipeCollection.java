@@ -12,7 +12,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- *  Control class for Recipe's
+ *  Control class for recipes
+ *  it can contain number of recipes and keep track of them
+ *  recipe can be removed or updated from the collection
+ *  new recipe can also be added in
+ *  recipes can also be sorted in different ways shown in RecipeSortOption enum
+ *  it also contains comparators for Recipe
  */
 public class RecipeCollection {
     /**

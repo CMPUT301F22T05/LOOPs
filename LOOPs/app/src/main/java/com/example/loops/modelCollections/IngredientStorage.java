@@ -1,12 +1,10 @@
 package com.example.loops.modelCollections;
 
 import com.example.loops.database.Database;
-import com.example.loops.database.RemoteIngredientStorageManager;
 import com.example.loops.models.Ingredient;
 
-public class IngredientStorage extends IngredientCollection{
+public class IngredientStorage extends IngredientCollection {
     private Database database;
-    public boolean done = false;
 
     public IngredientStorage(Database manager) {
         super();
@@ -16,15 +14,6 @@ public class IngredientStorage extends IngredientCollection{
 
     private void getIngredientStorageFromDataBase() {
         database.retrieveCollection(Database.DB_INGREDIENT, this);
-/*        synchronized (remoteIngredientStorageManager) {
-            try {
-                System.out.println("block");
-                remoteIngredientStorageManager.wait();
-            } catch (InterruptedException e) {
-                System.out.println("error");
-            }
-        }*/
-        done = false;
     }
 
     public void addIngredientLocal(Ingredient ingredient) {
