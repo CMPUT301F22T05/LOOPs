@@ -7,13 +7,16 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Model class. It is abstraction of ingredient and it implements Serializable which make it
  * transmissible between fragment
  * Ingredient class that encapsulate the data structure & methods of each ingredient.
  */
-public class Ingredient implements Serializable {
+public class Ingredient implements Serializable, ModelConstraints {
     /**
      * An ingredient includes description, best before date, location, amount, unit & category.
      */
@@ -27,12 +30,12 @@ public class Ingredient implements Serializable {
 
     /**
      * Constructor that pass all ingredient elements.
-     * @param description
-     * @param bestBeforeDate passing in Date
-     * @param storeLocation
-     * @param amount
-     * @param unit
-     * @param category
+     * @param description the name of ingredient
+     * @param bestBeforeDate the date when out-dated; passing in Date
+     * @param storeLocation the location to store; should be one of user-defined
+     * @param amount the amount to store; can be decimal number
+     * @param unit the unit for the amount; should be one of user-defined
+     * @param category the category of ingredient; should be user-defined
      */
     public Ingredient(String description, LocalDate bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
@@ -45,12 +48,12 @@ public class Ingredient implements Serializable {
 
     /**
      * Constructor that pass all ingredient elements.
-     * @param description
-     * @param bestBeforeDate passing in String with mm/dd/yyyy format
-     * @param storeLocation
-     * @param amount
-     * @param unit
-     * @param category
+     * @param description the name of ingredient
+     * @param bestBeforeDate the date when out-dated; passing in String with mm/dd/yyyy format
+     * @param storeLocation the location to store; should be one of user-defined
+     * @param amount the amount to store; can be decimal number
+     * @param unit the unit for the amount; should be one of user-defined
+     * @param category the category of ingredient; should be user-defined
      */
     public Ingredient(String description, String bestBeforeDate, String storeLocation, float amount, String unit, String category) {
         this.description = description;
@@ -63,6 +66,7 @@ public class Ingredient implements Serializable {
 
     /**
      * Rewrite equals method to make it comparable by element info.
+     * Two ingredients must have all attributes (except amount) being identical to be considered as equal.
      * @param o ingredient object to compare
      * @return whether is equal
      */
@@ -79,6 +83,34 @@ public class Ingredient implements Serializable {
                 && toCompare.getUnit().equals(getUnit());
     }
 
+    /**
+     * The hash of ingredient as the document in FireStore database.
+     * Hash is assigned by all attributes except amount.
+     * @return the hash code for the ingredient
+     */
+    @Override
+    public int hashCode() {
+        return (getDescription()
+                + getBestBeforeDateString()
+                + getStoreLocation()
+                + getUnit()
+                + getCategory()).hashCode();
+    }
+
+    /**
+     * The mapped result for ingredient; the formatted data that can directly send to database.
+     * @return the formatted map data for database storage
+     */
+    public Map<String, Object> getMapData() {
+        Map<String, Object> mapData = new HashMap<>();
+        mapData.put("description", getDescription());
+        mapData.put("bestBeforeDate", getBestBeforeDateString());
+        mapData.put("location", getStoreLocation());
+        mapData.put("amount", getAmount());
+        mapData.put("unit", getUnit());
+        mapData.put("category", getCategory());
+        return mapData;
+    }
 
     // The following are all getters & setters.
 

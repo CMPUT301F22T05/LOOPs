@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.loops.database.Database;
+import com.example.loops.ingredientFragments.IngredientCollectionEditorFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.IngredientStorage;
 import com.example.loops.modelCollections.RecipeCollection;
@@ -128,10 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Delete an ingredient from the database storage.
-     * @param ingInd index of ingredient to delete
-     */
 //    public void deleteIngredientFromDatabase(int ingInd) {
 //        db.collection("IngredientStorage").document(Integer.toString(ingInd))
 //                .delete()
