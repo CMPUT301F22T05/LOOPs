@@ -21,7 +21,7 @@ public class IngredientTest {
     void initialize() {
         ingredient = new Ingredient(
                 "apple",
-                "11/04/2022",
+                "2022-11-04",
                 "pantry",
                 1,
                 "kg",
@@ -32,7 +32,7 @@ public class IngredientTest {
     @Test
     void testGetters() {
         assertEquals("apple", ingredient.getDescription());
-        assertEquals("11/04/2022", ingredient.getBestBeforeDateString());
+        assertEquals("2022-11-04", ingredient.getBestBeforeDateString());
         assertEquals("pantry", ingredient.getStoreLocation());
         assertEquals(1.0, ingredient.getAmount());
         assertEquals("kg", ingredient.getUnit());
@@ -45,8 +45,8 @@ public class IngredientTest {
         assertEquals("pork", ingredient.getDescription());
         ingredient.setBestBeforeDate(date);
         assertEquals(date, ingredient.getBestBeforeDate());
-        ingredient.setBestBeforeDate("11/10/2022");
-        assertEquals("11/10/2022", ingredient.getBestBeforeDateString());
+        ingredient.setBestBeforeDate("2022-11-10");
+        assertEquals("2022-11-10", ingredient.getBestBeforeDateString());
         ingredient.setStoreLocation("fridge");
         assertEquals("fridge", ingredient.getStoreLocation());
         ingredient.setAmount(3);
@@ -61,7 +61,7 @@ public class IngredientTest {
     void testEquals() {
         Ingredient comparedIngredient = new Ingredient(
                 "apple",
-                "11/04/2022",
+                "2022-11-04",
                 "pantry",
                 1,
                 "kg",
