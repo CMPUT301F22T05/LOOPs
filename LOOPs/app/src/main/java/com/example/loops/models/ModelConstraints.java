@@ -11,5 +11,7 @@ public interface ModelConstraints {
      * The formatted data that can directly send to database.
      * @return the formatted map data for database storage
      */
-    public Map<String, Object> getMapData();
+    Map<String, Object> getMapData();
+
+    int hashCode();
 }

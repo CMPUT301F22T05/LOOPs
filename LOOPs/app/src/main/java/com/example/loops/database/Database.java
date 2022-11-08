@@ -7,6 +7,8 @@ import android.util.Log;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.IngredientStorage;
 import com.example.loops.models.Ingredient;
+import com.example.loops.models.ModelConstraints;
+import com.example.loops.models.Recipe;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +51,8 @@ public class Database implements RemoteIngredientStorageManager{
     private static final String DB_RECIPE = "RecipeCollection";
     private static final String DB_MEAL_PLAN = "MealPlanCollection";
     private static final String DB_SHOPPING_LIST = "ShoppingListCollection";
+    private static Map<Object, String> collectionDict = new HashMap<>();
+
 
     /**
      * Called when database query is successful
@@ -96,6 +100,8 @@ public class Database implements RemoteIngredientStorageManager{
 
     private Database() {
         db = FirebaseFirestore.getInstance();
+        collectionDict.put(Ingredient.class, DB_INGREDIENT);
+        collectionDict.put(Recipe.class, DB_RECIPE);
     }
 
     public static Database getInstance() {
@@ -170,24 +176,21 @@ public class Database implements RemoteIngredientStorageManager{
 
     /**
      * Update a database document based on its collection type & old/new document name.
-     * @param collectionName one of DB_INGREDIENT, DB_RECIPE, DB_MEAL_PLAN, DB_SHOPPING_LIST
-     * @param oldDocumentName hashCode of old object
-     * @param newDocumentName hashCode of new object
-     * @param updatedItem object's getMapData
+     * @param oldModel model before update
+     * @param newModel model after update
      */
-    public void updateCollection(String collectionName, String oldDocumentName,
-                                 String newDocumentName, HashMap<String, Object> updatedItem) {
-        deleteCollection(collectionName, oldDocumentName);
-        addCollection(collectionName, newDocumentName, updatedItem);
+    public void updateDocument(ModelConstraints oldModel, ModelConstraints newModel) {
+        deleteDocument(oldModel);
+        addDocument(newModel);
     }
 
     /**
      * Delete a database document based on its collection type & document name.
-     * @param collectionName one of DB_INGREDIENT, DB_RECIPE, DB_MEAL_PLAN, DB_SHOPPING_LIST
-     * @param documentName hashCode of object
+     * @param deleteModel model to delete
      */
-    public void deleteCollection(String collectionName, String documentName) {
-        db.collection(collectionName).document(documentName)
+    public void deleteDocument(ModelConstraints deleteModel) {
+        db.collection(collectionDict.get(deleteModel.getClass()))
+                .document(Integer.toString(deleteModel.hashCode()))
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -205,13 +208,12 @@ public class Database implements RemoteIngredientStorageManager{
 
     /**
      * Add a database document based on its collection type & document name.
-     * @param collectionName one of DB_INGREDIENT, DB_RECIPE, DB_MEAL_PLAN, DB_SHOPPING_LIST
-     * @param documentName hashCode of object
-     * @param addedItem object's getMapData
+     * @param addModel model to add
      */
-    public void addCollection(String collectionName, String documentName, HashMap<String, Object> addedItem) {
-        db.collection(collectionName).document(documentName)
-                .set(addedItem)
+    public void addDocument(ModelConstraints addModel) {
+        db.collection(collectionDict.get(addModel.getClass()))
+                .document(Integer.toString(addModel.hashCode()))
+                .set(addModel.getMapData())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
