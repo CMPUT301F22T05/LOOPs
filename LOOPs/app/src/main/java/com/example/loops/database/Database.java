@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.IngredientStorage;
+import com.example.loops.modelCollections.RecipeCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.models.ModelConstraints;
 import com.example.loops.models.Recipe;
@@ -258,7 +259,7 @@ public class Database {
                                         documentSnapshot.getString("description"),
                                         documentSnapshot.getString("bestBeforeDate"),
                                         documentSnapshot.getString("location"),
-                                        documentSnapshot.getDouble("amount"), //why can this return a float?
+                                        Double.parseDouble(documentSnapshot.getString("amount")),
                                         documentSnapshot.getString("unit"),
                                         documentSnapshot.getString("category")
                                 );
@@ -267,7 +268,34 @@ public class Database {
                         }
 
                         if (collectionName == DB_RECIPE) {
-
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                Recipe databaseRecipe = new Recipe(
+                                        documentSnapshot.getString("title"),
+                                        documentSnapshot.getLong("durationHour"),
+                                        documentSnapshot.getLong("durationMinute"),
+                                        Math.toIntExact(documentSnapshot.getLong("numServing")),
+                                        documentSnapshot.getString("category"),
+                                        documentSnapshot.getString("photoBase64"),
+                                        new IngredientCollection(),
+                                        documentSnapshot.getString("comments")
+                                );
+                                Map<String, Object> containIngredients =
+                                        (HashMap<String, Object>) documentSnapshot.get("ingredients");
+                                for (String ingHash : containIngredients.keySet()) {
+                                    Map<String, Object> ingInfo =
+                                            (HashMap<String, Object>) containIngredients.get(ingHash);
+                                    Ingredient containsIngredient = new Ingredient(
+                                            (String) ingInfo.get("description"),
+                                            (String) ingInfo.get("bestBeforeDate"),
+                                            (String) ingInfo.get("location"),
+                                            Double.parseDouble((String) ingInfo.get("amount")),
+                                            (String) ingInfo.get("unit"),
+                                            (String) ingInfo.get("category")
+                                    );
+                                    databaseRecipe.addIngredient(containsIngredient);
+                                }
+                                ((RecipeCollection)collection).addRecipe(databaseRecipe);
+                            }
                         }
 
                         if (collectionName == DB_MEAL_PLAN) {

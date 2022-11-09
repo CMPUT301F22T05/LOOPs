@@ -69,8 +69,6 @@ public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
         if (photo != null) {
             recipeImage.setImageBitmap(photo);
         }
-        Bitmap testImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.fried_chicken_test_picutre);
-        recipeImage.setImageBitmap(testImage);
 
         return convertView;
     }

@@ -106,7 +106,7 @@ public class Ingredient implements Serializable, ModelConstraints {
         mapData.put("description", getDescription());
         mapData.put("bestBeforeDate", getBestBeforeDateString());
         mapData.put("location", getStoreLocation());
-        mapData.put("amount", getAmount());
+        mapData.put("amount", Double.toString(getAmount()));
         mapData.put("unit", getUnit());
         mapData.put("category", getCategory());
         return mapData;

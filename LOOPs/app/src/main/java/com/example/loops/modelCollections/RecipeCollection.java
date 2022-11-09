@@ -1,9 +1,11 @@
 package com.example.loops.modelCollections;
 
 import android.os.Build;
+import android.provider.ContactsContract;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.loops.database.Database;
 import com.example.loops.models.Recipe;
 import com.example.loops.sortOption.RecipeSortOption;
 
@@ -24,20 +26,31 @@ public class RecipeCollection {
      * Attributes of the RecipeCollection
      */
     private ArrayList<Recipe> allRecipes;
+    private Database database;
 
     /**
-     * Constructor
+     * Constructor with no database interaction
      */
     public RecipeCollection() {
+        database = null;
         allRecipes = new ArrayList<>();
     }
 
+    /**
+     * Constructor with database data pre-loaded
+     * @param database database singleton
+     */
+    public RecipeCollection(Database database) {
+        this.database = database;
+        allRecipes = new ArrayList<>();
+        updateAllRecipes();
+    }
 
     /**
-     * Unused for now, no function
+     * Update database data to recipe collection.
      */
     public void updateAllRecipes(){
-        //function for using db data to populate list of recipes
+        database.retrieveCollection(Database.DB_RECIPE, this);
     }
 
     /**

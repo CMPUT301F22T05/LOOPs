@@ -87,10 +87,9 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
      */
     protected void setRecipeCollectionToDisplay(CollectionType type) {
         if (type == CollectionType.FROM_STORAGE) {
-            // TODO: retrieve recipes from storage
             recipeCollection = ((MainActivity)getActivity()).getAllRecipes();
-            //setRecipeCollectionToDisplay(CollectionType.FROM_TESTING);
         }
+        /*
 //        FIXME: Here for debugging purposes. Remove later
         else if (type == CollectionType.FROM_TESTING) {
             recipeCollection = new RecipeCollection();
@@ -135,6 +134,7 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
         else {
             throw new IllegalArgumentException("Unknown given collection type");
         }
+         */
         adaptRecipeCollection(recipeCollection);
     }
 
