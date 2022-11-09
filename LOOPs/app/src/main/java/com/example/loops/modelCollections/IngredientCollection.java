@@ -3,6 +3,7 @@ package com.example.loops.modelCollections;
 import com.example.loops.models.Ingredient;
 import com.example.loops.sortOption.IngredientSortOption;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +16,7 @@ import java.util.Comparator;
  * ingredients can also be sorted in different ways shown in IngredientSortOption enum
  * it also contains comparators for Ingredient
  */
-public class IngredientCollection {
+public class IngredientCollection implements Serializable {
     protected ArrayList<Ingredient> ingredients;
 
     /**

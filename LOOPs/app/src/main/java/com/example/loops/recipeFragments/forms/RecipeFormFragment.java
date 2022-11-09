@@ -68,6 +68,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
             }
         };
         ingredientRecyclerView.setLayoutManager(layoutManager);
+        if (ingredientCollection == null)
+            ingredientCollection = new IngredientCollection();
         recyclerViewAdapter = new RecipeIngredientsAdapter (ingredientCollection,view.getContext(),this);
         ingredientRecyclerView.setAdapter(recyclerViewAdapter);
     }

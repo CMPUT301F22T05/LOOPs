@@ -14,6 +14,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.loops.ingredientFragments.IngredientCollectionFragment;
+import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
 import com.example.loops.models.Recipe;
@@ -23,7 +24,7 @@ import com.example.loops.models.Recipe;
  */
 public class AddRecipeFormFragment extends RecipeFormFragment {
 
-    private Recipe addedRecipe = new Recipe();
+    //private Recipe addedRecipe;
     // Empty constructor
     public AddRecipeFormFragment() { }
 
@@ -36,9 +37,9 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Add");
-        ingredientCollection = addedRecipe.getIngredients();
-        setUpRecyclerView(formView);
+        //ingredientCollection = addedRecipe.getIngredients();
         parseArguments();
+        setUpRecyclerView(formView);
     }
 
     /**
@@ -100,7 +101,10 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                         }
                         // navigate to add ingredient form
                         else if (i == 1) {
-                            Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFragment);
+                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
+                                    addIngredientAction = AddRecipeFormFragmentDirections
+                                    .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 2) {
                             return;
@@ -120,12 +124,10 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     void parseArguments() {
         Bundle argsBundle = getArguments();
         if (argsBundle != null) {
-            Ingredient submittedIngredient = AddRecipeFormFragmentArgs.fromBundle(argsBundle).getAddedIngredient();
-            if (submittedIngredient != null) {
-                ingredientCollection.addIngredient(submittedIngredient);
-                recyclerViewAdapter.notifyDataSetChanged();
-                Log.e("TEST", submittedIngredient.getDescription());
-            }
+            ingredientCollection = AddRecipeFormFragmentArgs.fromBundle(argsBundle).getIngredientCollection();
+            if (ingredientCollection == null)
+                ingredientCollection = new IngredientCollection();
+            //recyclerViewAdapter.notifyDataSetChanged();
             argsBundle.clear();
         }
     }

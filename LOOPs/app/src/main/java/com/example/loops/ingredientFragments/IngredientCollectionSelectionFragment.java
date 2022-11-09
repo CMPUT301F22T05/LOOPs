@@ -68,7 +68,7 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param clickedView
      */
     protected void onClickAddButton(View clickedView) {
-        Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFromSelection);
+        //Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFromSelection);
     }
 
     /**
@@ -95,11 +95,13 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
             getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
         }
         else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
+            /*
             IngredientCollectionSelectionFragmentDirections.ActionIngredientCollectionSelectionFragmentToAddRecipeFormFragment toSubmitAction =
                     IngredientCollectionSelectionFragmentDirections.
                             actionIngredientCollectionSelectionFragmentToAddRecipeFormFragment();
             toSubmitAction.setAddedIngredient(selectedIngredient);
             Navigation.findNavController(getView()).navigate(toSubmitAction);
+             */
         }
 //        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
 //            IngredientCollectionSelectionFragmentDirections.AddIngredientToAddRecipeForm toSubmitAction =

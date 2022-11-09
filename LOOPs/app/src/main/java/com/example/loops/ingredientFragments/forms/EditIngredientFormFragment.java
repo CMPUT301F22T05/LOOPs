@@ -60,7 +60,7 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
      * Send the edited ingredient back to previous fragment.
      * @param submittedIngredient ingredient that is submitted by the form
      */
-    void sendResult(Ingredient submittedIngredient) {
+    public void sendResult(Ingredient submittedIngredient) {
         Integer callerFragmentId = getCallerFragmentId();
 
         if ( callerFragmentId == null ) {

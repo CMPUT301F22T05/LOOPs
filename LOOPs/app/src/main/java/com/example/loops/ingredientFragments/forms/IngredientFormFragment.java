@@ -48,7 +48,7 @@ public abstract class IngredientFormFragment extends Fragment {
      * Implement to handle how submitted ingredient is sent to other activities
      * @param submittedIngredient ingredient submitted by the form
      */
-    abstract void sendResult(Ingredient submittedIngredient);
+    public abstract void sendResult(Ingredient submittedIngredient);
 
     /**
      * Creates view of the ingredient form and initialize its widgets
