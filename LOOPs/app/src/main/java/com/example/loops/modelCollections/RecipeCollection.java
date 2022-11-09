@@ -61,6 +61,7 @@ public class RecipeCollection {
         if (!allRecipes.contains(recipe)){
             allRecipes.add(recipe);
         }
+        database.addDocument(recipe);
     }
 
     /**
@@ -70,6 +71,7 @@ public class RecipeCollection {
      */
     public boolean deleteRecipe(int indexToDelete){
         try {
+            database.deleteDocument(allRecipes.get(indexToDelete));
             allRecipes.remove(indexToDelete);
         } catch (Exception e) {
             return false;
@@ -102,6 +104,7 @@ public class RecipeCollection {
      */
     public boolean updateRecipe(int recipeInd, Recipe newRecipe){
         try {
+            database.updateDocument(allRecipes.get(recipeInd), newRecipe);
             allRecipes.set(recipeInd, newRecipe);
         }
         catch (Exception e) {

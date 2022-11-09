@@ -165,13 +165,14 @@ public class Recipe implements Serializable, ModelConstraints {
         mapData.put("category", getCategory());
         mapData.put("comments", getComments());
         mapData.put("durationHour", getPrepTime().toHours());
-        mapData.put("durationMinute", getPrepTime().toMinutes());
+        mapData.put("durationMinute", getPrepTime().toMinutes() - getPrepTime().toHours()*60);
         Map<String, Object> ingredientsMap = new HashMap<>();
         for (Ingredient ing : this.getIngredients().getIngredients())
             ingredientsMap.put(Integer.toString(ing.hashCode()), ing.getMapData());
         mapData.put("ingredients", ingredientsMap);
         mapData.put("numServing", getNumServing());
         mapData.put("title", getTitle());
+        mapData.put("photoBase64", getPhotoBase64());
         return mapData;
     }
 
