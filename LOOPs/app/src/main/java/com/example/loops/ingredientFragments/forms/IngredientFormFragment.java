@@ -97,7 +97,7 @@ public abstract class IngredientFormFragment extends Fragment {
         if ( isValidIngredientAndNotifyErrors(submittedIngredient) ) {
             sendResult(submittedIngredient);
         }
-   }
+    }
 
     /**
      * Returns an ingredient object where its attributes are those from the form

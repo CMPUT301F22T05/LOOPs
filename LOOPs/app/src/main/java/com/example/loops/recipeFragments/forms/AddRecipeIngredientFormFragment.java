@@ -45,13 +45,13 @@ public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
 
     private void hideUnusedInput(View formView) {
         TextView bestBeforeDateText = formView.findViewById(R.id.ingredientFormBestBeforeDateText);
-        bestBeforeDateText.setVisibility(View.INVISIBLE);
-        bestBeforeDateInput.setVisibility(View.INVISIBLE);
+        bestBeforeDateText.setVisibility(View.GONE);
+        bestBeforeDateInput.setVisibility(View.GONE);
         bestBeforeDateInput.setText("2022-01-01");
 
         TextView locationText = formView.findViewById(R.id.ingredientFormLocationText);
-        locationText.setVisibility(View.INVISIBLE);
+        locationText.setVisibility(View.GONE);
         locationInput.setSelection(1);
-        locationInput.setVisibility(View.INVISIBLE);
+        locationInput.setVisibility(View.GONE);
     }
 }
