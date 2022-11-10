@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 
 import com.example.loops.MainActivity;
 import com.example.loops.R;
+import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
 /**
@@ -52,15 +53,19 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
         // Set the type of the recipe collection
         RecipeCollectionFragment.CollectionType collectionType = argsBundle.getCollectionType();
         setRecipeCollectionToDisplay(collectionType);
+
         // If any form had returned a recipe, update it to the collection
         Recipe submittedRecipe = argsBundle.getAddedRecipe();
         if (submittedRecipe != null) {
+            Log.e("ohh", "this is problem");
             recipeCollection.addRecipe(submittedRecipe);
         }
-        // TODO: handle editted recipes
+        // If recipe edited, update or delete
         Recipe editedRecipe = argsBundle.getEditedRecipe();
         int editedRecipeIndex = argsBundle.getEditedRecipeIndex();
         if (editedRecipe != null) {
+            Log.e("old", Integer.toString(recipeCollection.getRecipe(editedRecipeIndex).hashCode()));
+            Log.e("new", Integer.toString(editedRecipe.hashCode()));
             if (argsBundle.getDeletedFlag() == false) { //update ingredient
                 recipeCollection.updateRecipe(editedRecipeIndex, editedRecipe);
             }

@@ -1,7 +1,10 @@
 package com.example.loops.modelCollections;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
