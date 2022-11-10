@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -26,14 +27,14 @@ public class IngredientCollectionTest {
         storage = new IngredientCollection();
         ingredient1 = new Ingredient(
                 "a",
-                "10/28/2022",
+                "2022-10-28",
                 "cupboard",
                 1,
                 "",
                 "x");
         ingredient2 = new Ingredient(
                 "b",
-                "10/29/2022",
+                "2022-10-29",
                 "fridge",
                 1,
                 "",
@@ -46,7 +47,7 @@ public class IngredientCollectionTest {
     void testAdd() {
         Ingredient ingredient = new Ingredient(
                 "",
-                new Date(0),
+                LocalDate.now(),
                 "",
                 1,
                 "",
@@ -70,7 +71,7 @@ public class IngredientCollectionTest {
     void testUpdate() {
         Ingredient ingredient = new Ingredient(
                 "aa",
-                new Date(0),
+                LocalDate.now(),
                 "",
                 1,
                 "",
@@ -94,15 +95,11 @@ public class IngredientCollectionTest {
     @Test
     void testSortByBestBeforeDate() {
         storage.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_DESCENDING);
-        assertEquals("2022-10-29",
-                dateFormatter.format(storage.getIngredients().get(0).getBestBeforeDate()));
-        assertEquals("2022-10-28",
-                dateFormatter.format(storage.getIngredients().get(1).getBestBeforeDate()));
+        assertEquals("2022-10-29", storage.getIngredients().get(0).getBestBeforeDateString());
+        assertEquals("2022-10-28", storage.getIngredients().get(1).getBestBeforeDateString());
         storage.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING);
-        assertEquals("2022-10-28",
-                dateFormatter.format(storage.getIngredients().get(0).getBestBeforeDate()));
-        assertEquals("2022-10-29",
-                dateFormatter.format(storage.getIngredients().get(1).getBestBeforeDate()));
+        assertEquals("2022-10-28", storage.getIngredients().get(0).getBestBeforeDateString());
+        assertEquals("2022-10-29", storage.getIngredients().get(1).getBestBeforeDateString());
     }
 
     @Test

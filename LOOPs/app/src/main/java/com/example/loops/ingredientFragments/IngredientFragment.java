@@ -52,7 +52,7 @@ public class IngredientFragment extends Fragment {
         descriptionText.setText(ingredient.getDescription());
         bestBeforeDateText.setText(ingredient.getBestBeforeDateString());
         locationText.setText(ingredient.getStoreLocation());
-        amountText.setText(Float.toString(ingredient.getAmount()));
+        amountText.setText(Double.toString(ingredient.getAmount()));
         unitText.setText(ingredient.getUnit());
         categoryText.setText(ingredient.getCategory());
     }

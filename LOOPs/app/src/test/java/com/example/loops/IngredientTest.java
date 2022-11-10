@@ -7,6 +7,7 @@ import com.example.loops.models.Ingredient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,24 +15,24 @@ import java.util.Date;
  */
 public class IngredientTest {
     private Ingredient ingredient;
-    private Date date;
+    private LocalDate date;
 
     @BeforeEach
     void initialize() {
         ingredient = new Ingredient(
                 "apple",
-                "11/04/2022",
+                "2022-11-04",
                 "pantry",
                 1,
                 "kg",
                 "fruit");
-        date = new Date(0);
+        date = LocalDate.now();
     }
 
     @Test
     void testGetters() {
         assertEquals("apple", ingredient.getDescription());
-        assertEquals("11/04/2022", ingredient.getBestBeforeDateString());
+        assertEquals("2022-11-04", ingredient.getBestBeforeDateString());
         assertEquals("pantry", ingredient.getStoreLocation());
         assertEquals(1.0, ingredient.getAmount());
         assertEquals("kg", ingredient.getUnit());
@@ -44,8 +45,8 @@ public class IngredientTest {
         assertEquals("pork", ingredient.getDescription());
         ingredient.setBestBeforeDate(date);
         assertEquals(date, ingredient.getBestBeforeDate());
-        ingredient.setBestBeforeDate("11/10/2022");
-        assertEquals("11/10/2022", ingredient.getBestBeforeDateString());
+        ingredient.setBestBeforeDate("2022-11-10");
+        assertEquals("2022-11-10", ingredient.getBestBeforeDateString());
         ingredient.setStoreLocation("fridge");
         assertEquals("fridge", ingredient.getStoreLocation());
         ingredient.setAmount(3);
@@ -60,7 +61,7 @@ public class IngredientTest {
     void testEquals() {
         Ingredient comparedIngredient = new Ingredient(
                 "apple",
-                "11/04/2022",
+                "2022-11-04",
                 "pantry",
                 1,
                 "kg",

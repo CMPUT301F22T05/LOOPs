@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.loops.MainActivity;
 import com.example.loops.R;
+import com.example.loops.modelCollections.IngredientCollection;
+import com.example.loops.modelCollections.RecipeCollection;
+import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 import com.example.loops.adapters.RecipeIngredientsAdapter;
 import com.example.loops.RecyclerViewOnClickInterface;
@@ -77,7 +82,22 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recipeIndex = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipeIndex();
-        selectedRecipe = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipe();
+
+        // deep copy required to avoid overwrite ingredient collection directly to main activity
+        Recipe recipe = RecipeFragmentArgs.fromBundle(getArguments()).getSelectedRecipe();
+        selectedRecipe = new Recipe(
+                recipe.getTitle(),
+                recipe.getPrepTime().toHours(),
+                recipe.getPrepTime().toMinutes() - recipe.getPrepTime().toHours()*60,
+                recipe.getNumServing(),
+                recipe.getCategory(),
+                recipe.getPhotoBase64(),
+                new IngredientCollection(),
+                recipe.getComments()
+        );
+        for (Ingredient ing : recipe.getIngredients().getIngredients()) {
+            selectedRecipe.addIngredient(ing);
+        }
         fromWhichFragment = RecipeFragmentArgs.fromBundle(getArguments()).getFromWhichFragment();
 
         bindComponents(view);

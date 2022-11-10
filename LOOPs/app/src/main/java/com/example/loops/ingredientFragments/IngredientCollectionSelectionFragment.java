@@ -47,20 +47,20 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * to caller
      */
     protected void parseArguments() {
-        if (getArguments() == null)
-            throw new IllegalArgumentException("Arguments not supplied to the fragment");
-        IngredientCollectionSelectionFragmentArgs argsBundle
-                = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
-        // Set the type of the ingredient collection
-        CollectionType collectionType = argsBundle.getCollectionType();
-        setIngredientCollectionToDisplay(collectionType);
-        // If any form had returned an ingredient, send it back to this fragment's caller
-        Ingredient submittedIngredient = argsBundle.getAddedIngredient();
-        if (submittedIngredient != null) {
-            sendIngredientToCallerFragment(submittedIngredient);
-        }
-        getArguments().clear();
-        ((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
+//        if (getArguments() == null)
+//            throw new IllegalArgumentException("Arguments not supplied to the fragment");
+//        IngredientCollectionSelectionFragmentArgs argsBundle
+//                = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
+//        // Set the type of the ingredient collection
+//        CollectionType collectionType = argsBundle.getCollectionType();
+//        setIngredientCollectionToDisplay(collectionType);
+//        // If any form had returned an ingredient, send it back to this fragment's caller
+//        Ingredient submittedIngredient = argsBundle.getAddedIngredient();
+//        if (submittedIngredient != null) {
+//            sendIngredientToCallerFragment(submittedIngredient);
+//        }
+//        getArguments().clear();
+//        ((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
     }
 
     /**
@@ -68,7 +68,7 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param clickedView
      */
     protected void onClickAddButton(View clickedView) {
-        Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFromSelection);
+        //Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFromSelection);
     }
 
     /**
@@ -95,11 +95,13 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
             getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
         }
         else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
+            /*
             IngredientCollectionSelectionFragmentDirections.ActionIngredientCollectionSelectionFragmentToAddRecipeFormFragment toSubmitAction =
                     IngredientCollectionSelectionFragmentDirections.
                             actionIngredientCollectionSelectionFragmentToAddRecipeFormFragment();
             toSubmitAction.setAddedIngredient(selectedIngredient);
             Navigation.findNavController(getView()).navigate(toSubmitAction);
+             */
         }
 //        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
 //            IngredientCollectionSelectionFragmentDirections.AddIngredientToAddRecipeForm toSubmitAction =

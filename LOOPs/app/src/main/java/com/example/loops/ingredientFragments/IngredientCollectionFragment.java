@@ -105,14 +105,14 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
             ingredientCollection = new IngredientCollection();
             ingredientCollection.addIngredient(new Ingredient(
                     "BBB",
-                    "10/28/2022",
+                    "2022-10-28",
                     "fridge",
                     1,
                     "unit",
                     "XXX"));
             ingredientCollection.addIngredient(new Ingredient(
                     "AAA",
-                    "10/29/2022",
+                    "2022-10-29",
                     "cupboard",
                     1,
                     "unit",
@@ -131,7 +131,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
         sortOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sortIngredientCollection(parent, position);
+                sortCollection(parent);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -157,24 +157,41 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     /**
      * Sorts the ingredient collection and display it
      * @param parent
-     * @param position
      */
-    private void sortIngredientCollection(AdapterView<?> parent, int position) {
-        if (parent.getItemAtPosition(position).equals(getString(R.string.empty_sort_option))) {
+    @Override
+    protected void sortCollection(AdapterView<?> parent) {
+        if (parent.getSelectedItem().toString().equals(getString(R.string.empty_sort_option))) {
             return;
         }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_description))) {
-            ingredientCollection.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
+        if (isAscendingOrder) {
+            if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_description))) {
+                ingredientCollection.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_best_before_date))) {
+                ingredientCollection.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_Location))) {
+                ingredientCollection.sort(IngredientSortOption.BY_LOCATION_ASCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_Category))) {
+                ingredientCollection.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
+            }
         }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_best_before_date))) {
-            ingredientCollection.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING);
+        else {
+            if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_description))) {
+                ingredientCollection.sort(IngredientSortOption.BY_DESCRIPTION_DESCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_best_before_date))) {
+                ingredientCollection.sort(IngredientSortOption.BY_BEST_BEFORE_DATE_DESCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_Location))) {
+                ingredientCollection.sort(IngredientSortOption.BY_LOCATION_DESCENDING);
+            }
+            else if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_Category))) {
+                ingredientCollection.sort(IngredientSortOption.BY_CATEGORY_DESCENDING);
+            }
         }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Location))) {
-            ingredientCollection.sort(IngredientSortOption.BY_LOCATION_ASCENDING);
-        }
-        else if (parent.getItemAtPosition(position).equals(getString(R.string.sort_by_Category))) {
-            ingredientCollection.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
-        }
+
         collectionViewAdapter.notifyDataSetChanged();
     }
 

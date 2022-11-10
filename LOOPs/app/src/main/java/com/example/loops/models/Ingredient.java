@@ -3,35 +3,41 @@ package com.example.loops.models;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Model class. It is abstraction of ingredient and it implements Serializable which make it
  * transmissible between fragment
  * Ingredient class that encapsulate the data structure & methods of each ingredient.
  */
-public class Ingredient implements Serializable {
+public class Ingredient implements Serializable, ModelConstraints {
     /**
      * An ingredient includes description, best before date, location, amount, unit & category.
      */
     private String description;
-    private Date bestBeforeDate;
+    private LocalDate bestBeforeDate;
     private String storeLocation;
-    private float amount;
+    private double amount;
     private String unit;
     private String category;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
      * Constructor that pass all ingredient elements.
-     * @param description
-     * @param bestBeforeDate passing in Date
-     * @param storeLocation
-     * @param amount
-     * @param unit
-     * @param category
+     * @param description the name of ingredient
+     * @param bestBeforeDate the date when out-dated; passing in Date
+     * @param storeLocation the location to store; should be one of user-defined
+     * @param amount the amount to store; can be decimal number
+     * @param unit the unit for the amount; should be one of user-defined
+     * @param category the category of ingredient; should be user-defined
      */
-    public Ingredient(String description, Date bestBeforeDate, String storeLocation, float amount, String unit, String category) {
+    public Ingredient(String description, LocalDate bestBeforeDate, String storeLocation, double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.storeLocation = storeLocation;
@@ -42,14 +48,14 @@ public class Ingredient implements Serializable {
 
     /**
      * Constructor that pass all ingredient elements.
-     * @param description
-     * @param bestBeforeDate passing in String with mm/dd/yyyy format
-     * @param storeLocation
-     * @param amount
-     * @param unit
-     * @param category
+     * @param description the name of ingredient
+     * @param bestBeforeDate the date when out-dated; passing in String with mm/dd/yyyy format
+     * @param storeLocation the location to store; should be one of user-defined
+     * @param amount the amount to store; can be decimal number
+     * @param unit the unit for the amount; should be one of user-defined
+     * @param category the category of ingredient; should be user-defined
      */
-    public Ingredient(String description, String bestBeforeDate, String storeLocation, float amount, String unit, String category) {
+    public Ingredient(String description, String bestBeforeDate, String storeLocation, double amount, String unit, String category) {
         this.description = description;
         setBestBeforeDate(bestBeforeDate);
         this.storeLocation = storeLocation;
@@ -60,6 +66,7 @@ public class Ingredient implements Serializable {
 
     /**
      * Rewrite equals method to make it comparable by element info.
+     * Two ingredients must have all attributes (except amount) being identical to be considered as equal.
      * @param o ingredient object to compare
      * @return whether is equal
      */
@@ -69,13 +76,41 @@ public class Ingredient implements Serializable {
             return false;
         Ingredient toCompare = (Ingredient) o;
         return toCompare.getDescription().equals(getDescription())
-                && toCompare.getAmount() == getAmount()
+                //&& toCompare.getAmount() == getAmount()
                 && toCompare.getCategory().equals(getCategory())
                 && toCompare.getBestBeforeDateString().equals(getBestBeforeDateString())
                 && toCompare.getStoreLocation().equals(getStoreLocation())
                 && toCompare.getUnit().equals(getUnit());
     }
 
+    /**
+     * The hash of ingredient as the document in FireStore database.
+     * Hash is assigned by all attributes except amount.
+     * @return the hash code for the ingredient
+     */
+    @Override
+    public int hashCode() {
+        return (getDescription()
+                + getBestBeforeDateString()
+                + getStoreLocation()
+                + getUnit()
+                + getCategory()).hashCode();
+    }
+
+    /**
+     * The mapped result for ingredient; the formatted data that can directly send to database.
+     * @return the formatted map data for database storage
+     */
+    public Map<String, Object> getMapData() {
+        Map<String, Object> mapData = new HashMap<>();
+        mapData.put("description", getDescription());
+        mapData.put("bestBeforeDate", getBestBeforeDateString());
+        mapData.put("location", getStoreLocation());
+        mapData.put("amount", Double.toString(getAmount()));
+        mapData.put("unit", getUnit());
+        mapData.put("category", getCategory());
+        return mapData;
+    }
 
     // The following are all getters & setters.
 
@@ -100,7 +135,7 @@ public class Ingredient implements Serializable {
      * get the ingredient's best before date as Date
      * @return Date object
      */
-    public Date getBestBeforeDate() {
+    public LocalDate getBestBeforeDate() {
         return bestBeforeDate;
     }
 
@@ -116,7 +151,7 @@ public class Ingredient implements Serializable {
      * set the ingredient's best before date to another Date
      * @param bestBeforeDate new date
      */
-    public void setBestBeforeDate(Date bestBeforeDate) {
+    public void setBestBeforeDate(LocalDate bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
     }
 
@@ -126,10 +161,10 @@ public class Ingredient implements Serializable {
      */
     public void setBestBeforeDate(String bestBeforeDate){
         try {
-            Date date = dateFormatter.parse(bestBeforeDate);
+            LocalDate date = LocalDate.parse(bestBeforeDate, dateFormatter);
             this.bestBeforeDate = date;
-        } catch (ParseException e) {
-            this.bestBeforeDate = new Date(0);
+        } catch (DateTimeException e) {
+            this.bestBeforeDate = LocalDate.now();
         }
     }
 
@@ -153,7 +188,7 @@ public class Ingredient implements Serializable {
      * get the amount of the ingredient
      * @return the amount
      */
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 

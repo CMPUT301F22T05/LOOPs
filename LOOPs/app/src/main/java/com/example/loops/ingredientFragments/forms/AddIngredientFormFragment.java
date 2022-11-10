@@ -36,7 +36,7 @@ public class AddIngredientFormFragment extends IngredientFormFragment {
      * Sends ingredient to IngredientCollectionFragment through navigation graph action
      * @param submittedIngredient ingredient submitted by the form
      */
-    void sendResult(Ingredient submittedIngredient) {
+    public void sendResult(Ingredient submittedIngredient) {
         Integer callerFragmentId = getCallerFragmentId();
 
         if ( callerFragmentId == null ) {
@@ -45,18 +45,6 @@ public class AddIngredientFormFragment extends IngredientFormFragment {
         else if ( callerFragmentId == R.id.ingredientCollectionEditorFragment ) {
             AddIngredientFormFragmentDirections.SubmitIngredientToCollection toSubmitAction =
                 AddIngredientFormFragmentDirections.submitIngredientToCollection();
-            toSubmitAction.setAddedIngredient(submittedIngredient);
-            Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
-        }
-        else if ( callerFragmentId == R.id.ingredientCollectionSelectionFragment ) {
-            AddIngredientFormFragmentDirections.ActionAddIngredientFormFragmentToSelectIngredientFragment toSubmitAction =
-                    AddIngredientFormFragmentDirections.actionAddIngredientFormFragmentToSelectIngredientFragment();
-            toSubmitAction.setAddedIngredient(submittedIngredient);
-            Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
-        }
-        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
-            AddIngredientFormFragmentDirections.ActionAddIngredientFormFragmentToAddRecipeFormFragment toSubmitAction =
-                    AddIngredientFormFragmentDirections.actionAddIngredientFormFragmentToAddRecipeFormFragment();
             toSubmitAction.setAddedIngredient(submittedIngredient);
             Navigation.findNavController(getView()).navigate((NavDirections) toSubmitAction);
         }

@@ -3,6 +3,7 @@ package com.example.loops.modelCollections;
 import com.example.loops.models.Ingredient;
 import com.example.loops.sortOption.IngredientSortOption;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,8 +16,8 @@ import java.util.Comparator;
  * ingredients can also be sorted in different ways shown in IngredientSortOption enum
  * it also contains comparators for Ingredient
  */
-public class IngredientCollection {
-    private ArrayList<Ingredient> ingredients;
+public class IngredientCollection implements Serializable {
+    protected ArrayList<Ingredient> ingredients;
 
     /**
      * Default constructor.
@@ -38,7 +39,12 @@ public class IngredientCollection {
      * @param ingredient
      */
     public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
+        int ingInd = ingredients.indexOf(ingredient);
+        if (ingInd != -1) {
+            updateIngredient(ingInd, ingredient);
+        } else {
+            ingredients.add(ingredient);
+        }
     }
 
     /**
@@ -142,5 +148,27 @@ public class IngredientCollection {
         public int compare(Ingredient o1, Ingredient o2) {
             return o1.getStoreLocation().compareTo(o2.getStoreLocation());
         }
+    }
+
+    /**
+     * Equal method; used in recipe identical comparison; equal only when all ingredients are
+     * equal with same order.
+     * @param o ingredient collection to compare
+     * @return whether two ingredient collections are identical
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof IngredientCollection))
+            return false;
+        IngredientCollection toCompare = (IngredientCollection) o;
+
+        if (toCompare.getIngredients().size() != getIngredients().size())
+            return false;
+        int size = getIngredients().size();
+        for (int i = 0; i < size; i++) {
+            if (!toCompare.getIngredients().get(i).equals(getIngredients().get(i)))
+                return false;
+        }
+        return true;
     }
 }

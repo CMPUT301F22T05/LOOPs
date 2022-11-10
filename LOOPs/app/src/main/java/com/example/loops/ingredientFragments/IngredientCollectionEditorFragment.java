@@ -67,17 +67,17 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
             }
             else { //delete ingredient
                 ingredientCollection.deleteIngredient(ingredientIndex);
-                try {
-                    ((MainActivity) getActivity()).deleteIngredientFromDatabase(argsBundle.getEditedIngredientIndex());
-                } catch (Exception e) {}
+//                try {
+//                    ((MainActivity) getActivity()).deleteIngredientFromDatabase(argsBundle.getEditedIngredientIndex());
+//                } catch (Exception e) {}
             }
         }
         getArguments().clear();
-        try {
-            ((MainActivity) getActivity()).updateIngredientFromDatabase(ingredientCollection);
-        } catch (Exception e) {
-            return;
-        }
+//        try {
+//            ((MainActivity) getActivity()).updateIngredientFromDatabase(ingredientCollection);
+//        } catch (Exception e) {
+//            return;
+//        }
     }
 
     /**

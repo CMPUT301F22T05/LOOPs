@@ -47,9 +47,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     protected EditText commentsInput;
     protected Button submitButton;
     protected Button addIngredientButton;
-    protected ListView ingredientListView;
     protected RecyclerView ingredientRecyclerView;
-    protected RecipeIngredientsAdapter ingredientsAdapter;
     protected IngredientCollection ingredientCollection;
 
     protected RecyclerView.LayoutManager layoutManager;
@@ -70,6 +68,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
             }
         };
         ingredientRecyclerView.setLayoutManager(layoutManager);
+        if (ingredientCollection == null)
+            ingredientCollection = new IngredientCollection();
         recyclerViewAdapter = new RecipeIngredientsAdapter (ingredientCollection,view.getContext(),this);
         ingredientRecyclerView.setAdapter(recyclerViewAdapter);
     }
@@ -209,7 +209,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * If there are no validation errors, submits the result to the fragment manager and closes fragment
      */
     public void submitForm() {
-        Recipe submittedRecipe = getInputtedRecipe();
+        Recipe submittedRecipe = getRecipeFromInput();
         if ( isValidRecipeAndNotifyErrors(submittedRecipe) ) {
             sendResult(submittedRecipe);
         }
@@ -226,6 +226,23 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * Returns an Recipe object where its attributes are those from the form
      * @return Recipe object formed by the value of the fields of the form
      */
+    public Recipe getRecipeFromInput() {
+        Recipe recipe = new Recipe(
+                titleInput.getText().toString(),
+                prepTimeHourInput.getValue(),
+                prepTimeMinuteInput.getValue(),
+                Integer.parseInt(numServingInput.getText().toString()),
+                categoryInput.getSelectedItem().toString(),
+                ((BitmapDrawable) imageView.getDrawable()).getBitmap(),
+                ingredientCollection,
+                commentsInput.getText().toString()
+        );
+
+        return recipe;
+    }
+
+    /*
+    @Deprecated
     public Recipe getInputtedRecipe() {
         String title = titleInput.getText().toString();
         int timeHour = prepTimeHourInput.getValue();
@@ -246,7 +263,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         );
         return inputtedRecipe;
     }
-
+*/
 
     /**
      * Checks if Recipe is valid and also if there are any errors, prompts the message to user

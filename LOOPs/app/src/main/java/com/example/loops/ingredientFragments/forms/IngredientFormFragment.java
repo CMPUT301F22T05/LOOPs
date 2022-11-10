@@ -21,6 +21,9 @@ import com.example.loops.models.Ingredient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,7 +48,7 @@ public abstract class IngredientFormFragment extends Fragment {
      * Implement to handle how submitted ingredient is sent to other activities
      * @param submittedIngredient ingredient submitted by the form
      */
-    abstract void sendResult(Ingredient submittedIngredient);
+    public abstract void sendResult(Ingredient submittedIngredient);
 
     /**
      * Creates view of the ingredient form and initialize its widgets
@@ -94,7 +97,7 @@ public abstract class IngredientFormFragment extends Fragment {
         if ( isValidIngredientAndNotifyErrors(submittedIngredient) ) {
             sendResult(submittedIngredient);
         }
-   }
+    }
 
     /**
      * Returns an ingredient object where its attributes are those from the form
@@ -102,7 +105,7 @@ public abstract class IngredientFormFragment extends Fragment {
      */
     public Ingredient getInputtedIngredient() {
         String description = descriptionInput.getText().toString();
-        Date bestBeforeDate = parseBestBeforeDateFromInput();
+        LocalDate bestBeforeDate = parseBestBeforeDateFromInput();
         String location = locationInput.getSelectedItem().toString();
         float amount = parseAmountFromInput();
         String unit = unitInput.getSelectedItem().toString();
@@ -220,13 +223,15 @@ public abstract class IngredientFormFragment extends Fragment {
      * Parses the best before date from the input
      * @return the parsed best before date
      */
-    private Date parseBestBeforeDateFromInput() {
-        Date bestBeforeDate;
+    private LocalDate parseBestBeforeDateFromInput() {
+        LocalDate bestBeforeDate;
         try {
             String bestBeforeDateText = bestBeforeDateInput.getText().toString();
-            bestBeforeDate = new SimpleDateFormat(getString(R.string.date_format), Locale.CANADA).parse(bestBeforeDateText);
+            DateTimeFormatter dateFormatter = DateTimeFormatter
+                    .ofPattern("yyyy-MM-dd", Locale.CANADA);
+            bestBeforeDate = LocalDate.parse(bestBeforeDateText, dateFormatter);
         }
-        catch (ParseException e) {
+        catch (DateTimeException e) {
             bestBeforeDate = null;
         }
         return bestBeforeDate;

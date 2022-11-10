@@ -1,9 +1,14 @@
 package com.example.loops.modelCollections;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Build;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.loops.database.Database;
 import com.example.loops.models.Recipe;
 import com.example.loops.sortOption.RecipeSortOption;
 
@@ -12,27 +17,43 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- *  Control class for Recipe's
+ *  Control class for recipes
+ *  it can contain number of recipes and keep track of them
+ *  recipe can be removed or updated from the collection
+ *  new recipe can also be added in
+ *  recipes can also be sorted in different ways shown in RecipeSortOption enum
+ *  it also contains comparators for Recipe
  */
 public class RecipeCollection {
     /**
      * Attributes of the RecipeCollection
      */
     private ArrayList<Recipe> allRecipes;
+    private Database database;
 
     /**
-     * Constructor
+     * Constructor with no database interaction
      */
     public RecipeCollection() {
+        database = null;
         allRecipes = new ArrayList<>();
     }
 
+    /**
+     * Constructor with database data pre-loaded
+     * @param database database singleton
+     */
+    public RecipeCollection(Database database) {
+        this.database = database;
+        allRecipes = new ArrayList<>();
+        updateAllRecipes();
+    }
 
     /**
-     * Unused for now, no function
+     * Update database data to recipe collection.
      */
     public void updateAllRecipes(){
-        //function for using db data to populate list of recipes
+        database.retrieveCollection(Database.DB_RECIPE, this);
     }
 
     /**
@@ -43,6 +64,7 @@ public class RecipeCollection {
         if (!allRecipes.contains(recipe)){
             allRecipes.add(recipe);
         }
+        database.addDocument(recipe);
     }
 
     /**
@@ -52,6 +74,7 @@ public class RecipeCollection {
      */
     public boolean deleteRecipe(int indexToDelete){
         try {
+            database.deleteDocument(allRecipes.get(indexToDelete));
             allRecipes.remove(indexToDelete);
         } catch (Exception e) {
             return false;
@@ -84,6 +107,7 @@ public class RecipeCollection {
      */
     public boolean updateRecipe(int recipeInd, Recipe newRecipe){
         try {
+            database.updateDocument(allRecipes.get(recipeInd), newRecipe);
             allRecipes.set(recipeInd, newRecipe);
         }
         catch (Exception e) {
@@ -109,6 +133,12 @@ public class RecipeCollection {
         }
         else if (option.equals(RecipeSortOption.BY_TITLE__DESCENDING)) {
             Collections.sort(allRecipes, (new TitleAscendingComparator().reversed()));
+        }
+        else if (option.equals(RecipeSortOption.BY_PREP_TIME_DESCENDING)) {
+            allRecipes.sort(new RecipeCollection.PrepTimeAscendingComparator().reversed());
+        }
+        else if (option.equals(RecipeSortOption.BY_CATEGORY_ASCENDING)) {
+            allRecipes.sort(new RecipeCollection.CategoryAscendingComparator().reversed());
         }
     }
 
