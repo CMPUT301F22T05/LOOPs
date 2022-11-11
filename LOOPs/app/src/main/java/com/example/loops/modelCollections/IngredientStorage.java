@@ -21,9 +21,15 @@ public class IngredientStorage extends IngredientCollection {
     }
 
     @Override
-    public void addIngredient(Ingredient ingredient) {
-        database.addDocument(ingredient);
-        super.addIngredient(ingredient);
+    public int addIngredient(Ingredient ingredient) {
+        int ingIndex = super.addIngredient(ingredient);
+        if (ingIndex == -1) {
+            database.addDocument(ingredient);
+        }
+        else {
+            database.addDocument(ingredients.get(ingIndex));
+        }
+        return ingIndex;
     }
 
     @Override

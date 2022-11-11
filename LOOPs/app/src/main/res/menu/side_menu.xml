@@ -8,5 +8,8 @@
         <item
             android:id="@+id/recipeCollectionEditorFragment"
             android:title="@string/recipeCollection" />
+        <item
+            android:id="@+id/shoppingListFragment"
+            android:title="@string/shopping_list" />
     </group>
 </menu>

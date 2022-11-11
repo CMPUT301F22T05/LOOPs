@@ -58,7 +58,7 @@
         android:layout_marginBottom="100dp">
 
         <include
-            layout="@layout/ingredient_storage_row"
+            layout="@layout/shopping_list_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -67,7 +67,7 @@
             android:layout_marginEnd="0dp" />
 
         <include
-            layout="@layout/ingredient_storage_row"
+            layout="@layout/shopping_list_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

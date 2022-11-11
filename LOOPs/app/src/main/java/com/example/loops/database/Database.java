@@ -202,7 +202,7 @@ public class Database {
      */
     public void deleteDocument(ModelConstraints deleteModel) {
         db.collection(collectionDict.get(deleteModel.getClass()))
-                .document(Integer.toString(deleteModel.hashCode()))
+                .document(deleteModel.getDocumentName())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -224,7 +224,7 @@ public class Database {
      */
     public void addDocument(ModelConstraints addModel) {
         db.collection(collectionDict.get(addModel.getClass()))
-                .document(Integer.toString(addModel.hashCode()))
+                .document(addModel.getDocumentName())
                 .set(addModel.getMapData())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

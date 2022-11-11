@@ -65,6 +65,15 @@ public class Ingredient implements Serializable, ModelConstraints {
     }
 
     /**
+     * copy constructor
+     * @param that the ingredient want to copy
+     */
+    public Ingredient(Ingredient that) {
+        this(that.getDescription(), that.getBestBeforeDateString(), that.getStoreLocation(),
+                that.getAmount(), that.getUnit(), that.getCategory());
+    }
+
+    /**
      * Rewrite equals method to make it comparable by element info.
      * Two ingredients must have all attributes (except amount) being identical to be considered as equal.
      * @param o ingredient object to compare
@@ -89,12 +98,12 @@ public class Ingredient implements Serializable, ModelConstraints {
      * @return the hash code for the ingredient
      */
     @Override
-    public int hashCode() {
-        return (getDescription()
+    public String getDocumentName() {
+        return Integer.toString((getDescription()
                 + getBestBeforeDateString()
                 + getStoreLocation()
                 + getUnit()
-                + getCategory()).hashCode();
+                + getCategory()).hashCode());
     }
 
     /**
@@ -196,10 +205,17 @@ public class Ingredient implements Serializable, ModelConstraints {
      * set the ingredient's amount to a new value
      * @param amount new amount
      */
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
+    /**
+     * add amount to the ingredient
+     * @param amount how much to add
+     */
+    public void addAmount(double amount) {
+        this.amount += amount;
+    }
     /**
      * get the ingredient's unit
      * @return the unit

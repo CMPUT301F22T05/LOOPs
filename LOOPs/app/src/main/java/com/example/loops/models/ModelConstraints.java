@@ -13,6 +13,7 @@ public interface ModelConstraints {
      */
     Map<String, Object> getMapData();
 
-    boolean equals(Object o);
-    int hashCode();
+//    boolean equals(Object o);
+//    int hashCode();
+    String getDocumentName();
 }

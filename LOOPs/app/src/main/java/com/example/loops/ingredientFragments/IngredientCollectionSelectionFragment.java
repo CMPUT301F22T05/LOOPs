@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.MainActivity;
 import com.example.loops.R;
@@ -21,6 +22,7 @@ import com.example.loops.R;
 public class IngredientCollectionSelectionFragment extends IngredientCollectionFragment {
     public static final String RESULT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
     public static final String INGREDIENT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY_INGREDIENT";
+    private IngredientCollection chosenIngredients;
 
     public IngredientCollectionSelectionFragment() {
         // Required empty public constructor
@@ -47,20 +49,22 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * to caller
      */
     protected void parseArguments() {
-//        if (getArguments() == null)
-//            throw new IllegalArgumentException("Arguments not supplied to the fragment");
-//        IngredientCollectionSelectionFragmentArgs argsBundle
-//                = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
-//        // Set the type of the ingredient collection
-//        CollectionType collectionType = argsBundle.getCollectionType();
-//        setIngredientCollectionToDisplay(collectionType);
-//        // If any form had returned an ingredient, send it back to this fragment's caller
-//        Ingredient submittedIngredient = argsBundle.getAddedIngredient();
-//        if (submittedIngredient != null) {
-//            sendIngredientToCallerFragment(submittedIngredient);
-//        }
-//        getArguments().clear();
-//        ((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
+        if (getArguments() == null)
+            throw new IllegalArgumentException("Arguments not supplied to the fragment");
+        IngredientCollectionSelectionFragmentArgs argsBundle
+                = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
+        // Set the type of the ingredient collection
+        CollectionType collectionType = argsBundle.getCollectionType();
+        setIngredientCollectionToDisplay(collectionType);
+        // If any form had returned an ingredient, send it back to this fragment's caller
+        Ingredient submittedIngredient = argsBundle.getAddedIngredient();
+        if (submittedIngredient != null) {
+            chosenIngredients.addIngredient(submittedIngredient);
+            sendIngredientsToCallerFragment(chosenIngredients);
+        }
+        chosenIngredients = argsBundle.getIngredientCollection();
+        getArguments().clear();
+        //((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
     }
 
     /**
@@ -79,29 +83,28 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param id
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
-        sendIngredientToCallerFragment(collectionViewAdapter.getItem(position));
+        chosenIngredients.addIngredient(new Ingredient(collectionViewAdapter.getItem(position)));
+        sendIngredientsToCallerFragment(chosenIngredients);
     }
 
     /**
      * Sends the ingredient to the caller fragment
-     * @param selectedIngredient ingredient to send
+     * @param ingredients ingredients to send
      */
-    void sendIngredientToCallerFragment(Ingredient selectedIngredient) {
+    void sendIngredientsToCallerFragment(IngredientCollection ingredients) {
         Integer callerFragmentId = getCallerFragmentId();
 
         if ( callerFragmentId == null ) {
-            Bundle resultBundle = new Bundle();
-            resultBundle.putSerializable(INGREDIENT_KEY, selectedIngredient);
-            getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
+//            Bundle resultBundle = new Bundle();
+//            resultBundle.putSerializable(INGREDIENT_KEY, selectedIngredient);
+//            getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
         }
         else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
-            /*
             IngredientCollectionSelectionFragmentDirections.ActionIngredientCollectionSelectionFragmentToAddRecipeFormFragment toSubmitAction =
                     IngredientCollectionSelectionFragmentDirections.
                             actionIngredientCollectionSelectionFragmentToAddRecipeFormFragment();
-            toSubmitAction.setAddedIngredient(selectedIngredient);
+            toSubmitAction.setIngredientCollection(ingredients);
             Navigation.findNavController(getView()).navigate(toSubmitAction);
-             */
         }
 //        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
 //            IngredientCollectionSelectionFragmentDirections.AddIngredientToAddRecipeForm toSubmitAction =
