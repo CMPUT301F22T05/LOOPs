@@ -3,6 +3,7 @@ package com.example.loops.recipeFragments.forms;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 
@@ -55,7 +56,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
         titleInput.setText(editRecipe.getTitle());
         prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
-        prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes());
+        prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
         categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
         numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
         commentsInput.setText(editRecipe.getComments());
