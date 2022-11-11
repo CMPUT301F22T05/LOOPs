@@ -38,13 +38,15 @@ public class IngredientCollection implements Serializable {
      * Add an ingredient to the collection.
      * @param ingredient
      */
-    public void addIngredient(Ingredient ingredient) {
+    public int addIngredient(Ingredient ingredient) {
         int ingInd = ingredients.indexOf(ingredient);
         if (ingInd != -1) {
-            updateIngredient(ingInd, ingredient);
+            ingredients.get(ingInd).addAmount(ingredient.getAmount());
+//            updateIngredient(ingInd, ingredient);
         } else {
             ingredients.add(ingredient);
         }
+        return ingInd;
     }
 
     /**
