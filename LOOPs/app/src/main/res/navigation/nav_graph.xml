@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/addRecipeIngredientFormFragment"
         android:name="com.example.loops.recipeFragments.forms.AddRecipeIngredientFormFragment"
-        android:label="Add a  recipe ingredient">
+        android:label="Add a  recipe ingredient"
+        tools:layout="@layout/fragment_ingredient_form">
         <action
             android:id="@+id/action_addRecipeIngredientFormFragment_to_addRecipeFormFragment"
             app:destination="@id/addRecipeFormFragment"
