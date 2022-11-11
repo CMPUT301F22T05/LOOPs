@@ -82,7 +82,6 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
      */
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
-                "From Ingredient Storage",
                 "By New Ingredient",
                 "Cancel"
         };
@@ -92,22 +91,14 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                 .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // navigate to ingredient storage
-                        if (i == 0) {
-                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
-                                    AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
-                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_RECIPE_INGREDIENTS);
-                            addIngredientAction.setIngredientCollection(ingredientCollection);
-                            Navigation.findNavController(getView()).navigate(addIngredientAction);
-                        }
                         // navigate to add ingredient form
-                        else if (i == 1) {
+                        if (i == 0) {
                             AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
                                     addIngredientAction = AddRecipeFormFragmentDirections
                                     .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
-                        else if (i == 2) {
+                        else if (i == 1) {
                             return;
                         }
                         else {
