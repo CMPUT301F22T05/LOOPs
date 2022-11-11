@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
      * allRecipes - recipe storage from database
      */
     private AppBarConfiguration appBarConfiguration;
+    private IngredientCollection shoppingList; //default is null
     private IngredientStorage allIngredients = new IngredientStorage(Database.getInstance());
     private RecipeCollection allRecipes = new RecipeCollection(Database.getInstance());
     private FirebaseFirestore db = FirebaseFirestore.getInstance();

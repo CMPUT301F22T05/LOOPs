@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_mealPlanHomePageFragment_to_recipeCollectionFragment"
             app:destination="@id/recipeCollectionEditorFragment" />
+        <action
+            android:id="@+id/action_mealPlanHomePageFragment_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionEditorFragment"
@@ -259,5 +262,18 @@
             app:argType="com.example.loops.modelCollections.IngredientCollection"
             app:nullable="true"
             android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/shoppingListFragment"
+        android:name="com.example.loops.ShoppingListFragment"
+        android:label="Shopping List"
+        tools:layout="@layout/fragment_shopping_list">
+        <action
+            android:id="@+id/action_shoppingListFragment_to_mealPlanHomePageFragment"
+            app:destination="@id/mealPlanHomePageFragment" />
+        <argument
+            android:name="collectionType"
+            android:defaultValue="FROM_SHOPPING_LIST"
+            app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType" />
     </fragment>
 </navigation>

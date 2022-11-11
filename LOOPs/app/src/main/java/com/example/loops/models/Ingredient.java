@@ -89,12 +89,12 @@ public class Ingredient implements Serializable, ModelConstraints {
      * @return the hash code for the ingredient
      */
     @Override
-    public int hashCode() {
-        return (getDescription()
+    public String getDocumentName() {
+        return Integer.toString((getDescription()
                 + getBestBeforeDateString()
                 + getStoreLocation()
                 + getUnit()
-                + getCategory()).hashCode();
+                + getCategory()).hashCode());
     }
 
     /**

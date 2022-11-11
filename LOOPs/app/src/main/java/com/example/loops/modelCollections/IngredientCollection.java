@@ -112,7 +112,7 @@ public class IngredientCollection implements Serializable {
     /**
      * Sort by description.
      */
-    class DescriptionAscendingComparator implements Comparator<Ingredient> {
+    static class DescriptionAscendingComparator implements Comparator<Ingredient> {
 
         @Override
         public int compare(Ingredient o1, Ingredient o2) {
@@ -123,7 +123,7 @@ public class IngredientCollection implements Serializable {
     /**
      * Sort by best before date.
      */
-    class BestBeforeDateAscendingComparator implements Comparator<Ingredient> {
+     static class BestBeforeDateAscendingComparator implements Comparator<Ingredient> {
         @Override
         public int compare(Ingredient o1, Ingredient o2) {
             return o1.getBestBeforeDate().compareTo(o2.getBestBeforeDate());
@@ -133,7 +133,7 @@ public class IngredientCollection implements Serializable {
     /**
      * Sort by category.
      */
-    class CategoryAscendingComparator implements Comparator<Ingredient> {
+    static class CategoryAscendingComparator implements Comparator<Ingredient> {
         @Override
         public int compare(Ingredient o1, Ingredient o2) {
             return o1.getCategory().compareTo(o2.getCategory());
@@ -143,7 +143,7 @@ public class IngredientCollection implements Serializable {
     /**
      * Sort by location.
      */
-    class LocationAscendingComparator implements Comparator<Ingredient> {
+    static class LocationAscendingComparator implements Comparator<Ingredient> {
         @Override
         public int compare(Ingredient o1, Ingredient o2) {
             return o1.getStoreLocation().compareTo(o2.getStoreLocation());
