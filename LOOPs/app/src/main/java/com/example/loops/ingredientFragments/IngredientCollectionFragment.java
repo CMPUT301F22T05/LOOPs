@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.loops.GenericCollectionLayout;
+import com.example.loops.adapters.ShoppingListViewAdapter;
 import com.example.loops.models.Ingredient;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.adapters.IngredientStorageViewAdapter;
@@ -21,7 +22,12 @@ import com.example.loops.sortOption.IngredientSortOption;
  */
 public abstract class IngredientCollectionFragment extends GenericCollectionLayout {
     protected IngredientCollection ingredientCollection;
-    protected IngredientStorageViewAdapter collectionViewAdapter;
+    protected ArrayAdapter<Ingredient> collectionViewAdapter;
+    protected ArrayAdapter<CharSequence> sortOptionSpinnerAdapter;
+    enum LayoutType {
+        IngredientStorage,
+        ShoppingList
+    }
 
     /**
      * The type of ingredient collections the fragment accepts. Accepted values are:
@@ -32,7 +38,8 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     public enum CollectionType {
         FROM_STORAGE,
         FROM_RECIPE_INGREDIENTS,
-        FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT
+        FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT,
+        FROM_SHOPPING_LIST
     }
 
     public IngredientCollectionFragment() {
@@ -83,7 +90,6 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         parseArguments();
-        populateSortSpinnerOptions();
         setListeners();
     }
 
@@ -118,10 +124,28 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     "unit",
                     "YYY"));
         }
+        else if (type == CollectionType.FROM_SHOPPING_LIST) {
+            ingredientCollection = new IngredientCollection();
+            ingredientCollection.addIngredient(new Ingredient(
+                    "BBB",
+                    "2022-10-28",
+                    "fridge",
+                    1,
+                    "g",
+                    "XXX"));
+            ingredientCollection.addIngredient(new Ingredient(
+                    "AAA",
+                    "2022-10-29",
+                    "cupboard",
+                    1,
+                    "kg",
+                    "YYY"));
+        }
         else {
             throw new IllegalArgumentException("Unknown given collection type");
         }
-        adaptIngredientCollection(ingredientCollection);
+        populateSortSpinnerOptions(type);
+        adaptIngredientCollection(ingredientCollection, type);
     }
 
     /**
@@ -199,20 +223,34 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * Binds the ingredient collection to the UI
      * @param ingredientCollection the collection of ingredient to bind to UI
      */
-    private void adaptIngredientCollection(IngredientCollection ingredientCollection) {
-        collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(),
+    private void adaptIngredientCollection(IngredientCollection ingredientCollection, CollectionType type) {
+        if (type == CollectionType.FROM_STORAGE) {
+            collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(),
                     ingredientCollection.getIngredients());
+        }
+        else {
+            collectionViewAdapter = new ShoppingListViewAdapter(getActivity(),
+                    ingredientCollection.getIngredients());
+        }
+
         collectionView.setAdapter(collectionViewAdapter);
     }
 
     /**
      * Populates the spinners in the fragment with options
      */
-    private void populateSortSpinnerOptions() {
-        ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
-                ArrayAdapter.createFromResource(getActivity(),
-                        R.array.ingredient_collection_sort_option, android.R.layout.simple_spinner_item);
-        sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    private void populateSortSpinnerOptions(CollectionType type) {
+        if (type == CollectionType.FROM_STORAGE) {
+            sortOptionSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                    R.array.ingredient_storage_sort_option, android.R.layout.simple_spinner_item);
+            sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        }
+        else {
+            sortOptionSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                    R.array.shopping_list_sort_option, android.R.layout.simple_spinner_item);
+            sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        }
+
         sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
     }
 }

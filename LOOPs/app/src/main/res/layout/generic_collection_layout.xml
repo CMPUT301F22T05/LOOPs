@@ -39,7 +39,9 @@
             android:layout_centerVertical="true"
             android:fontFamily="sans-serif-black"
             android:text="XXXXX:"
-            android:textSize="18sp"></TextView>
+            android:textSize="18sp">
+
+        </TextView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +71,9 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="0dp"
             android:divider="@android:color/transparent"
-            android:dividerHeight="10sp"></ListView>
+            android:dividerHeight="10sp">
+
+        </ListView>
 
     </RelativeLayout>
 

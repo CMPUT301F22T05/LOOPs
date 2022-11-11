@@ -142,10 +142,10 @@ public class Recipe implements Serializable, ModelConstraints {
 
     /**
      * Generate unique hashcode for each different recipes.
-     * @return hashcode for recipe
+     * @return documentName for recipe
      */
     @Override
-    public int hashCode() {
+    public String getDocumentName() {
         String hashStr = getTitle();
         hashStr += getPrepTime().toString();
         hashStr += Integer.toString(getNumServing());
@@ -153,7 +153,7 @@ public class Recipe implements Serializable, ModelConstraints {
         for (Ingredient ing : getIngredients().getIngredients())
             hashStr += Integer.toString(ing.hashCode());
         hashStr += getComments();
-        return hashStr.hashCode();
+        return Integer.toString(hashStr.hashCode());
     }
 
     /**
