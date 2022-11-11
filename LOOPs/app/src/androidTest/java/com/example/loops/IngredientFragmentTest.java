@@ -27,6 +27,7 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 import com.example.loops.ingredientFragments.IngredientFragment;
 import com.example.loops.models.Ingredient;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -53,12 +54,9 @@ public class IngredientFragmentTest {
         });
     }
 
-    private Date getDate(int year, int month, int day) {
-        Calendar cal= Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month-1);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        return cal.getTime();
+    private LocalDate getDate(int year, int month, int day) {
+        LocalDate date = LocalDate.of(year, month-1, day);
+        return date;
     }
 
     private Ingredient getTestIngredient() {
