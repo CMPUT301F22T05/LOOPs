@@ -52,8 +52,8 @@ public class IngredientCollectionEditorFragmentTest {
                 IngredientCollectionFragment
                         .CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT);
     }
-    private void lunchFragment() {
 
+    private void launchFragment() {
         fragmentScenario = FragmentScenario.
                 launchInContainer(IngredientCollectionEditorFragment.class, bundle);
 
@@ -148,7 +148,7 @@ public class IngredientCollectionEditorFragmentTest {
      */
     @Test
     public void testSort() {
-        lunchFragment();
+        launchFragment();
         testSortByDescription();
         testSortByBestBeforeDate();
         testSortByLocation();
@@ -172,7 +172,7 @@ public class IngredientCollectionEditorFragmentTest {
     @Test
     public void testAddIngredientRequest() {
         mimicAddIngredientRequest();
-        lunchFragment();
+        launchFragment();
         onView(withId(R.id.generic_collection_view)).check(ViewAssertions.matches(withListSize(3)));
         onData(is(instanceOf(Ingredient.class)))
                 .inAdapterView(withId(R.id.generic_collection_view))
@@ -193,7 +193,7 @@ public class IngredientCollectionEditorFragmentTest {
     @Test
     public void testEditIngredientRequest() {
         mimicEditIngredientRequest();
-        lunchFragment();
+        launchFragment();
         onView(withId(R.id.generic_collection_view)).check(ViewAssertions.matches(withListSize(2)));
         onData(is(instanceOf(Ingredient.class)))
                 .inAdapterView(withId(R.id.generic_collection_view))
@@ -213,7 +213,7 @@ public class IngredientCollectionEditorFragmentTest {
     @Test
     public void testDeleteIngredientRequest() {
         mimicDeleteIngredientRequest();
-        lunchFragment();
+        launchFragment();
         onView(withId(R.id.generic_collection_view)).check(ViewAssertions.matches(withListSize(1)));
         onData(is(instanceOf(Ingredient.class)))
                 .inAdapterView(withId(R.id.generic_collection_view))
