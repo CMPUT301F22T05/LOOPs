@@ -96,7 +96,8 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                         if (i == 0) {
                             AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
                                     AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
-                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_STORAGE);
+                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_RECIPE_INGREDIENTS);
+                            addIngredientAction.setIngredientCollection(ingredientCollection);
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         // navigate to add ingredient form
@@ -121,7 +122,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     /**
      * Parses argument of this fragment
      */
-    void parseArguments() {
+    protected void parseArguments() {
         Bundle argsBundle = getArguments();
         if (argsBundle != null) {
             ingredientCollection = AddRecipeFormFragmentArgs.fromBundle(argsBundle).getIngredientCollection();

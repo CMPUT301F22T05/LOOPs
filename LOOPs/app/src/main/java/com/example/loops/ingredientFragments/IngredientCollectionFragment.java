@@ -104,7 +104,8 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
         }
         else if (type == CollectionType.FROM_RECIPE_INGREDIENTS) {
             // TODO: implement this whoever is handling recipe fragment
-            throw new IllegalArgumentException("NOT IMPLEMENTED");
+            ingredientCollection = ((MainActivity)getActivity()).getIngredientStorage();
+            //throw new IllegalArgumentException("NOT IMPLEMENTED");
         }
         //This is used for intent test and it should not be removed
         else if (type == CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT) {
