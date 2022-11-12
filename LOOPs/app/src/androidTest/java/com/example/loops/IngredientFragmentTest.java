@@ -27,6 +27,7 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 import com.example.loops.ingredientFragments.IngredientFragment;
 import com.example.loops.models.Ingredient;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -38,6 +39,12 @@ public class IngredientFragmentTest {
     private TestNavHostController navController;
     private FragmentScenario<IngredientFragment> fragmentScenario;
 
+    /**
+     * Opens the ingredient fragment displayed the ingredient from the argument
+     * @param ingredient ingredient to display
+     * @param ingredientInd index of the ingredient
+     * @param parentFragment the fragment that opened the ingredient fragment
+     */
     private void displayIngredient(Ingredient ingredient, int ingredientInd, int parentFragment) {
         navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
         Bundle bundle = new Bundle();
@@ -53,12 +60,9 @@ public class IngredientFragmentTest {
         });
     }
 
-    private Date getDate(int year, int month, int day) {
-        Calendar cal= Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month-1);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        return cal.getTime();
+    private LocalDate getDate(int year, int month, int day) {
+        LocalDate date = LocalDate.of(year, month-1, day);
+        return date;
     }
 
     private Ingredient getTestIngredient() {
@@ -79,7 +83,10 @@ public class IngredientFragmentTest {
                 .getArguments();
     }
 
-
+    /**
+     * Checks if all the static UI texts are shown in the ingredient fragment that is opened by
+     * the ingredient collection fragment
+     */
     @Test
     public void testStaticDisplayFromIngredientCollection() {
         Ingredient ingredient = getTestIngredient();
@@ -101,6 +108,10 @@ public class IngredientFragmentTest {
         }
     }
 
+    /**
+     * Checks if all the static UI texts are shown in the ingredient fragment that is opened by
+     * the edit ingredient form fragment
+     */
     @Test
     public void testStaticDisplayFromEditIngredientForm() {
         Ingredient ingredient = getTestIngredient();
@@ -122,6 +133,9 @@ public class IngredientFragmentTest {
         }
     }
 
+    /**
+     * Tests if the ingredient the form should be displaying is properly shown in the UI texts
+     */
     @Test
     public void testIngredientFragmentDisplay() {
         Ingredient ingredient = getTestIngredient();
@@ -140,6 +154,11 @@ public class IngredientFragmentTest {
         }
     }
 
+    /**
+     * Tests the back button. Check if the ingredient fragment correctly backs out to the
+     * ingredient collection and the ingredient fragment returns proper arguments back to the parent
+     * fragment
+     */
     @Test
     public void testBackButton() {
         Ingredient ingredient = getTestIngredient();
@@ -153,6 +172,10 @@ public class IngredientFragmentTest {
         assertEquals(returnValue.getBoolean("deleteFlag"), false);
     }
 
+    /**
+     * Tests the edit button. Check if the ingredient fragment correctly opens the edit ingredient
+     * form fragment and if the ingredient fragment properly sends the arguments to the form
+     */
     @Test
     public void testEditButton() {
         Ingredient ingredient = getTestIngredient();
@@ -165,6 +188,10 @@ public class IngredientFragmentTest {
         assertEquals(returnValue.getInt("editIngredientIndex"), 6);
     }
 
+    /**
+     * Check if the delete prompt shows on delete button click and the cancel button in the prompt
+     * brings the user back to the ingredient fragment
+     */
     @Test
     public void testDeleteButtonCancel() {
         Ingredient ingredient = getTestIngredient();
@@ -185,6 +212,11 @@ public class IngredientFragmentTest {
         assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientFragment);
     }
 
+    /**
+     * Check if the delete prompt shows on delete button click and the confirm button in the prompt
+     * brings the user back to the ingredient collection fragment with proper arguments sent back
+     * especially the deleteFlag set to true
+     */
     @Test
     public void testDeleteButtonConfirm() {
         Ingredient ingredient = getTestIngredient();
