@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,15 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.R;
 import com.example.loops.adapters.RecipeIngredientsAdapter;
+import com.example.loops.models.Ingredient;
 import com.example.loops.validators.RecipeValidator;
 import com.example.loops.RecyclerViewOnClickInterface;
 import com.example.loops.models.Recipe;
@@ -38,6 +42,7 @@ import java.util.ArrayList;
  *  with the key RECIPE_RESULT
  */
 public abstract class RecipeFormFragment extends Fragment implements RecyclerViewOnClickInterface {
+    public static final String ADD_INGREDIENT_KEY = "RECIPEFORMFRAGMENT_ADD_INGREDIENT_KEY";
 
     protected EditText titleInput;
     protected NumberPicker prepTimeHourInput;
@@ -109,7 +114,26 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         View formView = inflater.inflate(R.layout.fragment_recipe_form, container, false);
         initializeWidgets(formView);
         setUpRecyclerView(formView);
+        Log.e("TEST", "ONCREATEVIEW");
         return formView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("TEST", "ONPAUSE");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("TEST", "DESTROY VIEW");
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e("TEST", "SAVE INSTANCE STATE");
     }
 
     /**
@@ -151,6 +175,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         parseArguments();
         setConstraintsOnInputs(); // Feel like this needs better name
         setButtonOnClickListeners();
+        setOnAddIngredientBehaviour();
     }
 
     /**
@@ -165,7 +190,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * @param prepTimeHourInput
      * @param prepTimeMinuteInput
      */
-    private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput,NumberPicker prepTimeMinuteInput ) {
+    private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput, NumberPicker prepTimeMinuteInput ) {
         // TODO: Finish implementing the values displayed for number picker
         int maxHourValue = 99;
         int maxMinuteValue = 59;
@@ -210,6 +235,21 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
+    /**
+     * Handles the behavior when the add ingredient form submits an ingredient
+     */
+    private void setOnAddIngredientBehaviour() {
+        Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
+        .getLiveData(
+                ADD_INGREDIENT_KEY
+        ).observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object ingredient) {
+                ingredientCollection.addIngredient((Ingredient) ingredient);
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     /**
      * Validates the values in the form.
