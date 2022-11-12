@@ -9,6 +9,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 
 import com.example.loops.adapters.RecipeIngredientsAdapter;
 import com.example.loops.models.Ingredient;
@@ -77,7 +78,6 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
-                "From Ingredient Storage",
                 "By New Ingredient",
                 "Cancel"
         };
@@ -87,18 +87,15 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                 .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // navigate to ingredient storage
+                        // navigate to add ingredient form
                         if (i == 0) {
-//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
-//                                    AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
-//                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_STORAGE);
+//                            TODO: when the branch 131-modularize-edit-recipe-form is merged, I can finish this part
+//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
+//                                    addIngredientAction = AddRecipeFormFragmentDirections
+//                                    .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
 //                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
-                        // navigate to add ingredient form
                         else if (i == 1) {
-//                            Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFragment);
-                        }
-                        else if (i == 2) {
                             return;
                         }
                         else {
