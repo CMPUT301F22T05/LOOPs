@@ -1,7 +1,8 @@
 package com.example.loops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import android.graphics.Color;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import android.graphics.Bitmap;
 
 import com.example.loops.modelCollections.IngredientCollection;
@@ -20,7 +21,6 @@ public class RecipeTest extends TestCase {
     Recipe testRecipe;
     IngredientCollection ingredients;
     Ingredient carrot;
-    Bitmap bm1;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -40,23 +40,22 @@ public class RecipeTest extends TestCase {
                 "snack");
         ingredients.addIngredient(carrot);
 
-        bm1 = Bitmap.createBitmap(100, 200, Bitmap.Config.ARGB_8888);
-        testRecipe = new Recipe(
-                "Baked carrots",
-                2,
-                15,
-                3,
-                "Vegetables",
-                "bm1",
-                ingredients,
-                "Bake in oven at 350F"
-        );
+        testRecipe = new Recipe();
+        Duration x = Duration.ofHours(2);
+        Duration y = Duration.ofMinutes(15);
+        x.plus(y);
+        testRecipe.setTitle("Baked carrots");
+        testRecipe.setPrepTime(x);
+        testRecipe.setNumServing(3);
+        testRecipe.setCategory("Vegetables");
+        testRecipe.setIngredients(ingredients);
+        testRecipe.setComments("Bake in oven at 350F");
     }
-
 
     @Test
     void testGetters() {
         initialize();
+
         assertEquals("Baked carrots", testRecipe.getTitle());
 
         Duration x = Duration.ofHours(2);
@@ -68,9 +67,6 @@ public class RecipeTest extends TestCase {
 
         assertEquals("Vegetables", testRecipe.getCategory());
 
-
-        assertEquals("bm1", testRecipe.getPhotoBase64());
-
         assertEquals(ingredients, testRecipe.getIngredients());
 
         assertEquals("Bake in oven at 350F",testRecipe.getComments());
@@ -78,8 +74,10 @@ public class RecipeTest extends TestCase {
 
     @Test
     void testSetters() {
+        initialize();
         testRecipe.setTitle("apple");
         assertEquals("apple", testRecipe.getTitle());
+
         Duration x = Duration.ofHours(3);
         Duration y = Duration.ofMinutes(5);
         x.plus(y);
@@ -91,10 +89,6 @@ public class RecipeTest extends TestCase {
 
         testRecipe.setCategory("fruit");
         assertEquals("fruit", testRecipe.getCategory());
-
-        Bitmap bm2 = Bitmap.createBitmap(350, 200, Bitmap.Config.RGB_565);
-        testRecipe.setPhoto(bm2);
-        assertEquals(bm2, testRecipe.getPhoto());
 
         testRecipe.setComments("good apples");
         assertEquals("good apples", testRecipe.getComments());
@@ -111,7 +105,35 @@ public class RecipeTest extends TestCase {
         ingredients.addIngredient(meat);
         testRecipe.setIngredients(ingredients);
         assertEquals(ingredients, testRecipe.getIngredients());
+
     }
 
+
+    @Test
+    void testEquals() {
+        initialize();
+        IngredientCollection comparedIngredientCollection  = new IngredientCollection();
+        Ingredient comparedIngredient = new Ingredient(
+                "Carrot",
+                "10/24/22",
+                "Fridge",
+                10,
+                "units",
+                "snack");
+        comparedIngredientCollection.addIngredient(comparedIngredient);
+
+        Recipe comparedRecipe = new Recipe();
+        Duration x = Duration.ofHours(2);
+        Duration y = Duration.ofMinutes(15);
+        x.plus(y);
+        comparedRecipe.setTitle("Baked carrots");
+        comparedRecipe.setPrepTime(x);
+        comparedRecipe.setNumServing(3);
+        comparedRecipe.setCategory("Vegetables");
+        comparedRecipe.setIngredients(ingredients);
+        comparedRecipe.setComments("Bake in oven at 350F");
+
+        assertTrue(testRecipe.equals(comparedRecipe));
+    }
 
 }
