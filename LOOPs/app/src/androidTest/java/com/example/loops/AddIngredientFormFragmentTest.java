@@ -139,7 +139,7 @@ public class AddIngredientFormFragmentTest {
 
         Ingredient typedIngredient = new Ingredient(
           "Tuna Can",
-          getDate(year, month, day),
+          "2022-10-21",
           "Pantry",
           12.0,
           "g",

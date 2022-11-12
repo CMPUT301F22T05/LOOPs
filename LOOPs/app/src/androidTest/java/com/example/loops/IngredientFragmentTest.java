@@ -68,7 +68,7 @@ public class IngredientFragmentTest {
     private Ingredient getTestIngredient() {
         Ingredient ingredient = new Ingredient(
                 "Roast Beef",
-                getDate(2023, 12, 9),
+                "2022-10-21",
                 "Fridge",
                 23,
                 "kg",

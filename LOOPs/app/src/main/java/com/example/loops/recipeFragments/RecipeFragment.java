@@ -253,7 +253,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = viewHolder.getAdapterPosition();
-                selectedRecipe.getIngredients().deleteIngredient(pos);
+                selectedRecipe.removeIngredient(pos);
                 recipeIngredientsAdapter.notifyDataSetChanged();
             }
         };
