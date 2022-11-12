@@ -18,6 +18,9 @@
         <argument
             android:name="ingredientCollection"
             app:argType="com.example.loops.modelCollections.IngredientCollection" />
+        <action
+            android:id="@+id/action_addRecipeIngredientFormFragment_to_editRecipeFormFragment"
+            app:destination="@id/editRecipeFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/editRecipeFormFragment"
@@ -36,11 +39,11 @@
             app:popUpTo="@id/recipeFragment"
             app:popUpToInclusive="true" />
         <action
+            android:id="@+id/addIngredientToEditRecipeForm"
+            app:destination="@id/addRecipeIngredientFormFragment" />
+        <action
             android:id="@+id/action_editRecipeFormFragment_to_ingredientCollectionSelectionFragment"
             app:destination="@id/ingredientCollectionSelectionFragment" />
-        <action
-            android:id="@+id/action_editRecipeFormFragment_to_addIngredientFormFragment"
-            app:destination="@id/addIngredientFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealPlanHomePageFragment"
@@ -105,11 +108,6 @@
             android:id="@+id/submitIngredientToCollection"
             app:destination="@id/ingredientCollectionEditorFragment"
             app:popUpTo="@id/ingredientCollectionEditorFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_addIngredientFormFragment_to_editRecipeFormFragment"
-            app:destination="@id/editRecipeFormFragment"
-            app:popUpTo="@id/editRecipeFormFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
