@@ -3,12 +3,16 @@ package com.example.loops.recipeFragments.forms;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 
+import com.example.loops.adapters.RecipeIngredientsAdapter;
+import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
 /**
@@ -30,8 +34,14 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Edit");
-
         initializeFormWithIngredientAttributes();
+    }
+
+    void parseArguments() {
+        editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
+                .getEditRecipe();
+        editRecipeInd = EditRecipeFormFragmentArgs.fromBundle(getArguments())
+                .getEditRecipeIndex();
     }
 
     // Gets the index for where 'value' is at in spinner
@@ -48,18 +58,13 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
      * Populates the edit form with data of the recipe
      */
     public void initializeFormWithIngredientAttributes() {
-        editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
-                .getEditRecipe();
-        editRecipeInd = EditRecipeFormFragmentArgs.fromBundle(getArguments())
-                .getEditRecipeIndex();
-
         titleInput.setText(editRecipe.getTitle());
         prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
-        prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes());
+        prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
         categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
         numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
         commentsInput.setText(editRecipe.getComments());
-        ingredientCollection = editRecipe.getIngredients();
+        ((RecipeIngredientsAdapter) recyclerViewAdapter).setRecipeIngredients(editRecipe.getIngredients());
     }
 
     /**
@@ -73,7 +78,6 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
-                "From Ingredient Storage",
                 "By New Ingredient",
                 "Cancel"
         };
@@ -83,18 +87,15 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                 .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // navigate to ingredient storage
+                        // navigate to add ingredient form
                         if (i == 0) {
-//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
-//                                    AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
-//                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_STORAGE);
+//                            TODO: when the branch 131-modularize-edit-recipe-form is merged, I can finish this part
+//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
+//                                    addIngredientAction = AddRecipeFormFragmentDirections
+//                                    .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
 //                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
-                        // navigate to add ingredient form
                         else if (i == 1) {
-//                            Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFragment);
-                        }
-                        else if (i == 2) {
                             return;
                         }
                         else {

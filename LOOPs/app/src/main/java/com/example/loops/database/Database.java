@@ -166,6 +166,7 @@ public class Database {
      t.start();
      t.join();      // wait for thread to finish
      */
+    @Deprecated
     public void getIngredientLocations(onSuccessListener onSuccess, onFailureListener onFailure) {
         userData.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

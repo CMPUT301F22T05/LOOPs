@@ -91,6 +91,12 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     // FIXME: better as a non-abstract method but not enough time!!!! >: (
     abstract void openSelectionForWhereToSelectIngredientsFrom();
 
+
+    /**
+     * Implement to handle how subclasses parses their arguments
+     */
+    abstract void parseArguments();
+
     /**
      * Creates view of the ingredient form and initialize its widgets
      * @param inflater
@@ -102,6 +108,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View formView = inflater.inflate(R.layout.fragment_recipe_form, container, false);
         initializeWidgets(formView);
+        setUpRecyclerView(formView);
         return formView;
     }
 
@@ -134,13 +141,14 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     }
 
     /**
-     * Set up event listeners
+     * Set up event listeners and parses argument
      * @param formView
      * @param savedInstanceState
      */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         //ingredientCollection = new IngredientCollection();
+        parseArguments();
         setConstraintsOnInputs(); // Feel like this needs better name
         setButtonOnClickListeners();
     }

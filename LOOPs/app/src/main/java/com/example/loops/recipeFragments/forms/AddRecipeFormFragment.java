@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.example.loops.adapters.RecipeIngredientsAdapter;
 import com.example.loops.ingredientFragments.IngredientCollectionFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
@@ -29,7 +30,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     public AddRecipeFormFragment() { }
 
     /**
-     * Set up event listeners and changes button text and parse arguments
+     * Sets the title text
      * @param formView
      * @param savedInstanceState
      */
@@ -38,8 +39,6 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Add");
         //ingredientCollection = addedRecipe.getIngredients();
-        parseArguments();
-        setUpRecyclerView(formView);
     }
 
     /**
@@ -82,7 +81,6 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
      */
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
-                "From Ingredient Storage",
                 "By New Ingredient",
                 "Cancel"
         };
@@ -92,22 +90,14 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                 .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // navigate to ingredient storage
-                        if (i == 0) {
-                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
-                                    AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
-                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_RECIPE_INGREDIENTS);
-                            addIngredientAction.setIngredientCollection(ingredientCollection);
-                            Navigation.findNavController(getView()).navigate(addIngredientAction);
-                        }
                         // navigate to add ingredient form
-                        else if (i == 1) {
+                        if (i == 0) {
                             AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
                                     addIngredientAction = AddRecipeFormFragmentDirections
                                     .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
-                        else if (i == 2) {
+                        else if (i == 1) {
                             return;
                         }
                         else {
@@ -128,7 +118,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
             ingredientCollection = AddRecipeFormFragmentArgs.fromBundle(argsBundle).getIngredientCollection();
             if (ingredientCollection == null)
                 ingredientCollection = new IngredientCollection();
-            //recyclerViewAdapter.notifyDataSetChanged();
+            ((RecipeIngredientsAdapter) recyclerViewAdapter).setRecipeIngredients(ingredientCollection);
             argsBundle.clear();
         }
     }
