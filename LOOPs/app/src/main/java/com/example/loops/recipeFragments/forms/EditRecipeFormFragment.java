@@ -23,6 +23,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
     private Recipe editRecipe;
     private int editRecipeInd;
+    private boolean initialized = false;
 
     public EditRecipeFormFragment() { }
 
@@ -59,13 +60,19 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
      * Populates the edit form with data of the recipe
      */
     public void initializeFormWithIngredientAttributes() {
-        titleInput.setText(editRecipe.getTitle());
-        prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
-        prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
-        categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
-        numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
-        commentsInput.setText(editRecipe.getComments());
-        ((RecipeIngredientsAdapter) recyclerViewAdapter).setRecipeIngredients(editRecipe.getIngredients());
+        if ( !initialized ) {
+            titleInput.setText(editRecipe.getTitle());
+            prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
+            prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
+            categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
+            numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
+            commentsInput.setText(editRecipe.getComments());
+            ingredientCollection.getIngredients().addAll(editRecipe.getIngredients().getIngredients());
+            if (editRecipe.getPhoto() != null)
+                imageView.setImageBitmap(editRecipe.getPhoto());
+
+            initialized = true;
+        }
     }
 
     /**
