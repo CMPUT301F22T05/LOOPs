@@ -69,6 +69,16 @@ public class RecipeCollection {
     }
 
     /**
+     * Method to add a recipe locally without adding to the database
+     * @param recipe (Recipe)
+     */
+    public void addRecipeLocally(Recipe recipe){
+        if (!allRecipes.contains(recipe)){
+            allRecipes.add(recipe);
+        }
+    }
+
+    /**
      * Method to remove a recipe from the collection of recipes
      * @param indexToDelete (int)
      * @return true if deleted, false otherwise

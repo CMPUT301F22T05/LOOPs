@@ -295,7 +295,7 @@ public class Database {
                                     );
                                     databaseRecipe.addIngredient(containsIngredient);
                                 }
-                                ((RecipeCollection)collection).addRecipe(databaseRecipe);
+                                ((RecipeCollection)collection).addRecipeLocally(databaseRecipe);
                             }
                         }
 
