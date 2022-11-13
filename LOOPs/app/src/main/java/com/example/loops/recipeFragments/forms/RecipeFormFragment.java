@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
@@ -34,7 +33,6 @@ import com.example.loops.validators.RecipeValidator;
 import com.example.loops.RecyclerViewOnClickInterface;
 import com.example.loops.models.Recipe;
 
-import java.time.Duration;
 import java.util.ArrayList;
 
 /**
@@ -61,6 +59,9 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     protected ImageView imageView;
     protected Button addPhotoButton;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    // Certain views' state are not properly saved hence the addition of this attribute
+    private final Bundle savedFormState = new Bundle();
 
     public RecipeFormFragment() {}
 
@@ -114,26 +115,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         View formView = inflater.inflate(R.layout.fragment_recipe_form, container, false);
         initializeWidgets(formView);
         setUpRecyclerView(formView);
-        Log.e("TEST", "ONCREATEVIEW");
         return formView;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.e("TEST", "ONPAUSE");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.e("TEST", "DESTROY VIEW");
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.e("TEST", "SAVE INSTANCE STATE");
     }
 
     /**
@@ -176,6 +158,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         setConstraintsOnInputs(); // Feel like this needs better name
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
+
+        restoreFormState();
     }
 
     /**
@@ -200,6 +184,9 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
 
         prepTimeMinuteInput.setMinValue(0);
         prepTimeMinuteInput.setMaxValue(maxMinuteValue);
+
+        /* FIXME: there is a bug where when a user scrolls to select an option, the value displayed
+            and the value of the number picker is off by one. */
     }
 
     /**
@@ -217,6 +204,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveFragmentState();
                 openSelectionForWhereToSelectIngredientsFrom();
             }
         });
@@ -224,8 +212,11 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+/*                FIXME: When an image is taken where are ingredients added,
+*                       the program crashes. */
                 Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
+                    saveFragmentState();
                     startActivityForResult(openCamera, REQUEST_IMAGE_CAPTURE);
                 } catch (ActivityNotFoundException e) {
                     // display error state to the user
@@ -233,6 +224,31 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
             }
         });
         // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
+    }
+
+    /**
+     * Saves the state of the fragment.
+     */
+    private void saveFragmentState() {
+//        Most of the view states are saved but there are some views that have problem saving their
+//        state like NumberPicker and ImageView
+        savedFormState.putInt("PREPTIME_HOUR", prepTimeHourInput.getValue());
+        savedFormState.putInt("PREPTIME_MINUTE", prepTimeMinuteInput.getValue());
+        if (imageView.getDrawable() != null)
+            savedFormState.putParcelable("IMAGE", ((BitmapDrawable)imageView.getDrawable()).getBitmap());
+    }
+
+    /**
+     * Restores the state of the fragment saved by saveFragmentState
+     */
+    private void restoreFormState() {
+        if ( !savedFormState.isEmpty()) {
+            prepTimeHourInput.setValue(savedFormState.getInt("PREPTIME_HOUR"));
+            prepTimeMinuteInput.setValue(savedFormState.getInt("PREPTIME_MINUTE"));
+        }
+        if (savedFormState.containsKey("IMAGE"))
+            imageView.setImageBitmap(savedFormState.getParcelable("IMAGE"));
+        savedFormState.clear();
     }
 
     /**
