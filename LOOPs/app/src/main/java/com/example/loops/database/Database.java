@@ -158,7 +158,7 @@ public class Database {
                                         documentSnapshot.getString("unit"),
                                         documentSnapshot.getString("category")
                                 );
-                                Log.e("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
+                                Log.d("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
                                 ((IngredientStorage) collection).addIngredientLocal(databaseIngredient);
                             }
                         }
@@ -191,7 +191,7 @@ public class Database {
                                     );
                                     databaseRecipe.addIngredient(containsIngredient);
                                 }
-                                Log.e("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
+                                Log.d("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
                                 ((RecipeCollection) collection).addRecipeLocally(databaseRecipe);
                             }
                         }
