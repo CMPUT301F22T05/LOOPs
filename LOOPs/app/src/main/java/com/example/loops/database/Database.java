@@ -193,6 +193,7 @@ public class Database {
      * @param newModel model after update
      */
     public void updateDocument(ModelConstraints oldModel, ModelConstraints newModel) {
+        Log.d("DATABASE_LOG", "DELETE DOCUMENT CALLED " + oldModel.getClass() + " " + newModel.getMapData().get("category"));
         deleteDocument(oldModel);
         addDocument(newModel);
     }
@@ -202,6 +203,7 @@ public class Database {
      * @param deleteModel model to delete
      */
     public void deleteDocument(ModelConstraints deleteModel) {
+        Log.d("DATABASE_LOG", "DELETE DOCUMENT CALLED " + deleteModel.getClass() + " " + deleteModel.getMapData().get("category"));
         db.collection(collectionDict.get(deleteModel.getClass()))
                 .document(deleteModel.getDocumentName())
                 .delete()
@@ -224,6 +226,7 @@ public class Database {
      * @param addModel model to add
      */
     public void addDocument(ModelConstraints addModel) {
+        Log.d("DATABASE_LOG", "ADD DOCUMENT CALLED " + addModel.getClass() + " " + addModel.getMapData().get("category"));
         db.collection(collectionDict.get(addModel.getClass()))
                 .document(addModel.getDocumentName())
                 .set(addModel.getMapData())
@@ -247,6 +250,7 @@ public class Database {
      * @param collection one of IngredientCollection, RecipeCollection, MealPlanCollection, ShoppingListCollection
      */
     public void retrieveCollection(String collectionName, Object collection) {
+        Log.d("DATABASE_LOG", "RETRIEVE COLLECTION CALLED " + collectionName);
         db.collection(collectionName).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -255,6 +259,7 @@ public class Database {
                             return;
 
                         if (collectionName == DB_INGREDIENT) {
+                            Log.d("DATABASE_LOG", "INGREDIENT COLLECTION RETRIEVED");
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Ingredient databaseIngredient = new Ingredient(
                                         documentSnapshot.getString("description"),
@@ -264,11 +269,13 @@ public class Database {
                                         documentSnapshot.getString("unit"),
                                         documentSnapshot.getString("category")
                                 );
-                                ((IngredientCollection)collection).addIngredient(databaseIngredient);
+                                Log.e("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
+                                ((IngredientStorage)collection).addIngredientLocal(databaseIngredient);
                             }
                         }
 
                         if (collectionName == DB_RECIPE) {
+                            Log.d("DATABASE_LOG", "RECIPE COLLECTION RETRIEVED");
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Recipe databaseRecipe = new Recipe(
                                         documentSnapshot.getString("title"),
@@ -295,6 +302,7 @@ public class Database {
                                     );
                                     databaseRecipe.addIngredient(containsIngredient);
                                 }
+                                Log.e("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
                                 ((RecipeCollection)collection).addRecipeLocally(databaseRecipe);
                             }
                         }
