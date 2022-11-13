@@ -158,9 +158,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
-        //ingredientCollection = new IngredientCollection();
         parseArguments();
-        setConstraintsOnInputs(); // Feel like this needs better name
+        setConstraintsOnInputs();
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
         if (savedInstanceState != null)
@@ -229,7 +228,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
                 }
             }
         });
-        // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
     /**
@@ -338,30 +336,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
 
         return recipe;
     }
-
-    /*
-    @Deprecated
-    public Recipe getInputtedRecipe() {
-        String title = titleInput.getText().toString();
-        int timeHour = prepTimeHourInput.getValue();
-        int timeMinute = prepTimeMinuteInput.getValue();
-        String category = categoryInput.getSelectedItem().toString();
-        String StringNumServ = numServingInput.getText().toString();
-        int numServ = Integer.parseInt(StringNumServ);
-        String comment = commentsInput.getText().toString();
-        Duration duration = Duration.ofHours(timeHour).plus(Duration.ofMinutes(timeMinute));
-        Bitmap photoG = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-        Recipe inputtedRecipe= new Recipe(
-                title,
-                duration,
-                category,
-                numServ,
-                comment,
-                photoG
-        );
-        return inputtedRecipe;
-    }
-*/
 
     /**
      * Checks if Recipe is valid and also if there are any errors, prompts the message to user
