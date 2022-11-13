@@ -35,13 +35,7 @@ public class Database {
      * https://refactoring.guru/design-patterns/singleton/java/example#example-2
      * Date Accessed: 2022-11-02
      */
-    public static final String MAIN_USER_ID = "MainUser";
-    public static final String TEST_USER_ID = "TestUser";
-    public static final Object lock = new Object();
-
     private static volatile Database instance;
-    private static volatile String currentUserId = "";
-    private DocumentReference userData;
     private FirebaseFirestore db;
 
     public static final String DB_INGREDIENT = "IngredientStorage";
@@ -49,37 +43,6 @@ public class Database {
     public static final String DB_MEAL_PLAN = "MealPlanCollection";
     public static final String DB_SHOPPING_LIST = "ShoppingListCollection";
     private static Map<Object, String> collectionDict = new HashMap<>();
-
-
-    /**
-     * Called when database query is successful
-     */
-    public interface onSuccessListener {
-        // FIXME: instead of returning a Map, it would be better to create a DatabaseResult class
-        // the DatabaseResult class can then handle many different type of results (strings, documents, ints, etc)
-        void onSuccess(Map<String, ?> result);
-    }
-
-    /**
-     * Called when database query has failed
-     */
-    public interface onFailureListener {
-        /*
-        Idea is when you call a database query, you supply a lambda function
-            (exception) -> {
-                try {
-                    throw exception
-                }
-                catch (ExceptionType e ){
-                    ... error handling ...
-                }
-            }
-
-         It would be a good idea to make our own custom exceptions like NonExistentDataError,
-         ConnectionError, etc to give few as examples.
-         */
-        void onFailure(@NonNull Exception e);
-    }
 
     /**
      * Connect to FireStore & initialize collection type mapping.
@@ -91,20 +54,6 @@ public class Database {
     }
 
     /**
-     * Constructor for user login.
-     * @param username name of user
-     */
-    private Database(String username) {
-        initDatabase();
-        try {
-            userData = db.collection("Users").document(username);
-        }
-        catch (Exception e){
-            Log.e(TAG, "User not found.");
-        }
-    }
-
-    /**
      * Constructor for offline mode.
      */
     private Database() {
@@ -113,6 +62,7 @@ public class Database {
 
     /**
      * Getter for database singleton in offline mode.
+     *
      * @return database singleton; can perform add, delete, update, & retrieve
      */
     public static Database getInstance() {
@@ -123,85 +73,24 @@ public class Database {
     }
 
     /**
-     * Getter for database singleton for user login.
-     * The idea is whenever you need to access the data, just call Database.getInstance(Database.TEST_USER_ID)
-     */
-    public static Database getInstance(String username) {
-        Database result = instance;
-        if (result != null && currentUserId.equals(username)) {
-            return result;
-        }
-        synchronized(Database.class) {
-            if (instance == null || !currentUserId.equals(username)) {
-                instance = new Database(username);
-                currentUserId = username;
-            }
-            return instance;
-        }
-    }
-
-    /*
-    Then you can call this in a fragment like this:
-    Database db = Database.getInstance(Database.TEST_USER_ID);
-    db.getIngredientLocations(
-            (result) -> {
-                Log.e("String", result.get("ingredientLocations").toString());
-            },
-            (exception) -> {
-                try {
-                    throw exception;
-                }
-                catch ...
-
-            }
-    );
-
-    ALSO it may be a good idea to look at threading in java
-    Thread t = new Thread(new Runnable() {
-        @Override
-           public void run() {
-                db.getIngredientLocations(....);
-           }
-       });
-     t.start();
-     t.join();      // wait for thread to finish
-     */
-    @Deprecated
-    public void getIngredientLocations(onSuccessListener onSuccess, onFailureListener onFailure) {
-        userData.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    if (doc.exists()) {
-                        onSuccess.onSuccess(doc.getData());
-                    }
-                    else {
-                        onFailure.onFailure(new Exception("User document does not exist"));
-                    }
-                }
-                else {
-                    onFailure.onFailure(new Exception("Failed to retrieve data"));
-                }
-            }
-        });
-    }
-
-    /**
      * Update a database document based on its collection type & old/new document name.
+     *
      * @param oldModel model before update
      * @param newModel model after update
      */
     public void updateDocument(ModelConstraints oldModel, ModelConstraints newModel) {
+        Log.d("DATABASE_LOG", "DELETE DOCUMENT CALLED " + oldModel.getClass() + " " + newModel.getMapData().get("category"));
         deleteDocument(oldModel);
         addDocument(newModel);
     }
 
     /**
      * Delete a database document based on its collection type & document name.
+     *
      * @param deleteModel model to delete
      */
     public void deleteDocument(ModelConstraints deleteModel) {
+        Log.d("DATABASE_LOG", "DELETE DOCUMENT CALLED " + deleteModel.getClass() + " " + deleteModel.getMapData().get("category"));
         db.collection(collectionDict.get(deleteModel.getClass()))
                 .document(deleteModel.getDocumentName())
                 .delete()
@@ -221,9 +110,11 @@ public class Database {
 
     /**
      * Add a database document based on its collection type & document name.
+     *
      * @param addModel model to add
      */
     public void addDocument(ModelConstraints addModel) {
+        Log.d("DATABASE_LOG", "ADD DOCUMENT CALLED " + addModel.getClass() + " " + addModel.getMapData().get("category"));
         db.collection(collectionDict.get(addModel.getClass()))
                 .document(addModel.getDocumentName())
                 .set(addModel.getMapData())
@@ -243,10 +134,12 @@ public class Database {
 
     /**
      * Retrieve all data from database to target collection based on its collection type.
+     *
      * @param collectionName one of DB_INGREDIENT, DB_RECIPE, DB_MEAL_PLAN, DB_SHOPPING_LIST
-     * @param collection one of IngredientCollection, RecipeCollection, MealPlanCollection, ShoppingListCollection
+     * @param collection     one of IngredientCollection, RecipeCollection, MealPlanCollection, ShoppingListCollection
      */
     public void retrieveCollection(String collectionName, Object collection) {
+        Log.d("DATABASE_LOG", "RETRIEVE COLLECTION CALLED " + collectionName);
         db.collection(collectionName).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -255,6 +148,7 @@ public class Database {
                             return;
 
                         if (collectionName == DB_INGREDIENT) {
+                            Log.d("DATABASE_LOG", "INGREDIENT COLLECTION RETRIEVED");
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Ingredient databaseIngredient = new Ingredient(
                                         documentSnapshot.getString("description"),
@@ -264,11 +158,13 @@ public class Database {
                                         documentSnapshot.getString("unit"),
                                         documentSnapshot.getString("category")
                                 );
-                                ((IngredientCollection)collection).addIngredient(databaseIngredient);
+                                Log.e("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
+                                ((IngredientStorage) collection).addIngredientLocal(databaseIngredient);
                             }
                         }
 
                         if (collectionName == DB_RECIPE) {
+                            Log.d("DATABASE_LOG", "RECIPE COLLECTION RETRIEVED");
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Recipe databaseRecipe = new Recipe(
                                         documentSnapshot.getString("title"),
@@ -295,7 +191,8 @@ public class Database {
                                     );
                                     databaseRecipe.addIngredient(containsIngredient);
                                 }
-                                ((RecipeCollection)collection).addRecipe(databaseRecipe);
+                                Log.e("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
+                                ((RecipeCollection) collection).addRecipeLocally(databaseRecipe);
                             }
                         }
 
@@ -309,97 +206,4 @@ public class Database {
                     }
                 });
     }
-
-    /**
-    @Override
-    public void getIngredientStorage(IngredientStorage ingredientStorage) {
-        //ArrayList<Ingredient> ingredientStorage = new ArrayList<>();
-        //return ingredientStorage;
-        Runnable myRunnable = () -> {
-            System.out.println("in runnable");
-            db.collection("IngredientStorage").get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                    Ingredient databaseIngredient = new Ingredient(
-                                            documentSnapshot.getString("description"),
-                                            documentSnapshot.getString("bestBeforeDate"),
-                                            documentSnapshot.getString("location"),
-                                            documentSnapshot.getLong("amount"), //why can this return a float?
-                                            documentSnapshot.getString("unit"),
-                                            documentSnapshot.getString("category")
-                                    );
-                                    ingredientStorage.addIngredientLocal(databaseIngredient);
-                                }
-
-                            }
-                            ingredientStorage.done = true;
-                            System.out.println("before unlock");
-                            synchronized (instance) {
-                                instance.notify();
-                                System.out.println("unblock");
-                            }
-                        }
-                    });
-        };
-        Thread thread = new Thread(myRunnable);
-        thread.start();
-        System.out.println("create thread");
-        /*while (ingredientStorage.done == false) {
-            //wait until read all data
-        }
-    }
-
-    @Override
-    public void addIngredientToStorage(Ingredient ingredient) {
-        String key = Integer.toString(ingredient.hashCode());
-        ingredientRecord = new HashMap<>();
-        ingredientRecord.put("description", ingredient.getDescription());
-        ingredientRecord.put("bestBeforeDate", ingredient.getBestBeforeDateString());
-        ingredientRecord.put("location", ingredient.getStoreLocation());
-        ingredientRecord.put("amount", ingredient.getAmount());
-        ingredientRecord.put("unit", ingredient.getUnit());
-        ingredientRecord.put("category", ingredient.getCategory());
-        db.collection("IngredientStorage").document(key)
-                .set(ingredientRecord)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-    }
-
-    @Override
-    public void removeIngredientFromStorage(Ingredient ingredient) {
-        String key =
-                ingredient.getDescription() +
-                        ingredient.getBestBeforeDateString() +
-                        ingredient.getStoreLocation() +
-                        ingredient.getUnit() +
-                        ingredient.getCategory();
-        ingredientRecord = new HashMap<>();
-        ingredientRecord.put("description", ingredient.getDescription());
-        ingredientRecord.put("bestBeforeDate", ingredient.getBestBeforeDateString());
-        ingredientRecord.put("location", ingredient.getStoreLocation());
-        ingredientRecord.put("amount", ingredient.getAmount());
-        ingredientRecord.put("unit", ingredient.getUnit());
-        ingredientRecord.put("category", ingredient.getCategory());
-        db.collection("IngredientStorage").document(key).delete();
-    }
-
-    @Override
-    public void updateIngredientInStorage(Ingredient oldIngredient, Ingredient newIngredient) {
-        removeIngredientFromStorage(oldIngredient);
-        addIngredientToStorage(newIngredient);
-    }
-    */
 }
