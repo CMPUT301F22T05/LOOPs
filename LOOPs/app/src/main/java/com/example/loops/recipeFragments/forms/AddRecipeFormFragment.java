@@ -92,9 +92,8 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // navigate to add ingredient form
                         if (i == 0) {
-                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
-                                    addIngredientAction = AddRecipeFormFragmentDirections
-                                    .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
+                            NavDirections addIngredientAction = AddRecipeFormFragmentDirections
+                                    .addRecipeIngredientToAddRecipeForm();
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
@@ -115,10 +114,6 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     protected void parseArguments() {
         Bundle argsBundle = getArguments();
         if (argsBundle != null) {
-            ingredientCollection = AddRecipeFormFragmentArgs.fromBundle(argsBundle).getIngredientCollection();
-            if (ingredientCollection == null)
-                ingredientCollection = new IngredientCollection();
-            ((RecipeIngredientsAdapter) recyclerViewAdapter).setRecipeIngredients(ingredientCollection);
             argsBundle.clear();
         }
     }

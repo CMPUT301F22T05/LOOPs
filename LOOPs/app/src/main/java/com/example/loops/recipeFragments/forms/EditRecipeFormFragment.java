@@ -9,6 +9,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.loops.adapters.RecipeIngredientsAdapter;
@@ -22,6 +23,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
     private Recipe editRecipe;
     private int editRecipeInd;
+    private boolean initialized = false;
 
     public EditRecipeFormFragment() { }
 
@@ -58,13 +60,19 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
      * Populates the edit form with data of the recipe
      */
     public void initializeFormWithIngredientAttributes() {
-        titleInput.setText(editRecipe.getTitle());
-        prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
-        prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
-        categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
-        numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
-        commentsInput.setText(editRecipe.getComments());
-        ((RecipeIngredientsAdapter) recyclerViewAdapter).setRecipeIngredients(editRecipe.getIngredients());
+        if ( !initialized ) {
+            titleInput.setText(editRecipe.getTitle());
+            prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
+            prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
+            categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
+            numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
+            commentsInput.setText(editRecipe.getComments());
+            ingredientCollection.getIngredients().addAll(editRecipe.getIngredients().getIngredients());
+            if (editRecipe.getPhoto() != null)
+                imageView.setImageBitmap(editRecipe.getPhoto());
+
+            initialized = true;
+        }
     }
 
     /**
@@ -89,11 +97,9 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // navigate to add ingredient form
                         if (i == 0) {
-//                            TODO: when the branch 131-modularize-edit-recipe-form is merged, I can finish this part
-//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
-//                                    addIngredientAction = AddRecipeFormFragmentDirections
-//                                    .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
-//                            Navigation.findNavController(getView()).navigate(addIngredientAction);
+                            NavDirections addIngredientAction = EditRecipeFormFragmentDirections
+                                    .addIngredientToEditRecipeForm();
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
                             return;

@@ -17,8 +17,6 @@ import com.example.loops.models.Recipe;
 
 public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
 
-    private IngredientCollection ingredients;
-
     public AddRecipeIngredientFormFragment() {}
 
     @Override
@@ -26,21 +24,14 @@ public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Add");
         hideUnusedInput(formView);
-        getCachedRecipe();
     }
 
     public void sendResult(Ingredient submittedIngredient) {
-        ingredients.addIngredient(submittedIngredient);
-        AddRecipeIngredientFormFragmentDirections.ActionAddRecipeIngredientFormFragmentToAddRecipeFormFragment
-                addRecipeIngredientAction = AddRecipeIngredientFormFragmentDirections
-                .actionAddRecipeIngredientFormFragmentToAddRecipeFormFragment();
-        addRecipeIngredientAction.setIngredientCollection(ingredients);
-        Navigation.findNavController(getView()).navigate(addRecipeIngredientAction);
-    }
-
-    private void getCachedRecipe() {
-        ingredients = AddRecipeIngredientFormFragmentArgs.fromBundle(getArguments())
-                .getIngredientCollection();
+        Navigation.findNavController(getView()).getPreviousBackStackEntry().getSavedStateHandle().set(
+                RecipeFormFragment.ADD_INGREDIENT_KEY,
+                submittedIngredient
+        );
+        Navigation.findNavController(getView()).popBackStack();
     }
 
     private void hideUnusedInput(View formView) {

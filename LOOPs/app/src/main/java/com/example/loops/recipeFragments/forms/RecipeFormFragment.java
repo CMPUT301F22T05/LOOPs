@@ -7,30 +7,32 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.R;
 import com.example.loops.adapters.RecipeIngredientsAdapter;
+import com.example.loops.models.Ingredient;
 import com.example.loops.validators.RecipeValidator;
 import com.example.loops.RecyclerViewOnClickInterface;
 import com.example.loops.models.Recipe;
 
-import java.time.Duration;
 import java.util.ArrayList;
 
 /**
@@ -38,6 +40,7 @@ import java.util.ArrayList;
  *  with the key RECIPE_RESULT
  */
 public abstract class RecipeFormFragment extends Fragment implements RecyclerViewOnClickInterface {
+    public static final String ADD_INGREDIENT_KEY = "RECIPEFORMFRAGMENT_ADD_INGREDIENT_KEY";
 
     protected EditText titleInput;
     protected NumberPicker prepTimeHourInput;
@@ -56,6 +59,9 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     protected ImageView imageView;
     protected Button addPhotoButton;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    // Certain views' state are not properly saved hence the addition of this attribute
+    private final Bundle savedFormState = new Bundle();
 
     public RecipeFormFragment() {}
 
@@ -151,6 +157,9 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         parseArguments();
         setConstraintsOnInputs(); // Feel like this needs better name
         setButtonOnClickListeners();
+        setOnAddIngredientBehaviour();
+
+        restoreFormState();
     }
 
     /**
@@ -165,7 +174,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * @param prepTimeHourInput
      * @param prepTimeMinuteInput
      */
-    private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput,NumberPicker prepTimeMinuteInput ) {
+    private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput, NumberPicker prepTimeMinuteInput ) {
         // TODO: Finish implementing the values displayed for number picker
         int maxHourValue = 99;
         int maxMinuteValue = 59;
@@ -175,6 +184,9 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
 
         prepTimeMinuteInput.setMinValue(0);
         prepTimeMinuteInput.setMaxValue(maxMinuteValue);
+
+        /* FIXME: there is a bug where when a user scrolls to select an option, the value displayed
+            and the value of the number picker is off by one. */
     }
 
     /**
@@ -192,6 +204,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveFragmentState();
                 openSelectionForWhereToSelectIngredientsFrom();
             }
         });
@@ -199,8 +212,11 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+/*                FIXME: When an image is taken where are ingredients added,
+*                       the program crashes. */
                 Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
+                    saveFragmentState();
                     startActivityForResult(openCamera, REQUEST_IMAGE_CAPTURE);
                 } catch (ActivityNotFoundException e) {
                     // display error state to the user
@@ -210,6 +226,46 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
+    /**
+     * Saves the state of the fragment.
+     */
+    private void saveFragmentState() {
+//        Most of the view states are saved but there are some views that have problem saving their
+//        state like NumberPicker and ImageView
+        savedFormState.putInt("PREPTIME_HOUR", prepTimeHourInput.getValue());
+        savedFormState.putInt("PREPTIME_MINUTE", prepTimeMinuteInput.getValue());
+        if (imageView.getDrawable() != null)
+            savedFormState.putParcelable("IMAGE", ((BitmapDrawable)imageView.getDrawable()).getBitmap());
+    }
+
+    /**
+     * Restores the state of the fragment saved by saveFragmentState
+     */
+    private void restoreFormState() {
+        if ( !savedFormState.isEmpty()) {
+            prepTimeHourInput.setValue(savedFormState.getInt("PREPTIME_HOUR"));
+            prepTimeMinuteInput.setValue(savedFormState.getInt("PREPTIME_MINUTE"));
+        }
+        if (savedFormState.containsKey("IMAGE"))
+            imageView.setImageBitmap(savedFormState.getParcelable("IMAGE"));
+        savedFormState.clear();
+    }
+
+    /**
+     * Handles the behavior when the add ingredient form submits an ingredient
+     */
+    private void setOnAddIngredientBehaviour() {
+        Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
+        .getLiveData(
+                ADD_INGREDIENT_KEY
+        ).observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object ingredient) {
+                ingredientCollection.addIngredient((Ingredient) ingredient);
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     /**
      * Validates the values in the form.
