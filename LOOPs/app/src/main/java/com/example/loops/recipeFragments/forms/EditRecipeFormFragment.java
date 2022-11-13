@@ -9,6 +9,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.loops.adapters.RecipeIngredientsAdapter;
@@ -89,11 +90,9 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // navigate to add ingredient form
                         if (i == 0) {
-//                            TODO: when the branch 131-modularize-edit-recipe-form is merged, I can finish this part
-//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToAddRecipeIngredientFormFragment
-//                                    addIngredientAction = AddRecipeFormFragmentDirections
-//                                    .actionAddRecipeFormFragmentToAddRecipeIngredientFormFragment(ingredientCollection);
-//                            Navigation.findNavController(getView()).navigate(addIngredientAction);
+                            NavDirections addIngredientAction = EditRecipeFormFragmentDirections
+                                    .addIngredientToEditRecipeForm();
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
                             return;
