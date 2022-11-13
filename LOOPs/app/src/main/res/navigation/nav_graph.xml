@@ -257,7 +257,7 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingListFragment"
-        android:name="com.example.loops.ShoppingListFragment"
+        android:name="com.example.loops.shoppingListFragment.ShoppingListFragment"
         android:label="Shopping List"
         tools:layout="@layout/fragment_shopping_list">
         <action

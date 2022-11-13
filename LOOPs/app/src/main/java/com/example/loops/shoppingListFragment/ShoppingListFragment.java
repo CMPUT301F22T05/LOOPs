@@ -1,4 +1,4 @@
-package com.example.loops;
+package com.example.loops.shoppingListFragment;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.example.loops.R;
 import com.example.loops.ingredientFragments.IngredientCollectionFragment;
 
 public class ShoppingListFragment extends IngredientCollectionFragment {

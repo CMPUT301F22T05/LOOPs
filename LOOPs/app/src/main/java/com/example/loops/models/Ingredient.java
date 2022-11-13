@@ -247,5 +247,4 @@ public class Ingredient implements Serializable, ModelConstraints {
     public void setCategory(String category) {
         this.category = category;
     }
-
 }
