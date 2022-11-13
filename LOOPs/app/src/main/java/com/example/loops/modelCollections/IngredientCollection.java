@@ -78,9 +78,7 @@ public class IngredientCollection implements Serializable {
         if (dupInd != -1 && dupInd != index) {
             ingredients.get(dupInd).addAmount(ingredient.getAmount());
             //deleteIngredient(index);
-            Log.e(TAG, "duplicates found, merged");
         } else {
-            Log.e(TAG, "no duplicates found");
             dupInd = index;
             ingredients.set(index, ingredient);
         }
