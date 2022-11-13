@@ -188,11 +188,10 @@ public class RecipeFragmentTest {
      */
     @Test
     public void testDeleteSwipe(){
-        ArrayList<Ingredient> testIngredients = mockIngredientCollection.getIngredients();
-        Ingredient deletedIngredient = testIngredients.get(1);
-        String description = deletedIngredient.getDescription();
-        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(description))),RecyclerViewActions.actionOnItemAtPosition(1,swipeRight()));
-        assertNotEquals(deletedIngredient,testIngredients.get(1));
+        Ingredient before = mockIngredientCollection.getIngredients().get(1);
+        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.actionOnItemAtPosition(1,swipeRight()));
+        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.actionOnItemAtPosition(1,swipeRight())).check(matches(hasDescendant(withText("black pepper"))));
+
 
     }
 
@@ -216,10 +215,10 @@ public class RecipeFragmentTest {
     @Test
     public void testNavigateToEditRecipe() {
         onView(withId(R.id.editRecipeButton)).perform(click());
-        assertEquals(navController.getCurrentDestination().getId(),R.id.EditRecipePlaceHolder);
+        assertEquals(navController.getCurrentDestination().getId(),R.id.editRecipeFormFragment);
         Bundle returnValue = getReturnBundle();
-        assertEquals(returnValue.getSerializable("editedRecipe"), mockRecipe);
-        assertEquals(returnValue.getInt("editedRecipe"),0);
+        assertEquals(returnValue.getSerializable("editRecipe"), mockRecipe);
+        assertEquals(returnValue.getInt("editRecipeIndex"),0);
     }
 
     /**
@@ -266,7 +265,7 @@ public class RecipeFragmentTest {
         Bundle returnValue = getReturnBundle();
         assertEquals(returnValue.getSerializable("editedRecipe"),mockRecipe);
         assertEquals(returnValue.getInt("editedRecipeIndex"), 0);
-        assertEquals(returnValue.getBoolean("deleteFlag"),true);
+        assertEquals(returnValue.getBoolean("deletedFlag"),true);
     }
 
 

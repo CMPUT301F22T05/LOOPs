@@ -218,7 +218,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         /*
          * Set the text based on the recipe's title
          */
-        popupDeleteText.setText(String.format("Delete  %s recipe",selectedRecipe.getTitle()));
+        popupDeleteText.setText(String.format("Delete %s recipe",selectedRecipe.getTitle()));
         deleteRecipeButton.setOnClickListener(view -> {
             deletePopupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
         });
