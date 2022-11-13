@@ -120,7 +120,7 @@ public class RecipeFragmentTest {
         onView(withId(R.id.ingredientSubHead)).check(matches(isDisplayed()));
         onView(withId(R.id.recipeIngredientList)).perform(scrollTo());
         onView(withId(R.id.recipeIngredientList)).check(matches(isDisplayed()));
-
+        onView(withId(R.id.backToRecipeCollection)).perform(scrollTo());
         onView(withId(R.id.backToRecipeCollection)).check(matches(isDisplayed()));
         onView(withId(R.id.deleteRecipeButton)).check(matches(isDisplayed()));
 
@@ -188,11 +188,11 @@ public class RecipeFragmentTest {
      */
     @Test
     public void testDeleteSwipe(){
-        onView(withId(R.id.recipeIngredientList)).perform(scrollTo());
         ArrayList<Ingredient> testIngredients = mockIngredientCollection.getIngredients();
-        Ingredient deletedIngredient = testIngredients.get(2);
-        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.scrollToPosition(2),swipeRight());
-        assertNotEquals(deletedIngredient,testIngredients.get(2));
+        Ingredient deletedIngredient = testIngredients.get(1);
+        String description = deletedIngredient.getDescription();
+        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.scrollTo(hasDescendant(withText(description))),RecyclerViewActions.actionOnItemAtPosition(1,swipeRight()));
+        assertNotEquals(deletedIngredient,testIngredients.get(1));
 
     }
 
