@@ -119,6 +119,7 @@ public abstract class IngredientFormFragment extends Fragment {
                 unit,
                 category
         );
+        inputtedIngredient.setPending(false);
         return inputtedIngredient;
     }
 

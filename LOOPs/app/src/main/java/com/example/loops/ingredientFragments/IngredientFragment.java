@@ -55,6 +55,14 @@ public class IngredientFragment extends Fragment {
         amountText.setText(Double.toString(ingredient.getAmount()));
         unitText.setText(ingredient.getUnit());
         categoryText.setText(ingredient.getCategory());
+
+        // pending ingredient have no best before date, location, amount, & unit
+        if (ingredient.getPending()) {
+            bestBeforeDateText.setText("N/A");
+            locationText.setText("N/A");
+            amountText.setText("N/A");
+            unitText.setText("N/A");
+        }
     }
 
     /**

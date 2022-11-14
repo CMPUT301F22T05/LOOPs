@@ -90,7 +90,7 @@ public class Database {
      * @param deleteModel model to delete
      */
     public void deleteDocument(ModelConstraints deleteModel) {
-        Log.d("DATABASE_LOG", "DELETE DOCUMENT CALLED " + deleteModel.getClass() + " " + deleteModel.getMapData().get("category"));
+        Log.d("DATABASE_LOG", "DELETE DOCUMENT CALLED " + deleteModel.getClass() + " " + deleteModel.getDocumentName());
         db.collection(collectionDict.get(deleteModel.getClass()))
                 .document(deleteModel.getDocumentName())
                 .delete()
@@ -158,6 +158,7 @@ public class Database {
                                         documentSnapshot.getString("unit"),
                                         documentSnapshot.getString("category")
                                 );
+                                databaseIngredient.setPending(documentSnapshot.getBoolean("pending"));
                                 Log.d("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
                                 ((IngredientStorage) collection).addIngredientLocal(databaseIngredient);
                             }

@@ -1,5 +1,7 @@
 package com.example.loops.models;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.Serializable;
@@ -26,6 +28,7 @@ public class Ingredient implements Serializable, ModelConstraints {
     private double amount;
     private String unit;
     private String category;
+    private boolean pending = false;
     private String dateTimeFormat = "yyyy-MM-dd";
 
     /**
@@ -71,6 +74,7 @@ public class Ingredient implements Serializable, ModelConstraints {
     public Ingredient(Ingredient that) {
         this(that.getDescription(), that.getBestBeforeDateString(), that.getStoreLocation(),
                 that.getAmount(), that.getUnit(), that.getCategory());
+        this.setPending(that.pending);
     }
 
     /**
@@ -89,7 +93,8 @@ public class Ingredient implements Serializable, ModelConstraints {
                 && toCompare.getCategory().equals(getCategory())
                 && toCompare.getBestBeforeDateString().equals(getBestBeforeDateString())
                 && toCompare.getStoreLocation().equals(getStoreLocation())
-                && toCompare.getUnit().equals(getUnit());
+                && toCompare.getUnit().equals(getUnit())
+                && toCompare.getPending() == getPending();
     }
 
     /**
@@ -99,11 +104,15 @@ public class Ingredient implements Serializable, ModelConstraints {
      */
     @Override
     public String getDocumentName() {
-        return Integer.toString((getDescription()
+        String documentName = Integer.toString((getDescription()
                 + getBestBeforeDateString()
                 + getStoreLocation()
                 + getUnit()
                 + getCategory()).hashCode());
+        if (getPending()) {
+            documentName = "$~" + documentName;
+        }
+        return documentName;
     }
 
     /**
@@ -118,6 +127,7 @@ public class Ingredient implements Serializable, ModelConstraints {
         mapData.put("amount", Double.toString(getAmount()));
         mapData.put("unit", getUnit());
         mapData.put("category", getCategory());
+        mapData.put("pending", getPending());
         return mapData;
     }
 
@@ -247,4 +257,7 @@ public class Ingredient implements Serializable, ModelConstraints {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public boolean getPending() { return pending; }
+    public void setPending(boolean pending) { this.pending = pending; }
 }
