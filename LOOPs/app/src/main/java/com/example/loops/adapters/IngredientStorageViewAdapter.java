@@ -1,6 +1,7 @@
 package com.example.loops.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,11 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         BestBeforeDate.setText("Best Before " + currentIngredient.getBestBeforeDateString());
         location.setText(currentIngredient.getStoreLocation());
         category.setText(currentIngredient.getCategory());
+        if (currentIngredient.getPending()) {
+            convertView.setBackgroundColor(Color.RED);
+            BestBeforeDate.setText("N/A");
+            location.setText("N/A");
+        }
 
         return convertView;
     }
