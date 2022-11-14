@@ -64,9 +64,9 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
         Recipe editedRecipe = argsBundle.getEditedRecipe();
         int editedRecipeIndex = argsBundle.getEditedRecipeIndex();
         if (editedRecipe != null) {
-            Log.e("old", Integer.toString(recipeCollection.getRecipe(editedRecipeIndex).hashCode()));
-            Log.e("new", Integer.toString(editedRecipe.hashCode()));
-            if (argsBundle.getDeletedFlag() == false) { //update ingredient
+            Log.e("old", recipeCollection.getRecipe(editedRecipeIndex).getDocumentName());
+            Log.e("new", editedRecipe.getDocumentName());
+            if (argsBundle.getDeletedFlag() == false) { //update recipe
                 recipeCollection.updateRecipe(editedRecipeIndex, editedRecipe);
             }
             else {
