@@ -10,17 +10,6 @@
         android:name="com.example.loops.recipeFragments.forms.AddRecipeIngredientFormFragment"
         android:label="Add a  recipe ingredient"
         tools:layout="@layout/fragment_ingredient_form">
-        <action
-            android:id="@+id/action_addRecipeIngredientFormFragment_to_addRecipeFormFragment"
-            app:destination="@id/addRecipeFormFragment"
-            app:popUpTo="@id/addRecipeFormFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="ingredientCollection"
-            app:argType="com.example.loops.modelCollections.IngredientCollection" />
-        <action
-            android:id="@+id/action_addRecipeIngredientFormFragment_to_editRecipeFormFragment"
-            app:destination="@id/editRecipeFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/editRecipeFormFragment"
@@ -258,7 +247,7 @@
             android:id="@+id/action_addRecipeFormFragment_to_ingredientCollectionSelectionFragment"
             app:destination="@id/ingredientCollectionSelectionFragment" />
         <action
-            android:id="@+id/action_addRecipeFormFragment_to_addRecipeIngredientFormFragment"
+            android:id="@+id/addRecipeIngredientToAddRecipeForm"
             app:destination="@id/addRecipeIngredientFormFragment" />
         <argument
             android:name="ingredientCollection"
@@ -268,7 +257,7 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingListFragment"
-        android:name="com.example.loops.ShoppingListFragment"
+        android:name="com.example.loops.shoppingListFragment.ShoppingListFragment"
         android:label="Shopping List"
         tools:layout="@layout/fragment_shopping_list">
         <action

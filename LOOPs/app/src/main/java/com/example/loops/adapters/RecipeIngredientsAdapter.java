@@ -87,5 +87,10 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
 
     }
 
+    public void setRecipeIngredients(IngredientCollection recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
+        notifyDataSetChanged();
+    }
+
 
 }

@@ -1,5 +1,9 @@
 package com.example.loops.modelCollections;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import com.example.loops.models.Ingredient;
 import com.example.loops.sortOption.IngredientSortOption;
 
@@ -69,14 +73,16 @@ public class IngredientCollection implements Serializable {
      * @param ingredient (Ingredient)
      * @return true if deleted, false otherwise
      */
-    public boolean updateIngredient(int index, Ingredient ingredient) {
-        try {
+    public int updateIngredient(int index, Ingredient ingredient) {
+        int dupInd = ingredients.indexOf(ingredient);
+        if (dupInd != -1 && dupInd != index) {
+            ingredients.get(dupInd).addAmount(ingredient.getAmount());
+            //deleteIngredient(index);
+        } else {
+            dupInd = index;
             ingredients.set(index, ingredient);
         }
-        catch (Exception e) {
-            return false;
-        }
-        return true;
+        return dupInd;
     }
 
     /**

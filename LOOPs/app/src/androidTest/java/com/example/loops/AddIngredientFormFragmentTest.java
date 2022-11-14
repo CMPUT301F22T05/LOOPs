@@ -32,6 +32,7 @@ import static org.junit.Assert.*;
 import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
 import com.example.loops.models.Ingredient;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -68,12 +69,9 @@ public class AddIngredientFormFragmentTest {
         return targetContext.getResources().getString(id);
     }
 
-    private Date getDate(int year, int month, int day) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month-1);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        return cal.getTime();
+    private LocalDate getDate(int year, int month, int day) {
+        LocalDate date = LocalDate.of(year, month-1, day);
+        return date;
     }
 
     private void typeToEditText(int id, String toType) {
@@ -143,14 +141,14 @@ public class AddIngredientFormFragmentTest {
           "Tuna Can",
           getDate(year, month, day),
           "Pantry",
-          12,
+          12.0,
           "g",
           "Dog Food"
         );
         setDescription(typedIngredient.getDescription());
         setBestBeforeDate(year, month, day);
         setLocation(typedIngredient.getStoreLocation());
-        setAmount(Float.toString(typedIngredient.getAmount()));
+        setAmount(Double.toString(typedIngredient.getAmount()));
         setUnit(typedIngredient.getUnit());
         setCategory(typedIngredient.getCategory());
         clickSubmit();
