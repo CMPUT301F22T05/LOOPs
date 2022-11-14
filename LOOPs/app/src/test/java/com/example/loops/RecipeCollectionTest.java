@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.example.loops.modelCollections.RecipeCollection;
 import com.example.loops.models.Recipe;
+import com.example.loops.sortOption.RecipeSortOption;
 
 import junit.framework.TestCase;
 
@@ -87,6 +88,39 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals("Pizza", recipeBook.getAllRecipes().get(0).getTitle());
         recipeBook.updateRecipe(0, recipe3);
         assertEquals("Burger", recipeBook.getAllRecipes().get(0).getTitle());
+    }
+
+    @Test
+    public void testSortByTitle(){
+        recipeBook.sort(RecipeSortOption.BY_TITLE_ASCENDING);
+        assertEquals("Grilled Cheese", recipeBook.getAllRecipes().get(0).getTitle());
+        assertEquals("Pizza", recipeBook.getAllRecipes().get(1).getTitle());
+
+        recipeBook.sort(RecipeSortOption.BY_TITLE__DESCENDING);
+        assertEquals("Pizza", recipeBook.getAllRecipes().get(0).getTitle());
+        assertEquals("Grilled Cheese", recipeBook.getAllRecipes().get(1).getTitle());
+    }
+
+    @Test
+    public void testSortByPREPTIME(){
+        recipeBook.sort(RecipeSortOption.BY_PREP_TIME_ASCENDING);
+        assertEquals(Duration.ofMinutes(30), recipeBook.getAllRecipes().get(0).getPrepTime());
+        assertEquals(Duration.ofHours(2), recipeBook.getAllRecipes().get(1).getPrepTime());
+
+        recipeBook.sort(RecipeSortOption.BY_PREP_TIME_DESCENDING);
+        assertEquals(Duration.ofHours(2), recipeBook.getAllRecipes().get(0).getPrepTime());
+        assertEquals(Duration.ofMinutes(30), recipeBook.getAllRecipes().get(1).getPrepTime());
+    }
+
+    @Test
+    public void testSortByCategory(){
+        recipeBook.sort(RecipeSortOption.BY_CATEGORY_ASCENDING);
+        assertEquals("Lunch", recipeBook.getAllRecipes().get(0).getCategory());
+        assertEquals("Supper", recipeBook.getAllRecipes().get(1).getCategory());
+
+        recipeBook.sort(RecipeSortOption.BY_CATEGORY_DESCENDING);
+        assertEquals("Supper", recipeBook.getAllRecipes().get(0).getCategory());
+        assertEquals("Lunch", recipeBook.getAllRecipes().get(1).getCategory());
     }
 
 }
