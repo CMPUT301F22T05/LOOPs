@@ -1,5 +1,6 @@
 package com.example.loops.recipeFragments.forms;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -17,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -54,11 +59,11 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     protected IngredientCollection ingredientCollection;
 
     protected RecyclerView.LayoutManager layoutManager;
-    protected RecyclerView.Adapter recyclerViewAdapter;
+    protected RecipeIngredientsAdapter recyclerViewAdapter;
 
     protected ImageView imageView;
     protected Button addPhotoButton;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ActivityResultLauncher<Intent> cameraActivityLauncher;
 
     // Certain views' state are not properly saved hence the addition of this attribute
     private final Bundle savedFormState = new Bundle();
@@ -153,13 +158,15 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
-        //ingredientCollection = new IngredientCollection();
         parseArguments();
-        setConstraintsOnInputs(); // Feel like this needs better name
+        setConstraintsOnInputs();
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
-
-        restoreFormState();
+        if (savedInstanceState != null)
+            restoreFormState(savedInstanceState);
+        else
+            restoreFormState(savedFormState);
+        setCameraActivityLauncher();
     }
 
     /**
@@ -212,18 +219,15 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-/*                FIXME: When an image is taken where are ingredients added,
-*                       the program crashes. */
                 Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
                     saveFragmentState();
-                    startActivityForResult(openCamera, REQUEST_IMAGE_CAPTURE);
+                    cameraActivityLauncher.launch(openCamera);
                 } catch (ActivityNotFoundException e) {
                     // display error state to the user
                 }
             }
         });
-        // setOnClickCancelButton();    FIXME: there is no cancel button in the UI mockup nor attributes
     }
 
     /**
@@ -236,18 +240,34 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         savedFormState.putInt("PREPTIME_MINUTE", prepTimeMinuteInput.getValue());
         if (imageView.getDrawable() != null)
             savedFormState.putParcelable("IMAGE", ((BitmapDrawable)imageView.getDrawable()).getBitmap());
+        if (ingredientCollection != null)
+            savedFormState.putSerializable("INGREDIENTS", ingredientCollection);
     }
 
     /**
-     * Restores the state of the fragment saved by saveFragmentState
+     * Saves the state of the fragment when parent activity is destroyed
+     * @param outState
      */
-    private void restoreFormState() {
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        saveFragmentState();
+        outState.putAll(savedFormState);
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Restores the state of the fragment saved by savedFormState
+     * @param savedFormState
+     */
+    private void restoreFormState(Bundle savedFormState) {
         if ( !savedFormState.isEmpty()) {
             prepTimeHourInput.setValue(savedFormState.getInt("PREPTIME_HOUR"));
             prepTimeMinuteInput.setValue(savedFormState.getInt("PREPTIME_MINUTE"));
         }
         if (savedFormState.containsKey("IMAGE"))
             imageView.setImageBitmap(savedFormState.getParcelable("IMAGE"));
+        if (savedFormState.containsKey("INGREDIENTS"))
+            recyclerViewAdapter.setRecipeIngredients((IngredientCollection) savedFormState.getSerializable("INGREDIENTS"));
         savedFormState.clear();
     }
 
@@ -279,11 +299,23 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap photo = (Bitmap)data.getExtras().get("data");
-        imageView.setImageBitmap(photo);
+    /**
+     * Sets up the launcher for the camera app and also the behavior on result of the camera operation
+     */
+    private void setCameraActivityLauncher() {
+        cameraActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent resultBundle = result.getData();
+                            Bitmap photo = (Bitmap) resultBundle.getExtras().get("data");
+                            imageView.setImageBitmap(photo);
+                        }
+                    }
+                }
+        );
     }
 
     /**
@@ -304,30 +336,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
 
         return recipe;
     }
-
-    /*
-    @Deprecated
-    public Recipe getInputtedRecipe() {
-        String title = titleInput.getText().toString();
-        int timeHour = prepTimeHourInput.getValue();
-        int timeMinute = prepTimeMinuteInput.getValue();
-        String category = categoryInput.getSelectedItem().toString();
-        String StringNumServ = numServingInput.getText().toString();
-        int numServ = Integer.parseInt(StringNumServ);
-        String comment = commentsInput.getText().toString();
-        Duration duration = Duration.ofHours(timeHour).plus(Duration.ofMinutes(timeMinute));
-        Bitmap photoG = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-        Recipe inputtedRecipe= new Recipe(
-                title,
-                duration,
-                category,
-                numServ,
-                comment,
-                photoG
-        );
-        return inputtedRecipe;
-    }
-*/
 
     /**
      * Checks if Recipe is valid and also if there are any errors, prompts the message to user
