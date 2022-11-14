@@ -54,6 +54,14 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
         amountInput.setText(Double.toString(editIngredient.getAmount()));
         unitInput.setSelection(getSpinnerIndexByValue(editIngredient.getUnit(), unitInput));
         categoryInput.setSelection(getSpinnerIndexByValue(editIngredient.getCategory(), categoryInput));
+
+        // if this ingredient is pending, leave best before date, location, amount, & unit blank
+        if (editIngredient.getPending()) {
+            bestBeforeDateInput.setText("");
+            locationInput.setSelection(0);
+            amountInput.setText("");
+            unitInput.setSelection(0);
+        }
     }
 
     /**

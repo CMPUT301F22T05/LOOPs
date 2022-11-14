@@ -1,5 +1,9 @@
 package com.example.loops.modelCollections;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import com.example.loops.models.Ingredient;
 import com.example.loops.sortOption.IngredientSortOption;
 
