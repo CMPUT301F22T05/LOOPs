@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.example.loops.modelCollections.IngredientCollection;
+import com.example.loops.sortOption.IngredientSortOption;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -150,10 +151,11 @@ public class Recipe implements Serializable, ModelConstraints {
         hashStr += getPrepTime().toString();
         hashStr += Integer.toString(getNumServing());
         hashStr += getCategory();
+        ingredients.sort(IngredientSortOption.BY_DESCRIPTION_ASCENDING);
         for (Ingredient ing : getIngredients().getIngredients())
             hashStr += ing.getDocumentName();
         hashStr += getComments();
-        return Integer.toString(hashStr.hashCode());
+        return hashStr;
     }
 
     /**
