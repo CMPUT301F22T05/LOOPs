@@ -77,11 +77,16 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
     /**
      * Send the edited recipe back to previous fragment.
-     * Todo: implement
      * @param submittedRecipe recipe submitted by the form
      */
     protected void sendResult(Recipe submittedRecipe) {
-        return;
+        EditRecipeFormFragmentDirections.ActionEditRecipeFormFragmentToRecipeFragment editAction =
+                EditRecipeFormFragmentDirections.actionEditRecipeFormFragmentToRecipeFragment(
+                        submittedRecipe,
+                        editRecipeInd,
+                        0
+                );
+        Navigation.findNavController(getView()).navigate(editAction);
     }
 
     void openSelectionForWhereToSelectIngredientsFrom() {
