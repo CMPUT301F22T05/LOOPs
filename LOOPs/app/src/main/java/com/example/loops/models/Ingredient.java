@@ -29,7 +29,7 @@ public class Ingredient implements Serializable, ModelConstraints {
     private String unit;
     private String category;
     private boolean pending = false;
-    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private String dateTimeFormat = "yyyy-MM-dd";
 
     /**
      * Constructor that pass all ingredient elements.
@@ -163,7 +163,7 @@ public class Ingredient implements Serializable, ModelConstraints {
      * @return Date string
      */
     public String getBestBeforeDateString() {
-        return dateFormatter.format(bestBeforeDate);
+        return DateTimeFormatter.ofPattern(dateTimeFormat).format(bestBeforeDate);
     }
 
     /**
@@ -180,7 +180,7 @@ public class Ingredient implements Serializable, ModelConstraints {
      */
     public void setBestBeforeDate(String bestBeforeDate){
         try {
-            LocalDate date = LocalDate.parse(bestBeforeDate, dateFormatter);
+            LocalDate date = LocalDate.parse(bestBeforeDate, DateTimeFormatter.ofPattern(dateTimeFormat));
             this.bestBeforeDate = date;
         } catch (DateTimeException e) {
             this.bestBeforeDate = LocalDate.now();
