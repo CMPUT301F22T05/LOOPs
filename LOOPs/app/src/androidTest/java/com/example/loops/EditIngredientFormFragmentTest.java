@@ -37,6 +37,7 @@ import com.example.loops.models.Ingredient;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -87,12 +88,9 @@ public class EditIngredientFormFragmentTest {
         return targetContext.getResources().getString(id);
     }
 
-    private Date getDate(int year, int month, int day) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month-1);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        return cal.getTime();
+    private LocalDate getDate(int year, int month, int day) {
+        LocalDate date = LocalDate.of(year, month-1, day);
+        return date;
     }
 
     private void typeToEditText(int id, String toType) {
@@ -151,7 +149,7 @@ public class EditIngredientFormFragmentTest {
         onView(withId(R.id.ingredientFormLocationInput))
                 .check(matches( withSpinnerText(ingredientToEdit.getStoreLocation()) ));
         onView(withId(R.id.ingredientFormAmountInput))
-                .check(matches( withText(Float.toString(ingredientToEdit.getAmount())) ));
+                .check(matches( withText(Double.toString(ingredientToEdit.getAmount())) ));
         onView(withId(R.id.ingredientFormUnitInput))
                 .check(matches( withSpinnerText(ingredientToEdit.getUnit()) ));
         onView(withId(R.id.ingredientFormCategoryInput))

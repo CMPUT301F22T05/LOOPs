@@ -3,12 +3,17 @@ package com.example.loops.recipeFragments.forms;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
+import com.example.loops.adapters.RecipeIngredientsAdapter;
+import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
 /**
@@ -18,6 +23,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
     private Recipe editRecipe;
     private int editRecipeInd;
+    private boolean initialized = false;
 
     public EditRecipeFormFragment() { }
 
@@ -30,8 +36,14 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Edit");
-
         initializeFormWithIngredientAttributes();
+    }
+
+    void parseArguments() {
+        editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
+                .getEditRecipe();
+        editRecipeInd = EditRecipeFormFragmentArgs.fromBundle(getArguments())
+                .getEditRecipeIndex();
     }
 
     // Gets the index for where 'value' is at in spinner
@@ -48,32 +60,37 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
      * Populates the edit form with data of the recipe
      */
     public void initializeFormWithIngredientAttributes() {
-        editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
-                .getEditRecipe();
-        editRecipeInd = EditRecipeFormFragmentArgs.fromBundle(getArguments())
-                .getEditRecipeIndex();
+        if ( !initialized ) {
+            titleInput.setText(editRecipe.getTitle());
+            prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
+            prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
+            categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
+            numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
+            commentsInput.setText(editRecipe.getComments());
+            ingredientCollection.getIngredients().addAll(editRecipe.getIngredients().getIngredients());
+            if (editRecipe.getPhoto() != null)
+                imageView.setImageBitmap(editRecipe.getPhoto());
 
-        titleInput.setText(editRecipe.getTitle());
-        prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
-        prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes());
-        categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
-        numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
-        commentsInput.setText(editRecipe.getComments());
-        ingredientCollection = editRecipe.getIngredients();
+            initialized = true;
+        }
     }
 
     /**
      * Send the edited recipe back to previous fragment.
-     * Todo: implement
      * @param submittedRecipe recipe submitted by the form
      */
     protected void sendResult(Recipe submittedRecipe) {
-        return;
+        EditRecipeFormFragmentDirections.ActionEditRecipeFormFragmentToRecipeFragment editAction =
+                EditRecipeFormFragmentDirections.actionEditRecipeFormFragmentToRecipeFragment(
+                        submittedRecipe,
+                        editRecipeInd,
+                        0
+                );
+        Navigation.findNavController(getView()).navigate(editAction);
     }
 
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
-                "From Ingredient Storage",
                 "By New Ingredient",
                 "Cancel"
         };
@@ -83,18 +100,13 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                 .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // navigate to ingredient storage
-                        if (i == 0) {
-//                            AddRecipeFormFragmentDirections.ActionAddRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction =
-//                                    AddRecipeFormFragmentDirections.actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
-//                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_STORAGE);
-//                            Navigation.findNavController(getView()).navigate(addIngredientAction);
-                        }
                         // navigate to add ingredient form
-                        else if (i == 1) {
-//                            Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFragment);
+                        if (i == 0) {
+                            NavDirections addIngredientAction = EditRecipeFormFragmentDirections
+                                    .addIngredientToEditRecipeForm();
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
-                        else if (i == 2) {
+                        else if (i == 1) {
                             return;
                         }
                         else {
