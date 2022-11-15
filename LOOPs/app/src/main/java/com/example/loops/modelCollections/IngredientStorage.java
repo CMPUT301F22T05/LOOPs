@@ -44,6 +44,7 @@ public class IngredientStorage extends IngredientCollection {
         int dupInd = super.updateIngredient(index, ingredient);
         if (dupInd != index) {
             database.updateDocument(ingredients.get(dupInd), ingredients.get(dupInd));
+//            database.addDocument(ingredients.get(dupInd)); //if add a same ingredient, the older one will be override
             deleteIngredient(index);
         } else {
             database.updateDocument(oldIngredient, ingredient);

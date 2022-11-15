@@ -122,7 +122,7 @@ public abstract class IngredientFormFragment extends Fragment {
         String description = descriptionInput.getText().toString();
         LocalDate bestBeforeDate = parseBestBeforeDateFromInput();
         String location = locationInput.getSelectedItem().toString();
-        float amount = parseAmountFromInput();
+        double amount = parseAmountFromInput();
         String unit = unitInput.getSelectedItem().toString();
         String category = categoryInput.getSelectedItem().toString();
 
@@ -255,15 +255,15 @@ public abstract class IngredientFormFragment extends Fragment {
 
     /**
      * Parses the amount from the input
-     * @return the parsed Integer amount
+     * @return the parsed double amount
      */
-    private float parseAmountFromInput() {
-        float amount;
+    private double parseAmountFromInput() {
+        double amount;
         try {
-            amount = Float.parseFloat( amountInput.getText().toString() );
+            amount = Double.parseDouble( amountInput.getText().toString() );
         }
         catch (NumberFormatException e) {
-            amount = Float.NaN;
+            amount = Double.NaN;
         }
         return amount;
     }
