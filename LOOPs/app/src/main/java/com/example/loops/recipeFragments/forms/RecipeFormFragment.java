@@ -62,7 +62,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     protected RecipeIngredientsAdapter recyclerViewAdapter;
 
     protected ImageView imageView;
-    protected Button addPhotoButton;
+    //protected Button addPhotoButton;
     private ActivityResultLauncher<Intent> cameraActivityLauncher;
 
     // Certain views' state are not properly saved hence the addition of this attribute
@@ -147,7 +147,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         categoryInput = formView.findViewById(R.id.recipeFormCategoryInput);
         submitButton = formView.findViewById(R.id.recipeFormSubmitButton);
         addIngredientButton = formView.findViewById(R.id.recipeFormAddIngredientButton);
-        addPhotoButton = formView.findViewById(R.id.add_photo_button);
+        //addPhotoButton = formView.findViewById(R.id.add_photo_button);
         imageView = formView.findViewById(R.id.imageView);
     }
 
@@ -216,6 +216,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
             }
         });
 
+        /*
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,6 +229,22 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
                 }
             }
         });
+
+         */
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    saveFragmentState();
+                    cameraActivityLauncher.launch(openCamera);
+                } catch (ActivityNotFoundException e) {
+                    // display error state to the user
+                }
+            }
+        });
+
     }
 
     /**

@@ -30,7 +30,7 @@ public class ShoppingListFragment extends IngredientCollectionFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
-        collectionTitle.setText(R.string.shopping_list);
+        //collectionTitle.setText(R.string.shopping_list);
         return fragmentView;
     }
 

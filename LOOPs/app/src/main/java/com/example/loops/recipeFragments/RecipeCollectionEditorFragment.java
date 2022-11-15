@@ -36,7 +36,7 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
-        collectionTitle.setText(R.string.recipeCollection);
+        //collectionTitle.setText(R.string.recipeCollection);
         return fragmentView;
     }
 

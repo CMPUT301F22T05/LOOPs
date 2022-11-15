@@ -9,20 +9,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:padding="18dp"
         android:paddingEnd="0dp">
-
-        <ImageButton
-            android:id="@+id/sort_order_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="220dp"
-            android:backgroundTint="@color/white"
-            app:tint="@color/purple_200"
-            app:srcCompat="@android:drawable/arrow_up_float" />
 
         <Spinner
             android:id="@+id/sort_option_spinner"
@@ -30,7 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="0dp" />
+            android:layout_marginEnd="0dp"
+            android:textAlignment="center"
+            />
 
         <TextView
             android:id="@+id/generic_collection_title"
@@ -38,10 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:fontFamily="sans-serif-black"
-            android:text="XXXXX:"
+            android:text="Sort Order:"
             android:textSize="18sp">
-
-        </TextView>
+            </TextView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,8 +42,19 @@
             android:fontFamily="sans-serif-black"
             android:text="Sort by:"
             android:textSize="18sp">
+            </TextView>
 
-        </TextView>
+        <ImageButton
+            android:id="@+id/sort_order_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/generic_collection_title"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@color/white"
+            app:tint="@color/purple_200"
+            app:srcCompat="@android:drawable/arrow_up_float"
+            />
+
     </RelativeLayout>
 
     <RelativeLayout
