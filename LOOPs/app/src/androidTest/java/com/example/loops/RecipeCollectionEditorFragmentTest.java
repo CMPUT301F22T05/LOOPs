@@ -13,6 +13,7 @@ import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsAnything.anything;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -92,6 +93,92 @@ public class RecipeCollectionEditorFragmentTest {
         onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(0)
                 .onChildView(withId(R.id.recipe_title_in_collection)).
                 check(matches(withText("Grilled Cheese")));
+        onView(withId(R.id.sort_order_button)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(0)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Pizza")));
     }
+    @Test
+    public void testSortByPrepTime(){
+        launchFragment();
+        chooseSortOption(ApplicationProvider.getApplicationContext()
+                .getString(R.string.sort_by_preptime));
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(0)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Grilled Cheese")));
+        onView(withId(R.id.sort_order_button)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(0)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Pizza")));
+    }
+    @Test
+    public void testSortByCategory(){
+        launchFragment();
+        chooseSortOption(ApplicationProvider.getApplicationContext()
+                .getString(R.string.sort_by_category));
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(0)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Grilled Cheese")));
+        onView(withId(R.id.sort_order_button)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(0)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Pizza")));
+    }
+    private void mimicAddRecipeRequest(){
+        bundle.putSerializable("addedRecipe",recipe3);
+    }
+    @Test
+    public void testAddRecipeRequest(){
+        mimicAddRecipeRequest();
+        launchFragment();
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(2)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Hamburger")));
+    }
+    private void mimicEditRecipeRequest(){
+        bundle.putSerializable("editedRecipe",recipe3);
+        bundle.putInt("editedRecipeIndex",1);
+    }
+    @Test
+    public void testEditRecipeRequest(){
+        mimicEditRecipeRequest();
+        launchFragment();
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(1)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Hamburger")));
+    }
+    public void mimicDeleteRecipeRequest() {
+        bundle.putBoolean("deletedFlag", true);
+        bundle.putInt("editedRecipeIndex",0);
+        bundle.putSerializable("editedRecipe",recipe3);
+    }
+    @Test
+    public void testDeleteRecipeRequest(){
+        mimicDeleteRecipeRequest();
+        launchFragment();
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(0)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                check(matches(withText("Pizza")));
+    }
+
+    private Bundle getReturnBundle() {
+        return navController.getBackStack()
+                .get(navController.getBackStack().size()-1)
+                .getArguments();
+    }
+    @Test
+    public void clickOnRecipe(){
+        mimicAddRecipeRequest();
+        launchFragment();
+        onData(anything()).inAdapterView(withId(R.id.generic_collection_view)).atPosition(2)
+                .onChildView(withId(R.id.recipe_title_in_collection)).
+                perform(click());
+        Bundle returnValue = getReturnBundle();
+        assertEquals(returnValue.getSerializable("SelectedRecipe"),recipe3);
+        assertEquals(returnValue.getInt("SelectedRecipeIndex"),2);
+        assertEquals(returnValue.getInt("fromWhichFragment"),R.layout.fragment_recipe_collection);
+    }
+
+
 
 }
