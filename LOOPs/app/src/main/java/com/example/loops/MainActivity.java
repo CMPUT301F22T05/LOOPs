@@ -20,6 +20,7 @@ import com.example.loops.database.Database;
 import com.example.loops.ingredientFragments.IngredientCollectionEditorFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.IngredientStorage;
+import com.example.loops.modelCollections.MealPlanCollection;
 import com.example.loops.modelCollections.RecipeCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
@@ -48,15 +49,22 @@ public class MainActivity extends AppCompatActivity {
      * allRecipes - recipe storage from database
      */
     private AppBarConfiguration appBarConfiguration;
-    private IngredientCollection shoppingList; //default is null
     private IngredientStorage allIngredients = new IngredientStorage(Database.getInstance());
     private RecipeCollection allRecipes = new RecipeCollection(Database.getInstance());
+    private IngredientCollection shoppingList; //default is null
+    private MealPlanCollection mealPlans = new MealPlanCollection(Database.getInstance());
 
     public IngredientCollection getIngredientStorage() {
         return allIngredients;
     }
     public RecipeCollection getAllRecipes() {
         return allRecipes;
+    }
+    public IngredientCollection getShoppingList() {
+        return shoppingList;
+    }
+    public MealPlanCollection getMealPlans() {
+        return mealPlans;
     }
 
     @Override

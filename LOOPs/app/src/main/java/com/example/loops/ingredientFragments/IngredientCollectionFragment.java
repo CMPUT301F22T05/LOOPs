@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.loops.GenericCollectionLayout;
 import com.example.loops.adapters.ShoppingListViewAdapter;
+import com.example.loops.modelCollections.MealPlanCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.adapters.IngredientStorageViewAdapter;
@@ -126,7 +127,10 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     "YYY"));
         }
         else if (type == CollectionType.FROM_SHOPPING_LIST) {
+            IngredientCollection ingredientStorage = ((MainActivity)getActivity()).getIngredientStorage();
+            MealPlanCollection mealPlans = ((MainActivity)getActivity()).getMealPlans();
             ingredientCollection = new IngredientCollection();
+            //TODO: write algorithm to calculate shopping list
             ingredientCollection.addIngredient(new Ingredient(
                     "BBB",
                     "2022-10-28",
