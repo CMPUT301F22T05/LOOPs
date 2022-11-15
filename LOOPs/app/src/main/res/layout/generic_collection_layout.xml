@@ -59,7 +59,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="647dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="100dp">
 
@@ -76,13 +76,6 @@
 
         </ListView>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:layout_marginTop="-100dp">
-
         <Button
             android:id="@+id/add_item_to_collection_btn"
             android:layout_width="70dp"
@@ -91,6 +84,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="30sp"
             android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true"
             android:backgroundTint="#4CAF50"
             android:text="+"
             android:textSize="30sp">
