@@ -127,7 +127,7 @@ public class IngredientFragment extends Fragment {
             //Navigation.findNavController(getParentFragment().getView()).navigate(deleteCollectionAction);
             Navigation.findNavController(parentView).navigate((NavDirections) deleteCollectionAction);
         });
-        popupDeleteText.setText(String.format("Delete Ingredient %s?", ingredient.getDescription()));
+        popupDeleteText.setText(String.format("Delete %s?", ingredient.getDescription()));
 
         // delete button is only for opening popup window
         deleteButton.setOnClickListener(view -> {
