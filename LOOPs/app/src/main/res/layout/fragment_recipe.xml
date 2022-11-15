@@ -19,19 +19,32 @@
                 android:id="@+id/backToRecipeCollection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/recipeBackButtonText"
-                android:layout_marginTop="@dimen/medium_pad"
-                android:layout_below="@id/recipeIngredientList"/>
+                android:layout_below="@id/recipeIngredientList"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="21dp"
+                android:text="@string/recipeBackButtonText" />
+
+            <Button
+                android:id="@+id/editRecipeButton"
+                android:layout_width="@dimen/recipe_edit_layout_width"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recipeIngredientList"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/backToRecipeCollection"
+                android:width="@dimen/recipe_edit_width"
+                android:text="@string/EditRecipeButtonName" />
 
             <Button
                 android:id="@+id/deleteRecipeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recipeDeleteButtonText"
-                android:layout_marginStart="@dimen/medium_pad"
+                android:layout_marginLeft="30dp"
                 android:layout_marginTop="@dimen/medium_pad"
+                android:layout_toRightOf="@id/editRecipeButton"
                 android:layout_below="@id/recipeIngredientList"
-                android:layout_toEndOf="@id/backToRecipeCollection"
                 />
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -140,13 +153,5 @@
         </RelativeLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/editRecipeButton"
-        android:layout_width="@dimen/recipe_edit_layout_width"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/serving_padding"
-        android:layout_marginTop="@dimen/extra_small_pad"
-        android:width="@dimen/recipe_edit_width"
-        android:text="@string/EditRecipeButtonName"/>
 
 </FrameLayout>
