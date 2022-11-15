@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MealPlanCollection {
     private String dateTimeFormat = "yyyy-MM-dd";
-    private int futureDays = 7;
+    private final int futureDays = 7;
     private ArrayList<MealPlan> mealPlans;
     private Database database;
 
@@ -28,7 +28,7 @@ public class MealPlanCollection {
             String date = DateTimeFormatter.ofPattern(dateTimeFormat).format(today);
             mealPlans.add(new MealPlan(date + " Breakfast"));
             mealPlans.add(new MealPlan(date + " Lunch"));
-            mealPlans.add(new MealPlan(date + " Dinner"));
+            mealPlans.add(new MealPlan(date + " Supper"));
             today = today.plusDays(1);
         }
     }
