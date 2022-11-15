@@ -149,7 +149,7 @@ public class Database {
                         if (!task.isSuccessful())
                             return;
 
-                        if (collectionName == DB_INGREDIENT) {
+                        if (collectionName.equals(DB_INGREDIENT)) {
                             Log.d("DATABASE_LOG", "INGREDIENT COLLECTION RETRIEVED");
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Ingredient databaseIngredient = new Ingredient(
@@ -168,7 +168,7 @@ public class Database {
                             }
                         }
 
-                        if (collectionName == DB_RECIPE) {
+                        if (collectionName.equals(DB_RECIPE)) {
                             Log.d("DATABASE_LOG", "RECIPE COLLECTION RETRIEVED");
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Recipe databaseRecipe = new Recipe(
@@ -201,13 +201,13 @@ public class Database {
                             }
                         }
 
-                        if (collectionName == DB_MEAL_PLAN) {
+                        if (collectionName.equals(DB_MEAL_PLAN)) {
 
                         }
 
-                        if (collectionName == DB_SHOPPING_LIST) {
-
-                        }
+//                        if (collectionName == DB_SHOPPING_LIST) {
+//
+//                        }
                     }
                 });
     }
