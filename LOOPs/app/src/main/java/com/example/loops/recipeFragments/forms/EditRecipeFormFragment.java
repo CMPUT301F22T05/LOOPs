@@ -62,8 +62,8 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     public void initializeFormWithIngredientAttributes() {
         if ( !initialized ) {
             titleInput.setText(editRecipe.getTitle());
-            prepTimeHourInput.setValue((int)editRecipe.getPrepTime().toHours());
-            prepTimeMinuteInput.setValue((int)editRecipe.getPrepTime().toMinutes() % 60);
+            prepTimeHourInput.setText(Integer.toString((int)editRecipe.getPrepTime().toHours()));
+            prepTimeMinuteInput.setText(Integer.toString((int)editRecipe.getPrepTime().toMinutes() % 60));
             categoryInput.setSelection(getSpinnerIndexByValue(editRecipe.getCategory(), categoryInput));
             numServingInput.setText(Integer.toString(editRecipe.getNumServing()));
             commentsInput.setText(editRecipe.getComments());
