@@ -150,7 +150,7 @@ public class RecipeCollection {
         else if (option.equals(RecipeSortOption.BY_PREP_TIME_DESCENDING)) {
             allRecipes.sort(new RecipeCollection.PrepTimeAscendingComparator().reversed());
         }
-        else if (option.equals(RecipeSortOption.BY_CATEGORY_ASCENDING)) {
+        else if (option.equals(RecipeSortOption.BY_CATEGORY_DESCENDING)) {
             allRecipes.sort(new RecipeCollection.CategoryAscendingComparator().reversed());
         }
     }
