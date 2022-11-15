@@ -48,8 +48,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     public static final String ADD_INGREDIENT_KEY = "RECIPEFORMFRAGMENT_ADD_INGREDIENT_KEY";
 
     protected EditText titleInput;
-    protected NumberPicker prepTimeHourInput;
-    protected NumberPicker prepTimeMinuteInput;
+    protected EditText prepTimeHourInput;
+    protected EditText prepTimeMinuteInput;
     protected Spinner categoryInput;
     protected EditText numServingInput;
     protected EditText commentsInput;
@@ -173,7 +173,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * Set constraints on input widgets
      */
     private void setConstraintsOnInputs() {
-        bindNumberPickerOnInput(prepTimeHourInput, prepTimeMinuteInput);
+        //bindNumberPickerOnInput(prepTimeHourInput, prepTimeMinuteInput);
     }
 
     /**
@@ -183,14 +183,14 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      */
     private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput, NumberPicker prepTimeMinuteInput ) {
         // TODO: Finish implementing the values displayed for number picker
-        int maxHourValue = 99;
-        int maxMinuteValue = 59;
+        //int maxHourValue = 99;
+        //int maxMinuteValue = 59;
 
-        prepTimeHourInput.setMinValue(0);
-        prepTimeHourInput.setMaxValue(maxHourValue);
+        //prepTimeHourInput.setMinValue(0);
+        //prepTimeHourInput.setMaxValue(maxHourValue);
 
-        prepTimeMinuteInput.setMinValue(0);
-        prepTimeMinuteInput.setMaxValue(maxMinuteValue);
+        //prepTimeMinuteInput.setMinValue(0);
+        //prepTimeMinuteInput.setMaxValue(maxMinuteValue);
 
         /* FIXME: there is a bug where when a user scrolls to select an option, the value displayed
             and the value of the number picker is off by one. */
@@ -253,8 +253,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     private void saveFragmentState() {
 //        Most of the view states are saved but there are some views that have problem saving their
 //        state like NumberPicker and ImageView
-        savedFormState.putInt("PREPTIME_HOUR", prepTimeHourInput.getValue());
-        savedFormState.putInt("PREPTIME_MINUTE", prepTimeMinuteInput.getValue());
+        //savedFormState.putInt("PREPTIME_HOUR", prepTimeHourInput.getValue());
+        //savedFormState.putInt("PREPTIME_MINUTE", prepTimeMinuteInput.getValue());
         if (imageView.getDrawable() != null)
             savedFormState.putParcelable("IMAGE", ((BitmapDrawable)imageView.getDrawable()).getBitmap());
         if (ingredientCollection != null)
@@ -277,10 +277,10 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * @param savedFormState
      */
     private void restoreFormState(Bundle savedFormState) {
-        if ( !savedFormState.isEmpty()) {
-            prepTimeHourInput.setValue(savedFormState.getInt("PREPTIME_HOUR"));
-            prepTimeMinuteInput.setValue(savedFormState.getInt("PREPTIME_MINUTE"));
-        }
+        //if ( !savedFormState.isEmpty()) {
+        //    prepTimeHourInput.setValue(savedFormState.getInt("PREPTIME_HOUR"));
+        //    prepTimeMinuteInput.setValue(savedFormState.getInt("PREPTIME_MINUTE"));
+        //}
         if (savedFormState.containsKey("IMAGE"))
             imageView.setImageBitmap(savedFormState.getParcelable("IMAGE"));
         if (savedFormState.containsKey("INGREDIENTS"))
@@ -340,10 +340,12 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * @return Recipe object formed by the value of the fields of the form
      */
     public Recipe getRecipeFromInput() {
+        //Log.e("hour", Integer.toString(prepTimeHourInput.getValue()));
+        //Log.e("minute", Integer.toString(prepTimeMinuteInput.getValue()));
         Recipe recipe = new Recipe(
                 titleInput.getText().toString(),
-                prepTimeHourInput.getValue(),
-                prepTimeMinuteInput.getValue(),
+                Integer.parseInt(prepTimeHourInput.getText().toString()),
+                Integer.parseInt(prepTimeMinuteInput.getText().toString()),
                 Integer.parseInt(numServingInput.getText().toString()),
                 categoryInput.getSelectedItem().toString(),
                 ((BitmapDrawable) imageView.getDrawable()).getBitmap(),
