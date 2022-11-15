@@ -37,7 +37,7 @@ public class Recipe implements Serializable, ModelConstraints {
     private Duration prepTime;
     private int numServing;
     private String category;
-    private Bitmap photo;
+    //private Bitmap photo;
     private String photoBase64;
     private IngredientCollection ingredients;
     private String comments;
@@ -59,7 +59,7 @@ public class Recipe implements Serializable, ModelConstraints {
         this.prepTime = Duration.ofHours(durationHour).plus(Duration.ofMinutes(durationMinute));
         this.numServing = numServing;
         this.category = category;
-        this.photo = compressPhoto(photo, 100);
+        //this.photo = compressPhoto(photo, 100);
         this.photoBase64 = encodeBase64(photo);
         this.ingredients = ingredients;
         this.comments = comments;
@@ -82,7 +82,7 @@ public class Recipe implements Serializable, ModelConstraints {
         this.prepTime = Duration.ofHours(durationHour).plus(Duration.ofMinutes(durationMinute));
         this.numServing = numServing;
         this.category = category;
-        this.photo = decodeBase64(photoBase64);
+        //this.photo = decodeBase64(photoBase64);
         this.photoBase64 = photoBase64;
         this.ingredients = ingredients;
         this.comments = comments;
@@ -271,7 +271,7 @@ public class Recipe implements Serializable, ModelConstraints {
      * @return Bitmap photo
      */
     public Bitmap getPhoto() {
-        return photo;
+        return decodeBase64(photoBase64);
     }
 
     /**
@@ -279,7 +279,7 @@ public class Recipe implements Serializable, ModelConstraints {
      * @param photo (Bitmap)
      */
     public void setPhoto(Bitmap photo) {
-        this.photo = photo;
+        this.photoBase64 = encodeBase64(photo);
     }
 
     /**
@@ -338,7 +338,7 @@ public class Recipe implements Serializable, ModelConstraints {
         this.category = category;
         this.comments = comment;
         this.ingredients = new IngredientCollection();
-        this.photo = photo;
+        //this.photo = photo;
     }
 
     @Deprecated
