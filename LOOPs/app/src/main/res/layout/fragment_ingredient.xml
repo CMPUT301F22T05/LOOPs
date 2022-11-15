@@ -156,7 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
-            android:backgroundTint="#E91E63"
+            android:backgroundTint="#B00020"
             android:text="delete"
             android:textSize="10dp" />
 
