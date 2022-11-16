@@ -35,7 +35,6 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
-        submitButton.setText("Edit");
         initializeFormWithIngredientAttributes();
     }
 
