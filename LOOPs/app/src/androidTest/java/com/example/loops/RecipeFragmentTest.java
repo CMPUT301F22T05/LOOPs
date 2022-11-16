@@ -53,7 +53,7 @@ public class RecipeFragmentTest {
 
 
     @Before
-    public void setUp() throws ParseException {
+    public void setUp() {
         navController = new TestNavHostController( ApplicationProvider.getApplicationContext() );
         Ingredient eggs = new Ingredient("eggs", "11/14/2022","Fridge",2,"","Breakfast");
         Ingredient water = new Ingredient("water", "11/14/2024","Fridge",1,"cups","Liquid");
@@ -72,18 +72,19 @@ public class RecipeFragmentTest {
         mockIngredientCollection.addIngredient(salt);
         mockIngredientCollection.addIngredient(oil);
         mockIngredientCollection.addIngredient(chicken);
-        mockRecipe = new Recipe("Fried Chicken", 4);
-        mockRecipe.setIngredients(mockIngredientCollection);
-        mockRecipe.setCategory("Southern American");
+
+        Integer numServing = 4;
+        String title = "FriedChicken";
+        String category = "Southern American";
+        long hours = 0;
+        long minutes = 15;
         String comment = String.join("\n",
                 "1. In a large shallow dish, combine 2-2/3 cups flour, garlic salt, paprika, 2-1/2 teaspoons pepper and poultry seasoning. In another shallow dish, beat eggs and 1-1/2 cups water; add salt and the remaining 1-1/3 cups flour and 1/2 teaspoon pepper. Dip chicken in egg mixture, then place in flour mixture, a few pieces at a time. Turn to coat",
                 "",
                 "2. In a deep-fat fryer, heat oil to 375°. Fry chicken, several pieces at a time, until chicken is golden brown and juices run clear, 7-8 minutes on each side. Drain on paper towels.");
-        mockRecipe.setComments(comment);
-        mockRecipe.setPrepTime(Duration.ofSeconds(900));
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Bitmap image = BitmapFactory.decodeResource(targetContext.getResources(),R.drawable.fried_chicken_test_picutre);
-        mockRecipe.setPhoto(image);
+        Bitmap image = BitmapFactory.decodeResource(targetContext.getResources(),R.drawable.friedchicken);
+        mockRecipe = new Recipe(title, hours, minutes, numServing, category, image, mockIngredientCollection,comment);
         Bundle bundle = new Bundle();
         bundle.putInt("fromWhichFragment", R.layout.fragment_recipe_collection);
         bundle.putSerializable("SelectedRecipe",mockRecipe);
@@ -119,6 +120,7 @@ public class RecipeFragmentTest {
         onView(withId(R.id.ingredientSubHead)).check(matches(isDisplayed()));
         onView(withId(R.id.recipeIngredientList)).perform(scrollTo());
         onView(withId(R.id.recipeIngredientList)).check(matches(isDisplayed()));
+        onView(withId(R.id.backToRecipeCollection)).perform(scrollTo());
         onView(withId(R.id.backToRecipeCollection)).check(matches(isDisplayed()));
         onView(withId(R.id.deleteRecipeButton)).check(matches(isDisplayed()));
 
@@ -173,6 +175,7 @@ public class RecipeFragmentTest {
 
 
         }
+        onView(withId(R.id.backToRecipeCollection)).perform(scrollTo());
         onView(withId(R.id.backToRecipeCollection)).check(matches(withText(backButtonText)));
         onView(withId(R.id.deleteRecipeButton)).check(matches(withText(deleteButtonText)));
 
@@ -185,11 +188,10 @@ public class RecipeFragmentTest {
      */
     @Test
     public void testDeleteSwipe(){
-        onView(withId(R.id.recipeIngredientList)).perform(scrollTo());
-        ArrayList<Ingredient> testIngredients = mockIngredientCollection.getIngredients();
-        Ingredient deletedIngredient = testIngredients.get(2);
-        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.scrollToPosition(2),swipeRight());
-        assertNotEquals(deletedIngredient,testIngredients.get(2));
+        Ingredient before = mockIngredientCollection.getIngredients().get(1);
+        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.actionOnItemAtPosition(1,swipeRight()));
+        onView(withId(R.id.recipeIngredientList)).perform(RecyclerViewActions.actionOnItemAtPosition(1,swipeRight())).check(matches(hasDescendant(withText("black pepper"))));
+
 
     }
 
@@ -213,10 +215,10 @@ public class RecipeFragmentTest {
     @Test
     public void testNavigateToEditRecipe() {
         onView(withId(R.id.editRecipeButton)).perform(click());
-        assertEquals(navController.getCurrentDestination().getId(),R.id.EditRecipePlaceHolder);
+        assertEquals(navController.getCurrentDestination().getId(),R.id.editRecipeFormFragment);
         Bundle returnValue = getReturnBundle();
-        assertEquals(returnValue.getSerializable("editedRecipe"), mockRecipe);
-        assertEquals(returnValue.getInt("editedRecipe"),0);
+        assertEquals(returnValue.getSerializable("editRecipe"), mockRecipe);
+        assertEquals(returnValue.getInt("editRecipeIndex"),0);
     }
 
     /**
@@ -263,7 +265,7 @@ public class RecipeFragmentTest {
         Bundle returnValue = getReturnBundle();
         assertEquals(returnValue.getSerializable("editedRecipe"),mockRecipe);
         assertEquals(returnValue.getInt("editedRecipeIndex"), 0);
-        assertEquals(returnValue.getBoolean("deleteFlag"),true);
+        assertEquals(returnValue.getBoolean("deletedFlag"),true);
     }
 
 

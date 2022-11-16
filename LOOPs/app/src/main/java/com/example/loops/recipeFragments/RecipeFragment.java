@@ -218,6 +218,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         /*
          * Set the text based on the recipe's title
          */
+
         popupDeleteText.setText(String.format("Delete %s recipe?",selectedRecipe.getTitle()));
         deleteRecipeButton.setOnClickListener(view -> {
             deletePopupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
@@ -253,7 +254,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = viewHolder.getAdapterPosition();
-                selectedRecipe.getIngredients().deleteIngredient(pos);
+                selectedRecipe.removeIngredient(pos);
                 recipeIngredientsAdapter.notifyDataSetChanged();
             }
         };

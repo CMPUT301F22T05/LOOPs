@@ -9,7 +9,9 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.navigation.NavDirections;
+
 import androidx.navigation.Navigation;
 
 import com.example.loops.adapters.RecipeIngredientsAdapter;
@@ -73,6 +75,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
 
             initialized = true;
         }
+
     }
 
     /**

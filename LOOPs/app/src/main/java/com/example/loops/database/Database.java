@@ -2,6 +2,7 @@ package com.example.loops.database;
 
 import static android.content.ContentValues.TAG;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.example.loops.modelCollections.IngredientCollection;
@@ -43,6 +44,7 @@ public class Database {
     public static final String DB_MEAL_PLAN = "MealPlanCollection";
     public static final String DB_SHOPPING_LIST = "ShoppingListCollection";
     private static Map<Object, String> collectionDict = new HashMap<>();
+
 
     /**
      * Connect to FireStore & initialize collection type mapping.
@@ -158,7 +160,9 @@ public class Database {
                                         documentSnapshot.getString("unit"),
                                         documentSnapshot.getString("category")
                                 );
+
                                 databaseIngredient.setPending(documentSnapshot.getBoolean("pending"));
+
                                 Log.d("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
                                 ((IngredientStorage) collection).addIngredientLocal(databaseIngredient);
                             }
