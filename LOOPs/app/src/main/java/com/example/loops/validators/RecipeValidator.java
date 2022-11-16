@@ -131,7 +131,8 @@ public class RecipeValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkComment(String comment, RECIPE_TYPE type) {
-        if (comment == null || comment.length() <= 0) {
+        // trim() ensures no strings with only whitespaces pass
+        if (comment == null || comment.trim().length() <= 0) {
             errorStringIds.add(R.string.recipe_no_Comment);
             return false;
         }
