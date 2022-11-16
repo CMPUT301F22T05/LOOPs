@@ -70,6 +70,7 @@
             android:layout_width="388dp"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/recipe_servings_in_collection"
             app:layout_constraintStart_toEndOf="@+id/recipe_image_in_collection"
             app:layout_constraintTop_toBottomOf="@+id/recipe_title_in_collection" />

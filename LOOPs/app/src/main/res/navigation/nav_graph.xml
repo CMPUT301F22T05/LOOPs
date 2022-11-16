@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_mealPlanHomePageFragment_to_shoppingListFragment"
             app:destination="@id/shoppingListFragment" />
+        <action
+            android:id="@+id/action_look_at_meal_plan_detail"
+            app:destination="@id/mealPlanFragment" />
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionEditorFragment"
@@ -270,4 +273,9 @@
             android:defaultValue="FROM_SHOPPING_LIST"
             app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType" />
     </fragment>
+    <fragment
+        android:id="@+id/mealPlanFragment"
+        android:name="com.example.loops.MealPlanFragment"
+        android:label="Meal Plan Details"
+        tools:layout="@layout/fragment_meal_plan" />
 </navigation>
