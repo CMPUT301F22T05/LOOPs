@@ -51,12 +51,13 @@ public class RecipeValidator {
      * @return true if valid. False otherwise
      */
     public boolean checkRecipe(Recipe recipe, RECIPE_TYPE type) {
-        return recipe != null
-                && checkTitle(recipe.getTitle(), type)
-                && checkDuration(recipe.getPrepTime(), type)
-                && checkCategory(recipe.getCategory(), type)
-                && checkNumServ(recipe.getNumServing(), type)
-                && checkComment(recipe.getComments(), type);
+        boolean success = true;
+        success &= checkTitle(recipe.getTitle(), type);
+        success &= checkDuration(recipe.getPrepTime(), type);
+        success &= checkCategory(recipe.getCategory(), type);
+        success &= checkNumServ(recipe.getNumServing(), type);
+        success &= checkComment(recipe.getComments(), type);
+        return success;
     }
 
     /**
