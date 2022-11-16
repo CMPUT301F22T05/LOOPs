@@ -35,7 +35,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
-        collectionTitle.setText(R.string.ingredientCollection);
+        //collectionTitle.setText(R.string.ingredientCollection);
         return fragmentView;
     }
 

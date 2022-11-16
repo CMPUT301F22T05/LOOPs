@@ -43,12 +43,7 @@
                         android:clickable="true"
                         android:src="@android:drawable/ic_menu_gallery" />
 
-                    <Button
-                        android:id="@+id/add_photo_button"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp">
 
-                    </Button>
 
                 </LinearLayout>
 
@@ -100,41 +95,45 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <NumberPicker
+                    <EditText
                         android:id="@+id/recipeFormPrepTimeHourInput"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
                         android:layout_height="46dp"
                         android:layout_marginStart="18dp"
-                        android:layout_marginEnd="18dp"
+                        android:layout_marginEnd="0dp"
                         android:autofillHints=""
-                        android:clickable="false"
-                        android:scaleX="1.75"
-                        android:scaleY="1.75"
-                        android:theme="@style/NumberPickerText" />
+                        android:digits="0123456789"
+                        android:ems="10"
+                        android:hint="h"
+                        android:inputType="number" />
 
                     <TextView
                         android:id="@+id/recipeFormPrepTimeHourText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="hour(s)"
                         android:textSize="18sp" />
 
-                    <NumberPicker
+                    <EditText
                         android:id="@+id/recipeFormPrepTimeMinuteInput"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
                         android:layout_height="46dp"
                         android:layout_marginStart="18dp"
-                        android:layout_marginEnd="18dp"
+                        android:layout_marginEnd="0dp"
                         android:autofillHints=""
-                        android:clickable="false"
-                        android:scaleX="1.75"
-                        android:scaleY="1.75"
-                        android:theme="@style/NumberPickerText" />
+                        android:digits="0123456789"
+                        android:ems="10"
+                        android:hint="m"
+                        android:inputType="number" />
 
                     <TextView
                         android:id="@+id/recipeFormPrepTimeMinuteText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="minute(s)"

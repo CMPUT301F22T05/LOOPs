@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="empty"> </string>
     <string-array name="ingredient_locations">
-        <item></item>
+        <item>@string/empty</item>
         <item>Pantry</item>
+        <item>Freezer</item>
         <item>Fridge</item>
-        <item>Dog</item>
     </string-array>
 
     <string-array name="ingredient_units">
-        <item></item>
+        <item>@string/empty</item>
         <item>kg</item>
         <item>g</item>
-        <item>dogs</item>
+        <item>mg</item>
+        <item>#</item>
+        <item>L</item>
+        <item>mL</item>
     </string-array>
 
     <string-array name="ingredient_categories">
-        <item></item>
-        <item>Dog Food</item>
-        <item>Cat Food</item>
-        <item>Sure, I guess Human Food as well</item>
+        <item>@string/empty</item>
+        <item>Meat</item>
+        <item>Vegetable</item>
+        <item>Staple</item>
+        <item>Condiment</item>
+        <item>Drinks</item>
     </string-array>
 </resources>
