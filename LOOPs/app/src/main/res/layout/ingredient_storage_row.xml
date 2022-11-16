@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="best before"
+            android:textColor="#000000"
             app:layout_constraintEnd_toStartOf="@+id/ingredient_location_in_storage"
             app:layout_constraintHorizontal_weight="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +29,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="description"
+            android:textColor="#000000"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,6 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="location"
+            android:textColor="#000000"
             app:layout_constraintBaseline_toBaselineOf="@+id/ingredient_bbd_in_storage"
             app:layout_constraintEnd_toStartOf="@+id/ingredient_category_in_storage"
             app:layout_constraintHorizontal_weight="0.25"
@@ -47,10 +51,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="category"
+            android:textColor="#000000"
             app:layout_constraintBaseline_toBaselineOf="@+id/ingredient_location_in_storage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="0.25"
             app:layout_constraintStart_toEndOf="@+id/ingredient_location_in_storage" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="390dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toTopOf="@+id/ingredient_bbd_in_storage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_description_in_storage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

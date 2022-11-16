@@ -19,7 +19,7 @@ import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
 /**
- * An ingredient form for editing ingredients. Supply the ingredient to edit through action args
+ * A recipe form for editing recipes. Supply the recipe to edit through action args
  */
 public class EditRecipeFormFragment extends RecipeFormFragment {
 
@@ -37,7 +37,6 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
-        submitButton.setText("Edit");
         initializeFormWithIngredientAttributes();
     }
 

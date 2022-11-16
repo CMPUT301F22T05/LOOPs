@@ -44,8 +44,8 @@ public class IngredientCollectionEditorFragmentTest {
         navController = new TestNavHostController( ApplicationProvider.getApplicationContext() );
         bundle = new Bundle();
         //Two ingredients will be shown in the fragment for testing
-        //1. Ingredient("BBB", "10/28/2022", "fridge", 1, "", "XXX")
-        //2. Ingredient("AAA", "10/29/2022", "cupboard", 1, "", "YYY")
+        //1. Ingredient("BBB", "2022-10-28", "fridge", 1, "", "XXX")
+        //2. Ingredient("AAA", "2022-10-29", "cupboard", 1, "", "YYY")
         //check method setIngredientCollectionToDisplay(CollectionType type)
         //in IngredientCollectionFragment.java
         bundle.putSerializable("collectionType",
@@ -72,7 +72,14 @@ public class IngredientCollectionEditorFragmentTest {
     }
 
     /**
-     * Test for sorting by description
+     * toggle between ascending or descending
+     */
+    private void changeSortOrder() {
+        onView(withId(R.id.sort_order_button)).perform(click());
+    }
+
+    /**
+     * Test for sorting by description in both ordering
      */
     private void testSortByDescription() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
@@ -87,10 +94,22 @@ public class IngredientCollectionEditorFragmentTest {
                 .atPosition(1)
                 .check(matches(hasDescendant(allOf(withId(R.id.ingredient_description_in_storage),
                         withText(containsString("BBB"))))));
+        changeSortOrder();
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(1)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_description_in_storage),
+                        withText(containsString("AAA"))))));
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(0)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_description_in_storage),
+                        withText(containsString("BBB"))))));
+        changeSortOrder();
     }
 
     /**
-     * Test for sorting by best before date
+     * Test for sorting by best before date in both ordering
      */
     private void testSortByBestBeforeDate() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
@@ -99,16 +118,28 @@ public class IngredientCollectionEditorFragmentTest {
                 .inAdapterView(withId(R.id.generic_collection_view))
                 .atPosition(0)
                 .check(matches(hasDescendant(allOf(withId(R.id.ingredient_bbd_in_storage),
-                        withText(containsString("10/28/2022"))))));
+                        withText(containsString("2022-10-28"))))));
         onData(is(instanceOf(Ingredient.class)))
                 .inAdapterView(withId(R.id.generic_collection_view))
                 .atPosition(1)
                 .check(matches(hasDescendant(allOf(withId(R.id.ingredient_bbd_in_storage),
-                        withText(containsString("10/29/2022"))))));
+                        withText(containsString("2022-10-29"))))));
+        changeSortOrder();
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(1)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_bbd_in_storage),
+                        withText(containsString("2022-10-28"))))));
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(0)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_bbd_in_storage),
+                        withText(containsString("2022-10-29"))))));
+        changeSortOrder();
     }
 
     /**
-     * Test by sorting by location
+     * Test by sorting by location in both ordering
      */
     private void testSortByLocation() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
@@ -123,10 +154,22 @@ public class IngredientCollectionEditorFragmentTest {
                 .atPosition(1)
                 .check(matches(hasDescendant(allOf(withId(R.id.ingredient_location_in_storage),
                         withText(containsString("fridge"))))));
+        changeSortOrder();
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(1)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_location_in_storage),
+                        withText(containsString("cupboard"))))));
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(0)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_location_in_storage),
+                        withText(containsString("fridge"))))));
+        changeSortOrder();
     }
 
     /**
-     * Test by sorting by category
+     * Test by sorting by category in both ordering
      */
     private void testSortByCategory() {
         chooseSortOption(ApplicationProvider.getApplicationContext()
@@ -141,10 +184,22 @@ public class IngredientCollectionEditorFragmentTest {
                 .atPosition(1)
                 .check(matches(hasDescendant(allOf(withId(R.id.ingredient_category_in_storage),
                         withText(containsString("YYY"))))));
+        changeSortOrder();
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(1)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_category_in_storage),
+                        withText(containsString("XXX"))))));
+        onData(is(instanceOf(Ingredient.class)))
+                .inAdapterView(withId(R.id.generic_collection_view))
+                .atPosition(0)
+                .check(matches(hasDescendant(allOf(withId(R.id.ingredient_category_in_storage),
+                        withText(containsString("YYY"))))));
+        changeSortOrder();
     }
 
     /**
-     * Tests all sort types by running each individual sorting test
+     * Tests all sort types by running each individual sorting test in both ordering
      */
     @Test
     public void testSort() {
@@ -159,7 +214,7 @@ public class IngredientCollectionEditorFragmentTest {
         bundle.putSerializable("addedIngredient",
                 new Ingredient(
                         "apple",
-                        "11/04/2022",
+                        "2022-11-04",
                         "pantry",
                         1,
                         "kg",
@@ -183,7 +238,12 @@ public class IngredientCollectionEditorFragmentTest {
 
     private void mimicEditIngredientRequest() {
         bundle.putSerializable("editedIngredient",
-                new Ingredient("apple", "11/04/2022", "pantry", 1, "kg", "fruit"));
+                new Ingredient("apple",
+                        "2022-11-04",
+                        "pantry",
+                        1,
+                        "kg",
+                        "fruit"));
         bundle.putInt("editedIngredientIndex", 0);
     }
 
