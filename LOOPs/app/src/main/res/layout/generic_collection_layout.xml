@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/sort_by_title"
             android:layout_toRightOf="@id/generic_collection_title"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@android:color/transparent"
             app:srcCompat="@android:drawable/arrow_up_float"
             app:tint="@color/purple_200" />
 
