@@ -17,7 +17,7 @@ import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
 /**
- * An ingredient form for editing recipes. Supply the recipe to edit through action args
+ * A recipe form for editing recipes. Supply the recipe to edit through action args
  */
 public class EditRecipeFormFragment extends RecipeFormFragment {
 
