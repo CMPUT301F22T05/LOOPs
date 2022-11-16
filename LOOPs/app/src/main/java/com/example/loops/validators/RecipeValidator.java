@@ -82,7 +82,7 @@ public class RecipeValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkDuration(Duration duration, RECIPE_TYPE type) {
-        if (duration == null) {
+        if (duration == null || duration.isNegative()) {
             errorStringIds.add(R.string.recipe_no_duration);
             return false;
         }
@@ -112,12 +112,8 @@ public class RecipeValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkNumServ(int numServ, RECIPE_TYPE type) {
-        if ( numServ != (int)numServ ) {
-            errorStringIds.add(R.string.recipe_no_numServ);
-            return false;
-        }
         if (numServ < 0) {
-            errorStringIds.add(R.string.recipe_negative_numServ);
+            errorStringIds.add(R.string.recipe_no_numServ);
             return false;
         }
         return true;

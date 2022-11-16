@@ -340,13 +340,19 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * @return Recipe object formed by the value of the fields of the form
      */
     public Recipe getRecipeFromInput() {
-        //Log.e("hour", Integer.toString(prepTimeHourInput.getValue()));
-        //Log.e("minute", Integer.toString(prepTimeMinuteInput.getValue()));
+        int prepTimeHour = parseNonNegativeInteger(prepTimeHourInput.getText().toString());
+        int prepTimeMin = parseNonNegativeInteger(prepTimeMinuteInput.getText().toString());
+        // If one of the inputs was not given but the other was, set the empty input as zero.
+        if (prepTimeHour == -1 && prepTimeMin != -1)
+            prepTimeHour = 0;
+        else if (prepTimeHour != -1 && prepTimeMin == -1)
+            prepTimeMin = 0;
+
         Recipe recipe = new Recipe(
                 titleInput.getText().toString(),
-                Integer.parseInt(prepTimeHourInput.getText().toString()),
-                Integer.parseInt(prepTimeMinuteInput.getText().toString()),
-                Integer.parseInt(numServingInput.getText().toString()),
+                prepTimeHour,
+                prepTimeMin,
+                parseNonNegativeInteger(numServingInput.getText().toString()),
                 categoryInput.getSelectedItem().toString(),
                 ((BitmapDrawable) imageView.getDrawable()).getBitmap(),
                 ingredientCollection,
@@ -388,5 +394,21 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
                 .setMessage( String.join("\n", errorMessages) )
                 .create();
         errorMessageDisplay.show();
+    }
+
+    /**
+     * Parses non negative integer string to an integer
+     * @param num string to parse
+     * @return (int) the non negative integer. Returns -1 on invalid string
+     */
+    private int parseNonNegativeInteger(String num) {
+        int result = -1;
+        try {
+            result = Integer.parseInt(num);
+        }
+        catch (NumberFormatException e) {
+            result = -1;
+        }
+        return result;
     }
 }
