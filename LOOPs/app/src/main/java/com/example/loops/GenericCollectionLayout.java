@@ -33,6 +33,7 @@ public abstract class GenericCollectionLayout extends Fragment {
         sortOptionSpinner = view.findViewById(R.id.sort_option_spinner);
         sortOrderButton = view.findViewById(R.id.sort_order_button);
 
+        //toggle between ascending or descending
         sortOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

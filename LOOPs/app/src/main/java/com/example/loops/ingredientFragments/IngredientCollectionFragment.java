@@ -125,6 +125,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     1,
                     "unit",
                     "YYY"));
+            type = CollectionType.FROM_STORAGE;
         }
         else if (type == CollectionType.FROM_SHOPPING_LIST) {
             IngredientCollection ingredientStorage = ((MainActivity)getActivity()).getIngredientStorage();
