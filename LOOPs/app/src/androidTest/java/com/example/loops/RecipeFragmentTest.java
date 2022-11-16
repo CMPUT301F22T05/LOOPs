@@ -106,7 +106,6 @@ public class RecipeFragmentTest {
     @Test
     public void testDisplay(){
 
-        onView(withId(R.id.editRecipeButton)).check(matches(isDisplayed()));
         onView(withId(R.id.recipeImage)).check(matches(isDisplayed()));
         onView(withId(R.id.recipeTitle)).check(matches(isDisplayed()));
         onView(withId(R.id.prepTimeString)).check(matches(isDisplayed()));
@@ -121,6 +120,7 @@ public class RecipeFragmentTest {
         onView(withId(R.id.recipeIngredientList)).perform(scrollTo());
         onView(withId(R.id.recipeIngredientList)).check(matches(isDisplayed()));
         onView(withId(R.id.backToRecipeCollection)).perform(scrollTo());
+        onView(withId(R.id.editRecipeButton)).check(matches(isDisplayed()));
         onView(withId(R.id.backToRecipeCollection)).check(matches(isDisplayed()));
         onView(withId(R.id.deleteRecipeButton)).check(matches(isDisplayed()));
 
@@ -147,7 +147,7 @@ public class RecipeFragmentTest {
         long seconds = time.getSeconds();
         String durationString = String.format("%d:%02d",seconds/3600,(seconds%3600)/60);
 
-        onView(withId(R.id.editRecipeButton)).check(matches(withText(editRecipeText)));
+
         onView(withId(R.id.recipeTitle)).check(matches(withText(mockRecipe.getTitle())));
         onView(withId(R.id.prepTimeString)).check(matches(withText(prepTime)));
         onView(withId(R.id.recipePrepTime)).check(matches(withText(durationString)));
@@ -176,6 +176,7 @@ public class RecipeFragmentTest {
 
         }
         onView(withId(R.id.backToRecipeCollection)).perform(scrollTo());
+        onView(withId(R.id.editRecipeButton)).check(matches(withText(editRecipeText)));
         onView(withId(R.id.backToRecipeCollection)).check(matches(withText(backButtonText)));
         onView(withId(R.id.deleteRecipeButton)).check(matches(withText(deleteButtonText)));
 
@@ -214,7 +215,7 @@ public class RecipeFragmentTest {
      */
     @Test
     public void testNavigateToEditRecipe() {
-        onView(withId(R.id.editRecipeButton)).perform(click());
+        onView(withId(R.id.editRecipeButton)).perform(scrollTo(),click());
         assertEquals(navController.getCurrentDestination().getId(),R.id.editRecipeFormFragment);
         Bundle returnValue = getReturnBundle();
         assertEquals(returnValue.getSerializable("editRecipe"), mockRecipe);
@@ -228,7 +229,7 @@ public class RecipeFragmentTest {
     @Test
     public void testDeleteButtonCancel() {
         onView(withId(R.id.deleteRecipeButton)).perform(scrollTo(), click());
-        String warning = "Delete " + mockRecipe.getTitle() + " recipe";
+        String warning = "Delete " + mockRecipe.getTitle() + " recipe?";
         String[] expected = {
                 "Warning",
                 warning,
@@ -250,7 +251,7 @@ public class RecipeFragmentTest {
     @Test
     public void testDeleteButtonConfirm() {
         onView(withId(R.id.deleteRecipeButton)).perform(scrollTo(), click());
-        String warning = "Delete " + mockRecipe.getTitle() + " recipe";
+        String warning = "Delete " + mockRecipe.getTitle() + " recipe?";
         String[] expected = {
                 "Warning",
                 warning,
