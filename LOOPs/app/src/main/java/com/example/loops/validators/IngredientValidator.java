@@ -50,14 +50,15 @@ public class IngredientValidator {
      * @return true if valid. False otherwise
      */
     public boolean checkIngredient(Ingredient ingredient, INGREDIENT_TYPE type) {
-        boolean success = true;
-        success &= ingredient != null;
-        success &= checkDescription(ingredient.getDescription(), type);
-        success &= checkBestBeforeDate(ingredient.getBestBeforeDate(), type);
-        success &= checkLocation(ingredient.getStoreLocation(), type);
-        success &= checkAmount(ingredient.getAmount(), type);
-        success &= checkUnit(ingredient.getUnit(), type);
-        success &= checkCategory(ingredient.getCategory(), type);
+        boolean success = ingredient != null;
+        if (ingredient != null) {
+            success &= checkDescription(ingredient.getDescription(), type);
+            success &= checkBestBeforeDate(ingredient.getBestBeforeDate(), type);
+            success &= checkLocation(ingredient.getStoreLocation(), type);
+            success &= checkAmount(ingredient.getAmount(), type);
+            success &= checkUnit(ingredient.getUnit(), type);
+            success &= checkCategory(ingredient.getCategory(), type);
+        }
         return success;
     }
 
