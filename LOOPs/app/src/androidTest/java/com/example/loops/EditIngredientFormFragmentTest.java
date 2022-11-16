@@ -58,7 +58,7 @@ public class EditIngredientFormFragmentTest {
         int year = 2022; int month = 10; int day = 21;
         ingredientToEdit = new Ingredient(
                 "Tuna Can",
-                getDate(year, month, day),
+                "2022-10-21",
                 "Pantry",
                 25,
                 "kg",

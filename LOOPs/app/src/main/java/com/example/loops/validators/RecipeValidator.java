@@ -51,12 +51,15 @@ public class RecipeValidator {
      * @return true if valid. False otherwise
      */
     public boolean checkRecipe(Recipe recipe, RECIPE_TYPE type) {
-        return recipe != null
-                && checkTitle(recipe.getTitle(), type)
-                && checkDuration(recipe.getPrepTime(), type)
-                && checkCategory(recipe.getCategory(), type)
-                && checkNumServ(recipe.getNumServing(), type)
-                && checkComment(recipe.getComments(), type);
+        boolean success = recipe != null;
+        if (recipe != null) {
+            success &= checkTitle(recipe.getTitle(), type);
+            success &= checkDuration(recipe.getPrepTime(), type);
+            success &= checkCategory(recipe.getCategory(), type);
+            success &= checkNumServ(recipe.getNumServing(), type);
+            success &= checkComment(recipe.getComments(), type);
+        }
+        return success;
     }
 
     /**
@@ -82,7 +85,7 @@ public class RecipeValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkDuration(Duration duration, RECIPE_TYPE type) {
-        if (duration == null) {
+        if (duration == null || duration.isNegative()) {
             errorStringIds.add(R.string.recipe_no_duration);
             return false;
         }
@@ -112,12 +115,8 @@ public class RecipeValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkNumServ(int numServ, RECIPE_TYPE type) {
-        if ( numServ != (int)numServ ) {
-            errorStringIds.add(R.string.recipe_no_numServ);
-            return false;
-        }
         if (numServ < 0) {
-            errorStringIds.add(R.string.recipe_negative_numServ);
+            errorStringIds.add(R.string.recipe_no_numServ);
             return false;
         }
         return true;
@@ -131,7 +130,8 @@ public class RecipeValidator {
      * @return true if valid. False otherwise.
      */
     public boolean checkComment(String comment, RECIPE_TYPE type) {
-        if (comment == null || comment.length() <= 0) {
+        // trim() ensures no strings with only whitespaces pass
+        if (comment == null || comment.trim().length() <= 0) {
             errorStringIds.add(R.string.recipe_no_Comment);
             return false;
         }

@@ -10,12 +10,12 @@
     <string name="recipe_no_category">Recipe\'s category must be given</string>
 
     <!--    RECIPE NUMBER SERVINGS ERROR MESSAGE -->
-    <string name="recipe_no_numServ">Recipe\'s numServ must be given</string>
+    <string name="recipe_no_numServ">Recipe\'s number of servings must be given</string>
 
     <!--    RECIPE NUMBER SERVINGS ERROR MESSAGE -->
-    <string name="recipe_negative_numServ">Recipe\'s numServ must be positive</string>
+    <string name="recipe_negative_numServ">Recipe\'s number of servings must be positive</string>
 
     <!--    RECIPE COMMENT ERROR MESSAGE -->
-    <string name="recipe_no_Comment">Recipe\'s Comment must be given</string>
+    <string name="recipe_no_Comment">Recipe\'s comment must be given</string>
 
 </resources>

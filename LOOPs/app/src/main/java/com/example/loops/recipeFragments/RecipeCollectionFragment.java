@@ -1,5 +1,7 @@
 package com.example.loops.recipeFragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.loops.GenericCollectionLayout;
+import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.MainActivity;
 import com.example.loops.R;
@@ -90,52 +93,36 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
         if (type == CollectionType.FROM_STORAGE) {
             recipeCollection = ((MainActivity)getActivity()).getAllRecipes();
         }
-        /*
-//        FIXME: Here for debugging purposes. Remove later
+        //Used for intent test and it should not be removed
         else if (type == CollectionType.FROM_TESTING) {
             recipeCollection = new RecipeCollection();
-            recipeCollection.addRecipe(new Recipe("test 1", 5));
-            recipeCollection.getRecipe(0).setPrepTime(Duration.ofMinutes(5));
-            recipeCollection.getRecipe(0).setCategory("test 3");
-            recipeCollection.getRecipe(0).setComments("Blah blah");
-            recipeCollection.getRecipe(0).addIngredient(new Ingredient(
-                    "desc",
-                    LocalDate.now(),
-                    "loc",
+            IngredientCollection grilledCheeseIngredients = new IngredientCollection();
+            Bitmap grilledCheese = BitmapFactory.decodeResource(getResources(),R.drawable.grilled_cheese_test_image);
+            Recipe recipe1 = new Recipe("Grilled Cheese",
+                    0,
+                    15,
+                    1,
+                    "Breakfast",
+                    grilledCheese,
+                    grilledCheeseIngredients,
+                    "Classic");
+            IngredientCollection pizzaIngredients = new IngredientCollection();
+            Bitmap pizza = BitmapFactory.decodeResource(getResources(),R.drawable.pizza_test_image);
+            Recipe recipe2 = new Recipe("Pizza",
+                    0,
+                    45,
                     4,
-                    "unit",
-                    "cate"
-            ));
-            recipeCollection.addRecipe(new Recipe("test 2", 5));
-            recipeCollection.getRecipe(1).setPrepTime(Duration.ofMinutes(3));
-            recipeCollection.getRecipe(1).setCategory("test 2");
-            recipeCollection.getRecipe(1).setComments("alah blah");
-            recipeCollection.getRecipe(1).addIngredient(new Ingredient(
-                    "desc",
-                    LocalDate.now(),
-                    "loc",
-                    4,
-                    "unit",
-                    "cate"
-            ));
-            recipeCollection.addRecipe(new Recipe("test 3", 5));
-            recipeCollection.getRecipe(2).setPrepTime(Duration.ofMinutes(2));
-            recipeCollection.getRecipe(2).setNumServing(14);
-            recipeCollection.getRecipe(2).setCategory("test 1");
-            recipeCollection.getRecipe(2).setComments("Klah blah");
-            recipeCollection.getRecipe(2).addIngredient(new Ingredient(
-                    "desc",
-                    LocalDate.now(),
-                    "loc",
-                    4,
-                    "unit",
-                    "cate"
-            ));
+                    "Dinner",
+                    pizza,
+                    pizzaIngredients,
+                    "Italian Pizza");
+            recipeCollection.addRecipe(recipe1);
+            recipeCollection.addRecipe(recipe2);
         }
         else {
             throw new IllegalArgumentException("Unknown given collection type");
         }
-         */
+
         adaptRecipeCollection(recipeCollection);
     }
 

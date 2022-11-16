@@ -233,6 +233,7 @@
             app:argType="com.example.loops.modelCollections.IngredientCollection"
             app:nullable="true"
             android:defaultValue="@null" />
+
     </fragment>
     <fragment
         android:id="@+id/addRecipeFormFragment"
