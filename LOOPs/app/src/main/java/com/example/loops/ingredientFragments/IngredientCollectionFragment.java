@@ -133,19 +133,19 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
             ingredientCollection = new IngredientCollection();
             //TODO: write algorithm to calculate shopping list
             ingredientCollection.addIngredient(new Ingredient(
-                    "BBB",
+                    "Cucumber",
                     "2022-10-28",
-                    "fridge",
-                    1,
-                    "g",
-                    "XXX"));
-            ingredientCollection.addIngredient(new Ingredient(
-                    "AAA",
-                    "2022-10-29",
-                    "cupboard",
-                    1,
+                    "Fridge",
+                    2,
                     "kg",
-                    "YYY"));
+                    "Vegetable"));
+            ingredientCollection.addIngredient(new Ingredient(
+                    "%2 Milk",
+                    "2022-11-29",
+                    "Pantry",
+                    3500,
+                    "mL",
+                    "Drinks"));
         }
         else {
             throw new IllegalArgumentException("Unknown given collection type");
