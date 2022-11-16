@@ -143,7 +143,7 @@ public class IngredientFragmentTest {
 
         String[] expected = {
                 "Roast Beef",
-                "12/09/2023",
+                "2022-10-21",
                 "Fridge",
                 "23.0",
                 "kg",
@@ -200,7 +200,7 @@ public class IngredientFragmentTest {
         onView(withId(R.id.ingredient_delete_button)).perform(ViewActions.click());
         String[] expected = {
                 "Warning",
-                "delete ingredient roast beef?",
+                "Delete Roast Beef?",
                 "no",
                 "yes"
         };
@@ -225,7 +225,7 @@ public class IngredientFragmentTest {
         onView(withId(R.id.ingredient_delete_button)).perform(ViewActions.click());
         String[] expected = {
                 "Warning",
-                "delete ingredient roast beef?",
+                "Delete Roast Beef?",
                 "no",
                 "yes"
         };
