@@ -143,7 +143,7 @@ public class AddIngredientFormFragmentTest {
           "Pantry",
           12.0,
           "g",
-          "Dog Food"
+          "Meat"
         );
         setDescription(typedIngredient.getDescription());
         setBestBeforeDate(year, month, day);
@@ -176,7 +176,7 @@ public class AddIngredientFormFragmentTest {
         setLocation("Pantry");
         setAmount("25");
         setUnit("g");
-        setCategory("Cat Food");
+        setCategory("Meat");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_description))).check(matches(isDisplayed()));
     }
@@ -190,7 +190,7 @@ public class AddIngredientFormFragmentTest {
         setLocation("Pantry");
         setAmount("25");
         setUnit("g");
-        setCategory("Cat Food");
+        setCategory("Meat");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_bestbeforedate))).check(matches(isDisplayed()));
     }
@@ -204,7 +204,7 @@ public class AddIngredientFormFragmentTest {
         setBestBeforeDate(2022, 10, 22);
         setAmount("25");
         setUnit("g");
-        setCategory("Cat Food");
+        setCategory("Meat");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_location))).check(matches(isDisplayed()));
     }
@@ -218,7 +218,7 @@ public class AddIngredientFormFragmentTest {
         setBestBeforeDate(2022, 10, 22);
         setLocation("Pantry");
         setUnit("g");
-        setCategory("Cat Food");
+        setCategory("Meat");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_amount))).check(matches(isDisplayed()));
     }
@@ -232,7 +232,7 @@ public class AddIngredientFormFragmentTest {
         setBestBeforeDate(2022, 10, 22);
         setLocation("Pantry");
         setAmount("25");
-        setCategory("Cat Food");
+        setCategory("Meat");
         clickSubmit();
         onView(withText(getString(R.string.ingredient_no_unit))).check(matches(isDisplayed()));
     }

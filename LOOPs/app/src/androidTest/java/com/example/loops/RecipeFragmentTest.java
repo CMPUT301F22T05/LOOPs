@@ -228,7 +228,7 @@ public class RecipeFragmentTest {
     @Test
     public void testDeleteButtonCancel() {
         onView(withId(R.id.deleteRecipeButton)).perform(scrollTo(), click());
-        String warning = "Delete " + mockRecipe.getTitle() + " recipe";
+        String warning = "Delete " + mockRecipe.getTitle() + " recipe?";
         String[] expected = {
                 "Warning",
                 warning,
@@ -250,7 +250,7 @@ public class RecipeFragmentTest {
     @Test
     public void testDeleteButtonConfirm() {
         onView(withId(R.id.deleteRecipeButton)).perform(scrollTo(), click());
-        String warning = "Delete " + mockRecipe.getTitle() + " recipe";
+        String warning = "Delete " + mockRecipe.getTitle() + " recipe?";
         String[] expected = {
                 "Warning",
                 warning,
