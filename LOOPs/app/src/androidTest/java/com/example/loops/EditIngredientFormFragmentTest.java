@@ -62,7 +62,7 @@ public class EditIngredientFormFragmentTest {
                 "Pantry",
                 25,
                 "kg",
-                "Dog Food"
+                "Meat"
         );
         Bundle args = new Bundle();
         args.putSerializable("editedIngredient", ingredientToEdit);
@@ -145,7 +145,7 @@ public class EditIngredientFormFragmentTest {
                 .check(matches( withText(ingredientToEdit.getDescription()) ));
         DateFormat dateFormat = new SimpleDateFormat("10/21/2022");
         onView(withId(R.id.ingredientFormBestBeforeDateInput))
-                .check(matches( withText(dateFormat.format(ingredientToEdit.getBestBeforeDate())) ));
+                .check(matches( withText(ingredientToEdit.getBestBeforeDateString()) ));
         onView(withId(R.id.ingredientFormLocationInput))
                 .check(matches( withSpinnerText(ingredientToEdit.getStoreLocation()) ));
         onView(withId(R.id.ingredientFormAmountInput))
