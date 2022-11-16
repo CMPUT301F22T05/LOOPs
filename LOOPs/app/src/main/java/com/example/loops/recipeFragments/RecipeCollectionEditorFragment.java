@@ -57,7 +57,7 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
         // If any form had returned a recipe, update it to the collection
         Recipe submittedRecipe = argsBundle.getAddedRecipe();
         if (submittedRecipe != null) {
-            Log.e("ohh", "this is problem");
+            Log.e("RecipeCollectionEditorFragment", "Submitted recipe was null");
             recipeCollection.addRecipe(submittedRecipe);
         }
         // If recipe edited, update or delete

@@ -48,7 +48,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
 
         Ingredient currentIngredient = dataList.get(position);
         description.setText(currentIngredient.getDescription());
-        BestBeforeDate.setText("Best Before " + currentIngredient.getBestBeforeDateString());
+        BestBeforeDate.setText("Best before:  " + currentIngredient.getBestBeforeDateString());
         location.setText(currentIngredient.getStoreLocation());
         category.setText(currentIngredient.getCategory());
         if (currentIngredient.getPending()) {

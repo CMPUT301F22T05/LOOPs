@@ -59,7 +59,7 @@ public class RecipeCollectionViewAdapter extends ArrayAdapter<Recipe> {
 
         Recipe currentRecipe = dataList.get(position);
         title.setText(currentRecipe.getTitle());
-        numServings.setText(Integer.toString(currentRecipe.getNumServing()));
+        numServings.setText("Serves " + Integer.toString(currentRecipe.getNumServing()));
         category.setText(currentRecipe.getCategory());
         prepTime.setText(getPrepTimeString(currentRecipe.getPrepTime()));
 

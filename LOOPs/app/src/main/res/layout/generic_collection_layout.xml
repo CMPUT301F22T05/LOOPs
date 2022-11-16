@@ -9,17 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:padding="18dp"
+        android:padding="6dp"
         android:paddingEnd="0dp">
-
-        <Spinner
-            android:id="@+id/sort_option_spinner"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="0dp"
-            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/generic_collection_title"
@@ -27,30 +18,41 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:fontFamily="sans-serif-black"
+            android:layout_marginLeft="5dp"
             android:text="Sort Order:"
             android:textSize="18sp">
 
         </TextView>
 
         <TextView
+            android:id="@+id/sort_by_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="150dp"
+            android:layout_toLeftOf="@id/sort_option_spinner"
             android:fontFamily="sans-serif-black"
             android:text="Sort by:"
             android:textSize="18sp">
 
         </TextView>
 
+        <Spinner
+            android:id="@+id/sort_option_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            />
+
         <ImageButton
             android:id="@+id/sort_order_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/generic_collection_title"
-            android:backgroundTint="@android:color/transparent"
+
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/sort_by_title"
+            android:layout_toRightOf="@id/generic_collection_title"
+            android:backgroundTint="@color/white"
             app:srcCompat="@android:drawable/arrow_up_float"
             app:tint="@color/purple_200" />
 
@@ -59,8 +61,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="100dp">
+
+        >
 
         <ListView
             android:id="@+id/generic_collection_view"
@@ -75,13 +77,6 @@
 
         </ListView>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:layout_marginTop="-100dp">
-
         <Button
             android:id="@+id/add_item_to_collection_btn"
             android:layout_width="70dp"
@@ -90,6 +85,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="30sp"
             android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true"
             android:backgroundTint="#4CAF50"
             android:text="+"
             android:textSize="30sp">
