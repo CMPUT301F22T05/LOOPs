@@ -3,10 +3,12 @@ package com.example.loops.models;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.RecipeCollection;
 
+import java.io.Serializable;
+
 /**
  * The class models a meal, a meal can contains multiple recipes and ingredients
  */
-public class MealPlan {
+public class MealPlan implements Serializable {
     private String name;
     private IngredientCollection ingredients;
     private RecipeCollection recipes;
