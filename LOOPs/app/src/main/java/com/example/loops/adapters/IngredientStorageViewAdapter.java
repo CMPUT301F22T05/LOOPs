@@ -54,6 +54,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         location.setText(currentIngredient.getStoreLocation());
         category.setText(currentIngredient.getCategory());
         if (currentIngredient.getPending()) {
+            //convertView.setBackgroundColor(Color.RED);
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.red));
             BestBeforeDate.setText("N/A");
