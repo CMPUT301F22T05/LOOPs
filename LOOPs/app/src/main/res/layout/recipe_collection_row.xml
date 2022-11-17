@@ -15,12 +15,13 @@
 
         <TextView
             android:id="@+id/recipe_prep_time_in_collection"
-            android:layout_width="135dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Prep time"
             android:textColor="#000000"
             app:layout_constraintEnd_toStartOf="@+id/recipe_servings_in_collection"
+            app:layout_constraintHorizontal_weight="0.5"
             app:layout_constraintStart_toEndOf="@+id/recipe_image_in_collection"
             app:layout_constraintTop_toBottomOf="@+id/recipe_title_in_collection" />
 
@@ -37,20 +38,24 @@
 
         <TextView
             android:id="@+id/recipe_servings_in_collection"
-            android:layout_width="90dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="servings"
             android:textColor="#000000"
             app:layout_constraintBaseline_toBaselineOf="@+id/recipe_prep_time_in_collection"
+            app:layout_constraintEnd_toStartOf="@+id/recipe_category_in_collection"
+            app:layout_constraintHorizontal_weight="0.3"
             app:layout_constraintStart_toEndOf="@+id/recipe_prep_time_in_collection" />
 
         <TextView
             android:id="@+id/recipe_category_in_collection"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="category"
             android:textColor="#000000"
             app:layout_constraintBaseline_toBaselineOf="@+id/recipe_servings_in_collection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.3"
             app:layout_constraintStart_toEndOf="@+id/recipe_servings_in_collection" />
 
 

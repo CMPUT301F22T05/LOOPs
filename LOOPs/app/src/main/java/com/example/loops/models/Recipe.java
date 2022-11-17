@@ -155,7 +155,7 @@ public class Recipe implements Serializable, ModelConstraints {
         for (Ingredient ing : getIngredients().getIngredients())
             hashStr += ing.getDocumentName();
         hashStr += getComments();
-        return hashStr;
+        return Integer.toString(hashStr.hashCode());
     }
 
     /**
