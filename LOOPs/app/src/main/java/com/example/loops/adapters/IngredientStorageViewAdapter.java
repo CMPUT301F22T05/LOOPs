@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
@@ -52,7 +54,8 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         location.setText(currentIngredient.getStoreLocation());
         category.setText(currentIngredient.getCategory());
         if (currentIngredient.getPending()) {
-            convertView.setBackgroundColor(Color.RED);
+            CardView card = convertView.findViewById(R.id.ingredient_cardview);
+            card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.red));
             BestBeforeDate.setText("N/A");
             location.setText("N/A");
         }
