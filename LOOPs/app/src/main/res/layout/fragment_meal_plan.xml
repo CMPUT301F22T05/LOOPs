@@ -13,7 +13,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/recipeCollection"
-        android:textColor="@color/black"
         android:textSize="@dimen/large_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,12 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/ingredientCollection"
-        android:textColor="@color/black"
         android:textSize="@dimen/large_text_size"
         app:layout_constraintBottom_toTopOf="@+id/add_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipes_textView"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.55" />
 
     <ListView
         android:id="@+id/recipes_listView"
@@ -51,11 +49,24 @@
 
     <Button
         android:id="@+id/add_button"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
         android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/save_button" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:text="SAVE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
