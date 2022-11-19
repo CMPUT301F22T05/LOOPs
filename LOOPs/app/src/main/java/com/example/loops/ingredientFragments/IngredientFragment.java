@@ -167,7 +167,7 @@ public class IngredientFragment extends Fragment {
         // initialize all button activities
         setBackButtonOnClick();
         setEditButtonOnClick();
-        setDeleteButtonOnClick(getView());
+        setDeleteButtonOnClick(view);
 
         initializeViewWithIngredient();
         return view;
