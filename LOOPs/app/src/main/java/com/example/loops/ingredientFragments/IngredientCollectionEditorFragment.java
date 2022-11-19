@@ -39,7 +39,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
-        addButton = fragmentView.findViewById(R.id.select_ingredient_in_collection_btn);
+        addButton = fragmentView.findViewById(R.id.add_ingredient_button);
         //collectionTitle.setText(R.string.ingredientCollection);
         return fragmentView;
     }
