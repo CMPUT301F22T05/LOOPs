@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 
+import com.example.loops.adapters.IngredientStorageViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
@@ -44,6 +46,8 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
         saveButton = fragmentView.findViewById(R.id.select_button);
         setSaveButtonListener();
+
+        collectionView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         return fragmentView;
     }
 
@@ -89,17 +93,16 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param id
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("TEST", Integer.toString(position));
+        ((IngredientStorageViewAdapter) collectionViewAdapter).selectItem(position);
         Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
+
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {
             chosenIngredients.getIngredients().remove(selectedIngredient);
-            ((CardView) view).setCardBackgroundColor(getResources().getColor(R.color.teal_200, null));
         }
         // If not, add it to selection
         else {
             chosenIngredients.addIngredient(selectedIngredient);
-            ((CardView) view).setCardBackgroundColor(Color.BLUE);
         }
     }
 
