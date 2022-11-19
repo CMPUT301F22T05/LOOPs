@@ -1,7 +1,9 @@
 package com.example.loops.ingredientFragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -90,12 +92,12 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {
             chosenIngredients.getIngredients().remove(selectedIngredient);
-            view.setBackgroundColor(getResources().getColor(R.color.teal_200, null));
+            ((CardView) view).setCardBackgroundColor(getResources().getColor(R.color.teal_200, null));
         }
         // If not, add it to selection
         else {
             chosenIngredients.addIngredient(selectedIngredient);
-            view.setBackgroundColor(getResources().getColor(R.color.teal_700, null));
+            ((CardView) view).setCardBackgroundColor(Color.BLUE);
         }
     }
 
