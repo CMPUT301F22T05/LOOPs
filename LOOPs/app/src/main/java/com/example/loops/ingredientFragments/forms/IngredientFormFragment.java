@@ -4,10 +4,11 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -21,14 +22,12 @@ import com.example.loops.validators.IngredientValidator;
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -50,20 +49,7 @@ public abstract class IngredientFormFragment extends Fragment {
      * Implement to handle how submitted ingredient is sent to other activities
      * @param submittedIngredient ingredient submitted by the form
      */
-    public abstract void sendResult(Ingredient submittedIngredient);
-
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                Navigation.findNavController(getView()).popBackStack();
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-//    }
+    protected abstract void sendResult(Ingredient submittedIngredient);
 
     /**
      * Creates view of the ingredient form and initialize its widgets

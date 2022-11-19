@@ -100,13 +100,7 @@
         android:id="@+id/addIngredientFormFragment"
         android:name="com.example.loops.ingredientFragments.forms.AddIngredientFormFragment"
         android:label="Add a Ingredient"
-        tools:layout="@layout/fragment_ingredient_form">
-        <action
-            android:id="@+id/submitIngredientToCollection"
-            app:destination="@id/ingredientCollectionEditorFragment"
-            app:popUpTo="@id/ingredientCollectionEditorFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_ingredient_form"/>
     <fragment
         android:id="@+id/recipeCollectionEditorFragment"
         android:name="com.example.loops.recipeFragments.RecipeCollectionEditorFragment"
@@ -190,9 +184,6 @@
         <argument
             android:name="selectedIngredientIndex"
             app:argType="integer" />
-        <argument
-            android:name="fromWhichFragment"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/editIngredientFormFragment"
@@ -202,14 +193,6 @@
         <argument
             android:name="editedIngredient"
             app:argType="com.example.loops.models.Ingredient" />
-        <action
-            android:id="@+id/action_editIngredientFormFragment_to_ingredientFragment"
-            app:destination="@id/ingredientFragment"
-            app:popUpTo="@id/ingredientFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="editIngredientIndex"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionSelectionFragment"

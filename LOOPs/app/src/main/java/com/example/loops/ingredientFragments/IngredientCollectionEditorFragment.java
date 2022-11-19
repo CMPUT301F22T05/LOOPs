@@ -1,7 +1,6 @@
 package com.example.loops.ingredientFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.loops.models.Ingredient;
-import com.example.loops.MainActivity;
 import com.example.loops.R;
 
 /**
@@ -100,7 +98,7 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
         Ingredient selectedIngredient = ingredientCollection.getIngredients().get(position);
         NavDirections viewIngredientDetailsAction =
                 (NavDirections)IngredientCollectionEditorFragmentDirections.actionViewIngredientDetails(
-                        selectedIngredient, position, R.layout.fragment_ingredient_collection);
+                        selectedIngredient, position);
         Navigation.findNavController(view).navigate(viewIngredientDetailsAction);
     }
 }

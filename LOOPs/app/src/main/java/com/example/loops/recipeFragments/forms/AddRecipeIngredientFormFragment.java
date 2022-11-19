@@ -16,6 +16,7 @@ import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
 public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
+    public static final String RESULT_KEY = "ADD_RECIPE_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
 
     public AddRecipeIngredientFormFragment() {}
 
@@ -24,14 +25,6 @@ public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Add");
         hideUnusedInput(formView);
-    }
-
-    public void sendResult(Ingredient submittedIngredient) {
-        Navigation.findNavController(getView()).getPreviousBackStackEntry().getSavedStateHandle().set(
-                RecipeFormFragment.ADD_INGREDIENT_KEY,
-                submittedIngredient
-        );
-        Navigation.findNavController(getView()).popBackStack();
     }
 
     private void hideUnusedInput(View formView) {
@@ -44,5 +37,17 @@ public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
         locationText.setVisibility(View.GONE);
         locationInput.setSelection(1);
         locationInput.setVisibility(View.GONE);
+    }
+
+    /**
+     * Sends back the result through navcontroller's saved state handle with key RESULT_KEY
+     * @param submittedIngredient ingredient submitted by the form
+     */
+    protected void sendResult(Ingredient submittedIngredient) {
+        Navigation.findNavController(getView()).getPreviousBackStackEntry().getSavedStateHandle().set(
+                RESULT_KEY,
+                submittedIngredient
+        );
+        Navigation.findNavController(getView()).popBackStack();
     }
 }

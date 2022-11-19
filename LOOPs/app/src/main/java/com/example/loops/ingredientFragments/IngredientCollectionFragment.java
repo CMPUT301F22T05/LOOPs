@@ -8,8 +8,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
+
 import com.example.loops.GenericCollectionLayout;
 import com.example.loops.adapters.ShoppingListViewAdapter;
+import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
 import com.example.loops.modelCollections.MealPlanCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.modelCollections.IngredientCollection;
@@ -48,26 +54,6 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     }
 
     /**
-     * Subclasses must implement the behavior when the add button is clicked
-     * @param clickedView
-     */
-    abstract protected void onClickAddButton(View clickedView);
-
-    /**
-     * Subclasses must implement the behavior when ingredient items in the list are clicked
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     */
-    abstract protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id);
-
-    /**
-     * Subclasses must parse arguments to at minimum handle the type of the ingredient collection
-     */
-    abstract protected void parseArguments();
-
-    /**
      * Sets the UI layout for the view
      * @param inflater
      * @param container
@@ -92,7 +78,43 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     public void onViewCreated(View view, Bundle savedInstanceState) {
         parseArguments();
         setListeners();
+        setOnAddIngredientBehavior();
     }
+
+    /**
+     * Handles the behavior when an ingredient is added to the fragment through the navigation controller
+     */
+    private void setOnAddIngredientBehavior() {
+        LiveData liveData = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
+                .getLiveData( AddIngredientFormFragment.RESULT_KEY );
+
+        liveData.observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object ingredient) {
+                ingredientCollection.addIngredient((Ingredient) ingredient);
+            }
+        });
+    }
+
+    /**
+     * Subclasses must implement the behavior when the add button is clicked
+     * @param clickedView
+     */
+    abstract protected void onClickAddButton(View clickedView);
+
+    /**
+     * Subclasses must implement the behavior when ingredient items in the list are clicked
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    abstract protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id);
+
+    /**
+     * Subclasses must parse arguments to at minimum handle the type of the ingredient collection
+     */
+    abstract protected void parseArguments();
 
     /**
      * Sets the type of ingredient collection the fragment must display

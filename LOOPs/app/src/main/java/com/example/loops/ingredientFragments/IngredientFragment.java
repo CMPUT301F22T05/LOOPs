@@ -15,10 +15,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.loops.R;
+import com.example.loops.ingredientFragments.forms.EditIngredientFormFragment;
 import com.example.loops.models.Ingredient;
 
 /**
@@ -87,7 +90,7 @@ public class IngredientFragment extends Fragment {
     public void setEditButtonOnClick() {
         editButton.setOnClickListener(view -> {
             NavDirections editIngredientAction = (NavDirections) IngredientFragmentDirections
-                    .actionIngredientFragmentToEditIngredientFormFragment(ingredient, ingInd);
+                    .actionIngredientFragmentToEditIngredientFormFragment(ingredient);
             Navigation.findNavController(view).navigate(editIngredientAction);
         });
     }
@@ -160,18 +163,36 @@ public class IngredientFragment extends Fragment {
         // get the ingredient and load info
         ingredient = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredient();
         ingInd = IngredientFragmentArgs.fromBundle(getArguments()).getSelectedIngredientIndex();
-        fromWhichFragment = IngredientFragmentArgs.fromBundle(getArguments()).getFromWhichFragment();
-        if (fromWhichFragment == R.layout.fragment_ingredient_form) {
-            backButton.setText("confirm");
-        }
-
-        initializeViewWithIngredient();
 
         // initialize all button activities
         setBackButtonOnClick();
         setEditButtonOnClick();
-        setDeleteButtonOnClick(view);
+        setDeleteButtonOnClick(getView());
 
+        initializeViewWithIngredient();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setOnEditIngredientBehaviour();
+    }
+
+    /**
+     * Changes the ingredient displayed accordingly to what it was edited to
+     * and display button to confirm changes
+     */
+    private void setOnEditIngredientBehaviour() {
+        LiveData liveData = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
+                .getLiveData( EditIngredientFormFragment.RESULT_KEY );
+        liveData.observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object submittedIngredient) {
+                ingredient = (Ingredient) submittedIngredient;
+                initializeViewWithIngredient();
+                backButton.setText("Confirm");
+            }
+        });
     }
 }

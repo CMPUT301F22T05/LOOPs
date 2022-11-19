@@ -20,8 +20,6 @@ import com.example.loops.R;
  * Ingredient collection fragment for selecting an ingredient
  */
 public class IngredientCollectionSelectionFragment extends IngredientCollectionFragment {
-    public static final String RESULT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
-    public static final String INGREDIENT_KEY = "SELECT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY_INGREDIENT";
     private IngredientCollection chosenIngredients;
 
     public IngredientCollectionSelectionFragment() {
@@ -39,7 +37,6 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
-        //collectionTitle.setText(R.string.ingredientCollection);
         return fragmentView;
     }
 

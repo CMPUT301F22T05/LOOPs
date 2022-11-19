@@ -45,8 +45,6 @@ import java.util.ArrayList;
  *  with the key RECIPE_RESULT
  */
 public abstract class RecipeFormFragment extends Fragment implements RecyclerViewOnClickInterface {
-    public static final String ADD_INGREDIENT_KEY = "RECIPEFORMFRAGMENT_ADD_INGREDIENT_KEY";
-
     protected EditText titleInput;
     protected EditText prepTimeHourInput;
     protected EditText prepTimeMinuteInput;
@@ -294,7 +292,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     private void setOnAddIngredientBehaviour() {
         Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
         .getLiveData(
-                ADD_INGREDIENT_KEY
+                AddRecipeIngredientFormFragment.RESULT_KEY
         ).observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(@Nullable final Object ingredient) {
