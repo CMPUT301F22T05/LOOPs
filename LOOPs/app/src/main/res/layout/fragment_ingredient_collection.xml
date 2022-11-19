@@ -1,95 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <include
+        layout="@layout/generic_collection_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="18dp"
-        android:paddingEnd="0dp">
-
-        <ImageButton
-            android:id="@+id/sort_order_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="220dp"
-            android:backgroundTint="@color/white"
-            app:tint="@color/purple_200"
-            app:srcCompat="@android:drawable/arrow_up_float" />
-
-        <Spinner
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="0dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/ingredientCollection"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="sans-serif-black"
-            android:text="Sort by:"
-            android:textSize="18sp"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="100dp">
-
-        <include
-            layout="@layout/ingredient_storage_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="73dp"
-            android:layout_marginEnd="0dp" />
-
-        <include
-            layout="@layout/ingredient_storage_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:layout_marginTop="-100dp">
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="30sp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="#4CAF50"
-            android:text="+"
-            android:textSize="30sp">
-
-        </Button>
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -8,14 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.navigation.Navigation;
-
 import com.example.loops.GenericCollectionLayout;
 import com.example.loops.adapters.ShoppingListViewAdapter;
-import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
 import com.example.loops.modelCollections.MealPlanCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.modelCollections.IngredientCollection;
@@ -64,9 +58,17 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.generic_collection_layout, container, false);
+        View view = inflater.inflate(getUIViewId(), container, false);
         bindComponents(view);
         return view;
+    }
+
+    /**
+     * Returns the layout id of the UI layout of this fragment
+     * @return id of the UI layout
+     */
+    protected int getUIViewId() {
+        return R.layout.fragment_ingredient_collection;
     }
 
     /**
@@ -78,29 +80,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     public void onViewCreated(View view, Bundle savedInstanceState) {
         parseArguments();
         setListeners();
-        setOnAddIngredientBehavior();
     }
-
-    /**
-     * Handles the behavior when an ingredient is added to the fragment through the navigation controller
-     */
-    private void setOnAddIngredientBehavior() {
-        LiveData liveData = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
-                .getLiveData( AddIngredientFormFragment.RESULT_KEY );
-
-        liveData.observe(getViewLifecycleOwner(), new Observer<Object>() {
-            @Override
-            public void onChanged(@Nullable final Object ingredient) {
-                ingredientCollection.addIngredient((Ingredient) ingredient);
-            }
-        });
-    }
-
-    /**
-     * Subclasses must implement the behavior when the add button is clicked
-     * @param clickedView
-     */
-    abstract protected void onClickAddButton(View clickedView);
 
     /**
      * Subclasses must implement the behavior when ingredient items in the list are clicked
@@ -188,13 +168,6 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 //useless?
-            }
-        });
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickAddButton(v);
             }
         });
 

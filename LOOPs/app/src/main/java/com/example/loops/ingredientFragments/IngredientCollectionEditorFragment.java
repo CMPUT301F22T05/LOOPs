@@ -5,10 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
 
@@ -17,6 +22,7 @@ import com.example.loops.R;
  * of the ingredients in the collection
  */
 public class IngredientCollectionEditorFragment extends IngredientCollectionFragment {
+    protected Button addButton;
 
     public IngredientCollectionEditorFragment() {
         // Required empty public constructor
@@ -33,8 +39,65 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
+        addButton = fragmentView.findViewById(R.id.select_ingredient_in_collection_btn);
         //collectionTitle.setText(R.string.ingredientCollection);
         return fragmentView;
+    }
+
+    /**
+     * Reads in any arguments of the fragment and set up listeners for the UI
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setAddButtonListener();
+        setOnAddIngredientBehavior();
+    }
+
+    /**
+     * Sets the listener for the add button
+     */
+    private void setAddButtonListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickAddButton(v);
+            }
+        });
+    }
+
+    /**
+     * Opens the add ingredient form
+     * @param clickedView
+     */
+    protected void onClickAddButton(View clickedView) {
+        Navigation.findNavController(getView()).navigate(R.id.addIngredientFromCollection);
+    }
+
+    /**
+     * Handles the behavior when an ingredient is added to the fragment through the navigation controller
+     */
+    private void setOnAddIngredientBehavior() {
+        LiveData liveData = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
+                .getLiveData( AddIngredientFormFragment.RESULT_KEY );
+
+        liveData.observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object ingredient) {
+                ingredientCollection.addIngredient((Ingredient) ingredient);
+            }
+        });
+    }
+
+    /**
+     * Returns the layout id of the UI layout of this fragment
+     * @return id of the UI layout
+     */
+    @Override
+    protected int getUIViewId() {
+        return R.layout.fragment_ingredient_collection_editor;
     }
 
     /**
@@ -77,14 +140,6 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
 //        } catch (Exception e) {
 //            return;
 //        }
-    }
-
-    /**
-     * Opens the add ingredient form
-     * @param clickedView
-     */
-    protected void onClickAddButton(View clickedView) {
-        Navigation.findNavController(getView()).navigate(R.id.addIngredientFromCollection);
     }
 
     /**

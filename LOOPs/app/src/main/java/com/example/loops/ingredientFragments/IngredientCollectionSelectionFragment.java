@@ -41,6 +41,15 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
     }
 
     /**
+     * Returns the layout id of the UI layout of this fragment
+     * @return id of the UI layout
+     */
+    @Override
+    protected int getUIViewId() {
+        return R.layout.fragment_ingredient_collection_selection;
+    }
+
+    /**
      * Parses the arguments specified by navigation graph actions.
      * Sets the ingredient collection from the arguments and passes ingredients from forms back
      * to caller
@@ -62,14 +71,6 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         chosenIngredients = argsBundle.getIngredientCollection();
         getArguments().clear();
         //((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
-    }
-
-    /**
-     * Opens the add ingredient form
-     * @param clickedView
-     */
-    protected void onClickAddButton(View clickedView) {
-        //Navigation.findNavController(getView()).navigate(R.id.addIngredientFormFromSelection);
     }
 
     /**
