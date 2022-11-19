@@ -191,7 +191,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     @Override
     protected void sortCollection(AdapterView<?> parent) {
         if (parent.getSelectedItem().toString().equals(getString(R.string.empty_sort_option))) {
-            return;
+            ingredientCollection.sort(IngredientSortOption.BY_PENDING);
         }
         if (isAscendingOrder) {
             if (parent.getSelectedItem().toString().equals(getString(R.string.sort_by_description))) {
