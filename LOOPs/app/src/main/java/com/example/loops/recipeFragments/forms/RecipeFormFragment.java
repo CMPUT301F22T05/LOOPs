@@ -25,7 +25,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -292,14 +294,14 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * Handles the behavior when the add ingredient form submits an ingredient
      */
     private void setOnAddIngredientBehaviour() {
-        Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
-        .getLiveData(
-                AddRecipeIngredientFormFragment.RESULT_KEY
-        ).observe(getViewLifecycleOwner(), new Observer<Object>() {
+        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
+        savedStateHandle.getLiveData( AddRecipeIngredientFormFragment.RESULT_KEY )
+                .observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(@Nullable final Object ingredient) {
                 ingredientCollection.addIngredient((Ingredient) ingredient);
                 recyclerViewAdapter.notifyDataSetChanged();
+                savedStateHandle.remove( AddRecipeIngredientFormFragment.RESULT_KEY );
             }
         });
     }
@@ -308,15 +310,17 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * Handles the behavior when the select ingredient fragment submits ingredients
      */
     private void setOnSelectIngredientBehaviour() {
-        Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
-        .getLiveData(
-                IngredientCollectionSelectionFragment.RESULT_KEY
-        ).observe(getViewLifecycleOwner(), new Observer<Object>() {
+        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
+        savedStateHandle.getLiveData( IngredientCollectionSelectionFragment.RESULT_KEY )
+                .observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(@Nullable final Object selectedIngredients) {
                 IngredientCollection s = (IngredientCollection) selectedIngredients;
-                ingredientCollection.getIngredients().addAll(s.getIngredients());
+                for (Ingredient ing : s.getIngredients()) {
+                    ingredientCollection.addIngredient(ing);
+                }
                 recyclerViewAdapter.notifyDataSetChanged();
+                savedStateHandle.remove( IngredientCollectionSelectionFragment.RESULT_KEY );
             }
         });
     }

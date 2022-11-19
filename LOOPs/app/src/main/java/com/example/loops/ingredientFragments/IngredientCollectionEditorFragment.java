@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -80,13 +81,13 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
      * Handles the behavior when an ingredient is added to the fragment through the navigation controller
      */
     private void setOnAddIngredientBehavior() {
-        LiveData liveData = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
-                .getLiveData( AddIngredientFormFragment.RESULT_KEY );
-
-        liveData.observe(getViewLifecycleOwner(), new Observer<Object>() {
+        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
+        savedStateHandle.getLiveData( AddIngredientFormFragment.RESULT_KEY )
+                .observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(@Nullable final Object ingredient) {
                 ingredientCollection.addIngredient((Ingredient) ingredient);
+                savedStateHandle.remove( AddIngredientFormFragment.RESULT_KEY );
             }
         });
     }

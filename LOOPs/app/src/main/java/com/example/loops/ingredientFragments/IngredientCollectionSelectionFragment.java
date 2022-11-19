@@ -8,6 +8,7 @@ import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,7 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param id
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("TEST", Integer.toString(position));
         Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {

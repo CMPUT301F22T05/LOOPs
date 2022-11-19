@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -184,14 +185,16 @@ public class IngredientFragment extends Fragment {
      * and display button to confirm changes
      */
     private void setOnEditIngredientBehaviour() {
-        LiveData liveData = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
-                .getLiveData( EditIngredientFormFragment.RESULT_KEY );
-        liveData.observe(getViewLifecycleOwner(), new Observer<Object>() {
+        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
+        savedStateHandle.getLiveData( EditIngredientFormFragment.RESULT_KEY )
+                .observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(@Nullable final Object submittedIngredient) {
                 ingredient = (Ingredient) submittedIngredient;
                 initializeViewWithIngredient();
                 backButton.setText("Confirm");
+
+                savedStateHandle.remove( EditIngredientFormFragment.RESULT_KEY );
             }
         });
     }
