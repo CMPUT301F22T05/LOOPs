@@ -73,6 +73,16 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         // Set the type of the ingredient collection
         CollectionType collectionType = argsBundle.getCollectionType();
         setIngredientCollectionToDisplay(collectionType);
+        // Get ingredients to filter
+        IngredientCollection filterIngredients = argsBundle.getIngredientsToFilter();
+        if (filterIngredients != null) {
+            for (Ingredient ing : filterIngredients.getIngredients()) {
+                int index = ingredientCollection.getIngredients().indexOf(ing);
+                if (index != -1) {
+                    ingredientCollection.deleteIngredient(index);
+                }
+            }
+        }
         getArguments().clear();
     }
 

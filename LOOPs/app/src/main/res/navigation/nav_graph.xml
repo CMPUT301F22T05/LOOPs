@@ -208,7 +208,11 @@
             app:destination="@id/addRecipeFormFragment"
             app:popUpTo="@id/addRecipeFormFragment"
             app:popUpToInclusive="true" />
-
+        <argument
+            android:name="ingredientsToFilter"
+            app:argType="com.example.loops.modelCollections.IngredientCollection"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFormFragment"
@@ -221,7 +225,7 @@
             app:popUpTo="@id/recipeCollectionEditorFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_addRecipeFormFragment_to_ingredientCollectionSelectionFragment"
+            android:id="@+id/selectIngredientForAddRecipeForm"
             app:destination="@id/ingredientCollectionSelectionFragment" />
         <action
             android:id="@+id/addRecipeIngredientToAddRecipeForm"

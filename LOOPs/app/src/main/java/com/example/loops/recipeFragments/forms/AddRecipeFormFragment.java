@@ -101,8 +101,10 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
-                            NavDirections addIngredientAction = AddRecipeFormFragmentDirections
-                                    .actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
+                            AddRecipeFormFragmentDirections.SelectIngredientForAddRecipeForm addIngredientAction
+                                    = AddRecipeFormFragmentDirections.selectIngredientForAddRecipeForm();
+                            addIngredientAction.setCollectionType(IngredientCollectionFragment.CollectionType.FROM_STORAGE);
+                            addIngredientAction.setIngredientsToFilter(ingredientCollection);
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else {
