@@ -200,29 +200,14 @@
         android:label="Choosing a Ingredient"
         tools:layout="@layout/fragment_ingredient_collection">
         <argument
-            android:name="addedIngredient"
-            android:defaultValue="@null"
-            app:argType="com.example.loops.models.Ingredient"
-            app:nullable="true" />
-        <argument
             android:name="collectionType"
-            android:defaultValue="FROM_RECIPE_INGREDIENTS"
+            android:defaultValue="FROM_STORAGE"
             app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType" />
         <action
             android:id="@+id/action_ingredientCollectionSelectionFragment_to_addRecipeFormFragment"
             app:destination="@id/addRecipeFormFragment"
             app:popUpTo="@id/addRecipeFormFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_ingredientCollectionSelectionFragment_to_editRecipeFormFragment"
-            app:destination="@id/editRecipeFormFragment"
-            app:popUpTo="@id/addRecipeFormFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="ingredientCollection"
-            app:argType="com.example.loops.modelCollections.IngredientCollection"
-            app:nullable="true"
-            android:defaultValue="@null" />
 
     </fragment>
     <fragment

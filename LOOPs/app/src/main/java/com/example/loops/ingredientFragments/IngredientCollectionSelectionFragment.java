@@ -10,17 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
-import com.example.loops.MainActivity;
 import com.example.loops.R;
 
 /**
  * Ingredient collection fragment for selecting an ingredient
  */
 public class IngredientCollectionSelectionFragment extends IngredientCollectionFragment {
-    private IngredientCollection chosenIngredients;
+    public static final String RESULT_KEY = "INGREDIENT_COLLECTION_SELECTION_FRAGMENT_RESULT_KEY";
+    private Button saveButton;
+    private IngredientCollection chosenIngredients = new IngredientCollection();
 
     public IngredientCollectionSelectionFragment() {
         // Required empty public constructor
@@ -37,6 +39,8 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
+        saveButton = fragmentView.findViewById(R.id.select_button);
+        setSaveButtonListener();
         return fragmentView;
     }
 
@@ -62,15 +66,16 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         // Set the type of the ingredient collection
         CollectionType collectionType = argsBundle.getCollectionType();
         setIngredientCollectionToDisplay(collectionType);
-        // If any form had returned an ingredient, send it back to this fragment's caller
-        Ingredient submittedIngredient = argsBundle.getAddedIngredient();
-        if (submittedIngredient != null) {
-            chosenIngredients.addIngredient(submittedIngredient);
-            sendIngredientsToCallerFragment(chosenIngredients);
-        }
-        chosenIngredients = argsBundle.getIngredientCollection();
         getArguments().clear();
-        //((MainActivity)getActivity()).updateIngredientFromDatabase(ingredientCollection);
+    }
+
+    private void setSaveButtonListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendIngredientsToCallerFragment();
+            }
+        });
     }
 
     /**
@@ -81,47 +86,28 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param id
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
-        chosenIngredients.addIngredient(new Ingredient(collectionViewAdapter.getItem(position)));
-        sendIngredientsToCallerFragment(chosenIngredients);
+        Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
+        collectionView.setSelection(position);
+        // If already selected, unselect it
+        if (chosenIngredients.getIngredients().contains(selectedIngredient)) {
+            chosenIngredients.getIngredients().remove(selectedIngredient);
+            view.setBackgroundColor(0xFF03DAC5);
+        }
+        // If not, add it to selection
+        else {
+            view.setBackgroundColor(0xFF00FF00);
+            chosenIngredients.addIngredient(selectedIngredient);
+        }
     }
 
     /**
      * Sends the ingredient to the caller fragment
-     * @param ingredients ingredients to send
      */
-    void sendIngredientsToCallerFragment(IngredientCollection ingredients) {
-        Integer callerFragmentId = getCallerFragmentId();
-
-        if ( callerFragmentId == null ) {
-//            Bundle resultBundle = new Bundle();
-//            resultBundle.putSerializable(INGREDIENT_KEY, selectedIngredient);
-//            getParentFragmentManager().setFragmentResult(RESULT_KEY, resultBundle);
-        }
-        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
-            IngredientCollectionSelectionFragmentDirections.ActionIngredientCollectionSelectionFragmentToAddRecipeFormFragment toSubmitAction =
-                    IngredientCollectionSelectionFragmentDirections.
-                            actionIngredientCollectionSelectionFragmentToAddRecipeFormFragment();
-            toSubmitAction.setIngredientCollection(ingredients);
-            Navigation.findNavController(getView()).navigate(toSubmitAction);
-        }
-//        else if ( callerFragmentId == R.id.addRecipeFormFragment ) {
-//            IngredientCollectionSelectionFragmentDirections.AddIngredientToAddRecipeForm toSubmitAction =
-//                    IngredientCollectionSelectionFragmentDirections.
-//                            addIngredientToAddRecipeForm();
-//            toSubmitAction.setAddedIngredient(selectedIngredient);
-//            Navigation.findNavController(getView()).navigate(toSubmitAction);
-//        }
-    }
-
-    /**
-     * Gets the id of the caller fragment
-     * @return id of the caller fragment
-     */
-    private Integer getCallerFragmentId() {
-        NavController navController = Navigation.findNavController(getView());
-        NavBackStackEntry previousFragment = navController.getPreviousBackStackEntry();
-        if (previousFragment == null)
-            return null;
-        return previousFragment.getDestination().getId();
+    void sendIngredientsToCallerFragment() {
+        Navigation.findNavController(getView()).getPreviousBackStackEntry().getSavedStateHandle().set(
+                RESULT_KEY,
+                chosenIngredients
+        );
+        Navigation.findNavController(getView()).popBackStack();
     }
 }

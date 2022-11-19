@@ -30,6 +30,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.R;
 import com.example.loops.adapters.RecipeIngredientsAdapter;
@@ -160,6 +161,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         setConstraintsOnInputs();
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
+        setOnSelectIngredientBehaviour();
         if (savedInstanceState != null)
             restoreFormState(savedInstanceState);
         else
@@ -297,6 +299,23 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
             @Override
             public void onChanged(@Nullable final Object ingredient) {
                 ingredientCollection.addIngredient((Ingredient) ingredient);
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * Handles the behavior when the select ingredient fragment submits ingredients
+     */
+    private void setOnSelectIngredientBehaviour() {
+        Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle()
+        .getLiveData(
+                IngredientCollectionSelectionFragment.RESULT_KEY
+        ).observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object selectedIngredients) {
+                IngredientCollection s = (IngredientCollection) selectedIngredients;
+                ingredientCollection.getIngredients().addAll(s.getIngredients());
                 recyclerViewAdapter.notifyDataSetChanged();
             }
         });

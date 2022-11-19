@@ -8,6 +8,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -15,6 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.example.loops.adapters.RecipeIngredientsAdapter;
 import com.example.loops.ingredientFragments.IngredientCollectionFragment;
+import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
@@ -82,6 +85,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
                 "By New Ingredient",
+                "From Ingredient Storage",
                 "Cancel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -97,7 +101,9 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
-                            return;
+                            NavDirections addIngredientAction = AddRecipeFormFragmentDirections
+                                    .actionAddRecipeFormFragmentToIngredientCollectionSelectionFragment();
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else {
                             throw new Error("Invalid selection");
