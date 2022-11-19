@@ -87,16 +87,15 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
         Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
-        collectionView.setSelection(position);
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {
             chosenIngredients.getIngredients().remove(selectedIngredient);
-            view.setBackgroundColor(0xFF03DAC5);
+            view.setBackgroundColor(getResources().getColor(R.color.teal_200, null));
         }
         // If not, add it to selection
         else {
-            view.setBackgroundColor(0xFF00FF00);
             chosenIngredients.addIngredient(selectedIngredient);
+            view.setBackgroundColor(getResources().getColor(R.color.teal_700, null));
         }
     }
 
