@@ -83,7 +83,9 @@ public class IngredientCollectionFactory {
                 IngredientCollection storedIngredients = ((MainActivity) context).getIngredientStorage();
                 collection = new IngredientCollection();
                 for (Ingredient ing : storedIngredients.getIngredients()) {
-                    collection.addIngredient(ing);
+                    if ( ! ing.getPending() ) {     // FIXME: Exclude pending ingredients?
+                        collection.addIngredient(new Ingredient(ing));
+                    }
                 }
                 break;
             case FROM_SHOPPING_LIST_FOR_EDIT:
