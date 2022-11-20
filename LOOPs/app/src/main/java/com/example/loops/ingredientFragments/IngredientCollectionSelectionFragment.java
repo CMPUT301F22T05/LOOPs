@@ -1,11 +1,14 @@
 package com.example.loops.ingredientFragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -16,10 +19,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.loops.adapters.IngredientSelectionViewAdapter;
 import com.example.loops.adapters.IngredientStorageViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
+import com.example.loops.factory.IngredientCollectionFactory.CollectionType;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
+import com.example.loops.recipeFragments.forms.AddRecipeFormFragmentDirections;
 
 /**
  * Ingredient collection fragment for selecting an ingredient
@@ -27,7 +33,7 @@ import com.example.loops.R;
 public class IngredientCollectionSelectionFragment extends IngredientCollectionFragment {
     public static final String RESULT_KEY = "INGREDIENT_COLLECTION_SELECTION_FRAGMENT_RESULT_KEY";
     private Button saveButton;
-    private IngredientCollection chosenIngredients = new IngredientCollection();
+    private IngredientCollection chosenIngredients;
 
     public IngredientCollectionSelectionFragment() {
         // Required empty public constructor
@@ -45,9 +51,8 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
         saveButton = fragmentView.findViewById(R.id.select_button);
+        chosenIngredients = new IngredientCollection();
         setSaveButtonListener();
-
-        collectionView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         return fragmentView;
     }
 
@@ -61,6 +66,20 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
     }
 
     /**
+     * Returns the ingredient collection type that is being displayed
+     * @return
+     */
+    @Override
+    public CollectionType getCollectionType() {
+        if (getArguments() == null)
+            throw new IllegalArgumentException("Arguments not supplied to the fragment");
+        IngredientCollectionSelectionFragmentArgs argsBundle
+                = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
+        CollectionType collectionType = argsBundle.getCollectionType();
+        return collectionType;
+    }
+
+    /**
      * Parses the arguments specified by navigation graph actions.
      * Sets the ingredient collection from the arguments and passes ingredients from forms back
      * to caller
@@ -70,9 +89,6 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
             throw new IllegalArgumentException("Arguments not supplied to the fragment");
         IngredientCollectionSelectionFragmentArgs argsBundle
                 = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
-        // Set the type of the ingredient collection
-        CollectionType collectionType = argsBundle.getCollectionType();
-        setIngredientCollectionToDisplay(collectionType);
         // Get ingredients to filter
         IngredientCollection filterIngredients = argsBundle.getIngredientsToFilter();
         if (filterIngredients != null) {
@@ -103,16 +119,36 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param id
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
-        ((IngredientStorageViewAdapter) collectionViewAdapter).selectItem(position);
         Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
 
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {
+            ((IngredientSelectionViewAdapter) collectionViewAdapter).selectItem(position);
             chosenIngredients.getIngredients().remove(selectedIngredient);
         }
         // If not, add it to selection
         else {
-            chosenIngredients.addIngredient(selectedIngredient);
+            // Prompt for quantity
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // TODO : Create UI for alert dialog to input amount and unit
+            AlertDialog setIngredientQuantityPrompt = builder
+                    .setTitle( "Select Quantity" )
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // On quantity set, select it
+                            selectedIngredient.setAmount(6.9);
+                            ((IngredientSelectionViewAdapter) collectionViewAdapter).selectItem(position);
+                            chosenIngredients.addIngredient(selectedIngredient);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // On cancel, do nothing
+                            return;
+                        }
+                    })
+                    .create();
+            setIngredientQuantityPrompt.show();
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.loops.ingredientFragments;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ArrayAdapter;
 
 import com.example.loops.GenericCollectionLayout;
 import com.example.loops.adapters.ShoppingListViewAdapter;
+import com.example.loops.factory.IngredientCollectionFactory;
+import com.example.loops.factory.IngredientCollectionFactory.CollectionType;
 import com.example.loops.modelCollections.MealPlanCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.modelCollections.IngredientCollection;
@@ -23,30 +26,10 @@ import com.example.loops.sortOption.IngredientSortOption;
  * An abstract fragment displaying an ingredient collection
  */
 public abstract class IngredientCollectionFragment extends GenericCollectionLayout {
+    private CollectionType collectionType = null;
     protected IngredientCollection ingredientCollection;
     protected ArrayAdapter<Ingredient> collectionViewAdapter;
     protected ArrayAdapter<CharSequence> sortOptionSpinnerAdapter;
-    enum LayoutType {
-        IngredientStorage,
-        ShoppingList
-    }
-
-    /**
-     * The type of ingredient collections the fragment accepts. Accepted values are:
-     *  FROM_STORAGE_FOR_EDIT - retrieve ingredients from user's stored ingredients
-     *                          and also can manipulate storage ingredients
-     *  FROM_STORAGE_FOR_VIEW - retrieve ingredients from user's stored ingredients but
-     *                          does not modify the ingredients
-     *  FROM_RECIPE_INGREDIENTS - retrieves ingredients from a given recipe
-     *  FROM_TESTING - FIXME: Temporary value for debugging.
-     */
-    public enum CollectionType {
-        FROM_STORAGE_FOR_EDIT,
-        FROM_STORAGE_FOR_VIEW,
-        FROM_RECIPE_INGREDIENTS,
-        FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT,
-        FROM_SHOPPING_LIST
-    }
 
     public IngredientCollectionFragment() {
         // Required empty public constructor
@@ -83,9 +66,22 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        if (collectionType == null)
+            collectionType = getCollectionType();
+        IngredientCollectionFactory ingredientCollectionFactory = new IngredientCollectionFactory(getActivity());
+        ingredientCollection = ingredientCollectionFactory.createIngredientCollection(collectionType);
+        Log.e("DEBUG", collectionType.toString());
+        populateSortSpinnerOptions(ingredientCollectionFactory, collectionType);
+        setIngredientCollectionToDisplay(ingredientCollectionFactory, collectionType, ingredientCollection);
         parseArguments();
         setListeners();
     }
+
+    /**
+     * Subclasses must implement this. When subclasses parse arguments, collection type can be parsed
+     * there
+     */
+    abstract protected IngredientCollectionFactory.CollectionType getCollectionType();
 
     /**
      * Subclasses must implement the behavior when ingredient items in the list are clicked
@@ -102,72 +98,26 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     abstract protected void parseArguments();
 
     /**
-     * Sets the type of ingredient collection the fragment must display
-     * @param type the type of the ingredient collection to display
+     * Populate the sort spinner with sort options
+     * @param factory factory used to create the sort options
+     * @param type type of the ingredient collection
      */
-    protected void setIngredientCollectionToDisplay(CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE_FOR_EDIT) {
-            ingredientCollection = ((MainActivity)getActivity()).getIngredientStorage();
-            //((MainActivity)getActivity()).retrieveIngredientFromDatabase();
-        }
-        else if (type == CollectionType.FROM_STORAGE_FOR_VIEW) {
-            ingredientCollection = new IngredientCollection();
-            IngredientCollection storedIngredients = ((MainActivity)getActivity()).getIngredientStorage();
-            for (Ingredient ing : storedIngredients.getIngredients()) {
-                ingredientCollection.addIngredient(ing);
-            }
-        }
-        else if (type == CollectionType.FROM_RECIPE_INGREDIENTS) {
-            // TODO: implement this whoever is handling recipe fragment
-            ingredientCollection = ((MainActivity)getActivity()).getIngredientStorage();
-            //throw new IllegalArgumentException("NOT IMPLEMENTED");
-        }
-        //This is used for intent test and it should not be removed
-        else if (type == CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT) {
-            ingredientCollection = new IngredientCollection();
-            ingredientCollection.addIngredient(new Ingredient(
-                    "BBB",
-                    "2022-10-28",
-                    "fridge",
-                    1,
-                    "unit",
-                    "XXX"));
-            ingredientCollection.addIngredient(new Ingredient(
-                    "AAA",
-                    "2022-10-29",
-                    "cupboard",
-                    1,
-                    "unit",
-                    "YYY"));
-            type = CollectionType.FROM_STORAGE_FOR_EDIT;
-        }
-        else if (type == CollectionType.FROM_SHOPPING_LIST) {
-            IngredientCollection ingredientStorage = ((MainActivity)getActivity()).getIngredientStorage();
-            MealPlanCollection mealPlans = ((MainActivity)getActivity()).getMealPlans();
-            //ingredientCollection = new IngredientCollection();
-            /*
-            ingredientCollection.addIngredient(new Ingredient(
-                    "Cucumber",
-                    "2022-10-28",
-                    "Fridge",
-                    2,
-                    "kg",
-                    "Vegetable"));
-            ingredientCollection.addIngredient(new Ingredient(
-                    "%2 Milk",
-                    "2022-11-29",
-                    "Pantry",
-                    3500,
-                    "mL",
-                    "Drinks"));
-             */
-            ingredientCollection = ShoppingListInitializer.getShoppingList(mealPlans, ingredientStorage);
-        }
-        else {
-            throw new IllegalArgumentException("Unknown given collection type");
-        }
-        populateSortSpinnerOptions(type);
-        adaptIngredientCollection(ingredientCollection, type);
+    private void populateSortSpinnerOptions(IngredientCollectionFactory factory, CollectionType type) {
+        sortOptionSpinnerAdapter = factory.createSortOptionArrayAdapter(type);
+        sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
+    }
+
+    /**
+     * Sets the ingredient collection to display in the UI list view
+     * @param factory factory used to create the view adapter for the list view
+     * @param type type of the ingredient collection
+     * @param collection ingredient collection to display
+     */
+    private void setIngredientCollectionToDisplay(
+            IngredientCollectionFactory factory, CollectionType type, IngredientCollection collection
+    ) {
+        collectionViewAdapter = factory.createIngredientListAdapter(type, collection);
+        collectionView.setAdapter(collectionViewAdapter);
     }
 
     /**
@@ -232,40 +182,5 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
         }
 
         collectionViewAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Binds the ingredient collection to the UI
-     * @param ingredientCollection the collection of ingredient to bind to UI
-     */
-    private void adaptIngredientCollection(IngredientCollection ingredientCollection, CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE_FOR_EDIT || type == CollectionType.FROM_STORAGE_FOR_VIEW) {
-            collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(),
-                    ingredientCollection.getIngredients());
-        }
-        else {
-            collectionViewAdapter = new ShoppingListViewAdapter(getActivity(),
-                    ingredientCollection.getIngredients());
-        }
-
-        collectionView.setAdapter(collectionViewAdapter);
-    }
-
-    /**
-     * Populates the spinners in the fragment with options
-     */
-    private void populateSortSpinnerOptions(CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE_FOR_EDIT || type == CollectionType.FROM_STORAGE_FOR_VIEW) {
-            sortOptionSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
-                    R.array.ingredient_storage_sort_option, android.R.layout.simple_spinner_item);
-            sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        }
-        else {
-            sortOptionSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
-                    R.array.shopping_list_sort_option, android.R.layout.simple_spinner_item);
-            sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        }
-
-        sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
     }
 }

@@ -93,7 +93,7 @@
             android:defaultValue="false" />
         <argument
             android:name="collectionType"
-            app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType"
+            app:argType="com.example.loops.factory.IngredientCollectionFactory$CollectionType"
             android:defaultValue="FROM_STORAGE_FOR_EDIT" />
     </fragment>
     <fragment
@@ -202,7 +202,7 @@
         <argument
             android:name="collectionType"
             android:defaultValue="FROM_STORAGE_FOR_VIEW"
-            app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType" />
+            app:argType="com.example.loops.factory.IngredientCollectionFactory$CollectionType" />
         <action
             android:id="@+id/action_ingredientCollectionSelectionFragment_to_addRecipeFormFragment"
             app:destination="@id/addRecipeFormFragment"
@@ -246,8 +246,8 @@
             app:destination="@id/mealPlanHomePageFragment" />
         <argument
             android:name="collectionType"
-            android:defaultValue="FROM_SHOPPING_LIST"
-            app:argType="com.example.loops.ingredientFragments.IngredientCollectionFragment$CollectionType" />
+            android:defaultValue="FROM_SHOPPING_LIST_FOR_EDIT"
+            app:argType="com.example.loops.factory.IngredientCollectionFactory$CollectionType" />
     </fragment>
     <fragment
         android:id="@+id/mealPlanFragment"
