@@ -10,7 +10,7 @@
             android:title="@string/recipeCollection" />
         <item
             android:id="@+id/shoppingListFragment"
-            android:icon="@drawable/ic_baseline_shopping_cart_24"
+            android:icon="@drawable/shopping_cart_icon"
             android:title="@string/shopping_list" />
     </group>
 </menu>
