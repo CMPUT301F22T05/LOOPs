@@ -4,9 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/ingredientCollectionEditorFragment"
+            android:icon="@drawable/fridge_icon"
             android:title="@string/ingredientCollection" />
         <item
             android:id="@+id/recipeCollectionEditorFragment"
+            android:icon="@drawable/recipe_icon"
             android:title="@string/recipeCollection" />
         <item
             android:id="@+id/shoppingListFragment"
