@@ -42,4 +42,36 @@ public class MealPlan implements Serializable {
     public String getName() {
         return name;
     }
+
+    /**
+     * get ingredient collection from meal plan
+     * @return an ingredient collection
+     */
+    public IngredientCollection getIngredients() {
+        return ingredients;
+    }
+
+    /**
+     * set meal plan with a new ingredient collection
+     * @param ingredients new ingredient collection
+     */
+    public void setIngredients(IngredientCollection ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    /**
+     * get recipe collection from meal plan
+     * @return a recipe collection
+     */
+    public RecipeCollection getRecipes() {
+        return recipes;
+    }
+
+    /**
+     * set meal plan with a new recipe collection
+     * @param recipes new recipe collection
+     */
+    public void setRecipes(RecipeCollection recipes) {
+        this.recipes = recipes;
+    }
 }

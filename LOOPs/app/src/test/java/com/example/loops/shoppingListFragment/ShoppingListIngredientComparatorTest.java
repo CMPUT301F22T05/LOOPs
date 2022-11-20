@@ -49,8 +49,8 @@ class ShoppingListIngredientComparatorTest {
 
     @Test
     void testComparator(){
-        assertEquals(Double.MAX_VALUE, ShoppingListIngredientComparator.isTheSameIngredient(ingredient1, ingredient2));
-        double amountNeeded = ShoppingListIngredientComparator.isTheSameIngredient(ingredient1, ingredient3);
+        assertEquals(Double.MAX_VALUE, ShoppingListIngredientComparator.getAmountDiff(ingredient1, ingredient2));
+        double amountNeeded = ShoppingListIngredientComparator.getAmountDiff(ingredient1, ingredient3);
         assertEquals(-4, amountNeeded);
     }
 

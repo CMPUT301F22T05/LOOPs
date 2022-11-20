@@ -13,7 +13,7 @@ public class ShoppingListIngredientComparator {
      * @param ingredient2 - Ingredient from the ingredient storage
      * @return - Double representing the amount of an ingredient needed to buy
      */
-    public static double isTheSameIngredient(@NonNull Ingredient ingredient1, @NonNull Ingredient ingredient2) {
+    public static double getAmountDiff(@NonNull Ingredient ingredient1, @NonNull Ingredient ingredient2) {
         // Check if ingredients have the same description
         if(ingredient1.getDescription().equalsIgnoreCase(ingredient2.getDescription())){
             // Check if ingredients have the same category
@@ -29,6 +29,18 @@ public class ShoppingListIngredientComparator {
         }
         // return a max value positive indicating ingredients are not the same
         return Double.MAX_VALUE;
+    }
+
+    /**
+     * Compare & see if meal plan ingredient has an identical ingredient storage that is pending
+     * @param ingredient1 meal plan ingredient
+     * @param ingredient2 storage ingredient
+     * @return if storage ingredient is pending and matched meal plan ingredient
+     */
+    public static boolean hasPending(@NonNull Ingredient ingredient1, @NonNull Ingredient ingredient2) {
+        return ingredient2.getPending() &&
+                ingredient1.getDescription().equalsIgnoreCase(ingredient2.getDescription()) &&
+                ingredient1.getCategory().equalsIgnoreCase(ingredient2.getCategory());
     }
 
 }
