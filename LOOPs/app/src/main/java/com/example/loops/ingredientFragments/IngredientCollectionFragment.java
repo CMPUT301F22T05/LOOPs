@@ -33,12 +33,16 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
 
     /**
      * The type of ingredient collections the fragment accepts. Accepted values are:
-     *  FROM_STORAGE - retrieve ingredients from user's stored ingredients
+     *  FROM_STORAGE_FOR_EDIT - retrieve ingredients from user's stored ingredients
+     *                          and also can manipulate storage ingredients
+     *  FROM_STORAGE_FOR_VIEW - retrieve ingredients from user's stored ingredients but
+     *                          does not modify the ingredients
      *  FROM_RECIPE_INGREDIENTS - retrieves ingredients from a given recipe
      *  FROM_TESTING - FIXME: Temporary value for debugging.
      */
     public enum CollectionType {
-        FROM_STORAGE,
+        FROM_STORAGE_FOR_EDIT,
+        FROM_STORAGE_FOR_VIEW,
         FROM_RECIPE_INGREDIENTS,
         FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT,
         FROM_SHOPPING_LIST
@@ -49,10 +53,39 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     }
 
     /**
-     * Subclasses must implement the behavior when the add button is clicked
-     * @param clickedView
+     * Sets the UI layout for the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
      */
-    abstract protected void onClickAddButton(View clickedView);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(getUIViewId(), container, false);
+        bindComponents(view);
+        return view;
+    }
+
+    /**
+     * Returns the layout id of the UI layout of this fragment
+     * @return id of the UI layout
+     */
+    protected int getUIViewId() {
+        return R.layout.fragment_ingredient_collection;
+    }
+
+    /**
+     * Reads in any arguments of the fragment and set up listeners for the UI
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        parseArguments();
+        setListeners();
+    }
 
     /**
      * Subclasses must implement the behavior when ingredient items in the list are clicked
@@ -69,40 +102,20 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     abstract protected void parseArguments();
 
     /**
-     * Sets the UI layout for the view
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.generic_collection_layout, container, false);
-        bindComponents(view);
-        return view;
-    }
-
-    /**
-     * Reads in any arguments of the fragment and set up listeners for the UI
-     * @param view
-     * @param savedInstanceState
-     */
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        parseArguments();
-        setListeners();
-    }
-
-    /**
      * Sets the type of ingredient collection the fragment must display
      * @param type the type of the ingredient collection to display
      */
     protected void setIngredientCollectionToDisplay(CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE) {
+        if (type == CollectionType.FROM_STORAGE_FOR_EDIT) {
             ingredientCollection = ((MainActivity)getActivity()).getIngredientStorage();
             //((MainActivity)getActivity()).retrieveIngredientFromDatabase();
+        }
+        else if (type == CollectionType.FROM_STORAGE_FOR_VIEW) {
+            ingredientCollection = new IngredientCollection();
+            IngredientCollection storedIngredients = ((MainActivity)getActivity()).getIngredientStorage();
+            for (Ingredient ing : storedIngredients.getIngredients()) {
+                ingredientCollection.addIngredient(ing);
+            }
         }
         else if (type == CollectionType.FROM_RECIPE_INGREDIENTS) {
             // TODO: implement this whoever is handling recipe fragment
@@ -126,7 +139,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     1,
                     "unit",
                     "YYY"));
-            type = CollectionType.FROM_STORAGE;
+            type = CollectionType.FROM_STORAGE_FOR_EDIT;
         }
         else if (type == CollectionType.FROM_SHOPPING_LIST) {
             IngredientCollection ingredientStorage = ((MainActivity)getActivity()).getIngredientStorage();
@@ -169,13 +182,6 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 //useless?
-            }
-        });
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickAddButton(v);
             }
         });
 
@@ -233,7 +239,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * @param ingredientCollection the collection of ingredient to bind to UI
      */
     private void adaptIngredientCollection(IngredientCollection ingredientCollection, CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE) {
+        if (type == CollectionType.FROM_STORAGE_FOR_EDIT || type == CollectionType.FROM_STORAGE_FOR_VIEW) {
             collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(),
                     ingredientCollection.getIngredients());
         }
@@ -249,7 +255,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * Populates the spinners in the fragment with options
      */
     private void populateSortSpinnerOptions(CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE) {
+        if (type == CollectionType.FROM_STORAGE_FOR_EDIT || type == CollectionType.FROM_STORAGE_FOR_VIEW) {
             sortOptionSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
                     R.array.ingredient_storage_sort_option, android.R.layout.simple_spinner_item);
             sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

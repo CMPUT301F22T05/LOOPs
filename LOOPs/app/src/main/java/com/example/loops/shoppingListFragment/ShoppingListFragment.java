@@ -34,10 +34,10 @@ public class ShoppingListFragment extends IngredientCollectionFragment {
         return fragmentView;
     }
 
-    @Override
-    protected void onClickAddButton(View clickedView) {
-
-    }
+//    @Override
+//    protected void onClickAddButton(View clickedView) {
+//
+//    }
 
     @Override
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {

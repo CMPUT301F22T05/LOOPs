@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -20,6 +23,7 @@ import com.example.loops.models.Recipe;
  * of the recipes in the collection
  */
 public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
+    private Button addButton;
 
     public RecipeCollectionEditorFragment() {
         // Required empty public constructor
@@ -37,7 +41,18 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
         //collectionTitle.setText(R.string.recipeCollection);
+        addButton = fragmentView.findViewById(R.id.select_recipe_in_collection_btn);
+        setAddButtonListener();
         return fragmentView;
+    }
+
+    /**
+     * Returns the layout id of the UI layout of this fragment
+     * @return id of the UI layout
+     */
+    @Override
+    protected int getUIViewId() {
+        return R.layout.fragment_recipe_collection_editor;
     }
 
     /**
@@ -77,10 +92,22 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
     }
 
     /**
+     * Sets the listener for the add button
+     */
+    private void setAddButtonListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickAddButton(v);
+            }
+        });
+    }
+
+    /**
      * Opens the add recipe form
      * @param clickedView
      */
-    void onClickAddButton(View clickedView) {
+    protected void onClickAddButton(View clickedView) {
         Navigation.findNavController(getView()).navigate(R.id.addRecipeFromCollection);
     }
 

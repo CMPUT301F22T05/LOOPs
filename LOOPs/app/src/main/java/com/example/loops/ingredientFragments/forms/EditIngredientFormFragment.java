@@ -20,8 +20,8 @@ import com.example.loops.models.Ingredient;
  * An ingredient form for editing ingredients. Supply the ingredient to edit through action args
  */
 public class EditIngredientFormFragment extends IngredientFormFragment {
+    public static final String RESULT_KEY = "EDIT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
     private Ingredient editIngredient;
-    private int editIngredientInd;
 
     public EditIngredientFormFragment() { }
 
@@ -44,8 +44,6 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
     public void initializeFormWithIngredientAttributes() {
         editIngredient = EditIngredientFormFragmentArgs.fromBundle(getArguments())
                 .getEditedIngredient();
-        editIngredientInd = EditIngredientFormFragmentArgs.fromBundle(getArguments())
-                .getEditIngredientIndex();
 
         // pre-fill all fields
         descriptionInput.setText(editIngredient.getDescription());
@@ -65,36 +63,14 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
     }
 
     /**
-     * Send the edited ingredient back to previous fragment.
-     * @param submittedIngredient ingredient that is submitted by the form
+     * Sends back the result through navcontroller's saved state handle with key RESULT_KEY
+     * @param submittedIngredient ingredient submitted by the form
      */
-    public void sendResult(Ingredient submittedIngredient) {
-        Integer callerFragmentId = getCallerFragmentId();
-
-        if ( callerFragmentId == null ) {
-            throw new Error("No caller fragment");
-        }
-        else if ( callerFragmentId == R.id.ingredientFragment ) {
-            NavDirections updateIngredientAction = EditIngredientFormFragmentDirections
-                    .actionEditIngredientFormFragmentToIngredientFragment(
-                            submittedIngredient, editIngredientInd, R.layout.fragment_ingredient_form);
-            Navigation.findNavController(getView()).navigate(updateIngredientAction);
-        }
-        else {
-            throw new Error("Navigation action not defined");
-        }
-
-    }
-
-    /**
-     * Returns the id of the previous fragment
-     * @return id of previous fragment. If no such fragment then null
-     */
-    private Integer getCallerFragmentId() {
-        NavController navController = Navigation.findNavController(getView());
-        NavBackStackEntry previousFragment = navController.getPreviousBackStackEntry();
-        if (previousFragment == null)
-            return null;
-        return previousFragment.getDestination().getId();
+    protected void sendResult(Ingredient submittedIngredient) {
+        Navigation.findNavController(getView()).getPreviousBackStackEntry().getSavedStateHandle().set(
+                RESULT_KEY,
+                submittedIngredient
+        );
+        Navigation.findNavController(getView()).popBackStack();
     }
 }

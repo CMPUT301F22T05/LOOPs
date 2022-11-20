@@ -47,12 +47,6 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
     }
 
     /**
-     * Subclasses must implement the behavior when the add button is clicked
-     * @param clickedView
-     */
-    abstract void onClickAddButton(View clickedView);
-
-    /**
      * Subclasses must implement the behavior when recipe items in the list are clicked
      * @param parent
      * @param view
@@ -77,12 +71,20 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe_collection, container, false);
+        View view = inflater.inflate(getUIViewId(), container, false);
         bindComponents(view);
         populateSortSpinnerOptions();
         parseArguments();
         setListeners();
         return view;
+    }
+
+    /**
+     * Returns the layout id of the UI layout of this fragment
+     * @return id of the UI layout
+     */
+    protected int getUIViewId() {
+        return R.layout.fragment_recipe_collection;
     }
 
     /**
@@ -138,13 +140,6 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 //useless?
-            }
-        });
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickAddButton(v);
             }
         });
 
