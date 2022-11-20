@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.loops.MainActivity;
 import com.example.loops.R;
 import com.example.loops.database.Database;
+import com.example.loops.factory.IngredientCollectionFactory;
 import com.example.loops.ingredientFragments.IngredientCollectionFragment;
 import com.example.loops.models.Ingredient;
 
@@ -74,6 +75,11 @@ public class ShoppingListFragment extends IngredientCollectionFragment {
 
     @Override
     protected void parseArguments() {
-        setIngredientCollectionToDisplay(CollectionType.FROM_SHOPPING_LIST);
+        return;
+    }
+
+    @Override
+    protected IngredientCollectionFactory.CollectionType getCollectionType() {
+        return IngredientCollectionFactory.CollectionType.FROM_SHOPPING_LIST_FOR_EDIT;
     }
 }

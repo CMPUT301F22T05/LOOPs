@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.Matchers.*;
 
+import com.example.loops.factory.IngredientCollectionFactory;
 import com.example.loops.ingredientFragments.IngredientCollectionEditorFragment;
 import com.example.loops.ingredientFragments.IngredientCollectionFragment;
 import com.example.loops.models.Ingredient;
@@ -49,8 +50,8 @@ public class IngredientCollectionEditorFragmentTest {
         //check method setIngredientCollectionToDisplay(CollectionType type)
         //in IngredientCollectionFragment.java
         bundle.putSerializable("collectionType",
-                IngredientCollectionFragment
-                        .CollectionType.FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT);
+                IngredientCollectionFactory
+                        .CollectionType.PRESET);
     }
 
     private void launchFragment() {
