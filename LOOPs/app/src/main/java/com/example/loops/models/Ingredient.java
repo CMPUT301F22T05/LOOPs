@@ -67,6 +67,15 @@ public class Ingredient implements Serializable, ModelConstraints {
         this.category = category;
     }
 
+    public Ingredient(String description, double amount, String unit, String category) {
+        this.description = description;
+        this.bestBeforeDate = LocalDate.MIN;
+        this.storeLocation = "";
+        this.amount = amount;
+        this.unit = unit;
+        this.category = category;
+    }
+
     /**
      * copy constructor
      * @param that the ingredient want to copy
@@ -183,7 +192,7 @@ public class Ingredient implements Serializable, ModelConstraints {
             LocalDate date = LocalDate.parse(bestBeforeDate, DateTimeFormatter.ofPattern(dateTimeFormat));
             this.bestBeforeDate = date;
         } catch (DateTimeException e) {
-            this.bestBeforeDate = LocalDate.now();
+            this.bestBeforeDate = LocalDate.MIN;
         }
     }
 
