@@ -7,8 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.example.loops.adapters.ShoppingListViewAdapter;
+import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.MealPlan;
+import com.example.loops.sortOption.IngredientSortOption;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +69,14 @@ public class MealPlanFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_meal_plan, container, false);
         mealPlan = MealPlanFragmentArgs.fromBundle(getArguments()).getMealPlan();
         ((MainActivity)getActivity()).setActionBarTitle(mealPlan.getName());
+
+        IngredientCollection ingredientCollection = mealPlan.getIngredients();
+        ingredientCollection.sort(IngredientSortOption.BY_CATEGORY_ASCENDING);
+        ShoppingListViewAdapter ingredientsViewAdapter =
+                new ShoppingListViewAdapter(getActivity(), ingredientCollection.getIngredients());
+
+        ListView ingredientListView = view.findViewById(R.id.ingredients_listView);
+        ingredientListView.setAdapter(ingredientsViewAdapter);
         return view;
     }
 }

@@ -42,6 +42,7 @@
         android:id="@+id/ingredients_listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingHorizontal="15dp"
         app:layout_constraintBottom_toTopOf="@+id/add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

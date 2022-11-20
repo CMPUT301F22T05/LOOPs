@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
                 if (navDestination.getId() == R.id.mealPlanHomePageFragment) {
-                    getSupportActionBar().setTitle(R.string.mealPlans);
+                    getSupportActionBar().setTitle(R.string.app_name);
                 }
                 else if (navDestination.getId() == R.id.ingredientCollectionEditorFragment) {
                     getSupportActionBar().setTitle(R.string.ingredientCollection);
