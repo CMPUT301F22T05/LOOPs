@@ -4,5 +4,8 @@ import com.example.loops.modelCollections.IngredientCollection;
 
 public class ShoppingListInitializer {
 
-    public static IngredientCollection getShoppingList() {}
+    public static IngredientCollection getShoppingList() {
+        IngredientCollection test = new IngredientCollection();
+        return test;
+    }
 }
