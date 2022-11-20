@@ -1,11 +1,14 @@
 package com.example.loops.ingredientFragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -16,11 +19,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.loops.adapters.IngredientSelectionViewAdapter;
 import com.example.loops.adapters.IngredientStorageViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.factory.IngredientCollectionFactory.CollectionType;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
+import com.example.loops.recipeFragments.forms.AddRecipeFormFragmentDirections;
 
 /**
  * Ingredient collection fragment for selecting an ingredient
@@ -114,16 +119,36 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param id
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
-        ((IngredientStorageViewAdapter) collectionViewAdapter).selectItem(position);
         Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
 
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {
+            ((IngredientSelectionViewAdapter) collectionViewAdapter).selectItem(position);
             chosenIngredients.getIngredients().remove(selectedIngredient);
         }
         // If not, add it to selection
         else {
-            chosenIngredients.addIngredient(selectedIngredient);
+            // Prompt for quantity
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // TODO : Create UI for alert dialog to input amount and unit
+            AlertDialog setIngredientQuantityPrompt = builder
+                    .setTitle( "Select Quantity" )
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // On quantity set, select it
+                            selectedIngredient.setAmount(6.9);
+                            ((IngredientSelectionViewAdapter) collectionViewAdapter).selectItem(position);
+                            chosenIngredients.addIngredient(selectedIngredient);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // On cancel, do nothing
+                            return;
+                        }
+                    })
+                    .create();
+            setIngredientQuantityPrompt.show();
         }
     }
 

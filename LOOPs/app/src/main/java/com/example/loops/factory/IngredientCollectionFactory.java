@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.loops.MainActivity;
 import com.example.loops.R;
+import com.example.loops.adapters.IngredientSelectionViewAdapter;
 import com.example.loops.adapters.IngredientStorageViewAdapter;
 import com.example.loops.adapters.ShoppingListViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
@@ -115,9 +116,8 @@ public class IngredientCollectionFactory {
                 sortOptionArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 break;
             case FROM_STORAGE_FOR_VIEW:
-                // FIXME: implement new one
                 sortOptionArrayAdapter = ArrayAdapter.createFromResource(context,
-                        R.array.ingredient_storage_sort_option, android.R.layout.simple_spinner_item);
+                        R.array.ingredient_selection_sort_option, android.R.layout.simple_spinner_item);
                 sortOptionArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 break;
             case FROM_SHOPPING_LIST_FOR_EDIT:
@@ -149,8 +149,7 @@ public class IngredientCollectionFactory {
                         collection.getIngredients());
                 break;
             case FROM_STORAGE_FOR_VIEW:
-                // FIXME: implement new one
-                ingredientArrayAdapter = new IngredientStorageViewAdapter(context,
+                ingredientArrayAdapter = new IngredientSelectionViewAdapter(context,
                         collection.getIngredients());
                 break;
             case FROM_SHOPPING_LIST_FOR_EDIT:
