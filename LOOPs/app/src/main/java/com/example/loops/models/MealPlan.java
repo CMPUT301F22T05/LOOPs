@@ -42,4 +42,12 @@ public class MealPlan implements Serializable {
     public String getName() {
         return name;
     }
+
+    public IngredientCollection getIngredients() {
+        return ingredients;
+    }
+
+    public RecipeCollection getRecipes() {
+        return recipes;
+    }
 }
