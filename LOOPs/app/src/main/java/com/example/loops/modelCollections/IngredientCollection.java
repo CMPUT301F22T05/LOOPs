@@ -91,6 +91,12 @@ public class IngredientCollection implements Serializable {
      * @param option
      */
     public void sort(IngredientSortOption option) {
+        if (option.equals(IngredientSortOption.BY_PENDING)) {
+            Collections.sort(ingredients, new PendingDescendingComparator());
+        }
+        if (option.equals(IngredientSortOption.BY_DESCRIPTION_ASCENDING)) {
+            Collections.sort(ingredients, new DescriptionAscendingComparator());
+        }
         if (option.equals(IngredientSortOption.BY_DESCRIPTION_ASCENDING)) {
             Collections.sort(ingredients, new DescriptionAscendingComparator());
         }
@@ -116,6 +122,26 @@ public class IngredientCollection implements Serializable {
             ingredients.sort((new CategoryAscendingComparator()).reversed());
         }
     }
+
+    /**
+     * Sort by pending.
+     */
+    static class PendingDescendingComparator implements Comparator<Ingredient> {
+
+        @Override
+        public int compare(Ingredient o1, Ingredient o2) {
+            if (o1.getPending() && !o2.getPending()){
+                return -1;
+            }
+            if (!o1.getPending() && o2.getPending()){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+    }
+
 
     /**
      * Sort by description.
