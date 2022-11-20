@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 class ShoppingListIngredientComparatorTest {
     private ShoppingListIngredientComparator shoppingList;
     private IngredientCollection storage;
+    private IngredientCollection mealPlan;
     private Ingredient ingredient1;
     private Ingredient ingredient2;
     private Ingredient ingredient3;
@@ -19,35 +20,38 @@ class ShoppingListIngredientComparatorTest {
     void initialize() {
         shoppingList = new ShoppingListIngredientComparator();
         storage = new IngredientCollection();
+        mealPlan = new IngredientCollection();
         ingredient1 = new Ingredient(
-                "a",
+                "Butter",
                 "2022-10-28",
-                "cupboard",
+                "fridge",
                 1,
-                "",
+                "kg",
                 "x");
         ingredient2 = new Ingredient(
-                "b",
+                "Salt",
                 "2022-10-29",
                 "fridge",
                 1,
-                "",
+                "g",
                 "y");
         ingredient3 = new Ingredient(
-                "a",
+                "Butter",
                 "2022-10-28",
-                "cupboard",
+                "fridge",
                 5,
-                "",
+                "kg",
                 "x");
-        storage.addIngredient(ingredient1);
+        mealPlan.addIngredient(ingredient1);
         storage.addIngredient(ingredient2);
         storage.addIngredient(ingredient3);
     }
 
     @Test
     void testComparator(){
-        assertEquals(Double.MAX_VALUE, shoppingList.);
+        assertEquals(Double.MAX_VALUE, ShoppingListIngredientComparator.isTheSameIngredient(ingredient1, ingredient2));
+        double amountNeeded = ShoppingListIngredientComparator.isTheSameIngredient(ingredient1, ingredient3);
+        assertEquals(-4, amountNeeded);
     }
 
 }
