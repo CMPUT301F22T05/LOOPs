@@ -161,7 +161,11 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         parseArguments();
         setConstraintsOnInputs();
         setButtonOnClickListeners();
-        setOnAddIngredientBehaviour();
+        try {
+            setOnAddIngredientBehaviour();
+        } catch (Exception e) {
+
+        }
         if (savedInstanceState != null)
             restoreFormState(savedInstanceState);
         else

@@ -16,6 +16,7 @@ import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.adapters.IngredientStorageViewAdapter;
 import com.example.loops.MainActivity;
 import com.example.loops.R;
+import com.example.loops.shoppingListFragment.ShoppingListInitializer;
 import com.example.loops.sortOption.IngredientSortOption;
 
 /**
@@ -130,8 +131,8 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
         else if (type == CollectionType.FROM_SHOPPING_LIST) {
             IngredientCollection ingredientStorage = ((MainActivity)getActivity()).getIngredientStorage();
             MealPlanCollection mealPlans = ((MainActivity)getActivity()).getMealPlans();
-            ingredientCollection = new IngredientCollection();
-            //TODO: write algorithm to calculate shopping list
+            //ingredientCollection = new IngredientCollection();
+            /*
             ingredientCollection.addIngredient(new Ingredient(
                     "Cucumber",
                     "2022-10-28",
@@ -146,6 +147,8 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     3500,
                     "mL",
                     "Drinks"));
+             */
+            ingredientCollection = ShoppingListInitializer.getShoppingList(mealPlans, ingredientStorage);
         }
         else {
             throw new IllegalArgumentException("Unknown given collection type");
