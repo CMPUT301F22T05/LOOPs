@@ -4,6 +4,9 @@ import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.RecipeCollection;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,7 +81,18 @@ public class MealPlan implements Serializable, ModelConstraints, Comparable<Meal
 
     @Override
     public Map<String, Object> getMapData() {
-        return null;
+        Map<String, Object> mapData = new HashMap<>();
+        List<Map<String, Object>> ingredientList = new ArrayList<>();
+        for (Ingredient ingredient : ingredients.getIngredients()) {
+            ingredientList.add(ingredient.getMapData());
+        }
+        mapData.put("ingredient", ingredientList);
+        List<Map<String, Object>> recipeList = new ArrayList<>();
+        for (Recipe recipe : recipes.getAllRecipes()) {
+            recipeList.add(recipe.getMapData());
+        }
+        mapData.put("recipes", recipeList);
+        return mapData;
     }
 
     @Override
