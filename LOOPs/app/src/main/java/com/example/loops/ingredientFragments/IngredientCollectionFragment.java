@@ -32,12 +32,16 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
 
     /**
      * The type of ingredient collections the fragment accepts. Accepted values are:
-     *  FROM_STORAGE - retrieve ingredients from user's stored ingredients
+     *  FROM_STORAGE_FOR_EDIT - retrieve ingredients from user's stored ingredients
+     *                          and also can manipulate storage ingredients
+     *  FROM_STORAGE_FOR_VIEW - retrieve ingredients from user's stored ingredients but
+     *                          does not modify the ingredients
      *  FROM_RECIPE_INGREDIENTS - retrieves ingredients from a given recipe
      *  FROM_TESTING - FIXME: Temporary value for debugging.
      */
     public enum CollectionType {
-        FROM_STORAGE,
+        FROM_STORAGE_FOR_EDIT,
+        FROM_STORAGE_FOR_VIEW,
         FROM_RECIPE_INGREDIENTS,
         FOR_TEST_INGREDIENT_COLLECTION_EDITOR_FRAGMENT,
         FROM_SHOPPING_LIST
@@ -101,9 +105,16 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * @param type the type of the ingredient collection to display
      */
     protected void setIngredientCollectionToDisplay(CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE) {
+        if (type == CollectionType.FROM_STORAGE_FOR_EDIT) {
             ingredientCollection = ((MainActivity)getActivity()).getIngredientStorage();
             //((MainActivity)getActivity()).retrieveIngredientFromDatabase();
+        }
+        else if (type == CollectionType.FROM_STORAGE_FOR_VIEW) {
+            ingredientCollection = new IngredientCollection();
+            IngredientCollection storedIngredients = ((MainActivity)getActivity()).getIngredientStorage();
+            for (Ingredient ing : storedIngredients.getIngredients()) {
+                ingredientCollection.addIngredient(ing);
+            }
         }
         else if (type == CollectionType.FROM_RECIPE_INGREDIENTS) {
             // TODO: implement this whoever is handling recipe fragment
@@ -127,7 +138,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
                     1,
                     "unit",
                     "YYY"));
-            type = CollectionType.FROM_STORAGE;
+            type = CollectionType.FROM_STORAGE_FOR_EDIT;
         }
         else if (type == CollectionType.FROM_SHOPPING_LIST) {
             IngredientCollection ingredientStorage = ((MainActivity)getActivity()).getIngredientStorage();
@@ -225,7 +236,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * @param ingredientCollection the collection of ingredient to bind to UI
      */
     private void adaptIngredientCollection(IngredientCollection ingredientCollection, CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE) {
+        if (type == CollectionType.FROM_STORAGE_FOR_EDIT || type == CollectionType.FROM_STORAGE_FOR_VIEW) {
             collectionViewAdapter = new IngredientStorageViewAdapter(getActivity(),
                     ingredientCollection.getIngredients());
         }
@@ -241,7 +252,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * Populates the spinners in the fragment with options
      */
     private void populateSortSpinnerOptions(CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE) {
+        if (type == CollectionType.FROM_STORAGE_FOR_EDIT || type == CollectionType.FROM_STORAGE_FOR_VIEW) {
             sortOptionSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
                     R.array.ingredient_storage_sort_option, android.R.layout.simple_spinner_item);
             sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
