@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -86,6 +87,23 @@ public class Recipe implements Serializable, ModelConstraints {
         this.photoBase64 = photoBase64;
         this.ingredients = ingredients;
         this.comments = comments;
+    }
+
+    /**
+     * Copy constructor
+     * @param that Recipe to copy
+     */
+    public Recipe(Recipe that) {
+        this.title = that.getTitle();
+        this.prepTime = that.getPrepTime();
+        this.numServing = that.getNumServing();
+        this.category = that.getCategory();
+        this.photoBase64 = that.getPhotoBase64();
+        this.comments = that.getComments();
+        this.ingredients = new IngredientCollection();
+        for (Ingredient ing : that.getIngredients().getIngredients()) {
+            this.ingredients.addIngredient(new Ingredient(ing));
+        }
     }
 
     /**
@@ -168,10 +186,15 @@ public class Recipe implements Serializable, ModelConstraints {
         mapData.put("comments", getComments());
         mapData.put("durationHour", getPrepTime().toHours());
         mapData.put("durationMinute", getPrepTime().toMinutes() - getPrepTime().toHours()*60);
-        Map<String, Object> ingredientsMap = new HashMap<>();
-        for (Ingredient ing : this.getIngredients().getIngredients())
-            ingredientsMap.put(Integer.toString(ing.hashCode()), ing.getMapData());
-        mapData.put("ingredients", ingredientsMap);
+//        Map<String, Object> ingredientsMap = new HashMap<>();
+//        for (Ingredient ing : this.getIngredients().getIngredients())
+//            ingredientsMap.put(Integer.toString(ing.hashCode()), ing.getMapData());
+        List<Map<String, Object>> ingredientList = new ArrayList<>();
+        for (Ingredient ingredient : ingredients.getIngredients()) {
+            ingredientList.add(ingredient.getMapData());
+        }
+//        mapData.put("ingredients", ingredientsMap);
+        mapData.put("ingredients", ingredientList);
         mapData.put("numServing", getNumServing());
         mapData.put("title", getTitle());
         mapData.put("photoBase64", getPhotoBase64());

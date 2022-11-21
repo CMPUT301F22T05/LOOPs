@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 
 import com.example.loops.MainActivity;
 import com.example.loops.R;
+import com.example.loops.factory.RecipeCollectionFactory;
+import com.example.loops.factory.RecipeCollectionFactory.CollectionType;
 import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
@@ -55,32 +57,36 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
         return R.layout.fragment_recipe_collection_editor;
     }
 
+    @Override
+    protected CollectionType getCollectionType() {
+        if (getArguments() == null)
+            throw new IllegalArgumentException("Arguments not supplied to the fragment");
+        RecipeCollectionEditorFragmentArgs argsBundle
+                = RecipeCollectionEditorFragmentArgs.fromBundle(getArguments());
+        CollectionType collectionType = argsBundle.getCollectionType();
+        return collectionType;
+    }
+
     /**
      * Parses the arguments specified by navigation graph actions.
      * Sets the ingredient collection from the arguments and adds ingredient sent by form to
      * its ingredient collection
      */
-    void parseArguments() {
+    @Override
+    protected void parseArguments() {
         if (getArguments() == null)
             throw new IllegalArgumentException("Arguments not supplied to the fragment");
         RecipeCollectionEditorFragmentArgs argsBundle
                 = RecipeCollectionEditorFragmentArgs.fromBundle(getArguments());
-        // Set the type of the recipe collection
-        RecipeCollectionFragment.CollectionType collectionType = argsBundle.getCollectionType();
-        setRecipeCollectionToDisplay(collectionType);
-
         // If any form had returned a recipe, update it to the collection
         Recipe submittedRecipe = argsBundle.getAddedRecipe();
         if (submittedRecipe != null) {
-            Log.e("RecipeCollectionEditorFragment", "Submitted recipe was null");
             recipeCollection.addRecipe(submittedRecipe);
         }
         // If recipe edited, update or delete
         Recipe editedRecipe = argsBundle.getEditedRecipe();
         int editedRecipeIndex = argsBundle.getEditedRecipeIndex();
         if (editedRecipe != null) {
-            Log.e("old", recipeCollection.getRecipe(editedRecipeIndex).getDocumentName());
-            Log.e("new", editedRecipe.getDocumentName());
             if (argsBundle.getDeletedFlag() == false) { //update recipe
                 recipeCollection.updateRecipe(editedRecipeIndex, editedRecipe);
             }
@@ -118,7 +124,8 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
      * @param position
      * @param id
      */
-    void onClickRecipe(AdapterView<?> parent, View view, int position, long id) {
+    @Override
+    protected void onClickRecipe(AdapterView<?> parent, View view, int position, long id) {
         Recipe selectedRecipe = recipeCollection.getRecipe(position);
         NavDirections viewRecipeDetailsAction =
                 (NavDirections) RecipeCollectionEditorFragmentDirections.actionRecipeCollectionToRecipe(

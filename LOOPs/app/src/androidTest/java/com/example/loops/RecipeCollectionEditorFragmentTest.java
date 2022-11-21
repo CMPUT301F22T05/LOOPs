@@ -28,6 +28,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.loops.factory.RecipeCollectionFactory;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Recipe;
 import com.example.loops.recipeFragments.RecipeCollectionEditorFragment;
@@ -50,8 +51,8 @@ public class RecipeCollectionEditorFragmentTest {
         navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
         bundle = new Bundle();
         bundle.putSerializable("collectionType",
-                RecipeCollectionFragment
-                        .CollectionType.FROM_TESTING);
+                RecipeCollectionFactory
+                    .CollectionType.PRESET);
 
         IngredientCollection burgerIngredients = new IngredientCollection();
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();

@@ -5,9 +5,16 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.widget.DatePicker;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelStore;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
@@ -49,13 +56,32 @@ public class AddIngredientFormFragmentTest {
      */
     @Before
     public void setUp() {
+        Bundle args = new Bundle();
         navController = new TestNavHostController( ApplicationProvider.getApplicationContext() );
-        fragmentScenario = FragmentScenario.launchInContainer(AddIngredientFormFragment.class);
+        /**
+         * https://developer.android.com/guide/navigation/navigation-testing#test_navigationui_with_fragmentscenario
+         * Date Accessed : 2022-11-19
+         */
+        fragmentScenario = FragmentScenario.launchInContainer(AddIngredientFormFragment.class, args, new FragmentFactory() {
+            @NonNull
+            @Override
+            public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
+                AddIngredientFormFragment fragment = new AddIngredientFormFragment();
 
-        fragmentScenario.onFragment(fragment -> {
-            navController.setGraph(R.navigation.nav_graph);
-            navController.setCurrentDestination(R.id.addIngredientFormFragment);
-            Navigation.setViewNavController(fragment.requireView(), navController);
+                fragment.getViewLifecycleOwnerLiveData().observeForever(new Observer<LifecycleOwner>() {
+                    @Override
+                    public void onChanged(LifecycleOwner viewLifecycleOwner) {
+                        // The fragment’s view has just been created
+                        if (viewLifecycleOwner != null) {
+                            navController.setViewModelStore(new ViewModelStore());
+                            navController.setGraph(R.navigation.nav_graph);
+                            navController.setCurrentDestination(R.id.addIngredientFormFragment);
+                            Navigation.setViewNavController(fragment.requireView(), navController);
+                        }
+                    }
+                });
+                return fragment;
+            }
         });
     }
 
@@ -118,10 +144,9 @@ public class AddIngredientFormFragmentTest {
     }
 
     private Ingredient getSubmittedIngredient() {
-        Ingredient ingredientFromPreviousFragment = (Ingredient) navController.getBackStack()
-                .get(navController.getBackStack().size()-1)
-                .getArguments()
-                .getSerializable("addedIngredient");
+        Ingredient ingredientFromPreviousFragment = navController.getCurrentBackStackEntry()
+                .getSavedStateHandle()
+                .get(AddIngredientFormFragment.RESULT_KEY);
         return ingredientFromPreviousFragment;
     }
 
@@ -152,7 +177,7 @@ public class AddIngredientFormFragmentTest {
         setUnit(typedIngredient.getUnit());
         setCategory(typedIngredient.getCategory());
         clickSubmit();
-        sleep(5000);
+        sleep(1000);
 
         Ingredient submittedIngredient = getSubmittedIngredient();
         assertTrue( typedIngredient.equals(submittedIngredient) );

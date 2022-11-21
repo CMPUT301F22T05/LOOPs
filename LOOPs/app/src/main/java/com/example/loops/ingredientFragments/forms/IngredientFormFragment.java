@@ -104,7 +104,7 @@ public abstract class IngredientFormFragment extends Fragment {
      * Returns an ingredient object where its attributes are those from the form
      * @return ingredient object formed by the value of the fields of the form
      */
-    public Ingredient getInputtedIngredient() {
+    protected Ingredient getInputtedIngredient() {
         String description = descriptionInput.getText().toString();
         LocalDate bestBeforeDate = parseBestBeforeDateFromInput();
         String location = locationInput.getSelectedItem().toString();
@@ -243,7 +243,7 @@ public abstract class IngredientFormFragment extends Fragment {
      * Parses the amount from the input
      * @return the parsed double amount
      */
-    private double parseAmountFromInput() {
+    protected double parseAmountFromInput() {
         double amount;
         try {
             amount = Double.parseDouble( amountInput.getText().toString() );

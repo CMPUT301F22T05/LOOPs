@@ -46,6 +46,17 @@ public class MealPlanHomePageFragment extends Fragment {
                 Navigation.findNavController(view).navigate(lookAtMealPlanDetailAction);
             }
         });
+
+        // parse arguments
+        MealPlanHomePageFragmentArgs argsBundle
+                = MealPlanHomePageFragmentArgs.fromBundle(getArguments());
+        int updatedMealPlanIndex = argsBundle.getMealPlanIndex();
+        MealPlan updatedMealPlan = argsBundle.getUpdatedMealPlan();
+        if (updatedMealPlanIndex != -1 && updatedMealPlan != null) {
+            mealPlans.updateMealPlan(updatedMealPlanIndex, updatedMealPlan);
+        }
+        getArguments().clear();
+
         return view;
     }
 }

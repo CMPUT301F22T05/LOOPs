@@ -15,6 +15,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
+import com.example.loops.factory.IngredientCollectionFactory.CollectionType;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
 
@@ -102,6 +103,20 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
     }
 
     /**
+     * Returns the ingredient collection type that is being displayed
+     * @return
+     */
+    @Override
+    public CollectionType getCollectionType() {
+        if (getArguments() == null)
+            throw new IllegalArgumentException("Arguments not supplied to the fragment");
+        IngredientCollectionSelectionFragmentArgs argsBundle
+                = IngredientCollectionSelectionFragmentArgs.fromBundle(getArguments());
+        CollectionType collectionType = argsBundle.getCollectionType();
+        return collectionType;
+    }
+
+    /**
      * Parses the arguments specified by navigation graph actions.
      * Sets the ingredient collection from the arguments and adds ingredient sent by form to
      * its ingredient collection
@@ -112,9 +127,6 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
             throw new IllegalArgumentException("Arguments not supplied to the fragment");
         IngredientCollectionEditorFragmentArgs argsBundle
                 = IngredientCollectionEditorFragmentArgs.fromBundle(getArguments());
-        // Set the type of the ingredient collection
-        CollectionType collectionType = argsBundle.getCollectionType();
-        setIngredientCollectionToDisplay(collectionType);
         // If any form had returned an ingredient, update it to collection
         Ingredient submittedIngredient = argsBundle.getAddedIngredient();
         if (submittedIngredient != null) {
@@ -130,17 +142,9 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
             }
             else { //delete ingredient
                 ingredientCollection.deleteIngredient(ingredientIndex);
-//                try {
-//                    ((MainActivity) getActivity()).deleteIngredientFromDatabase(argsBundle.getEditedIngredientIndex());
-//                } catch (Exception e) {}
             }
         }
         getArguments().clear();
-//        try {
-//            ((MainActivity) getActivity()).updateIngredientFromDatabase(ingredientCollection);
-//        } catch (Exception e) {
-//            return;
-//        }
     }
 
     /**

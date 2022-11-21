@@ -7,14 +7,17 @@ import android.util.Log;
 
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.IngredientStorage;
+import com.example.loops.modelCollections.MealPlanCollection;
 import com.example.loops.modelCollections.RecipeCollection;
 import com.example.loops.models.Ingredient;
+import com.example.loops.models.MealPlan;
 import com.example.loops.models.ModelConstraints;
 import com.example.loops.models.Recipe;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,8 +26,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +44,8 @@ public class Database {
      */
     private static volatile Database instance;
     private FirebaseFirestore db;
+
+    private CollectionReference mealPlanCollectionRef;
 
     public static final String DB_INGREDIENT = "IngredientStorage";
     public static final String DB_RECIPE = "RecipeCollection";
@@ -53,6 +61,8 @@ public class Database {
         db = FirebaseFirestore.getInstance();
         collectionDict.put(Ingredient.class, DB_INGREDIENT);
         collectionDict.put(Recipe.class, DB_RECIPE);
+        collectionDict.put(MealPlan.class, DB_MEAL_PLAN);
+        mealPlanCollectionRef = db.collection(DB_MEAL_PLAN);
     }
 
     /**
@@ -142,73 +152,137 @@ public class Database {
      */
     public void retrieveCollection(String collectionName, Object collection) {
         Log.d("DATABASE_LOG", "RETRIEVE COLLECTION CALLED " + collectionName);
-        db.collection(collectionName).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (!task.isSuccessful())
-                            return;
+        if (!collectionName.equals(DB_MEAL_PLAN)) {
+            db.collection(collectionName).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (!task.isSuccessful())
+                                return;
 
-                        if (collectionName.equals(DB_INGREDIENT)) {
-                            Log.d("DATABASE_LOG", "INGREDIENT COLLECTION RETRIEVED");
-                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                Ingredient databaseIngredient = new Ingredient(
-                                        documentSnapshot.getString("description"),
-                                        documentSnapshot.getString("bestBeforeDate"),
-                                        documentSnapshot.getString("location"),
-                                        Double.parseDouble(documentSnapshot.getString("amount")),
-                                        documentSnapshot.getString("unit"),
-                                        documentSnapshot.getString("category")
-                                );
-
-                                databaseIngredient.setPending(documentSnapshot.getBoolean("pending"));
-
-                                Log.d("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
-                                ((IngredientStorage) collection).addIngredientLocal(databaseIngredient);
-                            }
-                        }
-
-                        if (collectionName.equals(DB_RECIPE)) {
-                            Log.d("DATABASE_LOG", "RECIPE COLLECTION RETRIEVED");
-                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                Recipe databaseRecipe = new Recipe(
-                                        documentSnapshot.getString("title"),
-                                        documentSnapshot.getLong("durationHour"),
-                                        documentSnapshot.getLong("durationMinute"),
-                                        Math.toIntExact(documentSnapshot.getLong("numServing")),
-                                        documentSnapshot.getString("category"),
-                                        documentSnapshot.getString("photoBase64"),
-                                        new IngredientCollection(),
-                                        documentSnapshot.getString("comments")
-                                );
-                                Map<String, Object> containIngredients =
-                                        (HashMap<String, Object>) documentSnapshot.get("ingredients");
-                                for (String ingHash : containIngredients.keySet()) {
-                                    Map<String, Object> ingInfo =
-                                            (HashMap<String, Object>) containIngredients.get(ingHash);
-                                    Ingredient containsIngredient = new Ingredient(
-                                            (String) ingInfo.get("description"),
-                                            (String) ingInfo.get("bestBeforeDate"),
-                                            (String) ingInfo.get("location"),
-                                            Double.parseDouble((String) ingInfo.get("amount")),
-                                            (String) ingInfo.get("unit"),
-                                            (String) ingInfo.get("category")
+                            if (collectionName.equals(DB_INGREDIENT)) {
+                                Log.d("DATABASE_LOG", "INGREDIENT COLLECTION RETRIEVED");
+                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                    Ingredient databaseIngredient = new Ingredient(
+                                            documentSnapshot.getString("description"),
+                                            documentSnapshot.getString("bestBeforeDate"),
+                                            documentSnapshot.getString("location"),
+                                            Double.parseDouble(documentSnapshot.getString("amount")),
+                                            documentSnapshot.getString("unit"),
+                                            documentSnapshot.getString("category")
                                     );
-                                    databaseRecipe.addIngredient(containsIngredient);
+
+                                    databaseIngredient.setPending(documentSnapshot.getBoolean("pending"));
+
+                                    Log.d("DATABASE_LOG", "INGREDIENT GOTTEN " + databaseIngredient.getDescription());
+                                    ((IngredientStorage) collection).addIngredientLocal(databaseIngredient);
                                 }
-                                Log.d("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
-                                ((RecipeCollection) collection).addRecipeLocally(databaseRecipe);
                             }
-                        }
 
-                        if (collectionName.equals(DB_MEAL_PLAN)) {
+                            if (collectionName.equals(DB_RECIPE)) {
+                                Log.d("DATABASE_LOG", "RECIPE COLLECTION RETRIEVED");
+                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                    List<Map<String, Object>> ingredientsList =
+                                            (List<Map<String, Object>>) documentSnapshot.get("ingredients");
 
-                        }
+                                    Recipe databaseRecipe = new Recipe(
+                                            documentSnapshot.getString("title"),
+                                            documentSnapshot.getLong("durationHour"),
+                                            documentSnapshot.getLong("durationMinute"),
+                                            Math.toIntExact(documentSnapshot.getLong("numServing")),
+                                            documentSnapshot.getString("category"),
+                                            documentSnapshot.getString("photoBase64"),
+                                            constructIngredientCollection(ingredientsList),
+                                            documentSnapshot.getString("comments")
+                                    );
+//                                    Map<String, Object> containIngredients =
+//                                            (HashMap<String, Object>) documentSnapshot.get("ingredients");
+//                                    for (String ingHash : containIngredients.keySet()) {
+//                                        Map<String, Object> ingInfo =
+//                                                (HashMap<String, Object>) containIngredients.get(ingHash);
+//                                        Ingredient containsIngredient = new Ingredient(
+//                                                (String) ingInfo.get("description"),
+//                                                (String) ingInfo.get("bestBeforeDate"),
+//                                                (String) ingInfo.get("location"),
+//                                                Double.parseDouble((String) ingInfo.get("amount")),
+//                                                (String) ingInfo.get("unit"),
+//                                                (String) ingInfo.get("category")
+//                                        );
+//                                    }
+
+                                    Log.d("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
+                                    ((RecipeCollection) collection).addRecipeLocally(databaseRecipe);
+                                }
+                            }
+
+                            if (collectionName.equals(DB_MEAL_PLAN)) {
+
+                            }
 
 //                        if (collectionName == DB_SHOPPING_LIST) {
 //
 //                        }
+                        }
+                    });
+        }
+        else if (collectionName.equals(DB_MEAL_PLAN)) {
+            //CollectionReference mealPlanCollectionRef = db.collection(DB_MEAL_PLAN);
+            MealPlanCollection mealPlans = (MealPlanCollection) collection;
+            for (String mealPlanName : mealPlans.getMealPlanNames()) {
+                readMealPlan(mealPlanName, mealPlans);
+            }
+        }
+    }
+
+    private void readMealPlan(String name, MealPlanCollection mealPlans) {
+        mealPlanCollectionRef.document(name).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        List<Map<String, Object>> ingredients =
+                                (List<Map<String, Object>>) document.get("ingredients");
+                        List<Map<String, Object>> recipes =
+                                (List<Map<String, Object>>) document.get("recipes");
+                        RecipeCollection recipeCollection = new RecipeCollection();
+                        for (Map<String, Object> recipe : recipes) {
+                            recipeCollection.addRecipe(new Recipe(
+                                    (String) recipe.get("title"),
+                                    (Long) recipe.get("durationHour"),
+                                    (Long) recipe.get("durationMinute"),
+                                    Math.toIntExact((Long) recipe.get("numServing")),
+                                    (String) recipe.get("category"),
+                                    (String) recipe.get("photoBase64"),
+                                    constructIngredientCollection((List<Map<String, Object>>) recipe.get("ingredients")),
+                                    (String) recipe.get("comments")));
+                        }
+                        Log.d("DATABASE_LOG", "MEAL PLAN " + name);
+                        mealPlans.addMealPlanLocally(
+                                name,
+                                constructIngredientCollection(ingredients),
+                                recipeCollection);
                     }
-                });
+                }
+
+            }
+        });
+    }
+
+    private IngredientCollection constructIngredientCollection(List<Map<String, Object>> ingredients) {
+        IngredientCollection ingredientCollection = new IngredientCollection();
+        if (ingredients == null)
+          return ingredientCollection;
+        for (Map<String, Object> ingredient : ingredients) {
+            ingredientCollection
+                    .addIngredient(new Ingredient(
+                            (String) ingredient.get("description"),
+                            Double.parseDouble((String) ingredient.get("amount")),
+                            (String) ingredient.get("unit"),
+                            (String) ingredient.get("category")));
+        }
+
+        return ingredientCollection;
     }
 }
