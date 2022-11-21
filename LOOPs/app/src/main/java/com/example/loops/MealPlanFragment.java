@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.loops.adapters.RecipeCollectionViewAdapter;
 import com.example.loops.adapters.ShoppingListViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
+import com.example.loops.modelCollections.RecipeCollection;
 import com.example.loops.models.MealPlan;
 import com.example.loops.sortOption.IngredientSortOption;
+import com.example.loops.sortOption.RecipeSortOption;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,6 +80,14 @@ public class MealPlanFragment extends Fragment {
 
         ListView ingredientListView = view.findViewById(R.id.ingredients_listView);
         ingredientListView.setAdapter(ingredientsViewAdapter);
+
+        RecipeCollection recipeCollection = mealPlan.getRecipes();
+        recipeCollection.sort(RecipeSortOption.BY_TITLE_ASCENDING);
+        RecipeCollectionViewAdapter recipesViewAdapter =
+                new RecipeCollectionViewAdapter(getActivity(), recipeCollection.getAllRecipes());
+
+        ListView recipeListView = view.findViewById(R.id.recipes_listView);
+        recipeListView.setAdapter(recipesViewAdapter);
         return view;
     }
 }

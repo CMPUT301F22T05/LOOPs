@@ -182,6 +182,9 @@ public class Database {
                             if (collectionName.equals(DB_RECIPE)) {
                                 Log.d("DATABASE_LOG", "RECIPE COLLECTION RETRIEVED");
                                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                    List<Map<String, Object>> ingredientsList =
+                                            (List<Map<String, Object>>) documentSnapshot.get("ingredients");
+
                                     Recipe databaseRecipe = new Recipe(
                                             documentSnapshot.getString("title"),
                                             documentSnapshot.getLong("durationHour"),
@@ -189,7 +192,7 @@ public class Database {
                                             Math.toIntExact(documentSnapshot.getLong("numServing")),
                                             documentSnapshot.getString("category"),
                                             documentSnapshot.getString("photoBase64"),
-                                            new IngredientCollection(),
+                                            constructIngredientCollection(ingredientsList),
                                             documentSnapshot.getString("comments")
                                     );
 //                                    Map<String, Object> containIngredients =
@@ -206,16 +209,7 @@ public class Database {
 //                                                (String) ingInfo.get("category")
 //                                        );
 //                                    }
-                                    List<Map<String, Object>> ingredientsList =
-                                            (List<Map<String, Object>>) documentSnapshot.get("ingredients");
-                                    for (Map<String, Object> ingredient : ingredientsList) {
-                                        Ingredient containsIngredient = new Ingredient(
-                                                (String) ingredient.get("description"),
-                                                Double.parseDouble((String) ingredient.get("amount")),
-                                                (String) ingredient.get("unit"),
-                                                (String) ingredient.get("category"));
-                                        databaseRecipe.addIngredient(containsIngredient);
-                                    }
+
                                     Log.d("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
                                     ((RecipeCollection) collection).addRecipeLocally(databaseRecipe);
                                 }
@@ -248,26 +242,46 @@ public class Database {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        IngredientCollection ingredientCollection = new IngredientCollection();
                         List<Map<String, Object>> ingredients =
                                 (List<Map<String, Object>>) document.get("ingredients");
-                        Log.d("DATABASE_LOG", "MEAL PLAN " + name);
-                        for (Map<String, Object> ingredient : ingredients) {
-                            ingredientCollection
-                                    .addIngredient(new Ingredient(
-                                            (String) ingredient.get("description"),
-                                            Double.parseDouble((String) ingredient.get("amount")),
-                                            (String) ingredient.get("unit"),
-                                            (String) ingredient.get("category")));
+
+                        List<Map<String, Object>> recipes =
+                                (List<Map<String, Object>>) document.get("recipes");
+                        RecipeCollection recipeCollection = new RecipeCollection();
+                        for (Map<String, Object> recipe : recipes) {
+                            recipeCollection.addRecipe(new Recipe(
+                                    (String) recipe.get("title"),
+                                    (Long) recipe.get("durationHour"),
+                                    (Long) recipe.get("durationMinute"),
+                                    Math.toIntExact((Long) recipe.get("numServing")),
+                                    (String) recipe.get("category"),
+                                    (String) recipe.get("photoBase64"),
+                                    constructIngredientCollection((List<Map<String, Object>>) recipe.get("ingredients")),
+                                    (String) recipe.get("comments")));
                         }
+                        Log.d("DATABASE_LOG", "MEAL PLAN " + name);
                         mealPlans.addMealPlanLocally(
                                 name,
-                                ingredientCollection,
-                                new RecipeCollection());
+                                constructIngredientCollection(ingredients),
+                                recipeCollection);
                     }
                 }
 
             }
         });
+    }
+
+    private IngredientCollection constructIngredientCollection(List<Map<String, Object>> ingredients) {
+        IngredientCollection ingredientCollection = new IngredientCollection();
+        for (Map<String, Object> ingredient : ingredients) {
+            ingredientCollection
+                    .addIngredient(new Ingredient(
+                            (String) ingredient.get("description"),
+                            Double.parseDouble((String) ingredient.get("amount")),
+                            (String) ingredient.get("unit"),
+                            (String) ingredient.get("category")));
+        }
+
+        return ingredientCollection;
     }
 }
