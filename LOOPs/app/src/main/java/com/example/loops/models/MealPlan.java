@@ -86,7 +86,7 @@ public class MealPlan implements Serializable, ModelConstraints, Comparable<Meal
         for (Ingredient ingredient : ingredients.getIngredients()) {
             ingredientList.add(ingredient.getMapData());
         }
-        mapData.put("ingredient", ingredientList);
+        mapData.put("ingredients", ingredientList);
         List<Map<String, Object>> recipeList = new ArrayList<>();
         for (Recipe recipe : recipes.getAllRecipes()) {
             recipeList.add(recipe.getMapData());
