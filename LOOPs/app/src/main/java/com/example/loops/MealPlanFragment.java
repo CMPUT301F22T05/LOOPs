@@ -150,7 +150,10 @@ public class MealPlanFragment extends Fragment {
             public void onChanged(@Nullable final Object selectedRecipes) {
                 BaseRecipeCollection s = (BaseRecipeCollection) selectedRecipes;
                 for (Recipe recipe : s.getAllRecipes()) {
-                    Log.d("RECIPE_DEBUG", "SELECTED " + recipe.getTitle() + " " + recipe.getNumServing());
+                    Log.d("RECIPE_DEBUG", "SELECTED RECIPE " + recipe.getTitle() + " " + recipe.getNumServing());
+                    for (Ingredient ingredient : recipe.getIngredients().getIngredients()) {
+                        Log.d("RECIPE_DEBUG", "INGREDIENT " + ingredient.getDescription() + " " + ingredient.getAmount());
+                    }
                 }
                 savedStateHandle.remove( RecipeCollectionSelectionFragment.RESULT_KEY );
             }
