@@ -90,6 +90,23 @@ public class Recipe implements Serializable, ModelConstraints {
     }
 
     /**
+     * Copy constructor
+     * @param that Recipe to copy
+     */
+    public Recipe(Recipe that) {
+        this.title = that.getTitle();
+        this.prepTime = that.getPrepTime();
+        this.numServing = that.getNumServing();
+        this.category = that.getCategory();
+        this.photoBase64 = that.getPhotoBase64();
+        this.comments = that.getComments();
+        this.ingredients = new IngredientCollection();
+        for (Ingredient ing : that.getIngredients().getIngredients()) {
+            this.ingredients.addIngredient(new Ingredient(ing));
+        }
+    }
+
+    /**
      * Compress Bitmap photo to given quality; use non-lossy PNG format to compress.
      * @param photo Bitmap photo to compress
      * @param compressQuality number from 0 to 100 represents percentage of compress quality

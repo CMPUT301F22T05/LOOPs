@@ -70,7 +70,6 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
             collectionType = getCollectionType();
         IngredientCollectionFactory ingredientCollectionFactory = new IngredientCollectionFactory(getActivity());
         ingredientCollection = ingredientCollectionFactory.createIngredientCollection(collectionType);
-        Log.e("DEBUG", collectionType.toString());
         populateSortSpinnerOptions(ingredientCollectionFactory, collectionType);
         setIngredientCollectionToDisplay(ingredientCollectionFactory, collectionType, ingredientCollection);
         parseArguments();
@@ -81,7 +80,7 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
      * Subclasses must implement this. When subclasses parse arguments, collection type can be parsed
      * there
      */
-    abstract protected IngredientCollectionFactory.CollectionType getCollectionType();
+    abstract protected CollectionType getCollectionType();
 
     /**
      * Subclasses must implement the behavior when ingredient items in the list are clicked
