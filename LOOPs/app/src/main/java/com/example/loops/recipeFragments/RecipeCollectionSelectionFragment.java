@@ -13,12 +13,16 @@ import android.widget.EditText;
 import androidx.navigation.Navigation;
 
 import com.example.loops.R;
+import com.example.loops.adapters.RecipeSelectionViewAdapter;
 import com.example.loops.factory.RecipeCollectionFactory.CollectionType;
 import com.example.loops.modelCollections.BaseRecipeCollection;
+import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 import com.example.loops.validators.RecipeValidator;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment {
     public static final String RESULT_KEY = "RECIPE_COLLECTION_SELECTION_FRAGMENT_RESULT_KEY";
@@ -116,8 +120,7 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
 
         // If already selected, unselect it
         if (chosenRecipes.getAllRecipes().contains(selectedRecipe)) {
-            // TODO: implement adapter to select recipes
-            // ((RecipeCollectionViewAdapter) collectionViewAdapter).selectItem(position);
+            ((RecipeSelectionViewAdapter) collectionViewAdapter).selectItem(position, -1);
             chosenRecipes.getAllRecipes().remove(selectedRecipe);
         }
         // If not, add it to selection
@@ -140,9 +143,8 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
          */
         // Create view for the prompt
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        // TODO: Create dialog UI for num servings
-        View recipeQuantityPromptView = inflater.inflate(R.layout.dialog_ingredient_quantity_prompt, null);
-        EditText amountInput = recipeQuantityPromptView.findViewById(R.id.dialog_amount_input);
+        View recipeQuantityPromptView = inflater.inflate(R.layout.dialog_recipe_quantity_prompt, null);
+        EditText numServInput = recipeQuantityPromptView.findViewById(R.id.dialog_num_serving_input);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog setRecipeQuantityPrompt = builder
@@ -167,16 +169,14 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
                     @Override
                     public void onClick(View view) {
                         // Get user input
-                        double amount = getAmountFromInput(amountInput);
+                        int numServings = getNumServingsFromInput(numServInput);
                         // Validate user input
                         RecipeValidator validator = new RecipeValidator();
-                        boolean valid = validator.checkNumServ((int) amount, RecipeValidator.RECIPE_TYPE.STORED);
+                        boolean valid = validator.checkNumServ(numServings, RecipeValidator.RECIPE_TYPE.STORED);
 
                         if (valid) {
-                            selectedRecipe.setNumServing((int) amount);
+                            ((RecipeSelectionViewAdapter) collectionViewAdapter).selectItem(position, numServings);
                             chosenRecipes.addRecipe(selectedRecipe);
-                            // TODO: implement adapter to select recipes
-                            // ((RecipeCollectionViewAdapter) collectionViewAdapter).selectItem(position);
                             setRecipeQuantityPrompt.dismiss();
                         }
                         else {
@@ -208,9 +208,34 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
     }
 
     /**
+     * Given a new number of servings, scale the recipe to meet the new number of servings
+     * @param recipeToScale
+     * @param newNumServings
+     */
+    private void scaleRecipeWithNewServing(Recipe recipeToScale, int newNumServings) {
+        /* FIXME: one bug I can think of right now is if ingredient is scaled, then
+                if the ingredient is referenced elsewhere, then that would also be scaled */
+        // FIXME: Also another consideration is adding a scale method to Recipe or changing how setNumServing works
+        double scalingFactor = (double) newNumServings / recipeToScale.getNumServing();
+        DecimalFormat rounder = new DecimalFormat("#.####");
+        for (Ingredient ing : recipeToScale.getIngredients().getIngredients()) {
+            double scaledAmount = ing.getAmount() * scalingFactor;
+            double roundedAmount = Double.parseDouble( rounder.format( scaledAmount ) );
+            ing.setAmount( roundedAmount );
+        }
+        recipeToScale.setNumServing(newNumServings);
+    }
+
+    /**
      * Sends the recipes to the caller fragment
      */
     private void sendRecipesToCallerFragment() {
+        // Scale all chosen recipes
+        for (Recipe recipe : chosenRecipes.getAllRecipes()) {
+            int newNumServings = ((RecipeSelectionViewAdapter) collectionViewAdapter).getNumberOfServings(recipe);
+            scaleRecipeWithNewServing(recipe, newNumServings);
+        }
+        // Send result
         Navigation.findNavController(getView()).getPreviousBackStackEntry().getSavedStateHandle().set(
                 RESULT_KEY,
                 chosenRecipes
@@ -219,18 +244,18 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
     }
 
     /**
-     * Parses the user input in the edit text for amount
-     * @param amountInput edit text for amount
-     * @return double. If invalid input, returns NaN
+     * Parses the user input in the edit text for number of servings
+     * @param numServInput edit text for number of servings
+     * @return int. If invalid input, returns -1
      */
-    private double getAmountFromInput(EditText amountInput) {
-        double amount = Double.NaN;
+    private int getNumServingsFromInput(EditText numServInput) {
+        int numServ = -1;
         try {
-            amount = Double.parseDouble( amountInput.getText().toString() );
+            numServ = Integer.parseInt( numServInput.getText().toString() );
         }
         catch (NumberFormatException e) {
-            amount = Double.NaN;
+            numServ = -1;
         }
-        return amount;
+        return numServ;
     }
 }
