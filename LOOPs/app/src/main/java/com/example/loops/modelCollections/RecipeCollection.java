@@ -24,11 +24,10 @@ import java.util.Comparator;
  *  recipes can also be sorted in different ways shown in RecipeSortOption enum
  *  it also contains comparators for Recipe
  */
-public class RecipeCollection {
+public class RecipeCollection extends NonRemoteRecipeCollection {
     /**
      * Attributes of the RecipeCollection
      */
-    private ArrayList<Recipe> allRecipes;
     private Database database;
 
     /**
@@ -36,7 +35,6 @@ public class RecipeCollection {
      */
     public RecipeCollection() {
         database = null;
-        allRecipes = new ArrayList<>();
     }
 
     /**
@@ -45,7 +43,6 @@ public class RecipeCollection {
      */
     public RecipeCollection(Database database) {
         this.database = database;
-        allRecipes = new ArrayList<>();
         updateAllRecipes();
     }
 
@@ -61,9 +58,7 @@ public class RecipeCollection {
      * @param recipe (Recipe)
      */
     public void addRecipe(Recipe recipe){
-        if (!allRecipes.contains(recipe)){
-            allRecipes.add(recipe);
-        }
+        super.addRecipe(recipe);
         if (database != null)
             database.addDocument(recipe);
     }
@@ -73,9 +68,7 @@ public class RecipeCollection {
      * @param recipe (Recipe)
      */
     public void addRecipeLocally(Recipe recipe){
-        if (!allRecipes.contains(recipe)){
-            allRecipes.add(recipe);
-        }
+        super.addRecipe(recipe);
     }
 
     /**
@@ -84,31 +77,10 @@ public class RecipeCollection {
      * @return true if deleted, false otherwise
      */
     public boolean deleteRecipe(int indexToDelete){
-        try {
-            if (database != null)
-                database.deleteDocument(allRecipes.get(indexToDelete));
-            allRecipes.remove(indexToDelete);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Method to get a recipe from the collection of recipes
-     * @param recipeInd (int)
-     * @return Recipe
-     */
-    public Recipe getRecipe(int recipeInd){
-        return allRecipes.get(recipeInd);
-    }
-
-    /**
-     * Method to get all recipes in the collection as an array list
-     * @return ArrayList of recipes
-     */
-    public ArrayList<Recipe> getAllRecipes(){
-        return allRecipes;
+        boolean deleted = super.deleteRecipe(indexToDelete);
+        if (deleted && database != null)
+            database.deleteDocument(allRecipes.get(indexToDelete));
+        return deleted;
     }
 
     /**
@@ -118,71 +90,9 @@ public class RecipeCollection {
      * @return true if deleted, false otherwise
      */
     public boolean updateRecipe(int recipeInd, Recipe newRecipe){
-        try {
-            if (database != null)
-                database.updateDocument(allRecipes.get(recipeInd), newRecipe);
-            allRecipes.set(recipeInd, newRecipe);
-        }
-        catch (Exception e) {
-            return false;
-        }
-        return true;
+        boolean updated = super.updateRecipe(recipeInd, newRecipe);
+        if (updated && database != null)
+            database.updateDocument(allRecipes.get(recipeInd), newRecipe);
+        return updated;
     }
-
-    /**
-     * Method that calls the appropriate class based on the user sorting selection
-     * @param option (RecipeSortOption)
-     */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void sort(RecipeSortOption option) {
-        if (option.equals(RecipeSortOption.BY_TITLE_ASCENDING)) {
-            Collections.sort(allRecipes, new RecipeCollection.TitleAscendingComparator());
-        }
-        else if (option.equals(RecipeSortOption.BY_PREP_TIME_ASCENDING)) {
-            allRecipes.sort(new RecipeCollection.PrepTimeAscendingComparator());
-        }
-        else if (option.equals(RecipeSortOption.BY_CATEGORY_ASCENDING)) {
-            allRecipes.sort(new RecipeCollection.CategoryAscendingComparator());
-        }
-        else if (option.equals(RecipeSortOption.BY_TITLE__DESCENDING)) {
-            Collections.sort(allRecipes, (new TitleAscendingComparator().reversed()));
-        }
-        else if (option.equals(RecipeSortOption.BY_PREP_TIME_DESCENDING)) {
-            allRecipes.sort(new RecipeCollection.PrepTimeAscendingComparator().reversed());
-        }
-        else if (option.equals(RecipeSortOption.BY_CATEGORY_DESCENDING)) {
-            allRecipes.sort(new RecipeCollection.CategoryAscendingComparator().reversed());
-        }
-    }
-
-    /**
-     * Class for comparing recipes by title
-     */
-    class TitleAscendingComparator implements Comparator<Recipe> {
-        @Override
-        public int compare(Recipe o1, Recipe o2) {
-            return o1.getTitle().compareTo(o2.getTitle());
-        }
-    }
-
-    /**
-     * Class for comparing recipes by preparation time
-     */
-    class PrepTimeAscendingComparator implements Comparator<Recipe> {
-        @Override
-        public int compare(Recipe o1, Recipe o2) {
-            return o1.getPrepTime().compareTo(o2.getPrepTime());
-        }
-    }
-
-    /**
-     * Class for comparing recipes by categories
-     */
-    class CategoryAscendingComparator implements Comparator<Recipe> {
-        @Override
-        public int compare(Recipe o1, Recipe o2) {
-            return o1.getCategory().compareTo(o2.getCategory());
-        }
-    }
-
 }
