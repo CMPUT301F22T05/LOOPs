@@ -1,20 +1,7 @@
 package com.example.loops.modelCollections;
 
-import static android.content.ContentValues.TAG;
-
-import android.os.Build;
-import android.provider.ContactsContract;
-import android.util.Log;
-
-import androidx.annotation.RequiresApi;
-
 import com.example.loops.database.Database;
 import com.example.loops.models.Recipe;
-import com.example.loops.sortOption.RecipeSortOption;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  *  Control class for recipes
@@ -24,7 +11,7 @@ import java.util.Comparator;
  *  recipes can also be sorted in different ways shown in RecipeSortOption enum
  *  it also contains comparators for Recipe
  */
-public class RecipeCollection extends NonRemoteRecipeCollection {
+public class RecipeCollection extends BaseRecipeCollection {
     /**
      * Attributes of the RecipeCollection
      */

@@ -19,7 +19,7 @@ import java.util.Comparator;
  *  recipes can also be sorted in different ways shown in RecipeSortOption enum
  *  it also contains comparators for Recipe
  */
-public class NonRemoteRecipeCollection {
+public class BaseRecipeCollection {
     /* FIXME: I think it is better to rename this to RecipeCollection and the old RecipeCollection
            to RecipeStorage.
            However, I am not renaming it right now because it might conflict with other's work
@@ -29,7 +29,7 @@ public class NonRemoteRecipeCollection {
     /**
      * Constructor
      */
-    public NonRemoteRecipeCollection() {
+    public BaseRecipeCollection() {
         allRecipes = new ArrayList<>();
     }
 
@@ -97,22 +97,22 @@ public class NonRemoteRecipeCollection {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void sort(RecipeSortOption option) {
         if (option.equals(RecipeSortOption.BY_TITLE_ASCENDING)) {
-            Collections.sort(allRecipes, new NonRemoteRecipeCollection.TitleAscendingComparator());
+            Collections.sort(allRecipes, new BaseRecipeCollection.TitleAscendingComparator());
         }
         else if (option.equals(RecipeSortOption.BY_PREP_TIME_ASCENDING)) {
-            allRecipes.sort(new NonRemoteRecipeCollection.PrepTimeAscendingComparator());
+            allRecipes.sort(new BaseRecipeCollection.PrepTimeAscendingComparator());
         }
         else if (option.equals(RecipeSortOption.BY_CATEGORY_ASCENDING)) {
-            allRecipes.sort(new NonRemoteRecipeCollection.CategoryAscendingComparator());
+            allRecipes.sort(new BaseRecipeCollection.CategoryAscendingComparator());
         }
         else if (option.equals(RecipeSortOption.BY_TITLE__DESCENDING)) {
-            Collections.sort(allRecipes, (new NonRemoteRecipeCollection.TitleAscendingComparator().reversed()));
+            Collections.sort(allRecipes, (new BaseRecipeCollection.TitleAscendingComparator().reversed()));
         }
         else if (option.equals(RecipeSortOption.BY_PREP_TIME_DESCENDING)) {
-            allRecipes.sort(new NonRemoteRecipeCollection.PrepTimeAscendingComparator().reversed());
+            allRecipes.sort(new BaseRecipeCollection.PrepTimeAscendingComparator().reversed());
         }
         else if (option.equals(RecipeSortOption.BY_CATEGORY_DESCENDING)) {
-            allRecipes.sort(new NonRemoteRecipeCollection.CategoryAscendingComparator().reversed());
+            allRecipes.sort(new BaseRecipeCollection.CategoryAscendingComparator().reversed());
         }
     }
 
