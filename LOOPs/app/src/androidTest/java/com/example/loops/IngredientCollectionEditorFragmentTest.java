@@ -10,7 +10,13 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelStore;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
@@ -22,6 +28,8 @@ import static org.hamcrest.Matchers.*;
 import com.example.loops.factory.IngredientCollectionFactory;
 import com.example.loops.ingredientFragments.IngredientCollectionEditorFragment;
 import com.example.loops.ingredientFragments.IngredientCollectionFragment;
+import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
+import com.example.loops.ingredientFragments.forms.EditIngredientFormFragment;
 import com.example.loops.models.Ingredient;
 
 import org.hamcrest.Description;
@@ -55,13 +63,30 @@ public class IngredientCollectionEditorFragmentTest {
     }
 
     private void launchFragment() {
-        fragmentScenario = FragmentScenario.
-                launchInContainer(IngredientCollectionEditorFragment.class, bundle);
+        /**
+         * https://developer.android.com/guide/navigation/navigation-testing#test_navigationui_with_fragmentscenario
+         * Date Accessed : 2022-11-19
+         */
+        fragmentScenario = FragmentScenario.launchInContainer(IngredientCollectionEditorFragment.class, bundle, new FragmentFactory() {
+            @NonNull
+            @Override
+            public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
+                IngredientCollectionEditorFragment fragment = new IngredientCollectionEditorFragment();
 
-        fragmentScenario.onFragment(fragment -> {
-            //setCurrentDestination
-            navController.setGraph(R.navigation.nav_graph);
-            Navigation.setViewNavController(fragment.requireView(), navController);
+                fragment.getViewLifecycleOwnerLiveData().observeForever(new Observer<LifecycleOwner>() {
+                    @Override
+                    public void onChanged(LifecycleOwner viewLifecycleOwner) {
+                        // The fragment’s view has just been created
+                        if (viewLifecycleOwner != null) {
+                            navController.setViewModelStore(new ViewModelStore());
+                            navController.setGraph(R.navigation.nav_graph);
+                            navController.setCurrentDestination(R.id.ingredientCollectionEditorFragment);
+                            Navigation.setViewNavController(fragment.requireView(), navController);
+                        }
+                    }
+                });
+                return fragment;
+            }
         });
     }
 
@@ -212,14 +237,40 @@ public class IngredientCollectionEditorFragmentTest {
     }
 
     private void mimicAddIngredientRequest() {
-        bundle.putSerializable("addedIngredient",
-                new Ingredient(
-                        "apple",
-                        "2022-11-04",
-                        "pantry",
-                        1,
-                        "kg",
-                        "fruit"));
+        fragmentScenario = FragmentScenario.launchInContainer(IngredientCollectionEditorFragment.class, bundle, new FragmentFactory() {
+            @NonNull
+            @Override
+            public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
+                IngredientCollectionEditorFragment fragment = new IngredientCollectionEditorFragment();
+
+                fragment.getViewLifecycleOwnerLiveData().observeForever(new Observer<LifecycleOwner>() {
+                    @Override
+                    public void onChanged(LifecycleOwner viewLifecycleOwner) {
+                        // The fragment’s view has just been created
+                        if (viewLifecycleOwner != null) {
+                            navController.setViewModelStore(new ViewModelStore());
+                            navController.setGraph(R.navigation.nav_graph);
+                            navController.setCurrentDestination(R.id.ingredientCollectionEditorFragment);
+                            Navigation.setViewNavController(fragment.requireView(), navController);
+
+                            navController.getCurrentBackStackEntry()
+                            .getSavedStateHandle()
+                            .set(
+                                    AddIngredientFormFragment.RESULT_KEY,
+                                    new Ingredient(
+                                            "apple",
+                                            "2022-11-04",
+                                            "pantry",
+                                            1,
+                                            "kg",
+                                            "fruit")
+                            );
+                        }
+                    }
+                });
+                return fragment;
+            }
+        });
     }
 
     /**
@@ -227,8 +278,8 @@ public class IngredientCollectionEditorFragmentTest {
      */
     @Test
     public void testAddIngredientRequest() {
+        // launchFragment();
         mimicAddIngredientRequest();
-        launchFragment();
         onView(withId(R.id.generic_collection_view)).check(ViewAssertions.matches(withListSize(3)));
         onData(is(instanceOf(Ingredient.class)))
                 .inAdapterView(withId(R.id.generic_collection_view))
