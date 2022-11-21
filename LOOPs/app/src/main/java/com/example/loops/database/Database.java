@@ -192,19 +192,28 @@ public class Database {
                                             new IngredientCollection(),
                                             documentSnapshot.getString("comments")
                                     );
-                                    Map<String, Object> containIngredients =
-                                            (HashMap<String, Object>) documentSnapshot.get("ingredients");
-                                    for (String ingHash : containIngredients.keySet()) {
-                                        Map<String, Object> ingInfo =
-                                                (HashMap<String, Object>) containIngredients.get(ingHash);
+//                                    Map<String, Object> containIngredients =
+//                                            (HashMap<String, Object>) documentSnapshot.get("ingredients");
+//                                    for (String ingHash : containIngredients.keySet()) {
+//                                        Map<String, Object> ingInfo =
+//                                                (HashMap<String, Object>) containIngredients.get(ingHash);
+//                                        Ingredient containsIngredient = new Ingredient(
+//                                                (String) ingInfo.get("description"),
+//                                                (String) ingInfo.get("bestBeforeDate"),
+//                                                (String) ingInfo.get("location"),
+//                                                Double.parseDouble((String) ingInfo.get("amount")),
+//                                                (String) ingInfo.get("unit"),
+//                                                (String) ingInfo.get("category")
+//                                        );
+//                                    }
+                                    List<Map<String, Object>> ingredientsList =
+                                            (List<Map<String, Object>>) documentSnapshot.get("ingredients");
+                                    for (Map<String, Object> ingredient : ingredientsList) {
                                         Ingredient containsIngredient = new Ingredient(
-                                                (String) ingInfo.get("description"),
-                                                (String) ingInfo.get("bestBeforeDate"),
-                                                (String) ingInfo.get("location"),
-                                                Double.parseDouble((String) ingInfo.get("amount")),
-                                                (String) ingInfo.get("unit"),
-                                                (String) ingInfo.get("category")
-                                        );
+                                                (String) ingredient.get("description"),
+                                                Double.parseDouble((String) ingredient.get("amount")),
+                                                (String) ingredient.get("unit"),
+                                                (String) ingredient.get("category"));
                                         databaseRecipe.addIngredient(containsIngredient);
                                     }
                                     Log.d("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());

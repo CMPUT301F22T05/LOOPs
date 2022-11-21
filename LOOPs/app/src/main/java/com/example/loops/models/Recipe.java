@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -168,10 +169,15 @@ public class Recipe implements Serializable, ModelConstraints {
         mapData.put("comments", getComments());
         mapData.put("durationHour", getPrepTime().toHours());
         mapData.put("durationMinute", getPrepTime().toMinutes() - getPrepTime().toHours()*60);
-        Map<String, Object> ingredientsMap = new HashMap<>();
-        for (Ingredient ing : this.getIngredients().getIngredients())
-            ingredientsMap.put(Integer.toString(ing.hashCode()), ing.getMapData());
-        mapData.put("ingredients", ingredientsMap);
+//        Map<String, Object> ingredientsMap = new HashMap<>();
+//        for (Ingredient ing : this.getIngredients().getIngredients())
+//            ingredientsMap.put(Integer.toString(ing.hashCode()), ing.getMapData());
+        List<Map<String, Object>> ingredientList = new ArrayList<>();
+        for (Ingredient ingredient : ingredients.getIngredients()) {
+            ingredientList.add(ingredient.getMapData());
+        }
+//        mapData.put("ingredients", ingredientsMap);
+        mapData.put("ingredients", ingredientList);
         mapData.put("numServing", getNumServing());
         mapData.put("title", getTitle());
         mapData.put("photoBase64", getPhotoBase64());

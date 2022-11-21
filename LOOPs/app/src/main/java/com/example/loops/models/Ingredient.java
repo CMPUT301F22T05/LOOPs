@@ -70,7 +70,7 @@ public class Ingredient implements Serializable, ModelConstraints {
     public Ingredient(String description, double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = LocalDate.MIN;
-        this.storeLocation = "";
+        this.storeLocation = " ";
         this.amount = amount;
         this.unit = unit;
         this.category = category;
