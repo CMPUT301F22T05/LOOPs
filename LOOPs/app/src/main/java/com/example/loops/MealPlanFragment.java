@@ -2,10 +2,15 @@ package com.example.loops;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +19,16 @@ import android.widget.ListView;
 
 import com.example.loops.adapters.RecipeCollectionViewAdapter;
 import com.example.loops.adapters.ShoppingListViewAdapter;
+import com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment;
+import com.example.loops.modelCollections.BaseRecipeCollection;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.RecipeCollection;
+import com.example.loops.models.Ingredient;
 import com.example.loops.models.MealPlan;
+import com.example.loops.models.Recipe;
+import com.example.loops.recipeFragments.RecipeCollectionSelectionFragment;
+import com.example.loops.recipeFragments.forms.AddRecipeFormFragmentDirections;
+import com.example.loops.recipeFragments.forms.AddRecipeIngredientFormFragment;
 import com.example.loops.sortOption.IngredientSortOption;
 import com.example.loops.sortOption.RecipeSortOption;
 
@@ -107,5 +119,41 @@ public class MealPlanFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        testRecipeCollectionSelectionFragment();
+    }
+
+    // For Testing. I will push this so that the one implementing this class has a reference to work on
+    private void testRecipeCollectionSelectionFragment() {
+        Button addButton = getView().findViewById(R.id.add_button);
+        BaseRecipeCollection recipeToFilter = new RecipeCollection();
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Navigate to recipe selection fragment
+                MealPlanFragmentDirections.ActionMealPlanFragmentToRecipeCollectionSelectionFragment addRecipeAction
+                        = MealPlanFragmentDirections.actionMealPlanFragmentToRecipeCollectionSelectionFragment();
+                addRecipeAction.setRecipesToFilter(recipeToFilter);
+                Navigation.findNavController(getView()).navigate(addRecipeAction);
+            }
+        });
+
+        // Handle response from recipe collection selection fragment
+        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
+        savedStateHandle.getLiveData( RecipeCollectionSelectionFragment.RESULT_KEY )
+        .observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object selectedRecipes) {
+                BaseRecipeCollection s = (BaseRecipeCollection) selectedRecipes;
+                for (Recipe recipe : s.getAllRecipes()) {
+                    Log.d("RECIPE_DEBUG", "SELECTED " + recipe.getTitle() + " " + recipe.getNumServing());
+                }
+                savedStateHandle.remove( RecipeCollectionSelectionFragment.RESULT_KEY );
+            }
+        });
     }
 }
