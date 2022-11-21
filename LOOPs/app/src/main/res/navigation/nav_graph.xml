@@ -56,6 +56,11 @@
             android:name="mealPlanIndex"
             app:argType="integer"
             android:defaultValue="-1" />
+        <argument
+            android:name="updatedMealPlan"
+            app:argType="com.example.loops.models.MealPlan"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionEditorFragment"
@@ -260,5 +265,8 @@
         <argument
             android:name="mealPlanIndex"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_save_meal_plan"
+            app:destination="@id/mealPlanHomePageFragment" />
     </fragment>
 </navigation>
