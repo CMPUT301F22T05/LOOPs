@@ -252,13 +252,15 @@ public class Database {
                         List<Map<String, Object>> ingredients =
                                 (List<Map<String, Object>>) document.get("ingredients");
                         Log.d("DATABASE_LOG", "MEAL PLAN " + name);
-                        for (Map<String, Object> ingredient : ingredients) {
-                            ingredientCollection
-                                    .addIngredient(new Ingredient(
-                                            (String) ingredient.get("description"),
-                                            Double.parseDouble((String) ingredient.get("amount")),
-                                            (String) ingredient.get("unit"),
-                                            (String) ingredient.get("category")));
+                        if (ingredients != null) {
+                            for (Map<String, Object> ingredient : ingredients) {
+                                ingredientCollection
+                                        .addIngredient(new Ingredient(
+                                                (String) ingredient.get("description"),
+                                                Double.parseDouble((String) ingredient.get("amount")),
+                                                (String) ingredient.get("unit"),
+                                                (String) ingredient.get("category")));
+                            }
                         }
                         mealPlans.addMealPlanLocally(
                                 name,
