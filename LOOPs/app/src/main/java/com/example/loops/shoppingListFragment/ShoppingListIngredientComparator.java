@@ -31,6 +31,16 @@ public class ShoppingListIngredientComparator {
         return Double.MAX_VALUE;
     }
 
+    public static double getStoredAmount(Ingredient mealPlanIngredient, Ingredient storageIngredient) {
+        boolean condition = mealPlanIngredient.getDescription().equalsIgnoreCase(storageIngredient.getDescription())
+                && mealPlanIngredient.getCategory().equalsIgnoreCase(storageIngredient.getCategory())
+                && mealPlanIngredient.getUnit().equalsIgnoreCase(storageIngredient.getUnit());
+        if (condition) {
+            return storageIngredient.getAmount();
+        }
+        return 0;
+    }
+
     /**
      * Compare & see if meal plan ingredient has an identical ingredient storage that is pending
      * @param ingredient1 meal plan ingredient
