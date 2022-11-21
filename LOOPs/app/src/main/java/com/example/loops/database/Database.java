@@ -244,7 +244,6 @@ public class Database {
                     if (document.exists()) {
                         List<Map<String, Object>> ingredients =
                                 (List<Map<String, Object>>) document.get("ingredients");
-
                         List<Map<String, Object>> recipes =
                                 (List<Map<String, Object>>) document.get("recipes");
                         RecipeCollection recipeCollection = new RecipeCollection();
@@ -273,6 +272,8 @@ public class Database {
 
     private IngredientCollection constructIngredientCollection(List<Map<String, Object>> ingredients) {
         IngredientCollection ingredientCollection = new IngredientCollection();
+        if (ingredients == null)
+          return ingredientCollection;
         for (Map<String, Object> ingredient : ingredients) {
             ingredientCollection
                     .addIngredient(new Ingredient(
