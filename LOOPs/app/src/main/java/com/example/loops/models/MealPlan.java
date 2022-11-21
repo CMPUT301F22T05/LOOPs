@@ -4,11 +4,15 @@ import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.RecipeCollection;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The class models a meal, a meal can contains multiple recipes and ingredients
  */
-public class MealPlan implements Serializable {
+public class MealPlan implements Serializable, ModelConstraints, Comparable<MealPlan>{
     private String name;
     private IngredientCollection ingredients;
     private RecipeCollection recipes;
@@ -73,5 +77,31 @@ public class MealPlan implements Serializable {
      */
     public void setRecipes(RecipeCollection recipes) {
         this.recipes = recipes;
+    }
+
+    @Override
+    public Map<String, Object> getMapData() {
+        Map<String, Object> mapData = new HashMap<>();
+        List<Map<String, Object>> ingredientList = new ArrayList<>();
+        for (Ingredient ingredient : ingredients.getIngredients()) {
+            ingredientList.add(ingredient.getMapData());
+        }
+        mapData.put("ingredient", ingredientList);
+        List<Map<String, Object>> recipeList = new ArrayList<>();
+        for (Recipe recipe : recipes.getAllRecipes()) {
+            recipeList.add(recipe.getMapData());
+        }
+        mapData.put("recipes", recipeList);
+        return mapData;
+    }
+
+    @Override
+    public String getDocumentName() {
+        return name;
+    }
+
+    @Override
+    public int compareTo(MealPlan o) {
+        return name.compareTo(o.getName());
     }
 }

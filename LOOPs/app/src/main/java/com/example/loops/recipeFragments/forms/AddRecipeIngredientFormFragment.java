@@ -15,6 +15,8 @@ import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
+import java.time.LocalDate;
+
 public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
     public static final String RESULT_KEY = "ADD_RECIPE_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
 
@@ -31,11 +33,11 @@ public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
         TextView bestBeforeDateText = formView.findViewById(R.id.ingredientFormBestBeforeDateText);
         bestBeforeDateText.setVisibility(View.GONE);
         bestBeforeDateInput.setVisibility(View.GONE);
-        bestBeforeDateInput.setText("2022-01-01");
+        //bestBeforeDateInput.setText("2022-01-01");
 
         TextView locationText = formView.findViewById(R.id.ingredientFormLocationText);
         locationText.setVisibility(View.GONE);
-        locationInput.setSelection(1);
+        //locationInput.setSelection(1);
         locationInput.setVisibility(View.GONE);
     }
 
@@ -49,5 +51,22 @@ public class AddRecipeIngredientFormFragment extends IngredientFormFragment {
                 submittedIngredient
         );
         Navigation.findNavController(getView()).popBackStack();
+    }
+
+    @Override
+    protected Ingredient getInputtedIngredient() {
+        String description = descriptionInput.getText().toString();
+        double amount = parseAmountFromInput();
+        String unit = unitInput.getSelectedItem().toString();
+        String category = categoryInput.getSelectedItem().toString();
+
+        Ingredient inputtedIngredient = new Ingredient(
+                description,
+                amount,
+                unit,
+                category
+        );
+        inputtedIngredient.setPending(false);
+        return inputtedIngredient;
     }
 }
