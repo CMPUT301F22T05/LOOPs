@@ -118,8 +118,8 @@
             android:defaultValue="@null" />
         <argument
             android:name="collectionType"
-            app:argType="com.example.loops.recipeFragments.RecipeCollectionFragment$CollectionType"
-            android:defaultValue="FROM_STORAGE" />
+            app:argType="com.example.loops.factory.RecipeCollectionFactory$CollectionType"
+            android:defaultValue="FROM_STORAGE_FOR_EDIT" />
 
         <action
             android:id="@+id/addRecipeFromCollection"
