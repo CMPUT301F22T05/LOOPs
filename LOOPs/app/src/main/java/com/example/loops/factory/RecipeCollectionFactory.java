@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import com.example.loops.MainActivity;
 import com.example.loops.R;
 import com.example.loops.adapters.RecipeCollectionViewAdapter;
+import com.example.loops.adapters.RecipeSelectionViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.BaseRecipeCollection;
 import com.example.loops.models.Ingredient;
@@ -106,14 +107,8 @@ public class RecipeCollectionFactory {
         switch (type) {
             case EMPTY:
             case PRESET:
-            case FROM_STORAGE_FOR_EDIT:
-                sortOptionArrayAdapter =
-                        ArrayAdapter.createFromResource(context,
-                                R.array.recipe_collection_sort_option, android.R.layout.simple_spinner_item);
-                sortOptionArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                break;
             case FROM_STORAGE_FOR_VIEW:
-                // TODO: Different adapter for viewing storage recipes
+            case FROM_STORAGE_FOR_EDIT:
                 sortOptionArrayAdapter =
                         ArrayAdapter.createFromResource(context,
                                 R.array.recipe_collection_sort_option, android.R.layout.simple_spinner_item);
@@ -143,8 +138,7 @@ public class RecipeCollectionFactory {
                         collection.getAllRecipes());
                 break;
             case FROM_STORAGE_FOR_VIEW:
-                // TODO: Different adapter for viewing storage recipes
-                recipeArrayAdapter = new RecipeCollectionViewAdapter(context,
+                recipeArrayAdapter = new RecipeSelectionViewAdapter(context,
                         collection.getAllRecipes());
                 break;
             default: throw new Error("No recipe adapter is given for this collection type");
