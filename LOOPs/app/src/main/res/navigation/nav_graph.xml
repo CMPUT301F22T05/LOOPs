@@ -269,4 +269,18 @@
             android:id="@+id/action_save_meal_plan"
             app:destination="@id/mealPlanHomePageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/recipeCollectionSelectionFragment"
+        android:name="com.example.loops.recipeFragments.RecipeCollectionSelectionFragment"
+        android:label="RecipeCollectionSelectionFragment" >
+        <argument
+            android:name="collectionType"
+            app:argType="com.example.loops.factory.RecipeCollectionFactory$CollectionType"
+            android:defaultValue="FROM_STORAGE_FOR_VIEW" />
+        <argument
+            android:name="recipesToFilter"
+            app:argType="com.example.loops.modelCollections.BaseRecipeCollection"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

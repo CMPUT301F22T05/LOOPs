@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import com.example.loops.models.Recipe;
 import com.example.loops.sortOption.RecipeSortOption;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,7 +20,7 @@ import java.util.Comparator;
  *  recipes can also be sorted in different ways shown in RecipeSortOption enum
  *  it also contains comparators for Recipe
  */
-public class BaseRecipeCollection {
+public class BaseRecipeCollection implements Serializable {
     /* FIXME: I think it is better to rename this to RecipeCollection and the old RecipeCollection
            to RecipeStorage.
            However, I am not renaming it right now because it might conflict with other's work
