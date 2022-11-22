@@ -18,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
+import com.google.android.material.divider.MaterialDivider;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -80,6 +81,9 @@ public class RecipeSelectionViewAdapter extends ArrayAdapter<Recipe> {
         TextView numServings = convertView.findViewById(R.id.recipe_servings_in_collection);
         TextView category = convertView.findViewById(R.id.recipe_category_in_collection);
         ImageView recipeImage = convertView.findViewById(R.id.recipe_image_in_collection);
+        MaterialDivider divider = convertView.findViewById(R.id.recipe_row_divider);
+
+        int dividerDefColor = divider.getDividerColor();
 
         title.setText(currentRecipe.getTitle());
         category.setText(currentRecipe.getCategory());
@@ -97,13 +101,13 @@ public class RecipeSelectionViewAdapter extends ArrayAdapter<Recipe> {
             prepTime.setTextColor(Color.WHITE);
             numServings.setTextColor(Color.WHITE);
             category.setTextColor(Color.WHITE);
-
+            divider.setDividerColor(Color.WHITE);
             numServings.setText("Serves " + Integer.toString(selectedRecipeNumServings.get(currentRecipe.getDocumentName())));
         }
         else {
             cardView.setCardBackgroundColor(context.getResources().getColor(R.color.teal_200, null));
             numServings.setText("");
-
+            divider.setDividerColor(dividerDefColor);
             title.setTextColor(Color.BLACK);
             prepTime.setTextColor(Color.BLACK);
             numServings.setTextColor(Color.BLACK);

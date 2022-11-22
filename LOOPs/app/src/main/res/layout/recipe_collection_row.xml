@@ -73,13 +73,12 @@
             app:layout_constraintTop_toTopOf="@+id/recipe_title_in_collection"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-        <View
-            android:id="@+id/divider"
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/recipe_row_divider"
             android:layout_width="388dp"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            android:backgroundTint="@color/black"
             android:layout_marginStart="67dp"
+            android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toTopOf="@+id/recipe_servings_in_collection"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_title_in_collection" />
