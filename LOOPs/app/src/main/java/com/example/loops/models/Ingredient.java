@@ -67,6 +67,13 @@ public class Ingredient implements Serializable, ModelConstraints {
         this.category = category;
     }
 
+    /**
+     * Constructor for partial ingredients; only being used in recipe & shopping list
+     * @param description the name of ingredient
+     * @param amount the amount to store; can be decimal number
+     * @param unit the unit for the amount; should be one of user-defined
+     * @param category the category of ingredient; should be user-defined
+     */
     public Ingredient(String description, double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = LocalDate.MIN;
