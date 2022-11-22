@@ -93,11 +93,22 @@ public class RecipeSelectionViewAdapter extends ArrayAdapter<Recipe> {
         CardView cardView = holder.cardView;
         if ( isSelected ) {
             cardView.setCardBackgroundColor(Color.BLUE);
+            title.setTextColor(Color.WHITE);
+            prepTime.setTextColor(Color.WHITE);
+            numServings.setTextColor(Color.WHITE);
+            category.setTextColor(Color.WHITE);
+
             numServings.setText("Serves " + Integer.toString(selectedRecipeNumServings.get(currentRecipe.getDocumentName())));
         }
         else {
             cardView.setCardBackgroundColor(context.getResources().getColor(R.color.teal_200, null));
             numServings.setText("");
+
+            title.setTextColor(Color.BLACK);
+            prepTime.setTextColor(Color.BLACK);
+            numServings.setTextColor(Color.BLACK);
+            category.setTextColor(Color.BLACK);
+
         }
 
         return convertView;
