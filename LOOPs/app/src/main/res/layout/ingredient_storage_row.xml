@@ -32,7 +32,7 @@
             android:text="description"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ingredient_amount_in_storage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +67,24 @@
             app:layout_constraintBottom_toTopOf="@+id/ingredient_bbd_in_storage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ingredient_description_in_storage" />
+
+        <TextView
+            android:id="@+id/ingredient_amount_in_storage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="amount"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/ingredient_unit_in_storage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ingredient_unit_in_storage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="unit"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
