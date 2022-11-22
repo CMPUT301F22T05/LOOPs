@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/ingredient_notification_number"
-        android:visibility="invisible"
+        android:id="@+id/ingredient_notification_number_textview"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
