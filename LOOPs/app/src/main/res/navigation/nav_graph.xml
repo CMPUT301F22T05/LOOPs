@@ -13,9 +13,6 @@
         <argument
             android:name="editedIngredient"
             app:argType="com.example.loops.models.Ingredient" />
-        <argument
-            android:name="editedIngredientIndex"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeIngredientFormFragment"

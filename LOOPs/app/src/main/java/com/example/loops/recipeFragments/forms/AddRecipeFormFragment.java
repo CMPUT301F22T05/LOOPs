@@ -31,13 +31,16 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     // Empty constructor
     public AddRecipeFormFragment() { }
 
+    /**
+     * On recipe's ingredient click, open edit ingredient form
+     * @param position
+     */
     @Override
     public void OnItemClick(int position) {
         super.OnItemClick(position);
         NavDirections actionEditRecipeIngredient = AddRecipeFormFragmentDirections
                 .actionAddRecipeFormFragmentToEditRecipeIngredientFormFragment(
-                        ingredientCollection.getIngredients().get(position),
-                        position
+                        ingredientCollection.getIngredients().get(position)
                 );
         Navigation.findNavController(getView()).navigate(actionEditRecipeIngredient);
     }
