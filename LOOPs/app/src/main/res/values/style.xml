@@ -12,4 +12,19 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">30%</item>
     </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:background">@drawable/dialog_bg</item>
+        <item name="android:colorAccent">#808080</item>
+        <item name="android:textColor">#B00020</item>
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="colorButtonNormal">#000000</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+    <style name="PositiveButtonStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">#F8F8F8</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">#FF0000FF</item>
+    </style>
+
 </resources>

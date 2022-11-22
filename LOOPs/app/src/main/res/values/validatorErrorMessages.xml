@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <!--    INGREDIENT DESCRIPTION ERROR MESSAGES -->
-    <string name="ingredient_no_description">Ingredient\'s description must be given</string>
+    <string name="ingredient_no_description">Description must be given</string>
 <!--    INGREDIENT DATE ERROR MESSAGE -->
-    <string name="ingredient_no_bestbeforedate">Ingredient\'s best before date must be given</string>
+    <string name="ingredient_no_bestbeforedate">Best Before Date must be given</string>
 <!--    INGREDIENT STORED LOCATION ERROR MESSAGE -->
-    <string name="ingredient_no_location">Ingredient\'s location must be given</string>
+    <string name="ingredient_no_location">Location must be given</string>
 <!--    INGREDIENT AMOUNT ERROR MESSAGES -->
-    <string name="ingredient_no_amount">Ingredient\'s amount must be given</string>
-    <string name="ingredient_negative_amount">Ingredient\'s amount cannot be negative</string>
+    <string name="ingredient_no_amount">Amount must be given</string>
+    <string name="ingredient_negative_amount">Amount cannot be negative</string>
 <!--    INGREDIENT UNIT ERROR MESSAGES -->
-    <string name="ingredient_no_unit">Ingredient\'s unit must be given</string>
+    <string name="ingredient_no_unit">Unit must be given</string>
 <!--    INGREDIENT CATEGORY ERROR MESSAGES -->
-    <string name="ingredient_no_category">Ingredient\'s category must be given</string>
+    <string name="ingredient_no_category">Category must be given</string>
 </resources>
