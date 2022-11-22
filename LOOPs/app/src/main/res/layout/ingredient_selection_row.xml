@@ -13,57 +13,105 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/descriptionHolderLinearLayout"
+        <TextView
+            android:id="@+id/ingredient_bbd_in_mealplan"
+            android:visibility="invisible"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="5dp"
+            android:text="best before"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/ingredient_location_in_mealplan"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ingredient_badge_in_selection"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_description_in_selection" />
+
+        <TextView
+            android:id="@+id/ingredient_description_in_selection"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/quantityHolderRelativeLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:text="description"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/ingredient_amount_in_selection"
+            app:layout_constraintStart_toEndOf="@+id/ingredient_badge_in_selection"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/ingredient_description_in_selection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="description"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+        <TextView
+            android:id="@+id/ingredient_location_in_mealplan"
+            android:visibility="invisible"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="location"
+            android:textColor="#000000"
+            android:textAlignment="viewStart"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/ingredient_bbd_in_mealplan"
+            app:layout_constraintHorizontal_weight="0.25"
+            app:layout_constraintStart_toEndOf="@+id/ingredient_bbd_in_mealplan" />
 
-            <TextView
-                android:id="@+id/ingredient_category_in_selection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="category"
-                android:textColor="#000000" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/quantityHolderRelativeLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|end"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/ingredient_category_in_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="category"
+            android:textColor="#000000"
+            app:layout_constraintBaseline_toBaselineOf="@+id/ingredient_location_in_mealplan"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/descriptionHolderLinearLayout"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintHorizontal_weight="0.25"
+            />
 
-            <TextView
-                android:id="@+id/ingredient_amount_in_selection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20sp"
-                android:layout_toLeftOf="@id/ingredient_unit_in_selection"
-                android:text="AMOUNT" />
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/ingredient_divider_selection"
+            android:layout_width="305dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="5dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toTopOf="@+id/ingredient_bbd_in_mealplan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ingredient_badge_in_selection"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_description_in_selection" />
 
-            <TextView
-                android:id="@+id/ingredient_unit_in_selection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UNIT" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/ingredient_amount_in_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="5dp"
+            android:text="amount"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ingredient_description_in_selection"
+            app:layout_constraintEnd_toStartOf="@+id/ingredient_unit_in_selection"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ingredient_unit_in_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:text="unit"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:gravity="bottom"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ingredient_badge_in_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_shape_textview"
+            android:gravity="center"
+            android:text="X"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ingredient_description_in_selection" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
