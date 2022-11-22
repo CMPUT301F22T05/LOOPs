@@ -23,6 +23,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="21dp"
+                android:backgroundTint="#4CAF50"
                 android:text="@string/recipeBackButtonText" />
 
             <Button
@@ -33,6 +34,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@id/backToRecipeCollection"
+                android:backgroundTint="#2196F3"
                 android:width="@dimen/recipe_edit_width"
                 android:text="@string/EditRecipeButtonName" />
 
@@ -41,6 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recipeDeleteButtonText"
+                android:backgroundTint="#B00020"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="@dimen/medium_pad"
                 android:layout_toRightOf="@id/editRecipeButton"

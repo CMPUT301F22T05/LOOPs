@@ -31,13 +31,13 @@
         <item>@string/sort_by_description</item>
         <item>@string/sort_by_Category</item>
     </string-array>
-    <string name="prepTime"><b>Prep Time:</b></string>
-    <string name="servingSize"><b> Servings:</b></string>
+    <string name="prepTime"><b>Prep Time: </b></string>
+    <string name="servingSize"><b> Servings: </b></string>
     <string name="recipeCommentSubHead"><b>Comments</b></string>
     <string name="ingredientSubHead"><b>Ingredients</b></string>
     <string name="EditRecipeButtonName">Edit</string>
-    <string name="categoryInRecipe"><b>Category:</b></string>
-    <string name="recipeBackButtonText">Back</string>
+    <string name="categoryInRecipe"><b>Category: </b></string>
+    <string name="recipeBackButtonText">Save</string>
     <string name="recipeDeleteButtonText">Delete</string>
     <!-- RECIPE SORT OPTION STRINGS-->
     <string name="sort_by_title">Title</string>

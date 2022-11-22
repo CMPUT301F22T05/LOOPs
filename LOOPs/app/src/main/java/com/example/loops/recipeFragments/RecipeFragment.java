@@ -230,6 +230,7 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
      * Sets the onClick listener to take us back to the fragment where a list of recipes are being shown.
      */
     private void setBackToRecipeCollectionOnClick() {
+
         backToRecipeCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
