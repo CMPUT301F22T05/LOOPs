@@ -24,7 +24,7 @@
     <style name="PositiveButtonStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:textColor">#F8F8F8</item>
         <item name="android:textStyle">bold</item>
-        <item name="backgroundTint">#FF0000FF</item>
+        <item name="backgroundTint">#B00020</item>
     </style>
 
 </resources>
