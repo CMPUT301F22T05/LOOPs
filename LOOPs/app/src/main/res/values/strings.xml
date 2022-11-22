@@ -59,4 +59,10 @@
         <item>@string/sort_by_preptime</item>
         <item>@string/sort_by_category</item>
     </string-array>
+<!--    USER PREFERENCES SORT OPTION STRINGS-->
+    <string name="sort_by_alphabetically">Alphabetically</string>
+    <string-array name="user_preferences_sort_option">
+        <item>@string/empty_sort_option</item>
+        <item>@string/sort_by_alphabetically</item>
+    </string-array>
 </resources>
