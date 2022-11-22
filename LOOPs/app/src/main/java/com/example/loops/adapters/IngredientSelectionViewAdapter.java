@@ -78,6 +78,11 @@ public class IngredientSelectionViewAdapter extends ArrayAdapter<Ingredient> {
         CardView cardView = holder.cardView;
         if ( isSelected ) {
             cardView.setCardBackgroundColor(Color.BLUE);
+            description.setTextColor(Color.WHITE);
+            category.setTextColor(Color.WHITE);
+            amount.setTextColor(Color.WHITE);
+            unit.setTextColor(Color.WHITE);
+
             amount.setText(Double.toString(currentIngredient.getAmount()));
             unit.setText(currentIngredient.getUnit());
         }
@@ -85,6 +90,12 @@ public class IngredientSelectionViewAdapter extends ArrayAdapter<Ingredient> {
             cardView.setCardBackgroundColor(context.getResources().getColor(R.color.teal_200, null));
             amount.setText("");
             unit.setText("");
+
+            description.setTextColor(Color.BLACK);
+            category.setTextColor(Color.BLACK);
+            amount.setTextColor(Color.BLACK);
+            unit.setTextColor(Color.BLACK);
+
         }
 
         return convertView;
