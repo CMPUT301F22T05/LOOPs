@@ -86,6 +86,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         TextView category = convertView.findViewById(R.id.ingredient_category_in_storage);
         TextView amount = convertView.findViewById(R.id.ingredient_amount_in_storage);
         TextView unit = convertView.findViewById(R.id.ingredient_unit_in_storage);
+        TextView letterBadge = convertView.findViewById(R.id.ingredient_badge_in_storage);
 
 
         description.setText(currentIngredient.getDescription());
@@ -94,6 +95,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         category.setText(currentIngredient.getCategory());
         amount.setText(String.valueOf(currentIngredient.getAmount()));
         unit.setText(currentIngredient.getUnit());
+        letterBadge.setText(String.valueOf(currentIngredient.getDescription().charAt(0)));
 
         if (currentIngredient.getPending()) {
             //convertView.setBackgroundColor(Color.RED);
