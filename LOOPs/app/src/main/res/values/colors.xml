@@ -10,4 +10,5 @@
     <color name="mat_red">#B00020</color>
     <color name="red">#FF0000</color>
     <color name="submit">#4CAF50</color>
+    <color name="dark_grey">#484A48</color>
 </resources>
