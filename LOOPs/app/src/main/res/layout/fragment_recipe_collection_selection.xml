@@ -26,7 +26,7 @@
             android:backgroundTint="#4CAF50"
             android:clickable="true"
             android:focusable="true"
-            android:text="SELECT"
+            android:text="Add to meal"
             android:textSize="30sp">
 
         </Button>

@@ -20,20 +20,21 @@
             android:layout_marginTop="8dp"
             android:text="Prep time"
             android:textColor="#000000"
+            android:layout_marginStart="67dp"
             app:layout_constraintEnd_toStartOf="@+id/recipe_servings_in_collection"
             app:layout_constraintHorizontal_weight="0.5"
-            app:layout_constraintStart_toEndOf="@+id/recipe_image_in_collection"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_title_in_collection" />
 
         <TextView
             android:id="@+id/recipe_title_in_collection"
             android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
             android:text="title"
             android:textColor="#000000"
             android:textSize="24dp"
-            app:layout_constraintStart_toEndOf="@+id/recipe_image_in_collection"
+            android:layout_marginStart="67dp"
+            app:layout_constraintStart_toStartOf="@+id/recipe_image_in_collection"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -59,25 +60,27 @@
             app:layout_constraintStart_toEndOf="@+id/recipe_servings_in_collection" />
 
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/recipe_image_in_collection"
-            android:layout_width="67dp"
+            android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginEnd="16dp"
+            android:foregroundGravity="center"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/roundedCorners"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="@+id/recipe_title_in_collection"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-        <View
-            android:id="@+id/divider"
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/recipe_row_divider"
             android:layout_width="388dp"
             android:layout_height="1dp"
+            android:layout_marginStart="67dp"
             android:background="?android:attr/listDivider"
-            android:backgroundTint="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/recipe_servings_in_collection"
-            app:layout_constraintStart_toEndOf="@+id/recipe_image_in_collection"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_title_in_collection" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

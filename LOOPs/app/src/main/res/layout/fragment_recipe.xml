@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="21dp"
+                android:backgroundTint="#4CAF50"
                 android:text="@string/recipeBackButtonText" />
 
             <Button
@@ -33,6 +35,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@id/backToRecipeCollection"
+                android:backgroundTint="#2196F3"
                 android:width="@dimen/recipe_edit_width"
                 android:text="@string/EditRecipeButtonName" />
 
@@ -41,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recipeDeleteButtonText"
+                android:backgroundTint="#B00020"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="@dimen/medium_pad"
                 android:layout_toRightOf="@id/editRecipeButton"
@@ -51,20 +55,16 @@
                 android:id="@+id/recipeImage"
                 android:layout_width="@dimen/recipe_fragment_image_width"
                 android:layout_height="@dimen/recipe_fragment_image_height"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="@dimen/medium_pad"
+                android:layout_below="@+id/recipe_view_title"
+                android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
+                android:layout_marginTop="10dp"
                 app:shapeAppearanceOverlay="@style/roundedCorners" />
 
             <TextView
                 android:id="@+id/recipeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:textSize="@dimen/extra_large_text_size"
-
-                android:layout_marginTop="@dimen/medium_pad"
                 android:layout_below="@id/recipeImage"/>
 
             <TextView
@@ -72,7 +72,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/recipeTitle"
-                android:text="@string/prepTime" />
+                android:layout_alignLeft="@id/recipeComment"
+                android:text="@string/prepTime"
+                />
 
             <TextView
                 android:id="@+id/recipePrepTime"
@@ -122,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recipeCommentSubHead"
-                android:layout_marginTop="@dimen/extra_large_pad"
+                android:layout_marginTop="15dp"
                 android:textSize="@dimen/recipe_subheading"
                 android:layout_below="@+id/prepTimeString"/>
 
@@ -139,9 +141,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ingredientSubHead"
-                android:layout_marginTop="@dimen/extra_large_pad"
+                android:layout_marginTop="15dp"
                 android:textSize="@dimen/recipe_subheading"
                 android:layout_below="@+id/recipeComment"/>
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/ingredientSubHead"
+                android:background="?android:attr/listDivider" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipeIngredientList"
@@ -149,6 +159,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/extra_small_pad"
                 android:layout_below="@+id/ingredientSubHead"/>
+
+            <TextView
+                android:id="@+id/recipe_view_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:text="Title"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textAlignment="center" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/recipeCommentSubhead"
+                android:background="?android:attr/listDivider" />
 
         </RelativeLayout>
     </ScrollView>

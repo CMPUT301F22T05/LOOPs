@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
+import com.google.android.material.divider.MaterialDivider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +87,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         TextView category = convertView.findViewById(R.id.ingredient_category_in_storage);
         TextView amount = convertView.findViewById(R.id.ingredient_amount_in_storage);
         TextView unit = convertView.findViewById(R.id.ingredient_unit_in_storage);
-        TextView letterBadge = convertView.findViewById(R.id.ingredient_badge_in_storage);
+        TextView letterBadge = convertView.findViewById(R.id.ingredient_badge_in_selection);
 
 
         description.setText(currentIngredient.getDescription());
@@ -97,6 +98,9 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         unit.setText(currentIngredient.getUnit());
         letterBadge.setText(String.valueOf(currentIngredient.getDescription().charAt(0)));
 
+        MaterialDivider divider = convertView.findViewById(R.id.ingredient_divider_storage);
+        int dividerDefColor = divider.getDividerColor();
+
         if (currentIngredient.getPending()) {
             //convertView.setBackgroundColor(Color.RED);
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
@@ -104,6 +108,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
             BestBeforeDate.setText("N/A");
             location.setText("N/A");
 
+            divider.setDividerColor(Color.WHITE);
             description.setTextColor(Color.WHITE);
             BestBeforeDate.setTextColor(Color.WHITE);
             location.setTextColor(Color.WHITE);
@@ -113,6 +118,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         } else {
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.teal_200));
+            divider.setDividerColor(dividerDefColor);
         }
 
         ViewState currentIngredientState = viewState.getOrDefault(currentIngredient.getDocumentName(), ViewState.Unselected);
