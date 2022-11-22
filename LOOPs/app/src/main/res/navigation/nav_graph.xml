@@ -6,6 +6,15 @@
     app:startDestination="@id/mealPlanHomePageFragment">
 
     <fragment
+        android:id="@+id/editRecipeIngredientFormFragment"
+        android:name="com.example.loops.recipeFragments.forms.EditRecipeIngredientFormFragment"
+        android:label="Edit a  recipe ingredient">
+
+        <argument
+            android:name="editedIngredient"
+            app:argType="com.example.loops.models.Ingredient" />
+    </fragment>
+    <fragment
         android:id="@+id/addRecipeIngredientFormFragment"
         android:name="com.example.loops.recipeFragments.forms.AddRecipeIngredientFormFragment"
         android:label="Add a  recipe ingredient"
@@ -34,6 +43,9 @@
         <action
             android:id="@+id/action_editRecipeFormFragment_to_ingredientCollectionSelectionFragment"
             app:destination="@id/ingredientCollectionSelectionFragment" />
+        <action
+            android:id="@+id/action_editRecipeFormFragment_to_editRecipeIngredientFormFragment"
+            app:destination="@id/editRecipeIngredientFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealPlanHomePageFragment"
@@ -118,8 +130,8 @@
             android:defaultValue="@null" />
         <argument
             android:name="collectionType"
-            app:argType="com.example.loops.recipeFragments.RecipeCollectionFragment$CollectionType"
-            android:defaultValue="FROM_STORAGE" />
+            app:argType="com.example.loops.factory.RecipeCollectionFactory$CollectionType"
+            android:defaultValue="FROM_STORAGE_FOR_EDIT" />
 
         <action
             android:id="@+id/addRecipeFromCollection"
@@ -240,6 +252,9 @@
             app:argType="com.example.loops.modelCollections.IngredientCollection"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_addRecipeFormFragment_to_editRecipeIngredientFormFragment"
+            app:destination="@id/editRecipeIngredientFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/shoppingListFragment"
@@ -268,5 +283,25 @@
         <action
             android:id="@+id/action_save_meal_plan"
             app:destination="@id/mealPlanHomePageFragment" />
+        <action
+            android:id="@+id/action_choose_recipes_for_meal_plan"
+            app:destination="@id/recipeCollectionSelectionFragment" />
+        <action
+            android:id="@+id/action_choose_ingredients_for_meal_plan"
+            app:destination="@id/ingredientCollectionSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeCollectionSelectionFragment"
+        android:name="com.example.loops.recipeFragments.RecipeCollectionSelectionFragment"
+        android:label="RecipeCollectionSelectionFragment" >
+        <argument
+            android:name="collectionType"
+            app:argType="com.example.loops.factory.RecipeCollectionFactory$CollectionType"
+            android:defaultValue="FROM_STORAGE_FOR_VIEW" />
+        <argument
+            android:name="recipesToFilter"
+            app:argType="com.example.loops.modelCollections.BaseRecipeCollection"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

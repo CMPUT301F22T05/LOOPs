@@ -1,5 +1,9 @@
 package com.example.loops.shoppingListFragment;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import com.example.loops.MainActivity;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.MealPlanCollection;
@@ -43,6 +47,8 @@ public class ShoppingListInitializer {
 
         // compare one by one the ingredient
         for (Ingredient mpIngredient : mealPlanIngredients.getIngredients()) {
+            Log.e(TAG, mpIngredient.getDescription());
+            double difference = mpIngredient.getAmount();
             for (Ingredient storageIngredient : currentIngredients.getIngredients()) {
 
                 // for ingredient that is pending to finish detail, shopping list will ignore them
@@ -50,18 +56,21 @@ public class ShoppingListInitializer {
                 // we don't generate shopping list
                 if (storageIngredient.getPending()) {
                     if (ShoppingListIngredientComparator.hasPending(mpIngredient, storageIngredient)) {
+                        difference = -1;
                         break;
                     }
                     continue;
                 }
 
-                // generate shopping list for matching result
-                Double amountDiff = ShoppingListIngredientComparator.getAmountDiff(mpIngredient, storageIngredient);
-                if (amountDiff < 0) {
-                    Ingredient shoppingIngredient = new Ingredient(mpIngredient);
-                    shoppingIngredient.setAmount(-amountDiff);
-                    shoppingList.addIngredient(shoppingIngredient);
-                }
+                // minus the amount of matched storage ingredient
+                difference -= ShoppingListIngredientComparator.getStoredAmount(mpIngredient, storageIngredient);
+            }
+
+            // if difference still more than 0, append to shopping list
+            if (difference > 0) {
+                Ingredient shoppingItem = new Ingredient(mpIngredient);
+                shoppingItem.setAmount(difference);
+                shoppingList.addIngredient(shoppingItem);
             }
         }
 

@@ -11,7 +11,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.loops.GenericCollectionLayout;
+import com.example.loops.factory.RecipeCollectionFactory;
+import com.example.loops.factory.RecipeCollectionFactory.CollectionType;
+import com.example.loops.modelCollections.BaseRecipeCollection;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.MainActivity;
@@ -21,6 +27,7 @@ import com.example.loops.modelCollections.RecipeCollection;
 import com.example.loops.adapters.RecipeCollectionViewAdapter;
 import com.example.loops.sortOption.RecipeSortOption;
 
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Date;
@@ -29,18 +36,9 @@ import java.util.Date;
  * An abstract fragment displaying a recipe collection
  */
 public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
-    protected RecipeCollection recipeCollection;
-    protected RecipeCollectionViewAdapter collectionViewAdapter;
-
-    /**
-     * The type of recipe collections the fragment accepts. Accepted values are:
-     * FROM_STORAGE - the user defined recipes
-     * FROM_TESTING - FIXME: Temporary value for debugging
-     */
-    public enum CollectionType {
-        FROM_STORAGE,
-        FROM_TESTING
-    }
+    private CollectionType collectionType = null;
+    protected BaseRecipeCollection recipeCollection;
+    protected ArrayAdapter<Recipe> collectionViewAdapter;
 
     public RecipeCollectionFragment() {
         // Required empty public constructor
@@ -53,12 +51,18 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
      * @param position
      * @param id
      */
-    abstract void onClickRecipe(AdapterView<?> parent, View view, int position, long id);
+    abstract protected void onClickRecipe(AdapterView<?> parent, View view, int position, long id);
 
     /**
      * Subclasses must parse arguments to at minimum, handle the type of the recipe collection
      */
-    abstract void parseArguments();
+    abstract protected void parseArguments();
+
+    /**
+     * Subclasses must implement this. When subclasses parse arguments, collection type can be parsed
+     * there
+     */
+    abstract protected CollectionType getCollectionType();
 
     /**
      * Sets the UI layout for the view it creates and any listeners
@@ -73,10 +77,24 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
         // Inflate the layout for this fragment
         View view = inflater.inflate(getUIViewId(), container, false);
         bindComponents(view);
-        populateSortSpinnerOptions();
+        return view;
+    }
+
+    /**
+     * Reads in any arguments of the fragment and set up listeners for the UI
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if (collectionType == null)
+            collectionType = getCollectionType();
+        RecipeCollectionFactory recipeCollectionFactory = new RecipeCollectionFactory(getActivity());
+        recipeCollection = recipeCollectionFactory.createRecipeCollection(collectionType);
+        populateSortSpinnerOptions(recipeCollectionFactory, collectionType);
+        setRecipeCollectionToDisplay(recipeCollectionFactory, collectionType, recipeCollection);
         parseArguments();
         setListeners();
-        return view;
     }
 
     /**
@@ -88,44 +106,15 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
     }
 
     /**
-     * Sets the type of recipe collection the fragment must display
-     * @param type the type of the recipe collection to display
+     * Sets the recipe collection to display in the UI list view
+     * @param factory factory used to create the view adapter for the list view
+     * @param type type of the recipe collection
+     * @param collection recipe collection to display
      */
-    protected void setRecipeCollectionToDisplay(CollectionType type) {
-        if (type == CollectionType.FROM_STORAGE) {
-            recipeCollection = ((MainActivity)getActivity()).getAllRecipes();
-        }
-        //Used for intent test and it should not be removed
-        else if (type == CollectionType.FROM_TESTING) {
-            recipeCollection = new RecipeCollection();
-            IngredientCollection grilledCheeseIngredients = new IngredientCollection();
-            Bitmap grilledCheese = BitmapFactory.decodeResource(getResources(),R.drawable.grilled_cheese_test_image);
-            Recipe recipe1 = new Recipe("Grilled Cheese",
-                    0,
-                    15,
-                    1,
-                    "Breakfast",
-                    grilledCheese,
-                    grilledCheeseIngredients,
-                    "Classic");
-            IngredientCollection pizzaIngredients = new IngredientCollection();
-            Bitmap pizza = BitmapFactory.decodeResource(getResources(),R.drawable.pizza_test_image);
-            Recipe recipe2 = new Recipe("Pizza",
-                    0,
-                    45,
-                    4,
-                    "Dinner",
-                    pizza,
-                    pizzaIngredients,
-                    "Italian Pizza");
-            recipeCollection.addRecipe(recipe1);
-            recipeCollection.addRecipe(recipe2);
-        }
-        else {
-            throw new IllegalArgumentException("Unknown given collection type");
-        }
-
-        adaptRecipeCollection(recipeCollection);
+    protected void setRecipeCollectionToDisplay(
+            RecipeCollectionFactory factory,  CollectionType type, BaseRecipeCollection collection) {
+        collectionViewAdapter = factory.createRecipeListAdapter(type, collection);
+        collectionView.setAdapter(collectionViewAdapter);
     }
 
     /**
@@ -187,23 +176,12 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
     }
 
     /**
-     * Binds the recipe collection to the UI
-     * @param recipeCollection the collection of recipes to bind to UI
-     */
-    private void adaptRecipeCollection(RecipeCollection recipeCollection) {
-        collectionViewAdapter = new RecipeCollectionViewAdapter(getActivity(),
-                recipeCollection.getAllRecipes());
-        collectionView.setAdapter(collectionViewAdapter);
-    }
-
-    /**
      * Populates the spinners in the fragment with options
+     * @param factory factory used to create the sort options
+     * @param type type of the recipe collection to sort
      */
-    private void populateSortSpinnerOptions() {
-        ArrayAdapter<CharSequence> sortOptionSpinnerAdapter =
-                ArrayAdapter.createFromResource(getActivity(),
-                        R.array.recipe_collection_sort_option, android.R.layout.simple_spinner_item);
-        sortOptionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    private void populateSortSpinnerOptions(RecipeCollectionFactory factory,  CollectionType type) {
+        ArrayAdapter<CharSequence> sortOptionSpinnerAdapter = factory.createSortOptionArrayAdapter(type);
         sortOptionSpinner.setAdapter(sortOptionSpinnerAdapter);
     }
 }

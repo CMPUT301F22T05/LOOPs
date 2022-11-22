@@ -41,12 +41,14 @@ public class ShoppingListViewAdapter extends ArrayAdapter<Ingredient> {
         TextView amount = convertView.findViewById(R.id.ingredient_amount_in_shopping_list);
         TextView unit = convertView.findViewById(R.id.ingredient_unit_in_shopping_list);
         TextView category = convertView.findViewById(R.id.ingredient_category_in_shopping_list);
+        TextView letterBadge = convertView.findViewById(R.id.shopping_list_badge);
 
         Ingredient currentIngredient = dataList.get(position);
         description.setText(currentIngredient.getDescription());
         amount.setText(Double.toString(currentIngredient.getAmount()));
         unit.setText(currentIngredient.getUnit());
         category.setText(currentIngredient.getCategory());
+        letterBadge.setText(String.valueOf(currentIngredient.getDescription().charAt(0)));
 
         return convertView;
     }
