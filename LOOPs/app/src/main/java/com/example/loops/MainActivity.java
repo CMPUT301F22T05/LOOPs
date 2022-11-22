@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+// FIXME: delete this
+//        Database db = Database.getInstance();
+//        db.getIngredientCategory((result) -> {
+//            Log.d("DEBUG", result.get(0) );
+//            Log.d("DEBUG", result.get(1) );
+//            Log.d("DEBUG", result.get(2) );
+//        });
+
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();
         NavigationView navView = findViewById(R.id.navigationView);
@@ -95,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (navDestination.getId() == R.id.recipeCollectionEditorFragment) {
                     getSupportActionBar().setTitle(R.string.recipeCollection);
+                }
+                else if (navDestination.getId() == R.id.userPreferencesFragment) {
+                    getSupportActionBar().setTitle(R.string.userPreferences);
                 }
             }
         });

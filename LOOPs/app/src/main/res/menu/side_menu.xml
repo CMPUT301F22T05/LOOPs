@@ -11,5 +11,8 @@
         <item
             android:id="@+id/shoppingListFragment"
             android:title="@string/shopping_list" />
+        <item
+            android:id="@+id/userPreferencesFragment"
+            android:title="@string/userPreferences" />
     </group>
 </menu>

@@ -6,13 +6,14 @@
     <string name="mealPlans">Meal Plans</string>
     <string name="shopping_list">Shopping List</string>
     <string name="recipeCollection">Recipes</string>
+    <string name="userPreferences">Preferences</string>
     <string name="date_format">yyyy-MM-dd</string>
     <string name="empty_sort_option"> </string>
     <string name="sort_by_description">Description</string>
     <string name="sort_by_best_before_date">Best Before Date</string>
     <string name="sort_by_Location">Location</string>
     <string name="sort_by_Category">Category</string>
-<!--    INGREDIENT SORT OPTION STRING -->
+    <!--    INGREDIENT SORT OPTION STRING -->
     <string-array name="ingredient_storage_sort_option">
         <item>@string/empty_sort_option</item>
         <item>@string/sort_by_description</item>
@@ -25,7 +26,7 @@
         <item>@string/sort_by_description</item>
         <item>@string/sort_by_Category</item>
     </string-array>
-<!--    SHOPPING LIST SORT OPTION STRING-->
+    <!--    SHOPPING LIST SORT OPTION STRING-->
     <string-array name="shopping_list_sort_option">
         <item>@string/empty_sort_option</item>
         <item>@string/sort_by_description</item>
