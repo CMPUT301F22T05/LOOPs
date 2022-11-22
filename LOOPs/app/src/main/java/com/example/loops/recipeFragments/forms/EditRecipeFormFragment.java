@@ -40,6 +40,20 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
         initializeFormWithIngredientAttributes();
     }
 
+    /**
+     * On recipe's ingredient click, open edit ingredient form
+     * @param position
+     */
+    @Override
+    public void OnItemClick(int position) {
+        super.OnItemClick(position);
+        NavDirections actionEditRecipeIngredient = EditRecipeFormFragmentDirections
+                .actionEditRecipeFormFragmentToEditRecipeIngredientFormFragment(
+                        ingredientCollection.getIngredients().get(position)
+                );
+        Navigation.findNavController(getView()).navigate(actionEditRecipeIngredient);
+    }
+
     void parseArguments() {
         editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
                 .getEditRecipe();
@@ -94,6 +108,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
                 "By New Ingredient",
+                "From Ingredient Storage",
                 "Cancel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -109,6 +124,12 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
+                            EditRecipeFormFragmentDirections.ActionEditRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction
+                                    = EditRecipeFormFragmentDirections.actionEditRecipeFormFragmentToIngredientCollectionSelectionFragment();
+                            addIngredientAction.setIngredientsToFilter(ingredientCollection);
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
+                        }
+                        else if (i == 2) {
                             return;
                         }
                         else {

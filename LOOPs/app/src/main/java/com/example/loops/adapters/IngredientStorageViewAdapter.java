@@ -84,18 +84,32 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         TextView BestBeforeDate = convertView.findViewById(R.id.ingredient_bbd_in_storage);
         TextView location = convertView.findViewById(R.id.ingredient_location_in_storage);
         TextView category = convertView.findViewById(R.id.ingredient_category_in_storage);
+        TextView amount = convertView.findViewById(R.id.ingredient_amount_in_storage);
+        TextView unit = convertView.findViewById(R.id.ingredient_unit_in_storage);
+        TextView letterBadge = convertView.findViewById(R.id.ingredient_badge_in_storage);
 
 
         description.setText(currentIngredient.getDescription());
         BestBeforeDate.setText("Best before:  " + currentIngredient.getBestBeforeDateString());
         location.setText(currentIngredient.getStoreLocation());
         category.setText(currentIngredient.getCategory());
+        amount.setText(String.valueOf(currentIngredient.getAmount()));
+        unit.setText(currentIngredient.getUnit());
+        letterBadge.setText(String.valueOf(currentIngredient.getDescription().charAt(0)));
+
         if (currentIngredient.getPending()) {
             //convertView.setBackgroundColor(Color.RED);
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.red));
             BestBeforeDate.setText("N/A");
             location.setText("N/A");
+
+            description.setTextColor(Color.WHITE);
+            BestBeforeDate.setTextColor(Color.WHITE);
+            location.setTextColor(Color.WHITE);
+            category.setTextColor(Color.WHITE);
+            amount.setTextColor(Color.WHITE);
+            unit.setTextColor(Color.WHITE);
         } else {
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.teal_200));

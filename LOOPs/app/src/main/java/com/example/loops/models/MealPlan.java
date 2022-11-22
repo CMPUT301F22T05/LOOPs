@@ -1,5 +1,6 @@
 package com.example.loops.models;
 
+import com.example.loops.modelCollections.BaseRecipeCollection;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.RecipeCollection;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 public class MealPlan implements Serializable, ModelConstraints, Comparable<MealPlan>{
     private String name;
     private IngredientCollection ingredients;
-    private RecipeCollection recipes;
+    private BaseRecipeCollection recipes;
 
     /**
      * the constructor require all fields
@@ -67,7 +68,7 @@ public class MealPlan implements Serializable, ModelConstraints, Comparable<Meal
      * get recipe collection from meal plan
      * @return a recipe collection
      */
-    public RecipeCollection getRecipes() {
+    public BaseRecipeCollection getRecipes() {
         return recipes;
     }
 

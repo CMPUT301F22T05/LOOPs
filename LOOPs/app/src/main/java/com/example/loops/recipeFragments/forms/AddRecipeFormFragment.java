@@ -27,10 +27,23 @@ import com.example.loops.models.Recipe;
  * A recipe form for adding recipes.
  */
 public class AddRecipeFormFragment extends RecipeFormFragment {
-
-    //private Recipe addedRecipe;
+    
     // Empty constructor
     public AddRecipeFormFragment() { }
+
+    /**
+     * On recipe's ingredient click, open edit ingredient form
+     * @param position
+     */
+    @Override
+    public void OnItemClick(int position) {
+        super.OnItemClick(position);
+        NavDirections actionEditRecipeIngredient = AddRecipeFormFragmentDirections
+                .actionAddRecipeFormFragmentToEditRecipeIngredientFormFragment(
+                        ingredientCollection.getIngredients().get(position)
+                );
+        Navigation.findNavController(getView()).navigate(actionEditRecipeIngredient);
+    }
 
     /**
      * Sets the title text
@@ -105,6 +118,9 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                                     = AddRecipeFormFragmentDirections.selectIngredientForAddRecipeForm();
                             addIngredientAction.setIngredientsToFilter(ingredientCollection);
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
+                        }
+                        else if (i == 2) {
+                            return; // do nothing
                         }
                         else {
                             throw new Error("Invalid selection");

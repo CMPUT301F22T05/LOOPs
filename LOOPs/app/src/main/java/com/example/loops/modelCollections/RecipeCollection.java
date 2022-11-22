@@ -64,10 +64,9 @@ public class RecipeCollection extends BaseRecipeCollection {
      * @return true if deleted, false otherwise
      */
     public boolean deleteRecipe(int indexToDelete){
-        boolean deleted = super.deleteRecipe(indexToDelete);
-        if (deleted && database != null)
+        if (database != null)
             database.deleteDocument(allRecipes.get(indexToDelete));
-        return deleted;
+        return super.deleteRecipe(indexToDelete);
     }
 
     /**
@@ -77,9 +76,8 @@ public class RecipeCollection extends BaseRecipeCollection {
      * @return true if deleted, false otherwise
      */
     public boolean updateRecipe(int recipeInd, Recipe newRecipe){
-        boolean updated = super.updateRecipe(recipeInd, newRecipe);
-        if (updated && database != null)
+        if (database != null)
             database.updateDocument(allRecipes.get(recipeInd), newRecipe);
-        return updated;
+        return super.updateRecipe(recipeInd, newRecipe);
     }
 }
