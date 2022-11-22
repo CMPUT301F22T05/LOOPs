@@ -285,4 +285,36 @@ public class Database {
 
         return ingredientCollection;
     }
+
+
+    public interface onDatabaseSuccess<T> {
+        void onResult(T result);
+    }
+
+    public void getIngredientCategory(onDatabaseSuccess<ArrayList<String>> onSuccessCallback) {
+        CollectionReference userPreferences = db.collection("UserPreferences");
+        DocumentReference ingredientCategoryReference = userPreferences.document("IngredientCategory");
+
+        ingredientCategoryReference.get()
+        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentResult = task.getResult();
+                    if (documentResult.exists()) {
+                        ArrayList<String> ingredientCategory = (ArrayList<String>) documentResult.get("categories");
+                        onSuccessCallback.onResult(ingredientCategory);
+                    }
+                    else {
+                        throw new Error("Could not find ingredient category document in Firestore");
+                    }
+                }
+                else {
+                    Log.e("DATABASE_LOG", "Retrieving ingredient category was not successful");
+                    // error checking is for losers
+                    // ...
+                }
+            }
+        });
+    }
 }
