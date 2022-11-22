@@ -94,6 +94,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
                 "By New Ingredient",
+                "From Ingredient Storage",
                 "Cancel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -109,6 +110,9 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
+                            return;
+                        }
+                        else if (i == 2) {
                             return;
                         }
                         else {

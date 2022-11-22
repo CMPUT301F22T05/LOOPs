@@ -106,6 +106,9 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
                             addIngredientAction.setIngredientsToFilter(ingredientCollection);
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
+                        else if (i == 2) {
+                            return; // do nothing
+                        }
                         else {
                             throw new Error("Invalid selection");
                         }
