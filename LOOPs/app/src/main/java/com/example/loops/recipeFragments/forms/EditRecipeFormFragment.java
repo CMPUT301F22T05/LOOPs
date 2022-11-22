@@ -110,7 +110,10 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                             Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 1) {
-                            return;
+                            EditRecipeFormFragmentDirections.ActionEditRecipeFormFragmentToIngredientCollectionSelectionFragment addIngredientAction
+                                    = EditRecipeFormFragmentDirections.actionEditRecipeFormFragmentToIngredientCollectionSelectionFragment();
+                            addIngredientAction.setIngredientsToFilter(ingredientCollection);
+                            Navigation.findNavController(getView()).navigate(addIngredientAction);
                         }
                         else if (i == 2) {
                             return;

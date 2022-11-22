@@ -208,11 +208,6 @@
             android:name="collectionType"
             android:defaultValue="FROM_STORAGE_FOR_VIEW"
             app:argType="com.example.loops.factory.IngredientCollectionFactory$CollectionType" />
-        <action
-            android:id="@+id/action_ingredientCollectionSelectionFragment_to_addRecipeFormFragment"
-            app:destination="@id/addRecipeFormFragment"
-            app:popUpTo="@id/addRecipeFormFragment"
-            app:popUpToInclusive="true" />
         <argument
             android:name="ingredientsToFilter"
             app:argType="com.example.loops.modelCollections.IngredientCollection"
