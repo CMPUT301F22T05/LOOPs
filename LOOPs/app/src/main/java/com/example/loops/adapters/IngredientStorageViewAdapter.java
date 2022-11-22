@@ -18,6 +18,8 @@ import com.example.loops.R;
 import com.example.loops.models.Ingredient;
 import com.google.android.material.divider.MaterialDivider;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -89,17 +91,18 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         TextView unit = convertView.findViewById(R.id.ingredient_unit_in_storage);
         TextView letterBadge = convertView.findViewById(R.id.ingredient_badge_in_selection);
 
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
 
         description.setText(currentIngredient.getDescription());
         BestBeforeDate.setText("Best before:  " + currentIngredient.getBestBeforeDateString());
         location.setText(currentIngredient.getStoreLocation());
         category.setText(currentIngredient.getCategory());
-        amount.setText(String.valueOf(currentIngredient.getAmount()));
+        amount.setText(df.format(currentIngredient.getAmount()));
         unit.setText(currentIngredient.getUnit());
         letterBadge.setText(String.valueOf(currentIngredient.getDescription().charAt(0)));
 
         MaterialDivider divider = convertView.findViewById(R.id.ingredient_divider_storage);
-        int dividerDefColor = divider.getDividerColor();
 
         if (currentIngredient.getPending()) {
             //convertView.setBackgroundColor(Color.RED);
@@ -116,13 +119,21 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
             amount.setTextColor(Color.WHITE);
             unit.setTextColor(Color.WHITE);
         } else {
+
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.teal_200));
-            divider.setDividerColor(dividerDefColor);
+            divider.setDividerColor(Color.parseColor("#808080"));
+            description.setTextColor(Color.BLACK);
+            BestBeforeDate.setTextColor(Color.BLACK);
+            location.setTextColor(Color.BLACK);
+            category.setTextColor(Color.BLACK);
+            amount.setTextColor(Color.BLACK);
+            unit.setTextColor(Color.BLACK);
+
         }
 
         ViewState currentIngredientState = viewState.getOrDefault(currentIngredient.getDocumentName(), ViewState.Unselected);
-        holder.cardView.setCardBackgroundColor(getBackgroundColorForState(currentIngredientState));
+        //holder.cardView.setCardBackgroundColor(getBackgroundColorForState(currentIngredientState));
 
         return convertView;
     }
@@ -152,7 +163,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
      */
     private int getBackgroundColorForState(ViewState state) {
         if (state == ViewState.Unselected) {
-            return context.getResources().getColor(R.color.teal_200, null);
+            return context.getResources().getColor(R.color.dark_grey, null);
         }
         else if (state == ViewState.Selected) {
             return Color.BLUE;
