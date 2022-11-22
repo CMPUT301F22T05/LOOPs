@@ -34,6 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
         app:layout_constraintBottom_toTopOf="@+id/ingredients_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,10 +46,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
         app:layout_constraintBottom_toTopOf="@+id/add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredients_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/ingredients_textView" >
+
+    </ListView>
+
 
     <Button
         android:id="@+id/add_button"
@@ -56,6 +63,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
         android:text="ADD"
+        android:backgroundTint="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/save_button" />
@@ -67,8 +75,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
         android:text="SAVE"
+        android:backgroundTint="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
