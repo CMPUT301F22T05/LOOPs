@@ -60,6 +60,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     protected Button addIngredientButton;
     protected RecyclerView ingredientRecyclerView;
     protected IngredientCollection ingredientCollection;
+    private int selectedIngredientIndex = -1;
 
     protected RecyclerView.LayoutManager layoutManager;
     protected RecipeIngredientsAdapter recyclerViewAdapter;
@@ -87,9 +88,13 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         ingredientRecyclerView.setAdapter(recyclerViewAdapter);
     }
 
+    /**
+     * Sets the behavior when recipe's ingredient item is clicked
+     * @param position
+     */
     @Override
     public void OnItemClick(int position) {
-        ingredientCollection.getIngredients().get(position).setPending(true);
+        selectedIngredientIndex = position;
         saveFragmentState();
     }
 
@@ -163,6 +168,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         parseArguments();
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
+        setOnEditIngredientBehaviour();
         setOnSelectIngredientBehaviour();
         if (savedInstanceState != null)
             restoreFormState(savedInstanceState);
@@ -239,7 +245,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     }
 
     /**
-     * Handles the behavior when the add/edit ingredient form submits an ingredient
+     * Handles the behavior when the add ingredient form submits an ingredient
      */
     private void setOnAddIngredientBehaviour() {
         SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
@@ -247,24 +253,27 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
                 .observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(@Nullable final Object ingredient) {
-
-                int updateIndex = 0;
-                for (Ingredient ing : ingredientCollection.getIngredients()) {
-                    if (ing.getPending()) {
-                        ingredientCollection.getIngredients().get(updateIndex).setPending(false);
-                        break;
-                    }
-                    updateIndex++;
-                }
-                try {
-                    ingredientCollection.updateIngredient(updateIndex, (Ingredient) ingredient);
-                } catch (Exception e) {
-                    ingredientCollection.addIngredient((Ingredient) ingredient);
-                }
+                ingredientCollection.addIngredient((Ingredient) ingredient);
                 recyclerViewAdapter.notifyDataSetChanged();
                 savedStateHandle.remove( AddRecipeIngredientFormFragment.RESULT_KEY );
             }
         });
+    }
+
+    /**
+     * Handles the behavior when the edit ingredient form submits an ingredient
+     */
+    private void setOnEditIngredientBehaviour() {
+        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
+        savedStateHandle.getLiveData( EditRecipeIngredientFormFragment.RESULT_KEY )
+                .observe(getViewLifecycleOwner(), new Observer<Object>() {
+                    @Override
+                    public void onChanged(@Nullable final Object ingredient) {
+                        ingredientCollection.updateIngredient(selectedIngredientIndex, (Ingredient) ingredient);
+                        recyclerViewAdapter.notifyDataSetChanged();
+                        savedStateHandle.remove( EditRecipeIngredientFormFragment.RESULT_KEY );
+                    }
+                });
     }
 
     /**
