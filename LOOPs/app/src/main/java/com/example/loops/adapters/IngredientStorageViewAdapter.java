@@ -96,6 +96,11 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.red));
             BestBeforeDate.setText("N/A");
             location.setText("N/A");
+
+            description.setTextColor(Color.);
+            BestBeforeDate.setTextColor(Color.WHITE);
+            location.setTextColor(Color.WHITE);
+            category.setTextColor(Color.WHITE);
         } else {
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.teal_200));
