@@ -2,8 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+Recipe Detail
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -123,9 +124,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recipeCommentSubHead"
-                android:layout_marginTop="@dimen/extra_large_pad"
+                android:layout_marginTop="15dp"
                 android:textSize="@dimen/recipe_subheading"
-
                 android:layout_below="@+id/prepTimeString"/>
 
             <TextView
@@ -141,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ingredientSubHead"
-                android:layout_marginTop="@dimen/extra_large_pad"
+                android:layout_marginTop="15dp"
                 android:textSize="@dimen/recipe_subheading"
                 android:layout_below="@+id/recipeComment"/>
 
