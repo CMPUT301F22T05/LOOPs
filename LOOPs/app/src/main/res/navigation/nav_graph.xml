@@ -269,8 +269,11 @@
             android:id="@+id/action_save_meal_plan"
             app:destination="@id/mealPlanHomePageFragment" />
         <action
-            android:id="@+id/action_mealPlanFragment_to_recipeCollectionSelectionFragment"
+            android:id="@+id/action_choose_recipes_for_meal_plan"
             app:destination="@id/recipeCollectionSelectionFragment" />
+        <action
+            android:id="@+id/action_choose_ingredients_for_meal_plan"
+            app:destination="@id/ingredientCollectionSelectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeCollectionSelectionFragment"
