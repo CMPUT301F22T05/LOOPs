@@ -27,8 +27,7 @@ import com.example.loops.models.Recipe;
  * A recipe form for adding recipes.
  */
 public class AddRecipeFormFragment extends RecipeFormFragment {
-
-    //private Recipe addedRecipe;
+    
     // Empty constructor
     public AddRecipeFormFragment() { }
 

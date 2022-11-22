@@ -65,7 +65,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     protected RecipeIngredientsAdapter recyclerViewAdapter;
 
     protected ImageView imageView;
-    //protected Button addPhotoButton;
     private ActivityResultLauncher<Intent> cameraActivityLauncher;
 
     // Certain views' state are not properly saved hence the addition of this attribute
@@ -151,7 +150,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         categoryInput = formView.findViewById(R.id.recipeFormCategoryInput);
         submitButton = formView.findViewById(R.id.recipeFormSubmitButton);
         addIngredientButton = formView.findViewById(R.id.recipeFormAddIngredientButton);
-        //addPhotoButton = formView.findViewById(R.id.add_photo_button);
         imageView = formView.findViewById(R.id.imageView);
     }
 
@@ -163,7 +161,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         parseArguments();
-        setConstraintsOnInputs();
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
         setOnSelectIngredientBehaviour();
@@ -175,37 +172,9 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     }
 
     /**
-     * Set constraints on input widgets
-     */
-    private void setConstraintsOnInputs() {
-        //bindNumberPickerOnInput(prepTimeHourInput, prepTimeMinuteInput);
-    }
-
-    /**
-     * Sets the values displayed by the number picker's
-     * @param prepTimeHourInput
-     * @param prepTimeMinuteInput
-     */
-    private void bindNumberPickerOnInput(NumberPicker prepTimeHourInput, NumberPicker prepTimeMinuteInput ) {
-        // TODO: Finish implementing the values displayed for number picker
-        //int maxHourValue = 99;
-        //int maxMinuteValue = 59;
-
-        //prepTimeHourInput.setMinValue(0);
-        //prepTimeHourInput.setMaxValue(maxHourValue);
-
-        //prepTimeMinuteInput.setMinValue(0);
-        //prepTimeMinuteInput.setMaxValue(maxMinuteValue);
-
-        /* FIXME: there is a bug where when a user scrolls to select an option, the value displayed
-            and the value of the number picker is off by one. */
-    }
-
-    /**
      * Sets all the button on click listeners in the form
      */
     private void setButtonOnClickListeners() {
-        // setOnClickSubmitButton() but in here instead.
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,22 +189,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
                 openSelectionForWhereToSelectIngredientsFrom();
             }
         });
-
-        /*
-        addPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                try {
-                    saveFragmentState();
-                    cameraActivityLauncher.launch(openCamera);
-                } catch (ActivityNotFoundException e) {
-                    // display error state to the user
-                }
-            }
-        });
-
-         */
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,10 +209,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * Saves the state of the fragment.
      */
     private void saveFragmentState() {
-//        Most of the view states are saved but there are some views that have problem saving their
-//        state like NumberPicker and ImageView
-        //savedFormState.putInt("PREPTIME_HOUR", prepTimeHourInput.getValue());
-        //savedFormState.putInt("PREPTIME_MINUTE", prepTimeMinuteInput.getValue());
         if (imageView.getDrawable() != null)
             savedFormState.putParcelable("IMAGE", ((BitmapDrawable)imageView.getDrawable()).getBitmap());
         if (ingredientCollection != null)
@@ -282,10 +231,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      * @param savedFormState
      */
     private void restoreFormState(Bundle savedFormState) {
-        //if ( !savedFormState.isEmpty()) {
-        //    prepTimeHourInput.setValue(savedFormState.getInt("PREPTIME_HOUR"));
-        //    prepTimeMinuteInput.setValue(savedFormState.getInt("PREPTIME_MINUTE"));
-        //}
         if (savedFormState.containsKey("IMAGE"))
             imageView.setImageBitmap(savedFormState.getParcelable("IMAGE"));
         if (savedFormState.containsKey("INGREDIENTS"))
