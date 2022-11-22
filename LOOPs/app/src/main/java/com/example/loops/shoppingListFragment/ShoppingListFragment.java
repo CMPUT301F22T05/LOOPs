@@ -1,7 +1,14 @@
 package com.example.loops.shoppingListFragment;
 
+import static androidx.core.view.ViewCompat.setBackgroundTintList;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.Gravity;
@@ -56,7 +63,19 @@ public class ShoppingListFragment extends IngredientCollectionFragment {
         Button pickupNoButton = pickupPopupView.findViewById(R.id.delete_popup_no_button);
         Button pickupYesButton = pickupPopupView.findViewById(R.id.delete_popup_yes_button);
         TextView pickupConfirmText = pickupPopupView.findViewById(R.id.delete_popup_message);
-        pickupConfirmText.setText("Already picked up this ingredient?");
+        TextView popupTitle = pickupPopupView.findViewById(R.id.popup_window_title);
+        CardView popupCard = pickupPopupView.findViewById(R.id.popup_cardview);
+        //LinearLayout popupWindow = pickupPopupView.findViewById(R.id.popup_window_frame);
+
+        popupTitle.setText("Confirm");
+        //popupTitle.setBackgroundColor(Color.parseColor("#2c8f04"));
+        //popupWindow.setBackgroundColor(Color.parseColor("#b6f59d"));
+        popupTitle.setBackgroundTintList(ContextCompat.getColorStateList(view.getContext(),R.color.color_states));
+        popupCard.setCardBackgroundColor(Color.parseColor("#b6f59d"));
+        pickupNoButton.setBackgroundColor(Color.parseColor("#FF6A6667"));
+        pickupYesButton.setBackgroundColor(Color.parseColor("#2196F3"));
+        pickupConfirmText.setText("Ingredient has been picked up?");
+
         pickupNoButton.setOnClickListener(view1 -> {
             pickupPopupWindow.dismiss();
         });
