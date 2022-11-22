@@ -32,6 +32,17 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     // Empty constructor
     public AddRecipeFormFragment() { }
 
+    @Override
+    public void OnItemClick(int position) {
+        super.OnItemClick(position);
+        NavDirections actionEditRecipeIngredient = AddRecipeFormFragmentDirections
+                .actionAddRecipeFormFragmentToEditRecipeIngredientFormFragment(
+                        ingredientCollection.getIngredients().get(position),
+                        position
+                );
+        Navigation.findNavController(getView()).navigate(actionEditRecipeIngredient);
+    }
+
     /**
      * Sets the title text
      * @param formView

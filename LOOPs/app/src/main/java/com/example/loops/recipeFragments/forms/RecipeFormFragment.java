@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.SavedStateHandle;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,7 +90,8 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
 
     @Override
     public void OnItemClick(int position) {
-        //To do overridden by subclasses
+        ingredientCollection.getIngredients().get(position).setPending(true);
+        saveFragmentState();
     }
 
     /**
@@ -291,7 +294,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     }
 
     /**
-     * Handles the behavior when the add ingredient form submits an ingredient
+     * Handles the behavior when the add/edit ingredient form submits an ingredient
      */
     private void setOnAddIngredientBehaviour() {
         SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
@@ -299,7 +302,20 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
                 .observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(@Nullable final Object ingredient) {
-                ingredientCollection.addIngredient((Ingredient) ingredient);
+
+                int updateIndex = 0;
+                for (Ingredient ing : ingredientCollection.getIngredients()) {
+                    if (ing.getPending()) {
+                        ingredientCollection.getIngredients().get(updateIndex).setPending(false);
+                        break;
+                    }
+                    updateIndex++;
+                }
+                try {
+                    ingredientCollection.updateIngredient(updateIndex, (Ingredient) ingredient);
+                } catch (Exception e) {
+                    ingredientCollection.addIngredient((Ingredient) ingredient);
+                }
                 recyclerViewAdapter.notifyDataSetChanged();
                 savedStateHandle.remove( AddRecipeIngredientFormFragment.RESULT_KEY );
             }

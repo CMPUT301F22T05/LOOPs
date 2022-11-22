@@ -40,6 +40,17 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
         initializeFormWithIngredientAttributes();
     }
 
+    @Override
+    public void OnItemClick(int position) {
+        super.OnItemClick(position);
+        NavDirections actionEditRecipeIngredient = EditRecipeFormFragmentDirections
+                .actionEditRecipeFormFragmentToEditRecipeIngredientFormFragment(
+                        ingredientCollection.getIngredients().get(position),
+                        position
+                );
+        Navigation.findNavController(getView()).navigate(actionEditRecipeIngredient);
+    }
+
     void parseArguments() {
         editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
                 .getEditRecipe();
