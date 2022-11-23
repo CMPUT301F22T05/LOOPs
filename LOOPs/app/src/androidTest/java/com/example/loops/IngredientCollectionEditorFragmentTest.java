@@ -67,7 +67,7 @@ public class IngredientCollectionEditorFragmentTest {
          * https://developer.android.com/guide/navigation/navigation-testing#test_navigationui_with_fragmentscenario
          * Date Accessed : 2022-11-19
          */
-        fragmentScenario = FragmentScenario.launchInContainer(IngredientCollectionEditorFragment.class, bundle, new FragmentFactory() {
+        fragmentScenario = FragmentScenario.launchInContainer(IngredientCollectionEditorFragment.class, bundle,R.style.AppTheme, new FragmentFactory() {
             @NonNull
             @Override
             public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
