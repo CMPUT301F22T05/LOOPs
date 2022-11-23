@@ -70,6 +70,7 @@ public class IngredientCollectionSelectionFragmentTest {
         fragmentScenario = FragmentScenario.launchInContainer(
             IngredientCollectionSelectionFragment.class,
             args,
+            R.style.AppTheme,
             new FragmentFactory() {
                 @NonNull
                 @Override
