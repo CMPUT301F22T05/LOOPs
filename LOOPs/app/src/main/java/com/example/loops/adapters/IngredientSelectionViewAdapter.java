@@ -12,10 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
+import com.google.android.material.divider.MaterialDivider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,14 +70,26 @@ public class IngredientSelectionViewAdapter extends ArrayAdapter<Ingredient> {
         TextView category = convertView.findViewById(R.id.ingredient_category_in_selection);
         TextView amount = convertView.findViewById(R.id.ingredient_amount_in_selection);
         TextView unit = convertView.findViewById(R.id.ingredient_unit_in_selection);
+        TextView badge = convertView.findViewById(R.id.ingredient_badge_in_selection);
 
         description.setText(currentIngredient.getDescription());
         category.setText(currentIngredient.getCategory());
+        badge.setText(String.valueOf(currentIngredient.getDescription().charAt(0)));
+
+        MaterialDivider divider = convertView.findViewById(R.id.ingredient_divider_selection);
+        int dividerDefColor = divider.getDividerColor();
 
         boolean isSelected = ingredientIsSelected.getOrDefault(currentIngredient.getDocumentName(), false);
         CardView cardView = holder.cardView;
         if ( isSelected ) {
             cardView.setCardBackgroundColor(Color.BLUE);
+            description.setTextColor(Color.WHITE);
+            category.setTextColor(Color.WHITE);
+            amount.setTextColor(Color.WHITE);
+            unit.setTextColor(Color.WHITE);
+            divider.setDividerColor(Color.WHITE);
+            badge.setText("\u2713");
+
             amount.setText(Double.toString(currentIngredient.getAmount()));
             unit.setText(currentIngredient.getUnit());
         }
@@ -85,6 +97,12 @@ public class IngredientSelectionViewAdapter extends ArrayAdapter<Ingredient> {
             cardView.setCardBackgroundColor(context.getResources().getColor(R.color.teal_200, null));
             amount.setText("");
             unit.setText("");
+            badge.setText(String.valueOf(currentIngredient.getDescription().charAt(0)));
+            description.setTextColor(Color.BLACK);
+            category.setTextColor(Color.BLACK);
+            amount.setTextColor(Color.BLACK);
+            unit.setTextColor(Color.BLACK);
+            divider.setDividerColor(dividerDefColor);
         }
 
         return convertView;

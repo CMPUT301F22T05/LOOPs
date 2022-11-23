@@ -74,7 +74,7 @@ public class ShoppingListFragment extends IngredientCollectionFragment {
         popupCard.setCardBackgroundColor(Color.parseColor("#b6f59d"));
         pickupNoButton.setBackgroundColor(Color.parseColor("#FF6A6667"));
         pickupYesButton.setBackgroundColor(Color.parseColor("#2196F3"));
-        pickupConfirmText.setText("Ingredient has been picked up?");
+        pickupConfirmText.setText(String.format("%s has been picked up?", ingredientCollection.getIngredients().get(position).getDescription()));
 
         pickupNoButton.setOnClickListener(view1 -> {
             pickupPopupWindow.dismiss();

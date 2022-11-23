@@ -17,5 +17,5 @@
     <dimen name="recipe_subheading">20sp</dimen>
     <dimen name="serving_padding">10dp</dimen>
     <dimen name="recipe_fragment_image_width">350dp</dimen>
-    <dimen name="recipe_fragment_image_height">200dp</dimen>
+    <dimen name="recipe_fragment_image_height">350dp</dimen>
 </resources>

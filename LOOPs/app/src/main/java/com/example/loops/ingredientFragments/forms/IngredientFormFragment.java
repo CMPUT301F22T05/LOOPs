@@ -2,6 +2,9 @@ package com.example.loops.ingredientFragments.forms;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +24,7 @@ import android.widget.Spinner;
 import com.example.loops.validators.IngredientValidator;
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
@@ -150,12 +154,14 @@ public abstract class IngredientFormFragment extends Fragment {
      * @param errorMessages string of error messages to display to user
      */
     private void displayErrorMessages(ArrayList<String> errorMessages) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        AlertDialog errorMessageDisplay = builder
-                .setTitle("Please fill out the form properly")
-                .setMessage( String.join("\n", errorMessages) )
-                .create();
-        errorMessageDisplay.show();
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.AlertDialogStyle);
+
+        builder
+                .setTitle("Error: Missing fields")
+                .setMessage(String.join("\n\n", errorMessages))
+                .setPositiveButton("Okay", null)
+                .setBackground(new ColorDrawable(Color.TRANSPARENT))
+                .show();
     }
 
     /**
