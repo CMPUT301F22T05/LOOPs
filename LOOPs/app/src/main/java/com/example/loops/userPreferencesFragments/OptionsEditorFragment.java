@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.example.loops.GenericCollectionLayout;
 import com.example.loops.R;
 import com.example.loops.database.Database;
+import com.example.loops.database.UserPreferenceAttribute;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,15 +64,32 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
                 .getOptionType();
         switch (optionsType) {
             case INGREDIENT_CATEGORY:
-                Database db = Database.getInstance();
-                db.getIngredientCategory((result) -> {
-                    options.addAll(result);
-                    if (optionsAdapter != null)
-                        optionsAdapter.notifyDataSetChanged();
+                Database.getInstance().getUserPreferencesAttribute(
+                    UserPreferenceAttribute.IngredientCategory,
+                    (result) -> {
+                        options.addAll(result);
+                        if (optionsAdapter != null)
+                            optionsAdapter.notifyDataSetChanged();
                 });
                 break;
             case RECIPE_CATEGORY:
+                Database.getInstance().getUserPreferencesAttribute(
+                    UserPreferenceAttribute.RecipeCategory,
+                    (result) -> {
+                        options.addAll(result);
+                        if (optionsAdapter != null)
+                            optionsAdapter.notifyDataSetChanged();
+                });
+                break;
             case STORAGE_LOCATION:
+                Database.getInstance().getUserPreferencesAttribute(
+                        UserPreferenceAttribute.StorageLocation,
+                        (result) -> {
+                            options.addAll(result);
+                            if (optionsAdapter != null)
+                                optionsAdapter.notifyDataSetChanged();
+                        });
+                break;
             default:
                 throw new Error("Given option type is not implemented");
         }
@@ -123,11 +141,20 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
             public void onClick(View view) {
                 switch (optionsType) {
                     case INGREDIENT_CATEGORY:
-                        Database db = Database.getInstance();
-                        db.setIngredientCategory(options);
+                        Database.getInstance().setUserPreferencesAttribute(
+                                UserPreferenceAttribute.IngredientCategory, options
+                        );
                         break;
                     case RECIPE_CATEGORY:
+                        Database.getInstance().setUserPreferencesAttribute(
+                                UserPreferenceAttribute.RecipeCategory, options
+                        );
+                        break;
                     case STORAGE_LOCATION:
+                        Database.getInstance().setUserPreferencesAttribute(
+                                UserPreferenceAttribute.StorageLocation, options
+                        );
+                        break;
                     default:
                         throw new Error("Given option type is not implemented");
                 }
