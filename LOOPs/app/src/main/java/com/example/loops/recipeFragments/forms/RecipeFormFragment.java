@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +33,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loops.MainActivity;
+import com.example.loops.database.Database;
+import com.example.loops.database.UserPreferenceAttribute;
 import com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.R;
@@ -131,7 +135,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      */
     private void initializeWidgets(View formView) {
         getLayoutWidgetsFrom(formView);
-//        populateSpinnerOptions()      FIXME: For now, spinner options are hard-coded but this will change
+        populateSpinnerOptions();
     }
 
     /**
@@ -150,6 +154,31 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         addIngredientButton = formView.findViewById(R.id.recipeFormAddIngredientButton);
         //addPhotoButton = formView.findViewById(R.id.add_photo_button);
         imageView = formView.findViewById(R.id.imageView);
+    }
+
+    /**
+     * Populates all the spinners in the fragment with relevant options
+     */
+    private void populateSpinnerOptions() {
+        // lazy way to not break testing
+        if ( getActivity() instanceof MainActivity) {
+            Database db = Database.getInstance();
+
+            // Create array list and adapter for ingredient category
+            ArrayList<String> categories = new ArrayList<>();
+            ArrayAdapter categoriesAdapter =
+                    new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, categories);
+            categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // get data
+            db.getUserPreferencesAttribute(
+                    UserPreferenceAttribute.RecipeCategory,
+                    (result) -> {
+                        categories.add("");     // empty option
+                        categories.addAll(result);
+                        categoriesAdapter.notifyDataSetChanged();
+                    });
+            categoryInput.setAdapter(categoriesAdapter);
+        }
     }
 
     /**
