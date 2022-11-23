@@ -100,6 +100,36 @@ public class IngredientCollection implements Serializable {
     }
 
     /**
+     * Returns whether the collection contains an ingredient with same attributes
+     * @param toCheck ingredient to check if it's contained
+     * @return True if it does contain it. False otherwise
+     */
+    public boolean contains(Ingredient toCheck) {
+        return ingredients.contains(toCheck);
+    }
+
+    /**
+     * Returns whether the collection contains an ingredient with same description and category
+     * @param toCheck ingredient to check if it's contained
+     * @return True if it does contain it. False otherwise
+     */
+    public boolean containsDescriptionAndCategory(Ingredient toCheck) {
+        return ingredients.stream().anyMatch(
+            (ing) -> { return
+                ing.getDescription().equals(toCheck.getDescription())
+                && ing.getCategory().equals(toCheck.getCategory());
+        });
+    }
+
+    /**
+     * Returns the number of ingredients in this collection
+     * @return number of ingredients
+     */
+    public int size() {
+        return ingredients.size();
+    }
+
+    /**
      * All sort options in a collection.
      * Include sort by description, best before date, location, category
      * @param option
