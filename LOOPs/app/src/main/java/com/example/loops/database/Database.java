@@ -53,6 +53,14 @@ public class Database {
     public static final String DB_SHOPPING_LIST = "ShoppingListCollection";
     private static Map<Object, String> collectionDict = new HashMap<>();
 
+    /**
+     * Callback function supplied to some database methods to be called on success
+     * @param <T> the result to return
+     */
+    public interface onDatabaseSuccess<T> {
+        void onResult(T result);
+    }
+
 
     /**
      * Connect to FireStore & initialize collection type mapping.
@@ -286,31 +294,55 @@ public class Database {
         return ingredientCollection;
     }
 
-
-    public interface onDatabaseSuccess<T> {
-        void onResult(T result);
+    /**
+     * Returns a document reference to a specific attribute of user preferences
+     * @param attribute attribute name
+     * @return
+     */
+    private DocumentReference getUserPreferencesAttributeReference(UserPreferenceAttribute attribute) {
+        CollectionReference userPreferences = db.collection("UserPreferences");
+        DocumentReference attributeReference = userPreferences.document(attribute.name());
+        return attributeReference;
     }
 
-    public void getIngredientCategory(onDatabaseSuccess<ArrayList<String>> onSuccessCallback) {
-        CollectionReference userPreferences = db.collection("UserPreferences");
-        DocumentReference ingredientCategoryReference = userPreferences.document("IngredientCategory");
+    /**
+     * Gets the user preferences attribute of type attribute from the database
+     * @param attribute - the type of user preferences attribute to retrieve
+     * @param onSuccessCallback callback function it calls on success with ArrayList<String> of the result
+     */
+    public void getUserPreferencesAttribute(
+            UserPreferenceAttribute attribute, onDatabaseSuccess<ArrayList<String>> onSuccessCallback) {
 
-        ingredientCategoryReference.get()
+        DocumentReference attributeReference = getUserPreferencesAttributeReference(attribute);
+        attributeReference.get()
         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot documentResult = task.getResult();
                     if (documentResult.exists()) {
-                        ArrayList<String> ingredientCategory = (ArrayList<String>) documentResult.get("categories");
-                        onSuccessCallback.onResult(ingredientCategory);
+                        switch (attribute) {
+                            case IngredientCategory:
+                            case RecipeCategory:
+                                ArrayList<String> category = (ArrayList<String>) documentResult.get("categories");
+                                onSuccessCallback.onResult(category);
+                                break;
+                            case StorageLocation:
+                                ArrayList<String> location = (ArrayList<String>) documentResult.get("locations");
+                                onSuccessCallback.onResult(location);
+                                break;
+                            default:
+                                throw new Error(
+                                        "Get users preferences attribute for " + attribute.name() +
+                                                "is not implemented");
+                        }
                     }
                     else {
-                        throw new Error("Could not find ingredient category document in Firestore");
+                        throw new Error("Could not find " + attribute.name() + " document in Firestore");
                     }
                 }
                 else {
-                    Log.e("DATABASE_LOG", "Retrieving ingredient category was not successful");
+                    Log.e("DATABASE_LOG", "Retrieving " + attribute.name() + " was not successful");
                     // error checking is for losers
                     // ...
                 }
@@ -318,25 +350,41 @@ public class Database {
         });
     }
 
-    public void setIngredientCategory(ArrayList<String> newIngredientCategory) {
-        CollectionReference userPreferences = db.collection("UserPreferences");
-        DocumentReference ingredientCategoryReference = userPreferences.document("IngredientCategory");
+    /**
+     * Sets the user preferences attribute of type attribute from the database
+     * @param attribute the type of user preferences attribute to retrieve
+     * @param newAttribute new value to set
+     */
+    public void setUserPreferencesAttribute(UserPreferenceAttribute attribute, ArrayList<String> newAttribute) {
+        DocumentReference attributeReference = getUserPreferencesAttributeReference(attribute);
 
-        Map<String, Object> newIngredientCategoryDocument = new HashMap<>();
-        newIngredientCategoryDocument.put("categories", newIngredientCategory);
+        Map<String, Object> newAttributeDocument = new HashMap<>();
+        switch (attribute) {
+            case IngredientCategory:
+            case RecipeCategory:
+                newAttributeDocument.put("categories", newAttribute);
+                break;
+            case StorageLocation:
+                newAttributeDocument.put("locations", newAttribute);
+                break;
+            default:
+                throw new Error(
+                        "Set users preferences attribute for " + attribute.name() +
+                                "is not implemented");
+        }
 
-        ingredientCategoryReference.set(newIngredientCategoryDocument)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Log.d("DATABASE_LOG", "Ingredient category was successfully updated");
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e("DATABASE_LOG", "Ingredient category failed to set " + e.getMessage());
-                }
-            });
+        attributeReference.set(newAttributeDocument)
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("DATABASE_LOG", attribute.name() +" was successfully updated");
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("DATABASE_LOG", attribute.name() + " failed to set\n" + e.getMessage());
+            }
+        });
     }
 }
