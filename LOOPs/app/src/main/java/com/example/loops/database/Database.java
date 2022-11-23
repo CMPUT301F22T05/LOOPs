@@ -317,4 +317,26 @@ public class Database {
             }
         });
     }
+
+    public void setIngredientCategory(ArrayList<String> newIngredientCategory) {
+        CollectionReference userPreferences = db.collection("UserPreferences");
+        DocumentReference ingredientCategoryReference = userPreferences.document("IngredientCategory");
+
+        Map<String, Object> newIngredientCategoryDocument = new HashMap<>();
+        newIngredientCategoryDocument.put("categories", newIngredientCategory);
+
+        ingredientCategoryReference.set(newIngredientCategoryDocument)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Log.d("DATABASE_LOG", "Ingredient category was successfully updated");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("DATABASE_LOG", "Ingredient category failed to set " + e.getMessage());
+                }
+            });
+    }
 }
