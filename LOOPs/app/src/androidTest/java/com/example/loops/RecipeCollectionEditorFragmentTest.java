@@ -69,7 +69,7 @@ public class RecipeCollectionEditorFragmentTest {
         );
     }
     private void launchFragment(){
-        fragmentScenario = FragmentScenario.launchInContainer(RecipeCollectionEditorFragment.class,bundle);
+        fragmentScenario = FragmentScenario.launchInContainer(RecipeCollectionEditorFragment.class,bundle,R.style.AppTheme);
         fragmentScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
             navController.setCurrentDestination(R.id.recipeCollectionEditorFragment,bundle);
