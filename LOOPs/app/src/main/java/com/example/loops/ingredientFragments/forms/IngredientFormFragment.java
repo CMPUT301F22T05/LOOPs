@@ -14,10 +14,14 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.loops.MainActivity;
+import com.example.loops.database.Database;
+import com.example.loops.database.UserPreferenceAttribute;
 import com.example.loops.validators.IngredientValidator;
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
@@ -204,7 +208,7 @@ public abstract class IngredientFormFragment extends Fragment {
      */
     private void initializeWidgets(View formView) {
         getLayoutWidgetsFrom(formView);
-//        populateSpinnerOptions()      FIXME: For now, spinner options are hard-coded but this will change
+        populateSpinnerOptions();
     }
 
     /**
@@ -219,6 +223,44 @@ public abstract class IngredientFormFragment extends Fragment {
         unitInput = formView.findViewById(R.id.ingredientFormUnitInput);
         categoryInput = formView.findViewById(R.id.ingredientFormCategoryInput);
         submitButton = formView.findViewById(R.id.ingredientFormSubmitButton);
+    }
+
+    /**
+     * Populates all the spinners in the fragment with relevant options
+     */
+    private void populateSpinnerOptions() {
+        // lazy way to not break testing
+        if ( getActivity() instanceof MainActivity ) {
+            Database db = Database.getInstance();
+
+            // Create array list and adapter for ingredient category
+            ArrayList<String> categories = new ArrayList<>();
+            ArrayAdapter categoriesAdapter =
+                    new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, categories);
+            categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // Create array list and adapter for storage location
+            ArrayList<String> locations = new ArrayList<>();
+            ArrayAdapter locationsAdapter =
+                    new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, locations);
+            locationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // get data
+            db.getUserPreferencesAttribute(
+                UserPreferenceAttribute.IngredientCategory,
+                (result) -> {
+                    categories.add("");     // empty option
+                    categories.addAll(result);
+                    categoriesAdapter.notifyDataSetChanged();
+            });
+            db.getUserPreferencesAttribute(
+                UserPreferenceAttribute.StorageLocation,
+                (result) -> {
+                    locations.add("");     // empty option
+                    locations.addAll(result);
+                    locationsAdapter.notifyDataSetChanged();
+            });
+            locationInput.setAdapter(locationsAdapter);
+            categoryInput.setAdapter(categoriesAdapter);
+        }
     }
 
     /**
