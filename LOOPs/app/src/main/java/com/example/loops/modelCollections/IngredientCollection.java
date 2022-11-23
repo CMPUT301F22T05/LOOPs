@@ -68,6 +68,15 @@ public class IngredientCollection implements Serializable {
     }
 
     /**
+     * Gets the ingredient at index given
+     * @param index
+     * @return Ingredient
+     */
+    public Ingredient get(int index) {
+        return ingredients.get(index);
+    }
+
+    /**
      * Counts how many ingredients are pending in the collection
      * @return int representing number of pending ingredients
      */
