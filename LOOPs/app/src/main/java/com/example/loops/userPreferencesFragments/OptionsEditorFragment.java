@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,15 +124,14 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
                 switch (optionsType) {
                     case INGREDIENT_CATEGORY:
                         Database db = Database.getInstance();
-                        // TODO: implement set ingreident category in database
-                        // db.setIngredientCategory(options);
+                        db.setIngredientCategory(options);
                         break;
                     case RECIPE_CATEGORY:
                     case STORAGE_LOCATION:
                     default:
                         throw new Error("Given option type is not implemented");
                 }
-
+                Navigation.findNavController(getView()).popBackStack();
             }
         });
     }
