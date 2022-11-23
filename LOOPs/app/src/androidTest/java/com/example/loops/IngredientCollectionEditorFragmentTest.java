@@ -27,9 +27,7 @@ import static org.hamcrest.Matchers.*;
 
 import com.example.loops.factory.IngredientCollectionFactory;
 import com.example.loops.ingredientFragments.IngredientCollectionEditorFragment;
-import com.example.loops.ingredientFragments.IngredientCollectionFragment;
 import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
-import com.example.loops.ingredientFragments.forms.EditIngredientFormFragment;
 import com.example.loops.models.Ingredient;
 
 import org.hamcrest.Description;
@@ -59,7 +57,7 @@ public class IngredientCollectionEditorFragmentTest {
         //in IngredientCollectionFragment.java
         bundle.putSerializable("collectionType",
                 IngredientCollectionFactory
-                        .CollectionType.PRESET);
+                        .CollectionType.PRESET_FOR_EDIT);
     }
 
     private void launchFragment() {
@@ -94,7 +92,6 @@ public class IngredientCollectionEditorFragmentTest {
         onView(withId(R.id.sort_option_spinner)).perform(click());
         onData(allOf(is(instanceOf(CharSequence.class)), is(option))).perform(click());
         //IdlingPolicies.setIdlingResourceTimeout(5000, TimeUnit.HOURS);
-
     }
 
     /**
