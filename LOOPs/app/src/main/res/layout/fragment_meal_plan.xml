@@ -10,8 +10,8 @@
         android:id="@+id/recipes_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/recipeCollection"
         android:textSize="@dimen/large_text_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
         android:id="@+id/ingredients_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:text="@string/ingredientCollection"
         android:textSize="@dimen/large_text_size"
         app:layout_constraintBottom_toTopOf="@+id/add_button"
@@ -34,6 +34,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/ingredients_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,11 +48,19 @@
         android:id="@+id/ingredients_listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
         android:paddingHorizontal="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
         app:layout_constraintBottom_toTopOf="@+id/add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredients_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/ingredients_textView" >
+
+    </ListView>
+
 
     <Button
         android:id="@+id/add_button"
@@ -56,6 +69,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
         android:text="ADD"
+        android:backgroundTint="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/save_button" />
@@ -67,8 +81,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
         android:text="SAVE"
+        android:backgroundTint="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

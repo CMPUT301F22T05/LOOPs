@@ -2,32 +2,24 @@ package com.example.loops.ingredientFragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
-import androidx.navigation.NavBackStackEntry;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.loops.adapters.IngredientSelectionViewAdapter;
-import com.example.loops.adapters.IngredientStorageViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.factory.IngredientCollectionFactory.CollectionType;
 import com.example.loops.models.Ingredient;
 import com.example.loops.R;
-import com.example.loops.recipeFragments.forms.AddRecipeFormFragmentDirections;
 import com.example.loops.validators.IngredientValidator;
 
 import java.util.ArrayList;
@@ -156,7 +148,10 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View ingredientQuantityPromptView = inflater.inflate(R.layout.dialog_ingredient_quantity_prompt, null);
         EditText amountInput = ingredientQuantityPromptView.findViewById(R.id.dialog_amount_input);
-        Spinner unitInput = ingredientQuantityPromptView.findViewById(R.id.dialog_unit_spinner);
+        //Spinner unitInput = ingredientQuantityPromptView.findViewById(R.id.dialog_unit_textview);
+        TextView unitView = ingredientQuantityPromptView.findViewById(R.id.dialog_unit_textview);
+
+        unitView.setText(selectedIngredient.getUnit());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog setIngredientQuantityPrompt = builder
@@ -182,7 +177,8 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
                     public void onClick(View view) {
                         // Get user input
                         double amount = getAmountFromInput(amountInput);
-                        String unit = unitInput.getSelectedItem().toString();
+                        String unit = selectedIngredient.getUnit();
+                        //String unit = unitInput.getSelectedItem().toString();
                         // Validate user input
                         IngredientValidator validator = new IngredientValidator();
                         boolean valid = validator.checkAmount(amount, IngredientValidator.INGREDIENT_TYPE.STORED);

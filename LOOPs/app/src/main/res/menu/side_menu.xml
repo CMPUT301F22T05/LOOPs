@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/ingredientCollectionEditorFragment"
-            android:title="@string/ingredientCollection" />
+            android:icon="@drawable/fridge_icon"
+            android:title="@string/ingredientCollection"
+            app:actionLayout="@layout/notification_ingredient_number"
+            />
         <item
             android:id="@+id/recipeCollectionEditorFragment"
+            android:icon="@drawable/recipe_icon"
             android:title="@string/recipeCollection" />
         <item
             android:id="@+id/shoppingListFragment"
+            android:icon="@drawable/shopping_cart_icon"
             android:title="@string/shopping_list" />
         <item
             android:id="@+id/userPreferencesFragment"

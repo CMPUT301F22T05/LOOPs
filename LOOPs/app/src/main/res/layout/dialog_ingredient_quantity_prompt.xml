@@ -20,22 +20,24 @@
         android:maxLength="100000"
         android:minHeight="48dp"
         android:textColorHint="#757575"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_unit_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_unit_textview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/dialog_unit_spinner"
+    <TextView
+        android:id="@+id/dialog_unit_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="40dp"
         android:contentDescription="Unit"
         android:ems="10"
-        android:entries="@array/ingredient_units"
         android:minHeight="48dp"
         android:textColorHint="#757575"
+        android:textSize="24dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/dialog_amount_input"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_amount_input"

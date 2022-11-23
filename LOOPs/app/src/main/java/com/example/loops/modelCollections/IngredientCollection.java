@@ -68,6 +68,20 @@ public class IngredientCollection implements Serializable {
     }
 
     /**
+     * Counts how many ingredients are pending in the collection
+     * @return int representing number of pending ingredients
+     */
+    public int countPendingIngredients(){
+        int numberOfPendingIng = 0;
+        for (Ingredient ingredient: getIngredients() ){
+            if (ingredient.getPending()){
+                numberOfPendingIng += 1;
+            }
+        }
+        return numberOfPendingIng;
+    }
+
+    /**
      * Update an ingredient's info based on its index.
      * @param index (int)
      * @param ingredient (Ingredient)

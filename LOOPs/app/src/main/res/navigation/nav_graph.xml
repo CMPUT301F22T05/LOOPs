@@ -6,6 +6,15 @@
     app:startDestination="@id/mealPlanHomePageFragment">
 
     <fragment
+        android:id="@+id/editRecipeIngredientFormFragment"
+        android:name="com.example.loops.recipeFragments.forms.EditRecipeIngredientFormFragment"
+        android:label="Edit a  recipe ingredient">
+
+        <argument
+            android:name="editedIngredient"
+            app:argType="com.example.loops.models.Ingredient" />
+    </fragment>
+    <fragment
         android:id="@+id/addRecipeIngredientFormFragment"
         android:name="com.example.loops.recipeFragments.forms.AddRecipeIngredientFormFragment"
         android:label="Add a  recipe ingredient"
@@ -34,6 +43,9 @@
         <action
             android:id="@+id/action_editRecipeFormFragment_to_ingredientCollectionSelectionFragment"
             app:destination="@id/ingredientCollectionSelectionFragment" />
+        <action
+            android:id="@+id/action_editRecipeFormFragment_to_editRecipeIngredientFormFragment"
+            app:destination="@id/editRecipeIngredientFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealPlanHomePageFragment"
@@ -152,7 +164,7 @@
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.loops.recipeFragments.RecipeFragment"
-        android:label="Recipe Detail"
+        android:label="Recipe Details"
         tools:layout="@layout/fragment_recipe">
         <argument
             android:name="SelectedRecipe"
@@ -205,17 +217,12 @@
     <fragment
         android:id="@+id/ingredientCollectionSelectionFragment"
         android:name="com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment"
-        android:label="Choosing a Ingredient"
+        android:label="Select Ingredients to Add"
         tools:layout="@layout/fragment_ingredient_collection">
         <argument
             android:name="collectionType"
             android:defaultValue="FROM_STORAGE_FOR_VIEW"
             app:argType="com.example.loops.factory.IngredientCollectionFactory$CollectionType" />
-        <action
-            android:id="@+id/action_ingredientCollectionSelectionFragment_to_addRecipeFormFragment"
-            app:destination="@id/addRecipeFormFragment"
-            app:popUpTo="@id/addRecipeFormFragment"
-            app:popUpToInclusive="true" />
         <argument
             android:name="ingredientsToFilter"
             app:argType="com.example.loops.modelCollections.IngredientCollection"
@@ -243,11 +250,14 @@
             app:argType="com.example.loops.modelCollections.IngredientCollection"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_addRecipeFormFragment_to_editRecipeIngredientFormFragment"
+            app:destination="@id/editRecipeIngredientFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/shoppingListFragment"
         android:name="com.example.loops.shoppingListFragment.ShoppingListFragment"
-        android:label="Shopping List"
+        android:label="Your Shopping List"
         tools:layout="@layout/fragment_shopping_list">
         <action
             android:id="@+id/action_shoppingListFragment_to_mealPlanHomePageFragment"
@@ -272,13 +282,16 @@
             android:id="@+id/action_save_meal_plan"
             app:destination="@id/mealPlanHomePageFragment" />
         <action
-            android:id="@+id/action_mealPlanFragment_to_recipeCollectionSelectionFragment"
+            android:id="@+id/action_choose_recipes_for_meal_plan"
             app:destination="@id/recipeCollectionSelectionFragment" />
+        <action
+            android:id="@+id/action_choose_ingredients_for_meal_plan"
+            app:destination="@id/ingredientCollectionSelectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeCollectionSelectionFragment"
         android:name="com.example.loops.recipeFragments.RecipeCollectionSelectionFragment"
-        android:label="RecipeCollectionSelectionFragment" >
+        android:label="Select Recipes to Add" >
         <argument
             android:name="collectionType"
             app:argType="com.example.loops.factory.RecipeCollectionFactory$CollectionType"

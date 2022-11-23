@@ -136,8 +136,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
-            android:backgroundTint="#2196F3"
-            android:text="back"
+            android:backgroundTint="#4CAF50"
+            android:text="Save"
             android:textSize="10dp" />
 
         <Button
@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
-            android:backgroundTint="#4CAF50"
+            android:backgroundTint="#2196F3"
             android:text="edit"
             android:textSize="10dp" />
 

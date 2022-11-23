@@ -2,7 +2,7 @@
     <string name="app_name">LOOPs</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="ingredientCollection">Ingredients</string>
+    <string name="ingredientCollection">Ingredient Storage</string>
     <string name="mealPlans">Meal Plans</string>
     <string name="shopping_list">Shopping List</string>
     <string name="recipeCollection">Recipes</string>
@@ -32,13 +32,13 @@
         <item>@string/sort_by_description</item>
         <item>@string/sort_by_Category</item>
     </string-array>
-    <string name="prepTime">Preparation Time:</string>
-    <string name="servingSize">Serving:</string>
-    <string name="recipeCommentSubHead">Comment</string>
-    <string name="ingredientSubHead">Ingredients</string>
+    <string name="prepTime"><b>Prep Time: </b></string>
+    <string name="servingSize"><b> Servings: </b></string>
+    <string name="recipeCommentSubHead"><b>Comments</b></string>
+    <string name="ingredientSubHead"><b>Ingredients</b></string>
     <string name="EditRecipeButtonName">Edit</string>
-    <string name="categoryInRecipe">Category:</string>
-    <string name="recipeBackButtonText">Back</string>
+    <string name="categoryInRecipe"><b>Category: </b></string>
+    <string name="recipeBackButtonText">Save</string>
     <string name="recipeDeleteButtonText">Delete</string>
     <!-- RECIPE SORT OPTION STRINGS-->
     <string name="sort_by_title">Title</string>
