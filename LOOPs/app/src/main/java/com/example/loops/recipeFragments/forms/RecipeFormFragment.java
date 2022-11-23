@@ -114,6 +114,14 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     abstract void parseArguments();
 
     /**
+     * Subclasses can override this to set the default category option displayed in the form
+     * @return the default category option
+     */
+    protected String getDefaultCategory() {
+        return "";  // empty value
+    }
+
+    /**
      * Creates view of the ingredient form and initialize its widgets
      * @param inflater
      * @param container
@@ -135,7 +143,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      */
     private void initializeWidgets(View formView) {
         getLayoutWidgetsFrom(formView);
-        populateSpinnerOptions();
     }
 
     /**
@@ -163,21 +170,23 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
         // lazy way to not break testing
         if ( getActivity() instanceof MainActivity) {
             Database db = Database.getInstance();
-
             // Create array list and adapter for ingredient category
             ArrayList<String> categories = new ArrayList<>();
+            categories.add(getDefaultCategory());
             ArrayAdapter categoriesAdapter =
                     new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, categories);
             categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            // get data
-            db.getUserPreferencesAttribute(
-                    UserPreferenceAttribute.RecipeCategory,
-                    (result) -> {
-                        categories.add("");     // empty option
-                        categories.addAll(result);
-                        categoriesAdapter.notifyDataSetChanged();
-                    });
             categoryInput.setAdapter(categoriesAdapter);
+            // Get data
+            db.getUserPreferencesAttribute(
+                UserPreferenceAttribute.RecipeCategory,
+                (result) -> {
+                    for (String category : result) {
+                        if ( ! categories.contains(category) )
+                            categories.add(category);
+                    }
+                    categoriesAdapter.notifyDataSetChanged();
+            });
         }
     }
 
@@ -189,7 +198,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         parseArguments();
-        setConstraintsOnInputs();
+        populateSpinnerOptions();
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
         setOnSelectIngredientBehaviour();
