@@ -131,7 +131,7 @@ public class MealPlanFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        //super.onViewCreated(view, savedInstanceState);
         //testRecipeCollectionSelectionFragment();
         handleNewAddedRecipes();
         handleNewAddedIngredients();
@@ -208,7 +208,8 @@ public class MealPlanFragment extends Fragment {
      * add new selected ingredients to the meal plan
      */
     private void handleNewAddedIngredients() {
-        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
+        SavedStateHandle savedStateHandle = Navigation.findNavController(getView())
+                .getCurrentBackStackEntry().getSavedStateHandle();
         savedStateHandle.getLiveData( IngredientCollectionSelectionFragment.RESULT_KEY )
                 .observe(getViewLifecycleOwner(), new Observer<Object>() {
                     @Override

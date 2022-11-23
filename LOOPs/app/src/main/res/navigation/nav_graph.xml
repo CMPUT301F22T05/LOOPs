@@ -282,7 +282,9 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_save_meal_plan"
-            app:destination="@id/mealPlanHomePageFragment" />
+            app:destination="@id/mealPlanHomePageFragment"
+            app:popUpTo="@id/mealPlanHomePageFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_choose_recipes_for_meal_plan"
             app:destination="@id/recipeCollectionSelectionFragment" />
