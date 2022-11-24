@@ -134,6 +134,12 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
         Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
+        selectedIngredient = new Ingredient(
+                selectedIngredient.getDescription(),
+                selectedIngredient.getAmount(),
+                selectedIngredient.getUnit(),
+                selectedIngredient.getCategory()
+        );
 
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {
