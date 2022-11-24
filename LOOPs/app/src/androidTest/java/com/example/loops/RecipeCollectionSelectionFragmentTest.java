@@ -40,7 +40,6 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.loops.factory.IngredientCollectionFactory;
 import com.example.loops.factory.RecipeCollectionFactory;
 import com.example.loops.modelCollections.BaseRecipeCollection;
 import com.example.loops.modelCollections.IngredientCollection;
@@ -114,7 +113,7 @@ public class RecipeCollectionSelectionFragmentTest {
      */
     private void launchFragmentWithRecipesToFilter(BaseRecipeCollection filter) {
         Bundle args = new Bundle();
-        args.putSerializable("collectionType", IngredientCollectionFactory.CollectionType.PRESET_FOR_VIEW);
+        args.putSerializable("collectionType", RecipeCollectionFactory.CollectionType.PRESET_FOR_VIEW);
         args.putSerializable("recipesToFilter", filter);
         launchFragmentWithArgs(args);
     }
@@ -157,94 +156,105 @@ public class RecipeCollectionSelectionFragmentTest {
         toggleSortOptionToAscendingOrDescending();
     }
 
-//    /**
-//     * Tests that an recipe that is passed to the fragment to filter the recipes in the
-//     * fragment are actually filtered.
-//     * It tests to see if the second recipe gets filtered
-//     */
-//    @Test
-//    public void testFilteringSingleRecipe() {
-//        BaseRecipeCollection toFilter = new BaseRecipeCollection();
-//        IngredientCollection pizzaIngredients = new IngredientCollection();
-//        // Bitmap pizza = BitmapFactory.decodeResource(context.getResources(),R.drawable.pizza_test_image);
-//        Recipe toFilterRecipe = new Recipe(
-//                "Pizza",
-//                0,
-//                45,
-//                4,
-//                "Dinner",
-//                null,
-//                pizzaIngredients,
-//                "Italian Pizza"
-//        );
-//        toFilter.addRecipe( toFilterRecipe );
-//        launchFragmentWithRecipesToFilter(toFilter);
-//
-//        assertListSizeIs(1);
-//        assertAdapterItemHasTextInTextView(0, R.id.recipe_title_in_collection, "Grilled Cheese");
-//        onView(withText("Pizza"))
-//                .check(doesNotExist());
-//    }
-//
-//    /**
-//     * Tests that an ingredients that are passed to the fragment to filter the ingredients in the
-//     * fragment are actually filtered.
-//     * It tests to see if all ingredients are filtered
-//     */
-//    @Test
-//    public void testFilteringAllIngredients() {
-//        IngredientCollection toFilter = new IngredientCollection();
-//        Ingredient ing1 = new Ingredient(
-//                "BBB",
-//                "2022-10-28",
-//                "fridge",
-//                1,
-//                "unit",
-//                "XXX"
-//        );
-//        Ingredient ing2 = new Ingredient(
-//                "AAA",
-//                "2022-10-29",
-//                "cupboard",
-//                1,
-//                "unit",
-//                "YYY"
-//        );
-//        toFilter.addIngredient( ing1 );
-//        toFilter.addIngredient( ing2 );
-//        launchFragmentWithRecipesToFilter(toFilter);
-//
-//        assertListSizeIs(0);
-//        onView(withText(ing1.getDescription()))
-//                .check(doesNotExist());
-//        onView(withText(ing2.getDescription()))
-//                .check(doesNotExist());
-//    }
-//
-//    /**
-//     * Tests that an ingredient with same description and same category (but not necessarily, same
-//     * values for other attributes) are filtered out
-//     */
-//    @Test
-//    public void testFilteringForDuplicateIngredient() {
-//        IngredientCollection toFilter = new IngredientCollection();
-//        // Category and descriptions are the same but everything else differs
-//        Ingredient ing1 = new Ingredient(
-//                "BBB",
-//                "2022-12-28",
-//                "DIFFERENT",
-//                1000000,
-//                "DIFFERENT",
-//                "XXX"
-//        );
-//        toFilter.addIngredient( ing1 );
-//        launchFragmentWithRecipesToFilter(toFilter);
-//
-//        assertListSizeIs(1);
-//        assertAdapterItemHasTextInTextView(0, R.id.ingredient_description_in_selection, "AAA");
-//        onView(withText("BBB"))
-//                .check(doesNotExist());
-//    }
+    /**
+     * Tests that an recipe that is passed to the fragment to filter the recipes in the
+     * fragment are actually filtered.
+     * It tests to see if the second recipe gets filtered
+     */
+    @Test
+    public void testFilteringSingleRecipe() {
+        BaseRecipeCollection toFilter = new BaseRecipeCollection();
+        IngredientCollection pizzaIngredients = new IngredientCollection();
+        Bitmap pizza = getPhoto(R.drawable.pizza_test_image);
+        Recipe toFilterRecipe = new Recipe(
+                "Pizza",
+                0,
+                45,
+                4,
+                "Dinner",
+                pizza,
+                pizzaIngredients,
+                "Italian Pizza"
+        );
+        toFilter.addRecipe( toFilterRecipe );
+        launchFragmentWithRecipesToFilter(toFilter);
+
+        assertListSizeIs(1);
+        assertAdapterItemHasTextInTextView(0, R.id.recipe_title_in_collection, "Grilled Cheese");
+        onView(withText("Pizza"))
+                .check(doesNotExist());
+    }
+
+    /**
+     * Tests that an ingredients that are passed to the fragment to filter the ingredients in the
+     * fragment are actually filtered.
+     * It tests to see if all ingredients are filtered
+     */
+    @Test
+    public void testFilteringAllIngredients() {
+        BaseRecipeCollection toFilter = new BaseRecipeCollection();
+        IngredientCollection grilledCheeseIngredients = new IngredientCollection();
+        Bitmap grilledCheese = getPhoto(R.drawable.grilled_cheese_test_image);
+        Recipe recipe1 = new Recipe("Grilled Cheese",
+                0,
+                15,
+                1,
+                "Breakfast",
+                grilledCheese,
+                grilledCheeseIngredients,
+                "Classic");
+        IngredientCollection pizzaIngredients = new IngredientCollection();
+        Bitmap pizza = getPhoto(R.drawable.pizza_test_image);
+        Recipe recipe2 = new Recipe("Pizza",
+                0,
+                45,
+                4,
+                "Dinner",
+                pizza,
+                pizzaIngredients,
+                "Italian Pizza");
+        toFilter.addRecipe(recipe1);
+        toFilter.addRecipe(recipe2);
+        launchFragmentWithRecipesToFilter(toFilter);
+
+        assertListSizeIs(0);
+        onView(withText(recipe1.getTitle()))
+                .check(doesNotExist());
+        onView(withText(recipe2.getTitle()))
+                .check(doesNotExist());
+    }
+
+    // TODO:
+    // Test for filtering for duplicate recipes
+    @Test
+    public void testFilteringForDuplicateRecipe() {
+        assert(false);
+        //
+        //    /**
+        //     * Tests that an ingredient with same description and same category (but not necessarily, same
+        //     * values for other attributes) are filtered out
+        //     */
+        //    @Test
+        //    public void testFilteringForDuplicateIngredient() {
+        //        IngredientCollection toFilter = new IngredientCollection();
+        //        // Category and descriptions are the same but everything else differs
+        //        Ingredient ing1 = new Ingredient(
+        //                "BBB",
+        //                "2022-12-28",
+        //                "DIFFERENT",
+        //                1000000,
+        //                "DIFFERENT",
+        //                "XXX"
+        //        );
+        //        toFilter.addIngredient( ing1 );
+        //        launchFragmentWithRecipesToFilter(toFilter);
+        //
+        //        assertListSizeIs(1);
+        //        assertAdapterItemHasTextInTextView(0, R.id.ingredient_description_in_selection, "AAA");
+        //        onView(withText("BBB"))
+        //                .check(doesNotExist());
+        //    }
+    }
 
     /**
      * Tests for a selection of a single recipe
@@ -405,6 +415,12 @@ public class RecipeCollectionSelectionFragmentTest {
 
     private void clickOkOnDialog() {
         onView(withId(android.R.id.button1)).perform(click());
+    }
+
+    private Bitmap getPhoto(int drawableID) {
+        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Bitmap photo = BitmapFactory.decodeResource(targetContext.getResources(), drawableID);
+        return photo;
     }
 
     private BaseRecipeCollection getSelectionResult() {
