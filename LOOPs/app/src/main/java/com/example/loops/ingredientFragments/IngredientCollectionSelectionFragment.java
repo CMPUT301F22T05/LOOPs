@@ -23,6 +23,8 @@ import com.example.loops.R;
 import com.example.loops.validators.IngredientValidator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Ingredient collection fragment for selecting an ingredient
@@ -89,11 +91,23 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
         // Get ingredients to filter
         IngredientCollection filterIngredients = argsBundle.getIngredientsToFilter();
         if (filterIngredients != null) {
-            for (Ingredient ing : filterIngredients.getIngredients()) {
-                int index = ingredientCollection.getIngredients().indexOf(ing);
-                if (index != -1) {
-                    ingredientCollection.deleteIngredient(index);
-                }
+            // Filter ingredients in filter ingredients
+            ingredientCollection.getIngredients().removeIf(
+                (ing) -> { return filterIngredients.containsDescriptionAndCategory(ing);
+            });
+        }
+        // Remove duplicates.
+        // This isn't the most optimal code nor cleanest as well but me dumb to do it properly
+        HashSet<String> seenDescriptionAndCategory = new HashSet<>();
+        for (int i = 0; i < ingredientCollection.size(); ++i) {
+            Ingredient currentIng = ingredientCollection.get(i);
+            String descAndCategory = currentIng.getDescription().trim()+currentIng.getCategory().trim();
+            if ( seenDescriptionAndCategory.contains(descAndCategory) ) {
+                ingredientCollection.deleteIngredient(i);
+                i--;
+            }
+            else {
+                seenDescriptionAndCategory.add(descAndCategory);
             }
         }
         getArguments().clear();
@@ -120,6 +134,12 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      */
     protected void onClickIngredient(AdapterView<?> parent, View view, int position, long id) {
         Ingredient selectedIngredient = collectionViewAdapter.getItem(position);
+        selectedIngredient = new Ingredient(
+                selectedIngredient.getDescription(),
+                selectedIngredient.getAmount(),
+                selectedIngredient.getUnit(),
+                selectedIngredient.getCategory()
+        );
 
         // If already selected, unselect it
         if (chosenIngredients.getIngredients().contains(selectedIngredient)) {

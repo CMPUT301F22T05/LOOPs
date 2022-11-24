@@ -32,10 +32,27 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
      */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
+        initializeFormWithIngredientAttributes();
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Update");
+    }
 
-        initializeFormWithIngredientAttributes();
+    /**
+     * Returns the default category to show in the category spinner by default
+     * @return the default category option
+     */
+    @Override
+    protected String getDefaultCategory() {
+        return editIngredient.getCategory();
+    }
+
+    /**
+     * Returns the default location to show in the location spinner by default
+     * @return the default location option
+     */
+    @Override
+    protected String getDefaultLocation() {
+        return editIngredient.getStoreLocation();
     }
 
     /**

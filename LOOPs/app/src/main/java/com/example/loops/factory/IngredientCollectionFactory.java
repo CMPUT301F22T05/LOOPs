@@ -1,7 +1,6 @@
 package com.example.loops.factory;
 
 import android.app.Activity;
-import android.content.Context;
 import android.widget.ArrayAdapter;
 
 import com.example.loops.MainActivity;
@@ -25,7 +24,10 @@ public class IngredientCollectionFactory {
     /**
      * The type of the ingredient collections to create.
      *  EMPTY - creates an empty ingredient collection
-     *  PRESET - creates an ingredient collection preset with some ingredients
+     *  PRESET_FOR_EDIT - creates an ingredient collection preset with some ingredients
+     *                      meant to be showed for editor fragments
+     *  PRESET_FOR_VIEW - creates an ingredient collection preset with some ingredients
+     *                        meant to be showed for selection fragments
      *  FROM_STORAGE_FOR_EDIT - retrieve ingredients from user's stored ingredients and
      *                          any changes to the collection are synced to the database
      *  FROM_STORAGE_FOR_VIEW - retrieve ingredients from user's stored ingredients
@@ -35,7 +37,8 @@ public class IngredientCollectionFactory {
      */
     public enum CollectionType {
         EMPTY,
-        PRESET,
+        PRESET_FOR_EDIT,
+        PRESET_FOR_VIEW,
         FROM_STORAGE_FOR_EDIT,
         FROM_STORAGE_FOR_VIEW,
         FROM_SHOPPING_LIST_FOR_EDIT,
@@ -60,7 +63,8 @@ public class IngredientCollectionFactory {
             case EMPTY:
                 collection = new IngredientCollection();
                 break;
-            case PRESET:
+            case PRESET_FOR_EDIT:
+            case PRESET_FOR_VIEW:
                 collection = new IngredientCollection();
                 collection.addIngredient(new Ingredient(
                         "BBB",
@@ -109,12 +113,13 @@ public class IngredientCollectionFactory {
         ArrayAdapter<CharSequence> sortOptionArrayAdapter;
         switch (type) {
             case EMPTY:
-            case PRESET:
+            case PRESET_FOR_EDIT:
             case FROM_STORAGE_FOR_EDIT:
                 sortOptionArrayAdapter = ArrayAdapter.createFromResource(context,
                         R.array.ingredient_storage_sort_option, android.R.layout.simple_spinner_item);
                 sortOptionArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 break;
+            case PRESET_FOR_VIEW:
             case FROM_STORAGE_FOR_VIEW:
                 sortOptionArrayAdapter = ArrayAdapter.createFromResource(context,
                         R.array.ingredient_selection_sort_option, android.R.layout.simple_spinner_item);
@@ -143,11 +148,12 @@ public class IngredientCollectionFactory {
         ArrayAdapter<Ingredient> ingredientArrayAdapter;
         switch (type) {
             case EMPTY:
-            case PRESET:
+            case PRESET_FOR_EDIT:
             case FROM_STORAGE_FOR_EDIT:
                 ingredientArrayAdapter = new IngredientStorageViewAdapter(context,
                         collection.getIngredients());
                 break;
+            case PRESET_FOR_VIEW:
             case FROM_STORAGE_FOR_VIEW:
                 ingredientArrayAdapter = new IngredientSelectionViewAdapter(context,
                         collection.getIngredients());

@@ -73,6 +73,9 @@
             app:argType="com.example.loops.models.MealPlan"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_mealPlanHomePageFragment_to_userPreferencesFragment"
+            app:destination="@id/userPreferencesFragment" />
     </fragment>
     <fragment
         android:id="@+id/ingredientCollectionEditorFragment"
@@ -298,5 +301,23 @@
             app:argType="com.example.loops.modelCollections.BaseRecipeCollection"
             app:nullable="true"
             android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPreferencesFragment"
+        android:name="com.example.loops.userPreferencesFragments.UserPreferencesFragment"
+        android:label="fragment_user_preferences"
+        tools:layout="@layout/fragment_user_preferences" >
+        <action
+            android:id="@+id/action_userPreferencesFragment_to_optionsEditorFragment"
+            app:destination="@id/optionsEditorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/optionsEditorFragment"
+        android:name="com.example.loops.userPreferencesFragments.OptionsEditorFragment"
+        android:label="fragment_options_editor"
+        tools:layout="@layout/fragment_options_editor" >
+        <argument
+            android:name="optionType"
+            app:argType="com.example.loops.userPreferencesFragments.OptionsEditorFragment$OptionsType" />
     </fragment>
 </navigation>
