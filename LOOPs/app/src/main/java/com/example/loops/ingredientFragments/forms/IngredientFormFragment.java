@@ -17,10 +17,14 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.loops.MainActivity;
+import com.example.loops.database.Database;
+import com.example.loops.database.UserPreferenceAttribute;
 import com.example.loops.validators.IngredientValidator;
 import com.example.loops.R;
 import com.example.loops.models.Ingredient;
@@ -54,6 +58,22 @@ public abstract class IngredientFormFragment extends Fragment {
      * @param submittedIngredient ingredient submitted by the form
      */
     protected abstract void sendResult(Ingredient submittedIngredient);
+
+    /**
+     * Subclasses can override this to set the default category option displayed in the form
+     * @return the default category option
+     */
+    protected String getDefaultCategory() {
+        return "";  // empty value
+    }
+
+    /**
+     * Subclasses can override this to set the default location option displayed in the form
+     * @return the default location option
+     */
+    protected String getDefaultLocation() {
+        return "";  // empty value
+    }
 
     /**
      * Creates view of the ingredient form and initialize its widgets
@@ -169,6 +189,7 @@ public abstract class IngredientFormFragment extends Fragment {
      */
     private void setConstraintsOnInputs() {
         bindDatePickerDialogToDateInput(bestBeforeDateInput);
+        populateSpinnerOptions();
     }
 
     /**
@@ -210,7 +231,6 @@ public abstract class IngredientFormFragment extends Fragment {
      */
     private void initializeWidgets(View formView) {
         getLayoutWidgetsFrom(formView);
-//        populateSpinnerOptions()      FIXME: For now, spinner options are hard-coded but this will change
     }
 
     /**
@@ -225,6 +245,50 @@ public abstract class IngredientFormFragment extends Fragment {
         unitInput = formView.findViewById(R.id.ingredientFormUnitInput);
         categoryInput = formView.findViewById(R.id.ingredientFormCategoryInput);
         submitButton = formView.findViewById(R.id.ingredientFormSubmitButton);
+    }
+
+    /**
+     * Populates all the spinners in the fragment with relevant options
+     */
+    private void populateSpinnerOptions() {
+        // lazy way to not break testing
+        if ( getActivity() instanceof MainActivity ) {
+            Database db = Database.getInstance();
+
+            // Create array list and adapter for ingredient category
+            ArrayList<String> categories = new ArrayList<>();
+            categories.add(getDefaultCategory());
+            ArrayAdapter categoriesAdapter =
+                    new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, categories);
+            categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categoryInput.setAdapter(categoriesAdapter);
+            // Create array list and adapter for storage location
+            ArrayList<String> locations = new ArrayList<>();
+            locations.add(getDefaultLocation());
+            ArrayAdapter locationsAdapter =
+                    new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, locations);
+            locationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            locationInput.setAdapter(locationsAdapter);
+            // get data
+            db.getUserPreferencesAttribute(
+                UserPreferenceAttribute.IngredientCategory,
+                (result) -> {
+                    for (String category : result) {
+                        if ( ! categories.contains(category) )
+                            categories.add(category);
+                    }
+                    categoriesAdapter.notifyDataSetChanged();
+            });
+            db.getUserPreferencesAttribute(
+                UserPreferenceAttribute.StorageLocation,
+                (result) -> {
+                    for (String location : result) {
+                        if ( ! locations.contains(location) )
+                            locations.add(location);
+                    }
+                    locationsAdapter.notifyDataSetChanged();
+            });
+        }
     }
 
     /**

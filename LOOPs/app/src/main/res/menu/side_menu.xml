@@ -18,5 +18,8 @@
             android:id="@+id/shoppingListFragment"
             android:icon="@drawable/shopping_cart_icon"
             android:title="@string/shopping_list" />
+        <item
+            android:id="@+id/userPreferencesFragment"
+            android:title="@string/userPreferences" />
     </group>
 </menu>

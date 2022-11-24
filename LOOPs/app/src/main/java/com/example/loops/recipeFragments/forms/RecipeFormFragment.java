@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +35,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loops.MainActivity;
+import com.example.loops.database.Database;
+import com.example.loops.database.UserPreferenceAttribute;
 import com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.R;
@@ -117,6 +121,14 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     abstract void parseArguments();
 
     /**
+     * Subclasses can override this to set the default category option displayed in the form
+     * @return the default category option
+     */
+    protected String getDefaultCategory() {
+        return "";  // empty value
+    }
+
+    /**
      * Creates view of the ingredient form and initialize its widgets
      * @param inflater
      * @param container
@@ -138,7 +150,6 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
      */
     private void initializeWidgets(View formView) {
         getLayoutWidgetsFrom(formView);
-//        populateSpinnerOptions()      FIXME: For now, spinner options are hard-coded but this will change
     }
 
     /**
@@ -159,6 +170,33 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     }
 
     /**
+     * Populates all the spinners in the fragment with relevant options
+     */
+    private void populateSpinnerOptions() {
+        // lazy way to not break testing
+        if ( getActivity() instanceof MainActivity) {
+            Database db = Database.getInstance();
+            // Create array list and adapter for ingredient category
+            ArrayList<String> categories = new ArrayList<>();
+            categories.add(getDefaultCategory());
+            ArrayAdapter categoriesAdapter =
+                    new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, categories);
+            categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categoryInput.setAdapter(categoriesAdapter);
+            // Get data
+            db.getUserPreferencesAttribute(
+                UserPreferenceAttribute.RecipeCategory,
+                (result) -> {
+                    for (String category : result) {
+                        if ( ! categories.contains(category) )
+                            categories.add(category);
+                    }
+                    categoriesAdapter.notifyDataSetChanged();
+            });
+        }
+    }
+
+    /**
      * Set up event listeners and parses argument
      * @param formView
      * @param savedInstanceState
@@ -166,6 +204,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         parseArguments();
+        populateSpinnerOptions();
         setButtonOnClickListeners();
         setOnAddIngredientBehaviour();
         setOnEditIngredientBehaviour();

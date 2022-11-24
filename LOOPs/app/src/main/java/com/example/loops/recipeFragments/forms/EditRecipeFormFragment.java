@@ -92,6 +92,15 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     }
 
     /**
+     * Shows the default category to recipe's original category
+     * @return
+     */
+    @Override
+    protected String getDefaultCategory() {
+        return editRecipe.getCategory();
+    }
+
+    /**
      * Send the edited recipe back to previous fragment.
      * @param submittedRecipe recipe submitted by the form
      */
