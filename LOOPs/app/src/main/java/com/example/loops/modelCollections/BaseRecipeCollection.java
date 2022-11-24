@@ -147,4 +147,12 @@ public class BaseRecipeCollection implements Serializable {
         }
     }
 
+
+    /**
+     * Returns the number of recipes in the collection
+     * @return
+     */
+    public int size() {
+        return allRecipes.size();
+    }
 }
