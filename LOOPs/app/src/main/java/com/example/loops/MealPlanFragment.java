@@ -148,7 +148,7 @@ public class MealPlanFragment extends Fragment {
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 AlertDialog ingredientSelectionPrompt = builder
-                        .setTitle( "What do you want to add to the mael plan?" )
+                        .setTitle( "What do you want to add to the meal plan?" )
                         .setItems(ingredientSelectionOptions, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

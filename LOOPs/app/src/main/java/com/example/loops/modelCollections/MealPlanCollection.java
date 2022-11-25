@@ -77,6 +77,9 @@ public class MealPlanCollection {
 
     public void updateMealPlan(int index, MealPlan mealPlan) {
         mealPlans.set(index, mealPlan);
-        database.addDocument(mealPlan);
+        if (database != null){
+            database.addDocument(mealPlan);
+        }
+
     }
 }
