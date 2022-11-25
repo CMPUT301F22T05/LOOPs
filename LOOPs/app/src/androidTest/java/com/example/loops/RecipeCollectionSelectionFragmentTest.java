@@ -224,36 +224,30 @@ public class RecipeCollectionSelectionFragmentTest {
                 .check(doesNotExist());
     }
 
-    // TODO:
-    // Test for filtering for duplicate recipes
+    /**
+     * Tests that a recipe with same attributes except number of servings is filtered out
+     */
     @Test
     public void testFilteringForDuplicateRecipe() {
-        assert(false);
-        //
-        //    /**
-        //     * Tests that an ingredient with same description and same category (but not necessarily, same
-        //     * values for other attributes) are filtered out
-        //     */
-        //    @Test
-        //    public void testFilteringForDuplicateIngredient() {
-        //        IngredientCollection toFilter = new IngredientCollection();
-        //        // Category and descriptions are the same but everything else differs
-        //        Ingredient ing1 = new Ingredient(
-        //                "BBB",
-        //                "2022-12-28",
-        //                "DIFFERENT",
-        //                1000000,
-        //                "DIFFERENT",
-        //                "XXX"
-        //        );
-        //        toFilter.addIngredient( ing1 );
-        //        launchFragmentWithRecipesToFilter(toFilter);
-        //
-        //        assertListSizeIs(1);
-        //        assertAdapterItemHasTextInTextView(0, R.id.ingredient_description_in_selection, "AAA");
-        //        onView(withText("BBB"))
-        //                .check(doesNotExist());
-        //    }
+        BaseRecipeCollection toFilter = new BaseRecipeCollection();
+        IngredientCollection grilledCheeseIngredients = new IngredientCollection();
+        Bitmap grilledCheese = getPhoto(R.drawable.grilled_cheese_test_image);
+        // All same attributes except number of servings
+        Recipe recipe1 = new Recipe("Grilled Cheese",
+                0,
+                15,
+                100000,         // DIFFERENT
+                "Breakfast",
+                grilledCheese,
+                grilledCheeseIngredients,
+                "Classic");
+        toFilter.addRecipe( recipe1 );
+        launchFragmentWithRecipesToFilter(toFilter);
+
+        assertListSizeIs(1);
+        assertAdapterItemHasTextInTextView(0, R.id.recipe_title_in_collection, "Pizza");
+        onView(withText("Grilled Cheese"))
+                .check(doesNotExist());
     }
 
     /**
