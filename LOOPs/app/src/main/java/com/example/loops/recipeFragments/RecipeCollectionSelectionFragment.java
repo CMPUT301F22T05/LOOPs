@@ -23,6 +23,7 @@ import com.example.loops.validators.RecipeValidator;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment {
     public static final String RESULT_KEY = "RECIPE_COLLECTION_SELECTION_FRAGMENT_RESULT_KEY";
@@ -86,12 +87,10 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
         // Get recipes to filter
         BaseRecipeCollection filterRecipes = argsBundle.getRecipesToFilter();
         if (filterRecipes != null) {
-            for (Recipe recipe : filterRecipes.getAllRecipes()) {
-                int index = recipeCollection.getAllRecipes().indexOf(recipe);
-                if (index != -1) {
-                    recipeCollection.deleteRecipe(index);
-                }
-            }
+            // Filter ingredients in filter ingredients
+            recipeCollection.getAllRecipes().removeIf(
+                (recipe) -> { return filterRecipes.containsSameRecipeIgnoringQuantity(recipe);
+            });
         }
         getArguments().clear();
     }
