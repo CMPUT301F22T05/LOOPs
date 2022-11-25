@@ -18,11 +18,32 @@ public class EditRecipeIngredientFormFragment extends RecipeIngredientFormFragme
 
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
+        initializeFormWithIngredientAttributes();
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("save");
-        initializeFormWithIngredientAttributes();
     }
 
+    /**
+     * Returns the default category to show in the category spinner by default
+     * @return the default category option
+     */
+    @Override
+    protected String getDefaultCategory() {
+        return editedIngredient.getCategory();
+    }
+
+    /**
+     * Returns the default location to show in the location spinner by default
+     * @return the default location option
+     */
+    @Override
+    protected String getDefaultLocation() {
+        return editedIngredient.getStoreLocation();
+    }
+
+    /**
+     * Initializes the form's input with the attributes of the ingredient to edit
+     */
     public void initializeFormWithIngredientAttributes() {
         editedIngredient = EditRecipeIngredientFormFragmentArgs.fromBundle(getArguments())
                 .getEditedIngredient();
