@@ -92,6 +92,26 @@ public class BaseRecipeCollection implements Serializable {
     }
 
     /**
+     * Returns true if the collection contains a recipe with same attributes except num servings
+     * @param toCheck the recipe to check for containment
+     * @return true if it does. Otherwise false
+     */
+    public boolean containsSameRecipeIgnoringQuantity(Recipe toCheck) {
+        return allRecipes.stream().anyMatch(
+            (recipe) -> { return
+                    recipe.equalsIgnoringQuantity(toCheck);
+            });
+    }
+
+    /**
+     * Returns the number of recipes in the collection
+     * @return
+     */
+    public int size() {
+        return allRecipes.size();
+    }
+
+    /**
      * Method that calls the appropriate class based on the user sorting selection
      * @param option (RecipeSortOption)
      */
@@ -146,5 +166,4 @@ public class BaseRecipeCollection implements Serializable {
             return o1.getCategory().compareTo(o2.getCategory());
         }
     }
-
 }

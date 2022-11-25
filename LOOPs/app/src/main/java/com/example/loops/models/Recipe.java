@@ -160,6 +160,22 @@ public class Recipe implements Serializable, ModelConstraints {
     }
 
     /**
+     * Returns whether two recipes are equal ignoring quantity (num servings)
+     * @param o object to compare
+     * @return True if equal. Otherwise false
+     */
+    public boolean equalsIgnoringQuantity(Object o) {
+        if (!(o instanceof Recipe))
+            return false;
+        Recipe toCompare = (Recipe) o;
+        return toCompare.getTitle().equals(getTitle())
+                && toCompare.getPrepTime().equals(getPrepTime())
+                && toCompare.getCategory().equals(getCategory())
+                && toCompare.getIngredients().equals(getIngredients())
+                && toCompare.getComments().equals(getComments());
+    }
+
+    /**
      * Generate unique hashcode for each different recipes.
      * @return documentName for recipe
      */

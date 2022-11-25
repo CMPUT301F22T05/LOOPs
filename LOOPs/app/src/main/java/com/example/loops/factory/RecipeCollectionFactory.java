@@ -11,7 +11,6 @@ import com.example.loops.adapters.RecipeCollectionViewAdapter;
 import com.example.loops.adapters.RecipeSelectionViewAdapter;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.BaseRecipeCollection;
-import com.example.loops.models.Ingredient;
 import com.example.loops.models.Recipe;
 
 /**
@@ -24,7 +23,10 @@ public class RecipeCollectionFactory {
     /**
      * The type of the recipe collections to create.
      *  EMPTY - creates an empty recipe collection
-     *  PRESET - creates an recipe collection preset with some recipes
+     *  PRESET_FOR_EDIT - creates an recipe collection preset with some recipes
+     *                      meant to be shown in editor fragments
+     *  PRESET_FOR_VIEW - creates an recipe collection preset with some recipes
+     *                      meant to be shown in selection fragments
      *  FROM_STORAGE_FOR_EDIT - retrieve recipes from user's stored recipes and
      *                          any changes to the collection are synced to the database
      *  FROM_STORAGE_FOR_VIEW - retrieve recipes from user's stored recipes
@@ -32,7 +34,8 @@ public class RecipeCollectionFactory {
      */
     public enum CollectionType {
         EMPTY,
-        PRESET,
+        PRESET_FOR_EDIT,
+        PRESET_FOR_VIEW,
         FROM_STORAGE_FOR_EDIT,
         FROM_STORAGE_FOR_VIEW
     }
@@ -56,7 +59,8 @@ public class RecipeCollectionFactory {
             case EMPTY:
                 collection = new BaseRecipeCollection();
                 break;
-            case PRESET:
+            case PRESET_FOR_VIEW:
+            case PRESET_FOR_EDIT:
                 collection = new BaseRecipeCollection();
                 IngredientCollection grilledCheeseIngredients = new IngredientCollection();
                 Bitmap grilledCheese = BitmapFactory.decodeResource(context.getResources(), R.drawable.grilled_cheese_test_image);
@@ -106,7 +110,8 @@ public class RecipeCollectionFactory {
         ArrayAdapter<CharSequence> sortOptionArrayAdapter;
         switch (type) {
             case EMPTY:
-            case PRESET:
+            case PRESET_FOR_VIEW:
+            case PRESET_FOR_EDIT:
             case FROM_STORAGE_FOR_VIEW:
             case FROM_STORAGE_FOR_EDIT:
                 sortOptionArrayAdapter =
@@ -132,11 +137,12 @@ public class RecipeCollectionFactory {
         ArrayAdapter<Recipe> recipeArrayAdapter;
         switch (type) {
             case EMPTY:
-            case PRESET:
+            case PRESET_FOR_EDIT:
             case FROM_STORAGE_FOR_EDIT:
                 recipeArrayAdapter = new RecipeCollectionViewAdapter(context,
                         collection.getAllRecipes());
                 break;
+            case PRESET_FOR_VIEW:
             case FROM_STORAGE_FOR_VIEW:
                 recipeArrayAdapter = new RecipeSelectionViewAdapter(context,
                         collection.getAllRecipes());

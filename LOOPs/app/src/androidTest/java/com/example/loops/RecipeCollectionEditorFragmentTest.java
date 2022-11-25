@@ -5,7 +5,6 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -16,7 +15,6 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -32,7 +30,6 @@ import com.example.loops.factory.RecipeCollectionFactory;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Recipe;
 import com.example.loops.recipeFragments.RecipeCollectionEditorFragment;
-import com.example.loops.recipeFragments.RecipeCollectionFragment;
 
 
 import org.junit.Before;
@@ -52,7 +49,7 @@ public class RecipeCollectionEditorFragmentTest {
         bundle = new Bundle();
         bundle.putSerializable("collectionType",
                 RecipeCollectionFactory
-                    .CollectionType.PRESET);
+                    .CollectionType.PRESET_FOR_EDIT);
 
         IngredientCollection burgerIngredients = new IngredientCollection();
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
