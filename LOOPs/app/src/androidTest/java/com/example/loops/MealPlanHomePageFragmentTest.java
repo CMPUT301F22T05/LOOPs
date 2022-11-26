@@ -81,6 +81,9 @@ public class MealPlanHomePageFragmentTest {
 
 
     }
+    /**
+     * Launches a fragment with no arguments
+     */
     private void launchFragment(){
         bundle.putSerializable("updatedMealPlan",mockMealPlan);
         fragmentScenario = FragmentScenario.launchInContainer(MealPlanHomePageFragment.class,bundle ,R.style.AppTheme);
@@ -91,12 +94,20 @@ public class MealPlanHomePageFragmentTest {
         });
     }
 
+    /**
+     * Gets arguments of the next fragment that a button in
+     * MealPlanHomePageFragment navigates to
+     * @return
+     */
     private Bundle getReturnBundle() {
         return navController.getBackStack()
                 .get(navController.getBackStack().size()-1)
                 .getArguments();
     }
 
+    /**
+     * Launches a fragment that has receive a result that updates a meal plan
+     */
     private void mimicUpdateMealPlan(){
         bundle.putSerializable("updatedMealPlan",mockMealPlan);
         bundle.putInt("mealPlanIndex", 0);
@@ -158,6 +169,10 @@ public class MealPlanHomePageFragmentTest {
         }
     }
 
+    /**
+     * Checks if an updated item in list view changes and if you click on an item it goes to the right
+     * fragment
+     */
     @Test
     public void testClickOnItemAndUpdateItem(){
         mimicUpdateMealPlan();

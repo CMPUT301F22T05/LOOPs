@@ -369,18 +369,15 @@ public class Recipe implements Serializable, ModelConstraints {
         this.ingredients = ingredients;
     }
 
-    @Deprecated
-    public Recipe(String title, Duration duration, String category, int numServ, String comment, Bitmap photo) {
-        this.title = title;
-        this.prepTime = duration;
-        this.numServing = numServ;
-        this.category = category;
-        this.comments = comment;
-        this.ingredients = new IngredientCollection();
-        //this.photo = photo;
-    }
 
-    @Deprecated
+    /**
+     * Used in unit testing since bitmaps and encoding does not work in unit testing
+     * @param title
+     * @param duration
+     * @param category
+     * @param numServ
+     * @param comment
+     */
     public Recipe(String title, Duration duration, String category, int numServ, String comment) {
         this.title = title;
         this.prepTime = duration;
@@ -390,7 +387,9 @@ public class Recipe implements Serializable, ModelConstraints {
         this.ingredients = new IngredientCollection();
     }
 
-    @Deprecated
+    /**
+     * Used for unit testing since bitmaps and encoding does not work in unit testing
+     */
     public Recipe(){this.ingredients = new IngredientCollection();}
 
     @Deprecated
