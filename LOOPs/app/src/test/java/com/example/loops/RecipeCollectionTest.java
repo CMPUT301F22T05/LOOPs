@@ -43,7 +43,9 @@ public class RecipeCollectionTest extends TestCase {
         recipeBook.addRecipe(recipe1);
         recipeBook.addRecipe(recipe2);
     }
-
+    /*
+     * Testing if the addRecipe method works properly
+     */
     @Test
     void testAddRecipe(){
         Recipe recipe3 = new Recipe(
@@ -58,6 +60,9 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals(3, recipeBook.getAllRecipes().size());
     }
 
+    /**
+     * Testing if the deleteRecipe method works properly
+     */
     @Test
     void testDelete(){
         assertFalse(recipeBook.deleteRecipe(-1));
@@ -68,6 +73,9 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals(0, recipeBook.getAllRecipes().size());
     }
 
+    /**
+     * Testing if the getRecipe method works properly
+     */
     @Test
     public void testGetRecipe() {
         Recipe recipe3;
@@ -75,6 +83,9 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals("Grilled Cheese", recipe3.getTitle());
     }
 
+    /**
+     * Testing if the updateRecipe method works properly
+     */
     @Test
     public void testUpdateRecipe() {
         Recipe recipe3 = new Recipe(
@@ -90,6 +101,9 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals("Burger", recipeBook.getAllRecipes().get(0).getTitle());
     }
 
+    /**
+     * Testing if the sorting by title works properly
+     */
     @Test
     public void testSortByTitle(){
         recipeBook.sort(RecipeSortOption.BY_TITLE_ASCENDING);
@@ -101,6 +115,9 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals("Grilled Cheese", recipeBook.getAllRecipes().get(1).getTitle());
     }
 
+    /**
+     * Testing if the sorting by preptime works properly
+     */
     @Test
     public void testSortByPREPTIME(){
         recipeBook.sort(RecipeSortOption.BY_PREP_TIME_ASCENDING);
@@ -112,6 +129,9 @@ public class RecipeCollectionTest extends TestCase {
         assertEquals(Duration.ofMinutes(30), recipeBook.getAllRecipes().get(1).getPrepTime());
     }
 
+    /**
+     * Testing if the sorting by category works properly
+     */
     @Test
     public void testSortByCategory(){
         recipeBook.sort(RecipeSortOption.BY_CATEGORY_ASCENDING);
