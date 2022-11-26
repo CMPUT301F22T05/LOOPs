@@ -95,7 +95,7 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         df.setRoundingMode(RoundingMode.CEILING);
 
         description.setText(currentIngredient.getDescription());
-        BestBeforeDate.setText("Best before:  " + currentIngredient.getBestBeforeDateString());
+        BestBeforeDate.setText(currentIngredient.getBestBeforeDateString());
         location.setText(currentIngredient.getStoreLocation());
         category.setText(currentIngredient.getCategory());
         amount.setText(df.format(currentIngredient.getAmount()));
