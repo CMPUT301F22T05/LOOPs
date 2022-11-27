@@ -64,7 +64,7 @@ public class MealPlanCollection {
         mealPlans.add(mealPlan);
     }
 
-    public void addMealPlanLocally(String name, IngredientCollection ingredients, RecipeCollection recipes) {
+    public void addMealPlanLocally(String name, IngredientCollection ingredients, BaseRecipeCollection recipes) {
         MealPlan meal = mealPlanDict.get(name);
         if (meal != null) {
             meal.setIngredients(ingredients);

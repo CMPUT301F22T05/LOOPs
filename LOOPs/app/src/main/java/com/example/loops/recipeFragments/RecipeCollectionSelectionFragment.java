@@ -30,9 +30,9 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
     private Button saveButton;
     private BaseRecipeCollection chosenRecipes;
 
-    public RecipeCollectionSelectionFragment() {
-        // Required empty public constructor
-    }
+//    public RecipeCollectionSelectionFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Sets the UI layout of the view it creates

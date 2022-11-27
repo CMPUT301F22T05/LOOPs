@@ -34,7 +34,7 @@ public class IngredientFragment extends Fragment {
     // selected ingredient from ingredient collection
     private Ingredient ingredient;
     private int ingInd;
-    private int fromWhichFragment;
+    //private int fromWhichFragment;
 
     // all text views
     private TextView descriptionText;

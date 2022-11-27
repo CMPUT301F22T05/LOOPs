@@ -27,7 +27,7 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     private int editRecipeInd;
     private boolean initialized = false;
 
-    public EditRecipeFormFragment() { }
+//    public EditRecipeFormFragment() { }
 
     /**
      * Set up event listeners and sets button text

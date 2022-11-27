@@ -147,10 +147,7 @@ public class IngredientCollection implements Serializable {
         if (option.equals(IngredientSortOption.BY_PENDING)) {
             Collections.sort(ingredients, new PendingDescendingComparator());
         }
-        if (option.equals(IngredientSortOption.BY_DESCRIPTION_ASCENDING)) {
-            Collections.sort(ingredients, new DescriptionAscendingComparator());
-        }
-        if (option.equals(IngredientSortOption.BY_DESCRIPTION_ASCENDING)) {
+        else if (option.equals(IngredientSortOption.BY_DESCRIPTION_ASCENDING)) {
             Collections.sort(ingredients, new DescriptionAscendingComparator());
         }
         else if (option.equals(IngredientSortOption.BY_BEST_BEFORE_DATE_ASCENDING)) {

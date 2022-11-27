@@ -76,7 +76,7 @@ public class MealPlan implements Serializable, ModelConstraints, Comparable<Meal
      * set meal plan with a new recipe collection
      * @param recipes new recipe collection
      */
-    public void setRecipes(RecipeCollection recipes) {
+    public void setRecipes(BaseRecipeCollection recipes) {
         this.recipes = recipes;
     }
 

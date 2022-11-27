@@ -140,7 +140,7 @@ public class BaseRecipeCollection implements Serializable {
     /**
      * Class for comparing recipes by title
      */
-    class TitleAscendingComparator implements Comparator<Recipe> {
+    static class TitleAscendingComparator implements Comparator<Recipe> {
         @Override
         public int compare(Recipe o1, Recipe o2) {
             return o1.getTitle().compareTo(o2.getTitle());
@@ -150,7 +150,7 @@ public class BaseRecipeCollection implements Serializable {
     /**
      * Class for comparing recipes by preparation time
      */
-    class PrepTimeAscendingComparator implements Comparator<Recipe> {
+    static class PrepTimeAscendingComparator implements Comparator<Recipe> {
         @Override
         public int compare(Recipe o1, Recipe o2) {
             return o1.getPrepTime().compareTo(o2.getPrepTime());
@@ -160,7 +160,7 @@ public class BaseRecipeCollection implements Serializable {
     /**
      * Class for comparing recipes by categories
      */
-    class CategoryAscendingComparator implements Comparator<Recipe> {
+    static class CategoryAscendingComparator implements Comparator<Recipe> {
         @Override
         public int compare(Recipe o1, Recipe o2) {
             return o1.getCategory().compareTo(o2.getCategory());

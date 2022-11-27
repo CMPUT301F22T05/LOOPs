@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.example.loops.modelCollections.BaseRecipeCollection;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.modelCollections.IngredientStorage;
 import com.example.loops.modelCollections.MealPlanCollection;
@@ -50,7 +51,6 @@ public class Database {
     public static final String DB_INGREDIENT = "IngredientStorage";
     public static final String DB_RECIPE = "RecipeCollection";
     public static final String DB_MEAL_PLAN = "MealPlanCollection";
-    public static final String DB_SHOPPING_LIST = "ShoppingListCollection";
     private static Map<Object, String> collectionDict = new HashMap<>();
 
     /**
@@ -254,7 +254,7 @@ public class Database {
                                 (List<Map<String, Object>>) document.get("ingredients");
                         List<Map<String, Object>> recipes =
                                 (List<Map<String, Object>>) document.get("recipes");
-                        RecipeCollection recipeCollection = new RecipeCollection();
+                        BaseRecipeCollection recipeCollection = new BaseRecipeCollection();
                         for (Map<String, Object> recipe : recipes) {
                             recipeCollection.addRecipe(new Recipe(
                                     (String) recipe.get("title"),

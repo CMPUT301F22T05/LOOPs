@@ -27,9 +27,9 @@ import com.example.loops.models.Recipe;
 public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
     private Button addButton;
 
-    public RecipeCollectionEditorFragment() {
-        // Required empty public constructor
-    }
+//    public RecipeCollectionEditorFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Sets the UI layout of the view it creates

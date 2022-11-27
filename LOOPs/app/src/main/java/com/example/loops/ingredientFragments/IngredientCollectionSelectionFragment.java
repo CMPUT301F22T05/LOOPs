@@ -34,9 +34,9 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
     private Button saveButton;
     private IngredientCollection chosenIngredients;
 
-    public IngredientCollectionSelectionFragment() {
-        // Required empty public constructor
-    }
+//    public IngredientCollectionSelectionFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Sets the UI layout of the view it creates

@@ -51,7 +51,7 @@ public abstract class IngredientFormFragment extends Fragment {
     protected Spinner categoryInput;
     protected Button submitButton;
 
-    public IngredientFormFragment() {}
+//    public IngredientFormFragment() {}
 
     /**
      * Implement to handle how submitted ingredient is sent to other activities

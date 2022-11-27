@@ -75,7 +75,7 @@ public abstract class RecipeFormFragment extends Fragment implements RecyclerVie
     // Certain views' state are not properly saved hence the addition of this attribute
     private final Bundle savedFormState = new Bundle();
 
-    public RecipeFormFragment() {}
+//    public RecipeFormFragment() {}
 
     public void setUpRecyclerView(View view){
         ingredientRecyclerView.setHasFixedSize(true);

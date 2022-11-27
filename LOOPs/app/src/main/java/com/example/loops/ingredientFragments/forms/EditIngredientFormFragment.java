@@ -23,7 +23,7 @@ public class EditIngredientFormFragment extends IngredientFormFragment {
     public static final String RESULT_KEY = "EDIT_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
     private Ingredient editIngredient;
 
-    public EditIngredientFormFragment() { }
+//    public EditIngredientFormFragment() { }
 
     /**
      * Set up event listeners and sets button text

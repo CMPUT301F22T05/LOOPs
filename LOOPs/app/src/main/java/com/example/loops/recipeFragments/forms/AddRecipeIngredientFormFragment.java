@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class AddRecipeIngredientFormFragment extends RecipeIngredientFormFragment {
     public static final String RESULT_KEY = "ADD_RECIPE_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
 
-    public AddRecipeIngredientFormFragment() {}
+//    public AddRecipeIngredientFormFragment() {}
 
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {

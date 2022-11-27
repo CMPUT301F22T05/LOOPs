@@ -31,9 +31,9 @@ public abstract class IngredientCollectionFragment extends GenericCollectionLayo
     protected ArrayAdapter<Ingredient> collectionViewAdapter;
     protected ArrayAdapter<CharSequence> sortOptionSpinnerAdapter;
 
-    public IngredientCollectionFragment() {
-        // Required empty public constructor
-    }
+//    public IngredientCollectionFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Sets the UI layout for the view

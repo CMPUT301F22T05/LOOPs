@@ -28,9 +28,9 @@ public class UserPreferencesFragment extends Fragment {
     private Button gotoRecipeCategoryButton;
     private Button gotoStoredLocationButton;
 
-    public UserPreferencesFragment() {
-        // Required empty public constructor
-    }
+//    public UserPreferencesFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Binds components of the view and creates the view

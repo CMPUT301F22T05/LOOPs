@@ -106,17 +106,17 @@ public class Recipe implements Serializable, ModelConstraints {
         }
     }
 
-    /**
-     * Compress Bitmap photo to given quality; use non-lossy PNG format to compress.
-     * @param photo Bitmap photo to compress
-     * @param compressQuality number from 0 to 100 represents percentage of compress quality
-     * @return compressed Bitmap photo
-     */
-    private Bitmap compressPhoto(Bitmap photo, int compressQuality) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.PNG, compressQuality, out);
-        return BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-    }
+//    /**
+//     * Compress Bitmap photo to given quality; use non-lossy PNG format to compress.
+//     * @param photo Bitmap photo to compress
+//     * @param compressQuality number from 0 to 100 represents percentage of compress quality
+//     * @return compressed Bitmap photo
+//     */
+//    private Bitmap compressPhoto(Bitmap photo, int compressQuality) {
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        photo.compress(Bitmap.CompressFormat.PNG, compressQuality, out);
+//        return BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+//    }
 
     /**
      * Encode Bitmap photo to base64 photo; use non-lossy PNG format to compress.

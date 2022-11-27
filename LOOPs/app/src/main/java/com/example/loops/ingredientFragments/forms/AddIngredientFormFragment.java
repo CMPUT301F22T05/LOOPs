@@ -16,7 +16,7 @@ import com.example.loops.models.Ingredient;
 public class AddIngredientFormFragment extends IngredientFormFragment {
     public static final String RESULT_KEY = "ADD_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
 
-    public AddIngredientFormFragment() { }
+//    public AddIngredientFormFragment() { }
 
     /**
      * Set up event listeners and changes button text

@@ -14,7 +14,7 @@ public class EditRecipeIngredientFormFragment extends RecipeIngredientFormFragme
     public static final String RESULT_KEY = "EDIT_RECIPE_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
     private Ingredient editedIngredient;
 
-    public EditRecipeIngredientFormFragment() {}
+//    public EditRecipeIngredientFormFragment() {}
 
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {

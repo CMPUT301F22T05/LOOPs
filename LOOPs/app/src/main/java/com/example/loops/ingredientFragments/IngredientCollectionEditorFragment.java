@@ -26,9 +26,9 @@ import com.example.loops.R;
 public class IngredientCollectionEditorFragment extends IngredientCollectionFragment {
     protected Button addButton;
 
-    public IngredientCollectionEditorFragment() {
-        // Required empty public constructor
-    }
+//    public IngredientCollectionEditorFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Sets the UI layout of the view it creates

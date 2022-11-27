@@ -16,7 +16,7 @@ import com.example.loops.models.Ingredient;
  */
 public abstract class RecipeIngredientFormFragment extends IngredientFormFragment  {
 
-    public RecipeIngredientFormFragment() {}
+//    public RecipeIngredientFormFragment() {}
 
     /**
      * sets up the view

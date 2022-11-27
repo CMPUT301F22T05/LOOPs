@@ -29,7 +29,7 @@ import com.example.loops.models.Recipe;
 public class AddRecipeFormFragment extends RecipeFormFragment {
     
     // Empty constructor
-    public AddRecipeFormFragment() { }
+//    public AddRecipeFormFragment() { }
 
     /**
      * On recipe's ingredient click, open edit ingredient form

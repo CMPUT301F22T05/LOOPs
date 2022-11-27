@@ -55,9 +55,9 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
     private Integer fromWhichFragment;
 
 
-    public RecipeFragment() {
-        // Required empty public constructor
-    }
+//    public RecipeFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      *  Method to inflate fragment's xml

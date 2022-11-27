@@ -30,9 +30,9 @@ import com.example.loops.models.Ingredient;
 
 public class ShoppingListFragment extends IngredientCollectionFragment {
 
-    public ShoppingListFragment() {
-        // Required empty public constructor
-    }
+//    public ShoppingListFragment() {
+//        // Required empty public constructor
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

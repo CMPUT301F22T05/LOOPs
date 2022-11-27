@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.loops.GenericCollectionLayout;
+import com.example.loops.MainActivity;
 import com.example.loops.R;
 import com.example.loops.database.Database;
 import com.example.loops.database.UserPreferenceAttribute;
@@ -48,9 +49,9 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
         STORAGE_LOCATION
     }
 
-    public OptionsEditorFragment() {
-        // Required empty public constructor
-    }
+//    public OptionsEditorFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Makes request to the database for result
@@ -64,6 +65,7 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
                 .getOptionType();
         switch (optionsType) {
             case INGREDIENT_CATEGORY:
+                ((MainActivity)getActivity()).setActionBarTitle("Modify Ingredient Categories");
                 Database.getInstance().getUserPreferencesAttribute(
                     UserPreferenceAttribute.IngredientCategory,
                     (result) -> {
@@ -73,6 +75,7 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
                 });
                 break;
             case RECIPE_CATEGORY:
+                ((MainActivity)getActivity()).setActionBarTitle("Modify Recipe Categories");
                 Database.getInstance().getUserPreferencesAttribute(
                     UserPreferenceAttribute.RecipeCategory,
                     (result) -> {
@@ -82,6 +85,7 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
                 });
                 break;
             case STORAGE_LOCATION:
+                ((MainActivity)getActivity()).setActionBarTitle("Modify Storage Locations");
                 Database.getInstance().getUserPreferencesAttribute(
                         UserPreferenceAttribute.StorageLocation,
                         (result) -> {
