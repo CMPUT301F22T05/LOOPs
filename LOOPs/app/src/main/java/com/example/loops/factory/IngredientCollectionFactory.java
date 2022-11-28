@@ -89,7 +89,12 @@ public class IngredientCollectionFactory {
                 collection = new IngredientCollection();
                 for (Ingredient ing : storedIngredients.getIngredients()) {
                     if ( ! ing.getPending() ) {
-                        collection.addIngredient(new Ingredient(ing));
+                        collection.addIngredient(new Ingredient(
+                                ing.getDescription(),
+                                ing.getAmount(),
+                                ing.getUnit(),
+                                ing.getCategory()
+                        ));
                     }
                 }
                 break;
