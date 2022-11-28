@@ -20,6 +20,7 @@
             android:title="@string/shopping_list" />
         <item
             android:id="@+id/userPreferencesFragment"
+            android:icon="@drawable/ic_outline_settings_24"
             android:title="@string/userPreferences" />
     </group>
 </menu>
