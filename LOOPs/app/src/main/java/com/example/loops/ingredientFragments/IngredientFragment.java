@@ -34,7 +34,6 @@ public class IngredientFragment extends Fragment {
     // selected ingredient from ingredient collection
     private Ingredient ingredient;
     private int ingInd;
-    //private int fromWhichFragment;
 
     // all text views
     private TextView descriptionText;
@@ -128,7 +127,6 @@ public class IngredientFragment extends Fragment {
             deleteCollectionAction.setEditedIngredient(ingredient);
             deleteCollectionAction.setEditedIngredientIndex(ingInd);
             deleteCollectionAction.setDeleteFlag(true);
-            //Navigation.findNavController(getParentFragment().getView()).navigate(deleteCollectionAction);
             Navigation.findNavController(parentView).navigate((NavDirections) deleteCollectionAction);
         });
         popupDeleteText.setText(String.format("Delete %s?", ingredient.getDescription()));
@@ -144,6 +142,14 @@ public class IngredientFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * binds the view's components to the class's attributes, set up event listeners, and initializes
+     * the view with ingredient's attribute
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -174,6 +180,11 @@ public class IngredientFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Sets the behavior when objects are returned from other fragments to this fragment
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

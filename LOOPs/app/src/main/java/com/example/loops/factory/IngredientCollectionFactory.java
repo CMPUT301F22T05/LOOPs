@@ -16,7 +16,7 @@ import com.example.loops.shoppingListFragment.ShoppingListInitializer;
 
 /**
  * A factory class to create ingredient collections. In addition, it can also return
- * proper adapters for each ingredient collection type.
+ * proper related adapters for each ingredient collection type.
  */
 public class IngredientCollectionFactory {
     private Activity context;
@@ -88,7 +88,7 @@ public class IngredientCollectionFactory {
                 IngredientCollection storedIngredients = ((MainActivity) context).getIngredientStorage();
                 collection = new IngredientCollection();
                 for (Ingredient ing : storedIngredients.getIngredients()) {
-                    if ( ! ing.getPending() ) {     // FIXME: Exclude pending ingredients?
+                    if ( ! ing.getPending() ) {
                         collection.addIngredient(new Ingredient(ing));
                     }
                 }

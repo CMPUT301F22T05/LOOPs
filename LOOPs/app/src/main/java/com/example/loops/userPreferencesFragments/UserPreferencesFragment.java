@@ -22,15 +22,9 @@ import com.example.loops.R;
  * A fragment as a central place to navigate to fragments related to manipulating user preferences
  */
 public class UserPreferencesFragment extends Fragment {
-    // FIXME: come up with a better name for the package and this class
-    // I suck at naming.
     private Button gotoIngredientCategoryButton;
     private Button gotoRecipeCategoryButton;
     private Button gotoStoredLocationButton;
-
-//    public UserPreferencesFragment() {
-//        // Required empty public constructor
-//    }
 
     /**
      * Binds components of the view and creates the view

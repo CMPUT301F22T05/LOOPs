@@ -11,6 +11,9 @@ import com.example.loops.models.Ingredient;
 import com.example.loops.models.MealPlan;
 import com.example.loops.models.Recipe;
 
+/**
+ * Generates the shopping list given current meal plan and stored ingredients
+ */
 public class ShoppingListInitializer {
 
     /**

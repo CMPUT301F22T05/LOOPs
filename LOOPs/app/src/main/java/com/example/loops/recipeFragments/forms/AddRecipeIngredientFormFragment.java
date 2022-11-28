@@ -17,11 +17,17 @@ import com.example.loops.models.Recipe;
 
 import java.time.LocalDate;
 
+/**
+ * A ingredient form for adding recipe's ingredient
+ */
 public class AddRecipeIngredientFormFragment extends RecipeIngredientFormFragment {
     public static final String RESULT_KEY = "ADD_RECIPE_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
 
-//    public AddRecipeIngredientFormFragment() {}
-
+    /**
+     * Sets the button text
+     * @param formView
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);

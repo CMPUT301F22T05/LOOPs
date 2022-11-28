@@ -42,7 +42,6 @@ import java.util.Locale;
  * An ingredient form. Holds the UI of the form and delegates on submit behavior to its subclasses
  */
 public abstract class IngredientFormFragment extends Fragment {
-    //private static final String INPUT_DATE_FORMAT = "MM/dd/yyyy";
     protected EditText descriptionInput;
     protected EditText bestBeforeDateInput;
     protected Spinner locationInput;
@@ -50,8 +49,6 @@ public abstract class IngredientFormFragment extends Fragment {
     protected Spinner unitInput;
     protected Spinner categoryInput;
     protected Button submitButton;
-
-//    public IngredientFormFragment() {}
 
     /**
      * Implement to handle how submitted ingredient is sent to other activities
@@ -96,7 +93,7 @@ public abstract class IngredientFormFragment extends Fragment {
      */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
-        setConstraintsOnInputs(); // Feel like this needs better name
+        setConstraintsOnInputs();
         setButtonOnClickListeners();
     }
 

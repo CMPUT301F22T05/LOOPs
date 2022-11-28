@@ -274,6 +274,15 @@ public class Ingredient implements Serializable, ModelConstraints {
         this.category = category;
     }
 
+    /**
+     * Returns whether the ingredient is pending for update
+     * @return true if pending. false otherwise
+     */
     public boolean getPending() { return pending; }
+
+    /**
+     * Sets the pending status of ingredient
+     * @param pending
+     */
     public void setPending(boolean pending) { this.pending = pending; }
 }

@@ -21,8 +21,7 @@ public class RecipeValidator {
      * SHOPPING - Recipe that is in the shopping list
      */
     public enum RECIPE_TYPE {
-        STORED,
-        SHOPPING
+        STORED
     }
 
     /**

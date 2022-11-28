@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Control class for ingredients
+ * Collection class for ingredients
  * it can contain number of ingredients and keep track of them
  * ingredient can be removed or updated from the collection
  * new ingredients can also be added in
@@ -46,7 +46,6 @@ public class IngredientCollection implements Serializable {
         int ingInd = ingredients.indexOf(ingredient);
         if (ingInd != -1) {
             ingredients.get(ingInd).addAmount(ingredient.getAmount());
-//            updateIngredient(ingInd, ingredient);
         } else {
             ingredients.add(ingredient);
         }

@@ -40,10 +40,6 @@ public abstract class RecipeCollectionFragment extends GenericCollectionLayout {
     protected BaseRecipeCollection recipeCollection;
     protected ArrayAdapter<Recipe> collectionViewAdapter;
 
-//    public RecipeCollectionFragment() {
-//        // Required empty public constructor
-//    }
-
     /**
      * Subclasses must implement the behavior when recipe items in the list are clicked
      * @param parent

@@ -80,6 +80,10 @@ public class MealPlan implements Serializable, ModelConstraints, Comparable<Meal
         this.recipes = recipes;
     }
 
+    /**
+     * The mapped result for meal plan; the formatted data that can directly send to database.
+     * @return the formatted map data for database storage
+     */
     @Override
     public Map<String, Object> getMapData() {
         Map<String, Object> mapData = new HashMap<>();
@@ -96,11 +100,20 @@ public class MealPlan implements Serializable, ModelConstraints, Comparable<Meal
         return mapData;
     }
 
+    /**
+     * The hash of meal plan as the document in FireStore database.
+     * @return the hash code for the meal plan
+     */
     @Override
     public String getDocumentName() {
         return name;
     }
 
+    /**
+     * How meal plans are compared
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(MealPlan o) {
         return name.compareTo(o.getName());

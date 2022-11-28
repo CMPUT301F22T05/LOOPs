@@ -49,6 +49,13 @@ public class IngredientSelectionViewAdapter extends ArrayAdapter<Ingredient> {
         this.ingredientIsSelected = new HashMap<>();
     }
 
+    /**
+     * Gets the individual list view item for the ingredient
+     * @param position position in the parent view container
+     * @param convertView the individual list view item if it's already been created
+     * @param parent parent view container
+     * @return view of the ingredient
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

@@ -27,9 +27,6 @@ import com.example.loops.models.Recipe;
  * A recipe form for adding recipes.
  */
 public class AddRecipeFormFragment extends RecipeFormFragment {
-    
-    // Empty constructor
-//    public AddRecipeFormFragment() { }
 
     /**
      * On recipe's ingredient click, open edit ingredient form
@@ -46,7 +43,7 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     }
 
     /**
-     * Sets the title text
+     * Sets the button text
      * @param formView
      * @param savedInstanceState
      */
@@ -54,7 +51,6 @@ public class AddRecipeFormFragment extends RecipeFormFragment {
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(formView, savedInstanceState);
         submitButton.setText("Add");
-        //ingredientCollection = addedRecipe.getIngredients();
     }
 
     /**

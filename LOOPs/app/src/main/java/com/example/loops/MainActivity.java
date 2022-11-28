@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
      * appBarConfiguration - header display
      * allIngredients - ingredient storage from database
      * allRecipes - recipe storage from database
+     * mealPlans - meal plans in the database
      */
     private AppBarConfiguration appBarConfiguration;
     private IngredientStorage allIngredients = new IngredientStorage(Database.getInstance());
     private RecipeCollection allRecipes = new RecipeCollection(Database.getInstance());
-    private IngredientCollection shoppingList; //default is null
     private MealPlanCollection mealPlans = new MealPlanCollection(Database.getInstance());
 
     public IngredientCollection getIngredientStorage() {
@@ -61,25 +61,19 @@ public class MainActivity extends AppCompatActivity {
     public RecipeCollection getAllRecipes() {
         return allRecipes;
     }
-    public IngredientCollection getShoppingList() {
-        return shoppingList;
-    }
     public MealPlanCollection getMealPlans() {
         return mealPlans;
     }
 
+    /**
+     * We are using single-activity architecture
+     * Sets up the navigation controller and side menu
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-// FIXME: delete this
-//        Database db = Database.getInstance();
-//        db.getIngredientCategory((result) -> {
-//            Log.d("DEBUG", result.get(0) );
-//            Log.d("DEBUG", result.get(1) );
-//            Log.d("DEBUG", result.get(2) );
-//        });
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();

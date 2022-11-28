@@ -36,7 +36,7 @@ import com.example.loops.sortOption.IngredientSortOption;
 import com.example.loops.sortOption.RecipeSortOption;
 
 /**
- * display meal plans for several following days
+ * Display a particular meal plan. That is, a meal plan for a particular day and time
  */
 public class MealPlanFragment extends Fragment {
     private MealPlan mealPlan;
@@ -45,46 +45,13 @@ public class MealPlanFragment extends Fragment {
     private ShoppingListViewAdapter ingredientsViewAdapter;
     private RecipeCollectionViewAdapter recipesViewAdapter;
 
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-//
-//    public MealPlanFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment MealPlanFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static MealPlanFragment newInstance(String param1, String param2) {
-//        MealPlanFragment fragment = new MealPlanFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-
+    /**
+     * Parses fragment's argument, set appropriate title bar,
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -101,7 +68,6 @@ public class MealPlanFragment extends Fragment {
         catch (Exception e){
 
         }
-
 
         // display ingredients
         IngredientCollection ingredientCollection = mealPlan.getIngredients();
@@ -138,14 +104,22 @@ public class MealPlanFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Sets the behavior when recipes or ingredients are added to the fragment
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //testRecipeCollectionSelectionFragment();
         handleNewAddedRecipes();
         handleNewAddedIngredients();
     }
 
+    /**
+     * Opens up a prompt to select what to add to the meal plan (ingredient or recipe)
+     * @param view
+     */
     private void chooseAddWhatToMealPlan(View view) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,37 +206,4 @@ public class MealPlanFragment extends Fragment {
                     }
                 });
     }
-
-//    // For Testing. I will push this so that the one implementing this class has a reference to work on
-//    private void testRecipeCollectionSelectionFragment() {
-//        Button addButton = getView().findViewById(R.id.add_button);
-//        BaseRecipeCollection recipeToFilter = new RecipeCollection();
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Navigate to recipe selection fragment
-////                MealPlanFragmentDirections.ActionMealPlanFragmentToRecipeCollectionSelectionFragment addRecipeAction
-////                        = MealPlanFragmentDirections.actionMealPlanFragmentToRecipeCollectionSelectionFragment();
-////                addRecipeAction.setRecipesToFilter(recipeToFilter);
-////                Navigation.findNavController(getView()).navigate(addRecipeAction);
-//            }
-//        });
-//
-//        // Handle response from recipe collection selection fragment
-//        SavedStateHandle savedStateHandle = Navigation.findNavController(getView()).getCurrentBackStackEntry().getSavedStateHandle();
-//        savedStateHandle.getLiveData( RecipeCollectionSelectionFragment.RESULT_KEY )
-//        .observe(getViewLifecycleOwner(), new Observer<Object>() {
-//            @Override
-//            public void onChanged(@Nullable final Object selectedRecipes) {
-//                BaseRecipeCollection s = (BaseRecipeCollection) selectedRecipes;
-//                for (Recipe recipe : s.getAllRecipes()) {
-//                    Log.d("RECIPE_DEBUG", "SELECTED RECIPE " + recipe.getTitle() + " " + recipe.getNumServing());
-//                    for (Ingredient ingredient : recipe.getIngredients().getIngredients()) {
-//                        Log.d("RECIPE_DEBUG", "INGREDIENT " + ingredient.getDescription() + " " + ingredient.getAmount());
-//                    }
-//                }
-//                savedStateHandle.remove( RecipeCollectionSelectionFragment.RESULT_KEY );
-//            }
-//        });
-//    }
 }

@@ -24,6 +24,9 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The array adapter for recipes that are meant to be selected
+ */
 public class RecipeSelectionViewAdapter extends ArrayAdapter<Recipe> {
     private Context context;
     private ArrayList<Recipe> dataList;
@@ -56,8 +59,8 @@ public class RecipeSelectionViewAdapter extends ArrayAdapter<Recipe> {
      * Creates the view of each recipe item in the view adapter
      * @param position position in adapter
      * @param convertView view of the recipe item if already created
-     * @param parent
-     * @return
+     * @param parent parent view
+     * @return view of the recipe
      */
     @NonNull
     @Override
