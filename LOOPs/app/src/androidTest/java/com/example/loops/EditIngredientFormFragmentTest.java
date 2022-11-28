@@ -80,7 +80,7 @@ public class EditIngredientFormFragmentTest {
          * https://developer.android.com/guide/navigation/navigation-testing#test_navigationui_with_fragmentscenario
          * Date Accessed : 2022-11-19
          */
-        fragmentScenario = FragmentScenario.launchInContainer(EditIngredientFormFragment.class, args, new FragmentFactory() {
+        fragmentScenario = FragmentScenario.launchInContainer(EditIngredientFormFragment.class, args, R.style.Theme_LOOPs, new FragmentFactory() {
             @NonNull
             @Override
             public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {

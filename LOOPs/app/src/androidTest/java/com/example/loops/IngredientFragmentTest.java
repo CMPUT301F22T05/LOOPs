@@ -13,7 +13,13 @@ import static org.junit.Assert.assertTrue;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelStore;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
@@ -24,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 
+import com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment;
 import com.example.loops.ingredientFragments.IngredientFragment;
 import com.example.loops.models.Ingredient;
 
@@ -51,13 +58,35 @@ public class IngredientFragmentTest {
         bundle.putSerializable("selectedIngredient", ingredient);
         bundle.putInt("selectedIngredientIndex", ingredientInd);
         bundle.putInt("fromWhichFragment", parentFragment);
-        fragmentScenario = FragmentScenario.launchInContainer(IngredientFragment.class, bundle);
-        fragmentScenario.onFragment(fragment -> {
-            navController.setGraph(R.navigation.nav_graph);
-            navController.setCurrentDestination(R.id.ingredientFragment, bundle);
-            Log.e("id", Integer.toString(R.id.ingredientFragment));
-            Navigation.setViewNavController(fragment.requireView(), navController);
-        });
+        /**
+         * https://developer.android.com/guide/navigation/navigation-testing#test_navigationui_with_fragmentscenario
+         * Date Accessed : 2022-11-19
+         */
+        fragmentScenario = FragmentScenario.launchInContainer(
+                IngredientFragment.class,
+                bundle,
+                R.style.Theme_LOOPs,
+                new FragmentFactory() {
+                    @NonNull
+                    @Override
+                    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
+                        IngredientFragment fragment = new IngredientFragment();
+
+                        fragment.getViewLifecycleOwnerLiveData().observeForever(new Observer<LifecycleOwner>() {
+                            @Override
+                            public void onChanged(LifecycleOwner viewLifecycleOwner) {
+                                // The fragment’s view has just been created
+                                if (viewLifecycleOwner != null) {
+                                    navController.setViewModelStore(new ViewModelStore());
+                                    navController.setGraph(R.navigation.nav_graph);
+                                    navController.setCurrentDestination(R.id.ingredientFragment, bundle);
+                                    Navigation.setViewNavController(fragment.requireView(), navController);
+                                }
+                            }
+                        });
+                        return fragment;
+                    }
+                });
     }
 
     private LocalDate getDate(int year, int month, int day) {
