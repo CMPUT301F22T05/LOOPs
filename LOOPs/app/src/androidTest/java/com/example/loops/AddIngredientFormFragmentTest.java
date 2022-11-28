@@ -189,7 +189,7 @@ public class AddIngredientFormFragmentTest {
     @Test
     public void testSubmittingWithNothing() {
         clickSubmit();
-        onView(withText("Please fill out the form properly")).check(matches(isDisplayed()));
+        onView(withText("Error: Missing fields")).check(matches(isDisplayed()));
     }
 
     /**
