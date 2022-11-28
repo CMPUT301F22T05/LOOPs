@@ -211,9 +211,6 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
      * @param newNumServings
      */
     private void scaleRecipeWithNewServing(Recipe recipeToScale, int newNumServings) {
-        /* FIXME: one bug I can think of right now is if ingredient is scaled, then
-                if the ingredient is referenced elsewhere, then that would also be scaled */
-        // FIXME: Also another consideration is adding a scale method to Recipe or changing how setNumServing works
         double scalingFactor = (double) newNumServings / recipeToScale.getNumServing();
         DecimalFormat rounder = new DecimalFormat("#.####");
         for (Ingredient ing : recipeToScale.getIngredients().getIngredients()) {
