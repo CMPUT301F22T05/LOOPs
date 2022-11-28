@@ -16,6 +16,9 @@ class ShoppingListIngredientComparatorTest {
     private Ingredient ingredient2;
     private Ingredient ingredient3;
 
+    /**
+     * Initializes the shopping list before each test
+     */
     @BeforeEach
     void initialize() {
         shoppingList = new ShoppingListIngredientComparator();
@@ -47,6 +50,9 @@ class ShoppingListIngredientComparatorTest {
         storage.addIngredient(ingredient3);
     }
 
+    /**
+     * Test that amount comparison works
+     */
     @Test
     void testComparator(){
         assertEquals(Double.MAX_VALUE, ShoppingListIngredientComparator.getAmountDiff(ingredient1, ingredient2));
