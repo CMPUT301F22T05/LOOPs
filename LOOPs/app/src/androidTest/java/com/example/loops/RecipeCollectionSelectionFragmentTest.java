@@ -74,7 +74,7 @@ public class RecipeCollectionSelectionFragmentTest {
         fragmentScenario = FragmentScenario.launchInContainer(
                 RecipeCollectionSelectionFragment.class,
                 args,
-                R.style.AppTheme,
+                R.style.Theme_LOOPs,
                 new FragmentFactory() {
                     @NonNull
                     @Override

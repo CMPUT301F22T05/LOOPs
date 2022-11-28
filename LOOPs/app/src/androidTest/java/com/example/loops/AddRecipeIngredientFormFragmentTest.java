@@ -71,7 +71,11 @@ public  class AddRecipeIngredientFormFragmentTest{
          * https://developer.android.com/guide/navigation/navigation-testing#test_navigationui_with_fragmentscenario
          * Date Accessed : 2022-11-19
          */
-        fragmentScenario = FragmentScenario.launchInContainer(AddRecipeIngredientFormFragment.class, args, new FragmentFactory() {
+        fragmentScenario = FragmentScenario.launchInContainer(
+                AddRecipeIngredientFormFragment.class,
+                args,
+                R.style.Theme_LOOPs,
+                new FragmentFactory() {
             @NonNull
             @Override
             public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
@@ -210,7 +214,7 @@ public  class AddRecipeIngredientFormFragmentTest{
     @Test
     public void testSubmitNothing(){
         clickSubmit();
-        onView(withText("Please fill out the form properly")).check(matches(isDisplayed()));
+        onView(withText("Error: Missing fields")).check(matches(isDisplayed()));
     }
 
     @Test
