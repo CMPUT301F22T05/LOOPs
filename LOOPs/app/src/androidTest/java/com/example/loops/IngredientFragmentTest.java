@@ -50,14 +50,12 @@ public class IngredientFragmentTest {
      * Opens the ingredient fragment displayed the ingredient from the argument
      * @param ingredient ingredient to display
      * @param ingredientInd index of the ingredient
-     * @param parentFragment the fragment that opened the ingredient fragment
      */
-    private void displayIngredient(Ingredient ingredient, int ingredientInd, int parentFragment) {
+    private void displayIngredient(Ingredient ingredient, int ingredientInd) {
         navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
         Bundle bundle = new Bundle();
         bundle.putSerializable("selectedIngredient", ingredient);
         bundle.putInt("selectedIngredientIndex", ingredientInd);
-        bundle.putInt("fromWhichFragment", parentFragment);
         /**
          * https://developer.android.com/guide/navigation/navigation-testing#test_navigationui_with_fragmentscenario
          * Date Accessed : 2022-11-19
@@ -119,7 +117,7 @@ public class IngredientFragmentTest {
     @Test
     public void testStaticDisplayFromIngredientCollection() {
         Ingredient ingredient = getTestIngredient();
-        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
+        displayIngredient(ingredient, 6);
 
         String[] expected = {
                 "Description:",
@@ -128,7 +126,7 @@ public class IngredientFragmentTest {
                 "Amount:",
                 "Unit:",
                 "Ingredient Category:",
-                "BACK",
+                "SAVE",
                 "EDIT",
                 "DELETE"
         };
@@ -144,7 +142,7 @@ public class IngredientFragmentTest {
     @Test
     public void testStaticDisplayFromEditIngredientForm() {
         Ingredient ingredient = getTestIngredient();
-        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_form);
+        displayIngredient(ingredient, 6);
 
         String[] expected = {
                 "Description:",
@@ -153,7 +151,7 @@ public class IngredientFragmentTest {
                 "Amount:",
                 "Unit:",
                 "Ingredient Category:",
-                "CONFIRM",
+                "SAVE",
                 "EDIT",
                 "DELETE"
         };
@@ -168,7 +166,7 @@ public class IngredientFragmentTest {
     @Test
     public void testIngredientFragmentDisplay() {
         Ingredient ingredient = getTestIngredient();
-        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
+        displayIngredient(ingredient, 6);
 
         String[] expected = {
                 "Roast Beef",
@@ -191,7 +189,7 @@ public class IngredientFragmentTest {
     @Test
     public void testBackButton() {
         Ingredient ingredient = getTestIngredient();
-        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
+        displayIngredient(ingredient, 6);
 
         onView(withId(R.id.ingredient_back_button)).perform(ViewActions.click());
         assertEquals(navController.getCurrentDestination().getId(), R.id.ingredientCollectionEditorFragment);
@@ -208,13 +206,12 @@ public class IngredientFragmentTest {
     @Test
     public void testEditButton() {
         Ingredient ingredient = getTestIngredient();
-        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
+        displayIngredient(ingredient, 6);
 
         onView(withId(R.id.ingredient_edit_button)).perform(ViewActions.click());
         assertEquals(navController.getCurrentDestination().getId(), R.id.editIngredientFormFragment);
         Bundle returnValue = getReturnBundle();
         assertEquals(returnValue.getSerializable("editedIngredient"), ingredient);
-        assertEquals(returnValue.getInt("editIngredientIndex"), 6);
     }
 
     /**
@@ -224,7 +221,7 @@ public class IngredientFragmentTest {
     @Test
     public void testDeleteButtonCancel() {
         Ingredient ingredient = getTestIngredient();
-        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
+        displayIngredient(ingredient, 6);
 
         onView(withId(R.id.ingredient_delete_button)).perform(ViewActions.click());
         String[] expected = {
@@ -249,7 +246,7 @@ public class IngredientFragmentTest {
     @Test
     public void testDeleteButtonConfirm() {
         Ingredient ingredient = getTestIngredient();
-        displayIngredient(ingredient, 6, R.layout.fragment_ingredient_collection);
+        displayIngredient(ingredient, 6);
 
         onView(withId(R.id.ingredient_delete_button)).perform(ViewActions.click());
         String[] expected = {
