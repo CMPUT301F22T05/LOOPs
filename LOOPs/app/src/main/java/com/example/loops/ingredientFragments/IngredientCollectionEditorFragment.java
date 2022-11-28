@@ -26,10 +26,6 @@ import com.example.loops.R;
 public class IngredientCollectionEditorFragment extends IngredientCollectionFragment {
     protected Button addButton;
 
-//    public IngredientCollectionEditorFragment() {
-//        // Required empty public constructor
-//    }
-
     /**
      * Sets the UI layout of the view it creates
      * @param inflater
@@ -42,7 +38,6 @@ public class IngredientCollectionEditorFragment extends IngredientCollectionFrag
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
         addButton = fragmentView.findViewById(R.id.add_ingredient_button);
-        //collectionTitle.setText(R.string.ingredientCollection);
         return fragmentView;
     }
 

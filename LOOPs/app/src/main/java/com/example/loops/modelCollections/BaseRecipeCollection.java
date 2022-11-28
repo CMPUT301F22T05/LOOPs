@@ -21,10 +21,6 @@ import java.util.Comparator;
  *  it also contains comparators for Recipe
  */
 public class BaseRecipeCollection implements Serializable {
-    /* FIXME: I think it is better to rename this to RecipeCollection and the old RecipeCollection
-           to RecipeStorage.
-           However, I am not renaming it right now because it might conflict with other's work
-   */
     protected ArrayList<Recipe> allRecipes;
 
     /**

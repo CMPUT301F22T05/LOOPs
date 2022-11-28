@@ -17,6 +17,9 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * The array adapter for shopping list ingredients
+ */
 public class ShoppingListViewAdapter extends ArrayAdapter<Ingredient> {
     private Context context;
     private ArrayList<Ingredient> dataList;
@@ -32,6 +35,13 @@ public class ShoppingListViewAdapter extends ArrayAdapter<Ingredient> {
         this.dataList = dataList;
     }
 
+    /**
+     * Gets the individual list view item for the shopping list item
+     * @param position position in the parent view container
+     * @param convertView the individual list view item if it's already been created
+     * @param parent parent view container
+     * @return view of the shopping list item
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

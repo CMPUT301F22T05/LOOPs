@@ -51,5 +51,9 @@ public abstract class GenericCollectionLayout extends Fragment {
         });
     }
 
+    /**
+     * Subclasses must implement how the collection it is displaying is sorted
+     * @param parent
+     */
     abstract protected void sortCollection(AdapterView<?> parent);
 }

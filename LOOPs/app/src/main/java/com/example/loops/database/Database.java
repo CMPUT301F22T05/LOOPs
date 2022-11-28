@@ -203,21 +203,6 @@ public class Database {
                                             constructIngredientCollection(ingredientsList),
                                             documentSnapshot.getString("comments")
                                     );
-//                                    Map<String, Object> containIngredients =
-//                                            (HashMap<String, Object>) documentSnapshot.get("ingredients");
-//                                    for (String ingHash : containIngredients.keySet()) {
-//                                        Map<String, Object> ingInfo =
-//                                                (HashMap<String, Object>) containIngredients.get(ingHash);
-//                                        Ingredient containsIngredient = new Ingredient(
-//                                                (String) ingInfo.get("description"),
-//                                                (String) ingInfo.get("bestBeforeDate"),
-//                                                (String) ingInfo.get("location"),
-//                                                Double.parseDouble((String) ingInfo.get("amount")),
-//                                                (String) ingInfo.get("unit"),
-//                                                (String) ingInfo.get("category")
-//                                        );
-//                                    }
-
                                     Log.d("DATABASE_LOG", "RECIPE GOTTEN " + databaseRecipe.getTitle());
                                     ((RecipeCollection) collection).addRecipeLocally(databaseRecipe);
                                 }
@@ -226,15 +211,10 @@ public class Database {
                             if (collectionName.equals(DB_MEAL_PLAN)) {
 
                             }
-
-//                        if (collectionName == DB_SHOPPING_LIST) {
-//
-//                        }
                         }
                     });
         }
         else if (collectionName.equals(DB_MEAL_PLAN)) {
-            //CollectionReference mealPlanCollectionRef = db.collection(DB_MEAL_PLAN);
             MealPlanCollection mealPlans = (MealPlanCollection) collection;
             for (String mealPlanName : mealPlans.getMealPlanNames()) {
                 readMealPlan(mealPlanName, mealPlans);
@@ -242,6 +222,11 @@ public class Database {
         }
     }
 
+    /**
+     * Retrieves the meal plan in the database
+     * @param name name of the meal plan
+     * @param mealPlans meal plan collection to populate
+     */
     private void readMealPlan(String name, MealPlanCollection mealPlans) {
         mealPlanCollectionRef.document(name).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -278,6 +263,12 @@ public class Database {
         });
     }
 
+    /**
+     * Converts the database representation of ingredients to IngredientCollection instance for
+     * recipes and meal plan
+     * @param ingredients
+     * @return
+     */
     private IngredientCollection constructIngredientCollection(List<Map<String, Object>> ingredients) {
         IngredientCollection ingredientCollection = new IngredientCollection();
         if (ingredients == null)
@@ -297,7 +288,7 @@ public class Database {
     /**
      * Returns a document reference to a specific attribute of user preferences
      * @param attribute attribute name
-     * @return
+     * @return document reference to user preferences of specific attribute
      */
     private DocumentReference getUserPreferencesAttributeReference(UserPreferenceAttribute attribute) {
         CollectionReference userPreferences = db.collection("UserPreferences");
@@ -343,8 +334,6 @@ public class Database {
                 }
                 else {
                     Log.e("DATABASE_LOG", "Retrieving " + attribute.name() + " was not successful");
-                    // error checking is for losers
-                    // ...
                 }
             }
         });

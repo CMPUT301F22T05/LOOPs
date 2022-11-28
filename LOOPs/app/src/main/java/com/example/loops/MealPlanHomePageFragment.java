@@ -18,11 +18,17 @@ import com.example.loops.modelCollections.MealPlanCollection;
 import com.example.loops.models.Ingredient;
 import com.example.loops.models.MealPlan;
 
+/**
+ * Display this week's meal plan
+ */
 public class MealPlanHomePageFragment extends Fragment {
     private MealPlanCollection mealPlans;
     private MealPlansViewAdapter viewAdapter;
-    //private ListView mealPlansView;
 
+    /**
+     * Retrieve meal plan from database
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,13 @@ public class MealPlanHomePageFragment extends Fragment {
 
     }
 
+    /**
+     * Set up the adapter, parse fragment's argument, and set event listeners
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

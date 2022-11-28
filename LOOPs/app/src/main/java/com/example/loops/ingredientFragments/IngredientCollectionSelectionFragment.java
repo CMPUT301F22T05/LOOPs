@@ -34,10 +34,6 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
     private Button saveButton;
     private IngredientCollection chosenIngredients;
 
-//    public IngredientCollectionSelectionFragment() {
-//        // Required empty public constructor
-//    }
-
     /**
      * Sets the UI layout of the view it creates
      * @param inflater
@@ -230,7 +226,6 @@ public class IngredientCollectionSelectionFragment extends IngredientCollectionF
      * @param errorMessages the strings of error messages to show
      */
     private void displayErrorMessages(ArrayList<String> errorMessages) {
-        // FIXME: maybe this should be a custom view since it has been reused from ingredient form
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog errorMessageDisplay = builder
                 .setTitle("Please fill out the form properly")

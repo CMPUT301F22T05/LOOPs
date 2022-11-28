@@ -49,10 +49,6 @@ public class OptionsEditorFragment extends GenericCollectionLayout {
         STORAGE_LOCATION
     }
 
-//    public OptionsEditorFragment() {
-//        // Required empty public constructor
-//    }
-
     /**
      * Makes request to the database for result
      * @param savedInstanceState

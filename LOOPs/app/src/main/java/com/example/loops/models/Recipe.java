@@ -29,7 +29,6 @@ public class Recipe implements Serializable, ModelConstraints {
      * prepTime - time required to prepare for a recipe
      * numServing - number of people to serve
      * category - recipe category; should be user defined
-     * photo - compressed bitmap photo
      * photoBase64 - encoded base64 photo string
      * ingredients - collection of ingredients the recipe contains
      * comments - comments to recipe; contains the process of finishing a recipe
@@ -38,7 +37,6 @@ public class Recipe implements Serializable, ModelConstraints {
     private Duration prepTime;
     private int numServing;
     private String category;
-    //private Bitmap photo;
     private String photoBase64;
     private IngredientCollection ingredients;
     private String comments;
@@ -60,7 +58,6 @@ public class Recipe implements Serializable, ModelConstraints {
         this.prepTime = Duration.ofHours(durationHour).plus(Duration.ofMinutes(durationMinute));
         this.numServing = numServing;
         this.category = category;
-        //this.photo = compressPhoto(photo, 100);
         this.photoBase64 = encodeBase64(photo);
         this.ingredients = ingredients;
         this.comments = comments;
@@ -83,7 +80,6 @@ public class Recipe implements Serializable, ModelConstraints {
         this.prepTime = Duration.ofHours(durationHour).plus(Duration.ofMinutes(durationMinute));
         this.numServing = numServing;
         this.category = category;
-        //this.photo = decodeBase64(photoBase64);
         this.photoBase64 = photoBase64;
         this.ingredients = ingredients;
         this.comments = comments;
@@ -105,18 +101,6 @@ public class Recipe implements Serializable, ModelConstraints {
             this.ingredients.addIngredient(new Ingredient(ing));
         }
     }
-
-//    /**
-//     * Compress Bitmap photo to given quality; use non-lossy PNG format to compress.
-//     * @param photo Bitmap photo to compress
-//     * @param compressQuality number from 0 to 100 represents percentage of compress quality
-//     * @return compressed Bitmap photo
-//     */
-//    private Bitmap compressPhoto(Bitmap photo, int compressQuality) {
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        photo.compress(Bitmap.CompressFormat.PNG, compressQuality, out);
-//        return BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-//    }
 
     /**
      * Encode Bitmap photo to base64 photo; use non-lossy PNG format to compress.
@@ -202,14 +186,10 @@ public class Recipe implements Serializable, ModelConstraints {
         mapData.put("comments", getComments());
         mapData.put("durationHour", getPrepTime().toHours());
         mapData.put("durationMinute", getPrepTime().toMinutes() - getPrepTime().toHours()*60);
-//        Map<String, Object> ingredientsMap = new HashMap<>();
-//        for (Ingredient ing : this.getIngredients().getIngredients())
-//            ingredientsMap.put(Integer.toString(ing.hashCode()), ing.getMapData());
         List<Map<String, Object>> ingredientList = new ArrayList<>();
         for (Ingredient ingredient : ingredients.getIngredients()) {
             ingredientList.add(ingredient.getMapData());
         }
-//        mapData.put("ingredients", ingredientsMap);
         mapData.put("ingredients", ingredientList);
         mapData.put("numServing", getNumServing());
         mapData.put("title", getTitle());
@@ -290,7 +270,6 @@ public class Recipe implements Serializable, ModelConstraints {
      * Method to get the category of the recipe
      * @return String representing the category
      */
-
     public String getCategory() {
         return category;
     }

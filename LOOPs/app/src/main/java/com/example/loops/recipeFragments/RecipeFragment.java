@@ -54,11 +54,6 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
     private Integer recipeIndex;
     private Integer fromWhichFragment;
 
-
-//    public RecipeFragment() {
-//        // Required empty public constructor
-//    }
-
     /**
      *  Method to inflate fragment's xml
      * @param inflater
@@ -70,7 +65,6 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
         return view;
     }
@@ -136,8 +130,6 @@ public class RecipeFragment extends Fragment implements RecyclerViewOnClickInter
         long seconds = time.getSeconds();
         String duration = String.format("%dh %02dm",seconds/3600,(seconds%3600)/60);
         prepTime.setText(" " + duration);
-        // FIXME: hard-coded image
-        //selectedRecipe.setPhoto(BitmapFactory.decodeResource(getResources(), R.drawable.fried_chicken_test_picutre));
 
         recipeImage.setImageBitmap(selectedRecipe.getPhoto());
         servingSize.setText(" " + selectedRecipe.getNumServing());

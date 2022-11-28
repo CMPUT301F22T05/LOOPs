@@ -16,16 +16,31 @@ import com.example.loops.models.MealPlan;
 
 import java.util.ArrayList;
 
+/**
+ * The array adapter for meal plans
+ */
 public class MealPlansViewAdapter extends ArrayAdapter<MealPlan> {
     private Context context;
     private ArrayList<MealPlan> dataList;
 
+    /**
+     * Adapter constructor.
+     * @param context
+     * @param dataList
+     */
     public MealPlansViewAdapter (Context context, ArrayList<MealPlan> dataList) {
         super(context, 0, dataList);
         this.context = context;
         this.dataList = dataList;
     }
 
+    /**
+     * Gets the individual list view item for the meal plan
+     * @param position position in the parent view container
+     * @param convertView the individual list view item if it's already been created
+     * @param parent parent view container
+     * @return view of the meal plan
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

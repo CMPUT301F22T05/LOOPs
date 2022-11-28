@@ -27,8 +27,6 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
     private int editRecipeInd;
     private boolean initialized = false;
 
-//    public EditRecipeFormFragment() { }
-
     /**
      * Set up event listeners and sets button text
      * @param formView
@@ -54,6 +52,9 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
         Navigation.findNavController(getView()).navigate(actionEditRecipeIngredient);
     }
 
+    /**
+     * Parses the arguments of the fragment
+     */
     void parseArguments() {
         editRecipe = EditRecipeFormFragmentArgs.fromBundle(getArguments())
                 .getEditRecipe();
@@ -61,7 +62,11 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
                 .getEditRecipeIndex();
     }
 
-    // Gets the index for where 'value' is at in spinner
+    /**
+     * Gets the index for where 'value' is at in spinner
+     * @param value
+     * @param spinner
+     */
     protected int getSpinnerIndexByValue(String value, Spinner spinner) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).toString().equals(value)) {
@@ -114,6 +119,10 @@ public class EditRecipeFormFragment extends RecipeFormFragment {
         Navigation.findNavController(getView()).navigate(editAction);
     }
 
+    /**
+     * Opens a dialog to select where to choose ingredients from and directs the user to
+     * the appropriate fragment
+     */
     void openSelectionForWhereToSelectIngredientsFrom() {
         CharSequence[] ingredientSelectionOptions = new CharSequence[]{
                 "By New Ingredient",

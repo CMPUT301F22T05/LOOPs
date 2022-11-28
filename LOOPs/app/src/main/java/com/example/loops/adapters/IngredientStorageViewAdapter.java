@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This is the adapter class for ingredient storage collection listview.
+ * This is the adapter class for ingredient storage collection listview items.
  */
 public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
     private Context context;
@@ -41,6 +41,13 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         this.dataList = dataList;
     }
 
+    /**
+     * Gets the individual list view item for the ingredient
+     * @param position position in the parent view container
+     * @param convertView the individual list view item if it's already been created
+     * @param parent parent view container
+     * @return view of the ingredient
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -73,7 +80,6 @@ public class IngredientStorageViewAdapter extends ArrayAdapter<Ingredient> {
         MaterialDivider divider = convertView.findViewById(R.id.ingredient_divider_storage);
 
         if (currentIngredient.getPending()) {
-            //convertView.setBackgroundColor(Color.RED);
             CardView card = convertView.findViewById(R.id.ingredient_cardview);
             card.setCardBackgroundColor(ContextCompat.getColor(this.context,R.color.red));
             BestBeforeDate.setText("N/A");

@@ -16,8 +16,6 @@ import com.example.loops.models.Ingredient;
  */
 public abstract class RecipeIngredientFormFragment extends IngredientFormFragment  {
 
-//    public RecipeIngredientFormFragment() {}
-
     /**
      * sets up the view
      * @param formView view of the ingredient form
@@ -34,8 +32,6 @@ public abstract class RecipeIngredientFormFragment extends IngredientFormFragmen
      * @param formView
      */
     private void hideUnusedInput(View formView) {
-        // Maybe, this isn't the best idea? Maybe we should refactor the ingredient form fragment
-        // so we can choose the UI layout we want to use?
         TextView bestBeforeDateText = formView.findViewById(R.id.ingredientFormBestBeforeDateText);
         bestBeforeDateText.setVisibility(View.GONE);
         bestBeforeDateInput.setVisibility(View.GONE);

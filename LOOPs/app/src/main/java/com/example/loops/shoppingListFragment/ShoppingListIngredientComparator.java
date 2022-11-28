@@ -5,6 +5,10 @@ import androidx.annotation.NonNull;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 
+/**
+ * Comparator operators for shopping list ingredients
+ * You can compare by amount and by pending status.
+ */
 public class ShoppingListIngredientComparator {
 
     /**
@@ -31,6 +35,12 @@ public class ShoppingListIngredientComparator {
         return Double.MAX_VALUE;
     }
 
+    /**
+     * Given a meal plan ingredient, check if the meal plan ingredients is already stored in user's
+     * storage.
+     * If it is stored, return how much more of it is needed
+     * Otherwise, return 0
+     */
     public static double getStoredAmount(Ingredient mealPlanIngredient, Ingredient storageIngredient) {
         boolean condition = mealPlanIngredient.getDescription().equalsIgnoreCase(storageIngredient.getDescription())
                 && mealPlanIngredient.getCategory().equalsIgnoreCase(storageIngredient.getCategory())

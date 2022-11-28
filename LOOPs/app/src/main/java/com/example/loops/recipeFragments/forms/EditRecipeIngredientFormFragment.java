@@ -10,12 +10,18 @@ import androidx.navigation.Navigation;
 import com.example.loops.ingredientFragments.forms.IngredientFormFragment;
 import com.example.loops.models.Ingredient;
 
+/**
+ * A ingredient form for editing recipe's ingredient. Supply the ingredient to edit through action args
+ */
 public class EditRecipeIngredientFormFragment extends RecipeIngredientFormFragment {
     public static final String RESULT_KEY = "EDIT_RECIPE_INGREDIENT_FORM_FRAGMENT_RESULT_KEY";
     private Ingredient editedIngredient;
 
-//    public EditRecipeIngredientFormFragment() {}
-
+    /**
+     * Initializes the form with ingredient's attributes and sets button text
+     * @param formView
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View formView, @Nullable Bundle savedInstanceState) {
         initializeFormWithIngredientAttributes();

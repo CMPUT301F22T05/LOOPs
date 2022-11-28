@@ -13,7 +13,10 @@ public interface ModelConstraints {
      */
     Map<String, Object> getMapData();
 
-//    boolean equals(Object o);
-//    int hashCode();
+    /**
+     * The document name that will be used to store the object in Firestore.
+     * It should be unique
+     * @return
+     */
     String getDocumentName();
 }

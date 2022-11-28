@@ -27,10 +27,6 @@ import com.example.loops.models.Recipe;
 public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
     private Button addButton;
 
-//    public RecipeCollectionEditorFragment() {
-//        // Required empty public constructor
-//    }
-
     /**
      * Sets the UI layout of the view it creates
      * @param inflater
@@ -42,7 +38,6 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = super.onCreateView(inflater, container, savedInstanceState);
-        //collectionTitle.setText(R.string.recipeCollection);
         addButton = fragmentView.findViewById(R.id.select_recipe_in_collection_btn);
         setAddButtonListener();
         return fragmentView;
@@ -57,6 +52,10 @@ public class RecipeCollectionEditorFragment extends RecipeCollectionFragment {
         return R.layout.fragment_recipe_collection_editor;
     }
 
+    /**
+     * Gets the collection type (the type of recipes to display) from fragment's arguments
+     * @return
+     */
     @Override
     protected CollectionType getCollectionType() {
         if (getArguments() == null)

@@ -25,14 +25,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Display a collection of recipes to be selected and this selection is sent back to the caller
+ * fragment
+ */
 public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment {
     public static final String RESULT_KEY = "RECIPE_COLLECTION_SELECTION_FRAGMENT_RESULT_KEY";
     private Button saveButton;
     private BaseRecipeCollection chosenRecipes;
-
-//    public RecipeCollectionSelectionFragment() {
-//        // Required empty public constructor
-//    }
 
     /**
      * Sets the UI layout of the view it creates
@@ -197,7 +197,6 @@ public class RecipeCollectionSelectionFragment extends RecipeCollectionFragment 
      * @param errorMessages the strings of error messages to show
      */
     private void displayErrorMessages(ArrayList<String> errorMessages) {
-        // FIXME: maybe this should be a custom view since it has been reused from ingredient form
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog errorMessageDisplay = builder
                 .setTitle("Please fill out the form properly")

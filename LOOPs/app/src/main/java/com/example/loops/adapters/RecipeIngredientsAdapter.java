@@ -37,6 +37,12 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
         this.recyclerViewOnClickInterface = recyclerViewOnClickInterface;
     }
 
+    /**
+     * Creates the view for a recipe's ingredient and its view holder
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,6 +52,11 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
         return holder;
     }
 
+    /**
+     * Binds the view holder for a recipe's ingredient to an recipe's ingredient
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.recipeIngredientTitle.setText(recipeIngredients.getIngredients().get(position).getDescription());
@@ -53,11 +64,18 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
         holder.recipeIngredientUnit.setText(recipeIngredients.getIngredients().get(position).getUnit());
     }
 
+    /**
+     * Returns the number of recipe's ingredient
+     * @return number of recipe's ingredient
+     */
     @Override
     public int getItemCount() {
         return recipeIngredients.getIngredients().size();
     }
 
+    /**
+     * ViewHolder for recipe's ingredient
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView recipeIngredientTitle;
         private TextView recipeIngredientCount;
@@ -87,6 +105,10 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
 
     }
 
+    /**
+     * Sets the recipe's ingredient to adapt
+     * @param recipeIngredients
+     */
     public void setRecipeIngredients(IngredientCollection recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
         notifyDataSetChanged();
