@@ -109,10 +109,6 @@ public class UserPreferencesFragmentTest {
     @Test
     public void clickGotoStoredLocationButtonTest() {
 
-        fragmentScenario.onFragment(fragment -> {
-            navController.setCurrentDestination(R.id.addRecipeFormFragment);
-            navController.navigate(R.id.addRecipeIngredientToAddRecipeForm);
-        });
         clickGotoIngredientCategoryButton();
     }
     /**
@@ -120,10 +116,7 @@ public class UserPreferencesFragmentTest {
      */
     @Test
     public void clickGotoIngredientCategoryButtonTest() {
-        fragmentScenario.onFragment(fragment -> {
-            navController.setCurrentDestination(R.id.addRecipeFormFragment);
-            navController.navigate(R.id.addRecipeIngredientToAddRecipeForm);
-        });
+
         clickGotoStoredLocationButton();
     }
     /**
@@ -131,10 +124,7 @@ public class UserPreferencesFragmentTest {
      */
     @Test
     public void clickGotoRecipeCategoryButtonTest() {
-        fragmentScenario.onFragment(fragment -> {
-            navController.setCurrentDestination(R.id.addRecipeFormFragment);
-            navController.navigate(R.id.addRecipeIngredientToAddRecipeForm);
-        });
+
         clickGotoRecipeCategoryButton();
     }
 
