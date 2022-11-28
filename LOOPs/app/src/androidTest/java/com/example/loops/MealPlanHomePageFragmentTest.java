@@ -86,7 +86,7 @@ public class MealPlanHomePageFragmentTest {
      */
     private void launchFragment(){
         bundle.putSerializable("updatedMealPlan",mockMealPlan);
-        fragmentScenario = FragmentScenario.launchInContainer(MealPlanHomePageFragment.class,bundle ,R.style.AppTheme);
+        fragmentScenario = FragmentScenario.launchInContainer(MealPlanHomePageFragment.class,bundle ,R.style.Theme_LOOPs);
         fragmentScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
             navController.setCurrentDestination(R.id.mealPlanHomePageFragment);
@@ -111,7 +111,7 @@ public class MealPlanHomePageFragmentTest {
     private void mimicUpdateMealPlan(){
         bundle.putSerializable("updatedMealPlan",mockMealPlan);
         bundle.putInt("mealPlanIndex", 0);
-        fragmentScenario = FragmentScenario.launchInContainer(MealPlanHomePageFragment.class,bundle ,R.style.AppTheme);
+        fragmentScenario = FragmentScenario.launchInContainer(MealPlanHomePageFragment.class,bundle ,R.style.Theme_LOOPs);
         fragmentScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
             navController.setCurrentDestination(R.id.mealPlanHomePageFragment);

@@ -135,7 +135,7 @@ public class MealPlanFragmentTest {
          * Date Accessed : 2022-11-19
          */
 
-        fragmentScenario = FragmentScenario.launchInContainer(MealPlanFragment.class, bundle,R.style.AppTheme ,new FragmentFactory() {
+        fragmentScenario = FragmentScenario.launchInContainer(MealPlanFragment.class, bundle,R.style.Theme_LOOPs ,new FragmentFactory() {
             @NonNull
             @Override
             public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
@@ -180,7 +180,7 @@ public class MealPlanFragmentTest {
     private void mimicAddRecipeRequest(){
         BaseRecipeCollection addedRecipeCollection = new BaseRecipeCollection();
         addedRecipeCollection.addRecipe(mockRecipe2);
-        fragmentScenario = FragmentScenario.launchInContainer(MealPlanFragment.class, bundle,R.style.AppTheme , new FragmentFactory() {
+        fragmentScenario = FragmentScenario.launchInContainer(MealPlanFragment.class, bundle,R.style.Theme_LOOPs , new FragmentFactory() {
             @NonNull
             @Override
             public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
@@ -236,7 +236,7 @@ public class MealPlanFragmentTest {
     private void mimicAddIngredientRequest(){
         IngredientCollection addedIngredientCollection = new IngredientCollection();
         addedIngredientCollection.addIngredient(mockIngredient2);
-        fragmentScenario = FragmentScenario.launchInContainer(MealPlanFragment.class, bundle,R.style.AppTheme , new FragmentFactory() {
+        fragmentScenario = FragmentScenario.launchInContainer(MealPlanFragment.class, bundle,R.style.Theme_LOOPs, new FragmentFactory() {
             @NonNull
             @Override
             public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {

@@ -107,7 +107,7 @@ public class RecipeFragmentTest {
     public void testDisplay(){
 
         onView(withId(R.id.recipeImage)).check(matches(isDisplayed()));
-        onView(withId(R.id.recipeTitle)).check(matches(isDisplayed()));
+        onView(withId(R.id.recipe_view_title)).check(matches(isDisplayed()));
         onView(withId(R.id.prepTimeString)).check(matches(isDisplayed()));
         onView(withId(R.id.recipePrepTime)).check(matches(isDisplayed()));
         onView(withId(R.id.categoryInRecipe)).check(matches(isDisplayed()));
@@ -142,19 +142,20 @@ public class RecipeFragmentTest {
         String editRecipeText = targetContext.getResources().getString(R.string.EditRecipeButtonName);
         String deleteButtonText = targetContext.getResources().getString(R.string.recipeDeleteButtonText);
         String backButtonText = targetContext.getResources().getString(R.string.recipeBackButtonText);
-        String recipeServingSize = mockRecipe.getNumServing() + "";
+        String recipeServingSize = Integer.toString(mockRecipe.getNumServing());
+        recipeServingSize = " " + recipeServingSize;
         Duration time = mockRecipe.getPrepTime();
         long seconds = time.getSeconds();
-        String durationString = String.format("%d:%02d",seconds/3600,(seconds%3600)/60);
+        String durationString = String.format(" %dh %02dm",seconds/3600,(seconds%3600)/60);
 
 
-        onView(withId(R.id.recipeTitle)).check(matches(withText(mockRecipe.getTitle())));
+        onView(withId(R.id.recipe_view_title)).check(matches(withText(mockRecipe.getTitle())));
         onView(withId(R.id.prepTimeString)).check(matches(withText(prepTime)));
         onView(withId(R.id.recipePrepTime)).check(matches(withText(durationString)));
         onView(withId(R.id.servingSizeString)).check(matches(withText(servingSize)));
         onView(withId(R.id.recipeServing)).check(matches(withText(recipeServingSize)));
         onView(withId(R.id.categoryInRecipe)).check(matches(withText(categoryInRecipe)));
-        onView(withId(R.id.recipeCategory)).check(matches(withText(mockRecipe.getCategory())));
+        onView(withId(R.id.recipeCategory)).check(matches(withText(" " + mockRecipe.getCategory())));
 
         onView(withId(R.id.recipeCommentSubhead)).check(matches(withText(recipeCommentSubHead)));
         onView(withId(R.id.recipeComment)).check(matches(withText(mockRecipe.getComments())));
