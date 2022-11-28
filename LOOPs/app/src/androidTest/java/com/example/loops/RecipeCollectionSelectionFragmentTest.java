@@ -103,7 +103,7 @@ public class RecipeCollectionSelectionFragmentTest {
      */
     private void launchFragmentWithNoRecipesToFilter() {
         Bundle args = new Bundle();
-        args.putSerializable("collectionType", RecipeCollectionFactory.CollectionType.PRESET_FOR_VIEW);
+        args.putSerializable("collectionType", RecipeCollectionFactory.CollectionType.PRESET_FOR_SELECTION);
         launchFragmentWithArgs(args);
     }
 
@@ -113,7 +113,7 @@ public class RecipeCollectionSelectionFragmentTest {
      */
     private void launchFragmentWithRecipesToFilter(BaseRecipeCollection filter) {
         Bundle args = new Bundle();
-        args.putSerializable("collectionType", RecipeCollectionFactory.CollectionType.PRESET_FOR_VIEW);
+        args.putSerializable("collectionType", RecipeCollectionFactory.CollectionType.PRESET_FOR_SELECTION);
         args.putSerializable("recipesToFilter", filter);
         launchFragmentWithArgs(args);
     }

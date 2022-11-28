@@ -25,19 +25,19 @@ public class RecipeCollectionFactory {
      *  EMPTY - creates an empty recipe collection
      *  PRESET_FOR_EDIT - creates an recipe collection preset with some recipes
      *                      meant to be shown in editor fragments
-     *  PRESET_FOR_VIEW - creates an recipe collection preset with some recipes
+     *  PRESET_FOR_SELECTION - creates an recipe collection preset with some recipes
      *                      meant to be shown in selection fragments
      *  FROM_STORAGE_FOR_EDIT - retrieve recipes from user's stored recipes and
      *                          any changes to the collection are synced to the database
-     *  FROM_STORAGE_FOR_VIEW - retrieve recipes from user's stored recipes
+     *  FROM_STORAGE_FOR_SELECTION - retrieve recipes from user's stored recipes
      *                          any changes to the collection are not synced to the database
      */
     public enum CollectionType {
         EMPTY,
         PRESET_FOR_EDIT,
-        PRESET_FOR_VIEW,
+        PRESET_FOR_SELECTION,
         FROM_STORAGE_FOR_EDIT,
-        FROM_STORAGE_FOR_VIEW
+        FROM_STORAGE_FOR_SELECTION
     }
 
     /**
@@ -59,7 +59,7 @@ public class RecipeCollectionFactory {
             case EMPTY:
                 collection = new BaseRecipeCollection();
                 break;
-            case PRESET_FOR_VIEW:
+            case PRESET_FOR_SELECTION:
             case PRESET_FOR_EDIT:
                 collection = new BaseRecipeCollection();
                 IngredientCollection grilledCheeseIngredients = new IngredientCollection();
@@ -88,7 +88,7 @@ public class RecipeCollectionFactory {
             case FROM_STORAGE_FOR_EDIT:
                 collection = ((MainActivity) context).getAllRecipes();
                 break;
-            case FROM_STORAGE_FOR_VIEW:
+            case FROM_STORAGE_FOR_SELECTION:
                 BaseRecipeCollection storedRecipes = ((MainActivity) context).getAllRecipes();
                 collection = new BaseRecipeCollection();
                 for (Recipe recipe : storedRecipes.getAllRecipes()) {
@@ -110,9 +110,9 @@ public class RecipeCollectionFactory {
         ArrayAdapter<CharSequence> sortOptionArrayAdapter;
         switch (type) {
             case EMPTY:
-            case PRESET_FOR_VIEW:
+            case PRESET_FOR_SELECTION:
             case PRESET_FOR_EDIT:
-            case FROM_STORAGE_FOR_VIEW:
+            case FROM_STORAGE_FOR_SELECTION:
             case FROM_STORAGE_FOR_EDIT:
                 sortOptionArrayAdapter =
                         ArrayAdapter.createFromResource(context,
@@ -142,8 +142,8 @@ public class RecipeCollectionFactory {
                 recipeArrayAdapter = new RecipeCollectionViewAdapter(context,
                         collection.getAllRecipes());
                 break;
-            case PRESET_FOR_VIEW:
-            case FROM_STORAGE_FOR_VIEW:
+            case PRESET_FOR_SELECTION:
+            case FROM_STORAGE_FOR_SELECTION:
                 recipeArrayAdapter = new RecipeSelectionViewAdapter(context,
                         collection.getAllRecipes());
                 break;

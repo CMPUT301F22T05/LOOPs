@@ -26,11 +26,11 @@ public class IngredientCollectionFactory {
      *  EMPTY - creates an empty ingredient collection
      *  PRESET_FOR_EDIT - creates an ingredient collection preset with some ingredients
      *                      meant to be showed for editor fragments
-     *  PRESET_FOR_VIEW - creates an ingredient collection preset with some ingredients
+     *  PRESET_FOR_SELECTION - creates an ingredient collection preset with some ingredients
      *                        meant to be showed for selection fragments
      *  FROM_STORAGE_FOR_EDIT - retrieve ingredients from user's stored ingredients and
      *                          any changes to the collection are synced to the database
-     *  FROM_STORAGE_FOR_VIEW - retrieve ingredients from user's stored ingredients
+     *  FROM_STORAGE_FOR_SELECTION - retrieve ingredients from user's stored ingredients
      *                          any changes to the collection are not synced to the database
      *  FROM_SHOPPING_LIST_FOR_EDIT - retrieve ingredients from the shopping list and
      *                                any changes to the collection are synced to the database
@@ -38,9 +38,9 @@ public class IngredientCollectionFactory {
     public enum CollectionType {
         EMPTY,
         PRESET_FOR_EDIT,
-        PRESET_FOR_VIEW,
+        PRESET_FOR_SELECTION,
         FROM_STORAGE_FOR_EDIT,
-        FROM_STORAGE_FOR_VIEW,
+        FROM_STORAGE_FOR_SELECTION,
         FROM_SHOPPING_LIST_FOR_EDIT,
     }
 
@@ -64,7 +64,7 @@ public class IngredientCollectionFactory {
                 collection = new IngredientCollection();
                 break;
             case PRESET_FOR_EDIT:
-            case PRESET_FOR_VIEW:
+            case PRESET_FOR_SELECTION:
                 collection = new IngredientCollection();
                 collection.addIngredient(new Ingredient(
                         "BBB",
@@ -84,12 +84,17 @@ public class IngredientCollectionFactory {
             case FROM_STORAGE_FOR_EDIT:
                 collection = ((MainActivity) context).getIngredientStorage();
                 break;
-            case FROM_STORAGE_FOR_VIEW:
+            case FROM_STORAGE_FOR_SELECTION:
                 IngredientCollection storedIngredients = ((MainActivity) context).getIngredientStorage();
                 collection = new IngredientCollection();
                 for (Ingredient ing : storedIngredients.getIngredients()) {
                     if ( ! ing.getPending() ) {
-                        collection.addIngredient(new Ingredient(ing));
+                        collection.addIngredient(new Ingredient(
+                                ing.getDescription(),
+                                ing.getAmount(),
+                                ing.getUnit(),
+                                ing.getCategory()
+                        ));
                     }
                 }
                 break;
@@ -119,8 +124,8 @@ public class IngredientCollectionFactory {
                         R.array.ingredient_storage_sort_option, android.R.layout.simple_spinner_item);
                 sortOptionArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 break;
-            case PRESET_FOR_VIEW:
-            case FROM_STORAGE_FOR_VIEW:
+            case PRESET_FOR_SELECTION:
+            case FROM_STORAGE_FOR_SELECTION:
                 sortOptionArrayAdapter = ArrayAdapter.createFromResource(context,
                         R.array.ingredient_selection_sort_option, android.R.layout.simple_spinner_item);
                 sortOptionArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -153,8 +158,8 @@ public class IngredientCollectionFactory {
                 ingredientArrayAdapter = new IngredientStorageViewAdapter(context,
                         collection.getIngredients());
                 break;
-            case PRESET_FOR_VIEW:
-            case FROM_STORAGE_FOR_VIEW:
+            case PRESET_FOR_SELECTION:
+            case FROM_STORAGE_FOR_SELECTION:
                 ingredientArrayAdapter = new IngredientSelectionViewAdapter(context,
                         collection.getIngredients());
                 break;
