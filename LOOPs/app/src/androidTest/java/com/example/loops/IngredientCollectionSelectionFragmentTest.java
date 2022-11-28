@@ -38,7 +38,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.loops.factory.IngredientCollectionFactory.CollectionType;
 import com.example.loops.ingredientFragments.IngredientCollectionSelectionFragment;
-import com.example.loops.ingredientFragments.forms.AddIngredientFormFragment;
 import com.example.loops.modelCollections.IngredientCollection;
 import com.example.loops.models.Ingredient;
 
@@ -99,7 +98,7 @@ public class IngredientCollectionSelectionFragmentTest {
      */
     private void launchFragmentWithNoIngredientsToFilter() {
         Bundle args = new Bundle();
-        args.putSerializable("collectionType", CollectionType.PRESET_FOR_VIEW);
+        args.putSerializable("collectionType", CollectionType.PRESET_FOR_SELECTION);
         launchFragmentWithArgs(args);
     }
 
@@ -109,7 +108,7 @@ public class IngredientCollectionSelectionFragmentTest {
      */
     private void launchFragmentWithIngredientsToFilter(IngredientCollection filter) {
         Bundle args = new Bundle();
-        args.putSerializable("collectionType", CollectionType.PRESET_FOR_VIEW);
+        args.putSerializable("collectionType", CollectionType.PRESET_FOR_SELECTION);
         args.putSerializable("ingredientsToFilter", filter);
         launchFragmentWithArgs(args);
     }

@@ -221,7 +221,7 @@
         tools:layout="@layout/fragment_ingredient_collection">
         <argument
             android:name="collectionType"
-            android:defaultValue="FROM_STORAGE_FOR_VIEW"
+            android:defaultValue="FROM_STORAGE_FOR_SELECTION"
             app:argType="com.example.loops.factory.IngredientCollectionFactory$CollectionType" />
         <argument
             android:name="ingredientsToFilter"
@@ -295,7 +295,7 @@
         <argument
             android:name="collectionType"
             app:argType="com.example.loops.factory.RecipeCollectionFactory$CollectionType"
-            android:defaultValue="FROM_STORAGE_FOR_VIEW" />
+            android:defaultValue="FROM_STORAGE_FOR_SELECTION" />
         <argument
             android:name="recipesToFilter"
             app:argType="com.example.loops.modelCollections.BaseRecipeCollection"
