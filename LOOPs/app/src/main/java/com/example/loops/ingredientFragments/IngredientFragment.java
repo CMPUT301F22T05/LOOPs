@@ -203,7 +203,6 @@ public class IngredientFragment extends Fragment {
             public void onChanged(@Nullable final Object submittedIngredient) {
                 ingredient = (Ingredient) submittedIngredient;
                 initializeViewWithIngredient();
-                backButton.setText("Confirm");
 
                 savedStateHandle.remove( EditIngredientFormFragment.RESULT_KEY );
             }
